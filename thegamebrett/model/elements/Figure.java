@@ -1,0 +1,39 @@
+package thegamebrett.model.elements;
+
+import thegamebrett.model.Layout;
+import thegamebrett.model.Player;
+
+/**
+ *
+ * @author christiancolbach
+ */
+public class Figure {
+    
+    // uebliche Kram......
+    
+    private Player owner;
+    
+    private Layout layout;
+
+    public Figure(Player owner, Layout layout) {
+        this.owner = owner;
+        this.layout = layout;
+    }
+
+    public Player getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Player owner) {
+        this.owner = owner;
+    }
+
+    public Layout getLayout() {
+        return layout;
+    }
+
+    public void setLayout(Layout layout) {
+        this.layout = layout;
+    }
+    
+}
