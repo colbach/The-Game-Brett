@@ -18,26 +18,11 @@ import thegamebrett.model.mediaeffect.SoundEffect;
  */
 public class SoundManager {
 
-    public static void main(String[] args) {
-
-        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-        URL url = classloader.getResource("thegamebrett/sound/assets/glitch.wav");
-        AudioClip sound;
-        //try {
-        sound = Applet.newAudioClip(url);
-        sound.play();
-        try {
-            Thread.sleep(100000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(SoundManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
     public static void playSoundEffect(SoundEffect se) {
-
+        playSound(se.getResource());
     }
 
-    protected static void playSound(String resource) {
+    public static void playSound(String resource) {
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
         URL url = classloader.getResource(resource);
         AudioClip sound;
