@@ -8,13 +8,10 @@ import thegamebrett.model.mediaeffect.MediaEffect;
  * 
  * @author christiancolbach
  */
-public abstract class Field {
+public abstract class Field implements Element {
     
-    /** gibt relative horizontale Position zurueck. Wert [0d, 1d]*/
-    public abstract double getXRelative();
-    
-    /** gibt relative vertikale Position zurueck. Wert [0d, 1d]*/
-    public abstract double getYRelative();
+    /** gibt relative horizontale und vertikale Position zurueck. Wert [0d, 1d]*/
+    public abstract double getRelativePosition();
     
     /** gibt relative Breite zurueck. Wert [0d, 1d]*/
     public abstract double getWidthRelative();

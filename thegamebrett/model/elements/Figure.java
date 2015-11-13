@@ -7,12 +7,12 @@ import thegamebrett.model.Player;
  *
  * @author christiancolbach
  */
-public class Figure {
+public class Figure implements Element {
     
-    // uebliche Kram......
-    
+    /** Besitzer dieser Figur */
     private Player owner;
     
+    /** Layout von Figur */
     private Layout layout;
 
     public Figure(Player owner, Layout layout) {

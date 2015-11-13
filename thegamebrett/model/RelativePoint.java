@@ -5,34 +5,43 @@
  */
 package thegamebrett.model;
 
+import thegamebrett.gui.ScreenResolution;
+
 /**
  *
  * @author christiancolbach
  */
 public class RelativePoint {
     
-    private double xRelative;
-    private double yRelative;
+    private final double xRelative;
+    private final double yRelative;
 
     public double getXRelative() {
         return xRelative;
     }
 
-    public void setXRelative(double xRelative) {
-        this.xRelative = xRelative;
-    }
-
     public double getYRelative() {
         return yRelative;
     }
-
-    public void setYRelative(double yRelative) {
-        this.yRelative = yRelative;
+    
+    public double getXOnScreen() {
+        return xRelative * ScreenResolution.getScreenWidth();
     }
 
+    public double getYOnScreen() {
+        return yRelative * ScreenResolution.getScreenHeigth();
+    } 
+
+    /** erwartet Werte: [0,1] */
     public RelativePoint(double xRelative, double yRelative) {
         this.xRelative = xRelative;
         this.yRelative = yRelative;
+    }
+    
+    /** (Hilfsconstructuor) erwartet Werte: [0,1000] */
+    public RelativePoint(int xRelativeTimes1000, int yRelativeTimes1000) {
+        this.xRelative = xRelativeTimes1000 / 1000d;
+        this.yRelative = yRelativeTimes1000 / 1000d;
     }
     
     
