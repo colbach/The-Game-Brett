@@ -1,6 +1,5 @@
 package thegamebrett.gui;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  * Kuemert sich um Skalierungsfaktoren etc
@@ -10,11 +9,11 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 public class ScreenResolution {
     
     public static int getScreenWidth() {
-        throw new NotImplementedException();
+        throw new RuntimeException("Noch nicht implementiert");
     }
     
     public static int getScreenHeigth() {
-        throw new NotImplementedException();
+        throw new RuntimeException("Noch nicht implementiert");
     }
     
 }
