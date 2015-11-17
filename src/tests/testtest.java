@@ -10,5 +10,5 @@ package tests;
  * @author Korè
  */
 public class testtest {
-    
+    public boolean bistDuDoof=true;
 }
