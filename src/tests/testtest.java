@@ -10,5 +10,10 @@ package tests;
  * @author Korè
  */
 public class testtest {
+<<<<<<< HEAD
     public boolean bistDuDoof=true;
+=======
+    
+    public static String hallo = "Hallo :)";
+>>>>>>> origin/master
 }
