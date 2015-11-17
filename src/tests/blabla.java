@@ -9,5 +9,6 @@ package tests;
  *
  * @author Korè
  */
-public class testtest {
+public class blabla {
+    
 }
