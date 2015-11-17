@@ -9,11 +9,6 @@ package tests;
  *
  * @author Korè
  */
-public class testtest {
-<<<<<<< HEAD
+public class blabla {
     
-    public static String hallo = "Hallo :) HHHHH";
 }
-=======
-}
->>>>>>> master
