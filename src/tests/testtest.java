@@ -11,5 +11,5 @@ package tests;
  */
 public class testtest {
     
-    public static String hallo = "Hallo :)";
+    public static String hallo = "Hallo :) HHHHH";
 }
