@@ -10,4 +10,10 @@ package tests;
  * @author Korè
  */
 public class testtest {
+<<<<<<< HEAD
+    
+    public static String hallo = "Hallo :) HHHHH";
 }
+=======
+}
+>>>>>>> master
