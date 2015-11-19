@@ -5,7 +5,7 @@
  */
 package thegamebrett.model;
 
-import thegamebrett.gui.ScreenResolution;
+import thegamebrett.gamescreen.ScreenResolution;
 
 /**
  *

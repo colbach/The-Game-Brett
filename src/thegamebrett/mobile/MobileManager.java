@@ -7,6 +7,7 @@
 package thegamebrett.mobile;
 
 import thegamebrett.action.ActionRequest;
+import thegamebrett.action.request.MobileRequest;
 import thegamebrett.network.NetworkManager;
 
 /**
@@ -18,5 +19,9 @@ public class MobileManager {
     
     public void bla(ActionRequest i) {
         
+    }
+
+    public void react(MobileRequest mobileRequest) {
+        // mach etwas
     }
 }

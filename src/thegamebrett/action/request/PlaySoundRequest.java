@@ -1,4 +1,4 @@
-package thegamebrett.action;
+package thegamebrett.action.request;
 
 import thegamebrett.model.mediaeffect.SoundEffect;
 

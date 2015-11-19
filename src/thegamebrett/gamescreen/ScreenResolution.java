@@ -1,4 +1,4 @@
-package thegamebrett.gui;
+package thegamebrett.gamescreen;
 
 
 /**

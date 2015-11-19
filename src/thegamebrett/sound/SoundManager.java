@@ -1,5 +1,6 @@
 package thegamebrett.sound;
 
+import thegamebrett.action.request.SoundRequest;
 import thegamebrett.model.mediaeffect.SoundEffect;
 
 /**
@@ -16,6 +17,10 @@ public class SoundManager {
     
     public static void playSoundEffect(SoundEffect se) {
         SoundHelper.playSound(se.getResource());
+    }
+
+    public void react(SoundRequest soundRequest) {
+        // mach was
     }
 
 }

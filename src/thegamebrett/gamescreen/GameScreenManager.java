@@ -4,19 +4,22 @@
  * and open the template in the editor.
  */
 
-package thegamebrett.gui;
+package thegamebrett.gamescreen;
 
 import thegamebrett.action.ActionRequest;
+import thegamebrett.action.ActionResponse;
+import thegamebrett.action.request.GUIRequest;
 
 /**
  *
  * @author christiancolbach
  */
-public class ScreenManager {
+public class GameScreenManager {
     
     private ScreenView sv;
-    
-    public void bla(ActionRequest i) {
-        
+
+    public void react(GUIRequest response) {
+        // mach was
     }
+
 }

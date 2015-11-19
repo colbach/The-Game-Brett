@@ -7,6 +7,8 @@
 package thegamebrett.model;
 
 import java.util.ArrayList;
+import thegamebrett.action.ActionRequest;
+import thegamebrett.action.ActionResponse;
 import thegamebrett.model.elements.Board;
 
 /**
@@ -23,6 +25,11 @@ public class Model {
         this.players = players;
         this.gameLogic = gameLogic;
         this.board = board;
+    }
+    
+    /** reicht ActionResponse-Object durch und gibt ActionRequest-Object zuruek */
+    public ActionRequest[] react(ActionResponse resonse) {
+        return gameLogic.next(resonse);
     }
 
     public ArrayList<Player> getPlayers() {
