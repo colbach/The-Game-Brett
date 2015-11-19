@@ -3,7 +3,7 @@ package thegamebrett.action;
 import thegamebrett.model.Player;
 
 /**
- * @author christiancolbach
+ * @author Christian Colbach
  */
 public class InteractionRequest implements GUIRequest, MobileRequest {
     

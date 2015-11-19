@@ -1,8 +1,7 @@
 package thegamebrett.action;
 
 /**
- *
- * @author christiancolbach
+ * @author Christian Colbach
  */
 public class InteractionResponse {
 

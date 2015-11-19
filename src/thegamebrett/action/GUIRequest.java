@@ -1,7 +1,6 @@
 package thegamebrett.action;
 
 /**
- *
- * @author christiancolbach
+ * @author Christian Colbach
  */
 public interface GUIRequest extends ActionRequest {}
