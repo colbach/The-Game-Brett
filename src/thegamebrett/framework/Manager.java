@@ -7,7 +7,7 @@
 package thegamebrett.framework;
 
 import thegamebrett.gui.ScreenManager;
-import thegamebrett.interaction.InteractionRequest;
+import thegamebrett.action.ActionRequest;
 import thegamebrett.model.Model;
 import thegamebrett.sound.SoundManager;
 
@@ -21,7 +21,7 @@ public class Manager {
     private ScreenManager sm;
     private SoundManager som;
     
-    public void bla(InteractionRequest i) {
+    public void bla(ActionRequest i) {
         
     }
 }
