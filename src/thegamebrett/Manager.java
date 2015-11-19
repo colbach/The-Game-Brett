@@ -6,6 +6,9 @@
 
 package thegamebrett;
 
+import java.util.ArrayList;
+import javafx.scene.Group;
+import javafx.scene.Scene;
 import thegamebrett.gamescreen.GameScreenManager;
 import thegamebrett.action.ActionRequest;
 import thegamebrett.action.ActionResponse;
@@ -16,6 +19,8 @@ import thegamebrett.action.request.TimerRequest;
 import thegamebrett.menuescreen.MenueScreenManager;
 import thegamebrett.mobile.MobileManager;
 import thegamebrett.model.Model;
+import thegamebrett.model.Player;
+import thegamebrett.model.elements.Board;
 import thegamebrett.sound.SoundManager;
 import thegamebrett.timer.TimeManager;
 
@@ -26,17 +31,37 @@ import thegamebrett.timer.TimeManager;
 public class Manager {
     
     private Model model;
-    private GameScreenManager screenManager;
+    private GameScreenManager gameScreenManager;
     private SoundManager soundManager;
     private MobileManager mobileManager;
     private TimeManager timeManager;
     private MenueScreenManager menueManager;
+        
+    private Main main;
 
     public Manager() {
         
+        // manager.getViewGroup().getChildren().add(menueView);
     }
     
+    public ArrayList<Player> getPlayers() {
+        return model.getPlayers();
+    }
     
+    public Board getBoard() {
+        return model.getBoard();
+    }
+    
+    public void startGame(Model model) {
+        this.model = model;
+        //initialisiere Gamescreenmanager
+        main.setView(gameScreenManager.getView());
+    }
+    
+    public void stopGame(Model model) {
+        main.setView(menueManager.getView());
+        this.model = null;
+    }
     
     /** reicht ActionResponse-Object durch und gibt ActionRequest-Object zuruek */
     public void react(ActionResponse response) {
@@ -45,7 +70,7 @@ public class Manager {
         
         for(ActionRequest ar : ars) {
             if(ar instanceof GUIRequest) {
-                screenManager.react((GUIRequest) ar);
+                gameScreenManager.react((GUIRequest) ar);
             } else if(ar instanceof SoundRequest) {
                 soundManager.react((SoundRequest) ar);
             } else if(ar instanceof MobileRequest) {
@@ -57,4 +82,12 @@ public class Manager {
             }
         }
     }
+
+    public Model getModel() {
+        if(model == null)
+            System.err.println("Model ist nicht gesetzt!");
+        return model;
+    }
+    
+    
 }

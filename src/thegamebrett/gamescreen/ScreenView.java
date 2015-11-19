@@ -6,9 +6,11 @@
 
 package thegamebrett.gamescreen;
 
+import javafx.scene.Group;
+
 /**
  *
  * @author christiancolbach
  */
-public class ScreenView {
+public class ScreenView extends Group {
 }

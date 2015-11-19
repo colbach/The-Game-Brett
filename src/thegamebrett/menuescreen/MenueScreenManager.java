@@ -1,6 +1,7 @@
 package thegamebrett.menuescreen;
 
 import javafx.scene.Group;
+import javafx.scene.Scene;
 import thegamebrett.Manager;
 
 /**
@@ -10,13 +11,25 @@ import thegamebrett.Manager;
 public class MenueScreenManager {
     
     private final Manager manager;
-    private final Group menueView;
+    private Group menueView;
 
-    public MenueScreenManager(Manager manager, Group menueView) {
+    public MenueScreenManager(Manager manager) {
         this.manager = manager;
-        this.menueView = menueView;
+        
+        // initialisiere menueView...
+        
     }
     
+    public Group getView() {
+        return menueView;
+    }
     
-    
+    public void startGame(int gameID) {
+        /*
+        if(gameID == IdVonMenschAergerDichNicht) {
+            Model game = initialisiere MenschAergerDichNicht...
+            manager.startGame(game);
+        } else ...
+        */
+    }
 }
