@@ -40,8 +40,11 @@ public class Manager {
     private Main main;
 
     public Manager() {
-        
-        // manager.getViewGroup().getChildren().add(menueView);
+        gameScreenManager = new GameScreenManager(this);
+        soundManager = new SoundManager(this);
+        mobileManager = new MobileManager(this);
+        timeManager = new TimeManager(this);
+        menueManager = new MenueScreenManager(this);
     }
     
     public ArrayList<Player> getPlayers() {

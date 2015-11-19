@@ -21,6 +21,7 @@ public class GameScreenManager {
     private Manager manager;
 
     public GameScreenManager(Manager manager) {
+        this.manager = manager;
         // lade Daten aus Manager
         // initialisiere ScreenView...
     }
