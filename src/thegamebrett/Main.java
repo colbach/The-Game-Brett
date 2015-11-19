@@ -5,8 +5,7 @@ import javafx.scene.Group;
 import javafx.stage.Stage;
 
 /**
- *
- * @author christiancolbach
+ * @author Christian Colbach
  */
 public class Main extends Application {
     

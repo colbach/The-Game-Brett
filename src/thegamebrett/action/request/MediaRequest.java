@@ -3,8 +3,7 @@ package thegamebrett.action.request;
 import thegamebrett.model.mediaeffect.MediaEffect;
 
 /**
- *
- * @author christiancolbach
+ * @author Christian Colbach
  */
 public class MediaRequest implements SoundRequest, GUIRequest {
     

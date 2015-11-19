@@ -1,15 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package thegamebrett.model;
 
 import thegamebrett.gamescreen.ScreenResolution;
 
 /**
- *
- * @author christiancolbach
+ * @author Christian Colbach
  */
 public class RelativePoint {
     

@@ -5,8 +5,7 @@ import javafx.scene.Scene;
 import thegamebrett.Manager;
 
 /**
- *
- * @author christiancolbach
+ * @author Christian Colbach
  */
 public class MenueScreenManager {
     

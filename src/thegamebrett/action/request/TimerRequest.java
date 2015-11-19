@@ -3,8 +3,7 @@ package thegamebrett.action.request;
 import thegamebrett.action.ActionRequest;
 
 /**
- *
- * @author christiancolbach
+ * @author Christian Colbach
  */
 public class TimerRequest implements ActionRequest {
     

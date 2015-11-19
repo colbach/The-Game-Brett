@@ -4,7 +4,7 @@ import thegamebrett.action.ActionResponse;
 import thegamebrett.action.request.TimerRequest;
 
 /**
- * @author christiancolbach
+ * @author Christian Colbach
  */
 public class TimerResponse implements ActionResponse {
     

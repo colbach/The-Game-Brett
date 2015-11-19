@@ -4,8 +4,7 @@ import thegamebrett.model.Layout;
 import thegamebrett.model.Player;
 
 /**
- *
- * @author christiancolbach
+ * @author Christian Colbach
  */
 public class Figure implements Element {
     

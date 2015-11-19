@@ -25,8 +25,7 @@ import thegamebrett.sound.SoundManager;
 import thegamebrett.timer.TimeManager;
 
 /**
- *
- * @author christiancolbach
+ * @author Christian Colbach
  */
 public class Manager {
     

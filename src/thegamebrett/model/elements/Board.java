@@ -4,8 +4,8 @@ import thegamebrett.model.Layout;
 
 /**
  * Definition des Spielbretts
- * 
- * @author christiancolbach
+ *
+ * @author Christian Colbach
  */
 public abstract class Board implements Element {
     

@@ -5,8 +5,8 @@ import thegamebrett.model.mediaeffect.MediaEffect;
 
 /**
  * Defintion eines einzelnen Feldes
- * 
- * @author christiancolbach
+ *
+ * @author Christian Colbach
  */
 public abstract class Field implements Element {
     

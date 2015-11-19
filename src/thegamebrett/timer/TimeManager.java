@@ -8,8 +8,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- *
- * @author christiancolbach
+ * @author Christian Colbach
  */
 public class TimeManager {
     
