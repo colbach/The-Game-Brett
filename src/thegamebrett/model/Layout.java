@@ -3,6 +3,9 @@ package thegamebrett.model;
 import java.awt.Color;
 import java.awt.Image;
 
+/**
+ * @author Christian Colbach
+ */
 public class Layout {
     
     /**  Hintergrungbild füllt ganzes Feld (Bild wird abgeschnitten damit es passt)*/

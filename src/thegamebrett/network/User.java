@@ -2,8 +2,8 @@ package thegamebrett.network;
 
 /**
  * Benutzer des Systems aus technischer Sicht
- * 
- * @author christiancolbach
+ *
+ * @author Christian Colbach
  */
 public class User {
     

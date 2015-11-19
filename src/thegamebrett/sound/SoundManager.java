@@ -1,5 +1,7 @@
 package thegamebrett.sound;
 
+import thegamebrett.Manager;
+import thegamebrett.action.request.SoundRequest;
 import thegamebrett.model.mediaeffect.SoundEffect;
 
 /**
@@ -16,6 +18,14 @@ public class SoundManager {
     
     public static void playSoundEffect(SoundEffect se) {
         SoundHelper.playSound(se.getResource());
+    }
+
+    public SoundManager(Manager aThis) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void react(SoundRequest soundRequest) {
+        // mach was
     }
 
 }

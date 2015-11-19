@@ -1,9 +1,6 @@
 package thegamebrett.action;
 
 /**
- *
- * @author christiancolbach
+ * @author Christian Colbach
  */
-public class ActionResponse {
-    
-}
+public interface ActionResponse {}
