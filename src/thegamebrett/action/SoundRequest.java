@@ -1,6 +1,7 @@
 package thegamebrett.action;
 
 /**
+ *
  * @author christiancolbach
  */
-public interface ActionResponse {}
+public interface SoundRequest extends ActionRequest {}
