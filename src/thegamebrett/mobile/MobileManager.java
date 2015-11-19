@@ -6,7 +6,7 @@
 
 package thegamebrett.mobile;
 
-import thegamebrett.interaction.InteractionRequest;
+import thegamebrett.action.ActionRequest;
 import thegamebrett.network.NetworkManager;
 
 /**
@@ -16,7 +16,7 @@ import thegamebrett.network.NetworkManager;
 public class MobileManager {
     private MobileView mv;
     
-    public void bla(InteractionRequest i) {
+    public void bla(ActionRequest i) {
         
     }
 }

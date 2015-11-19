@@ -4,12 +4,12 @@
  * and open the template in the editor.
  */
 
-package thegamebrett.model;
+package thegamebrett.action;
 
 /**
  *
  * @author christiancolbach
  */
-public class InteractionTemplates {
+public class ActionRequest {
     
 }

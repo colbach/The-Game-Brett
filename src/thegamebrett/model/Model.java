@@ -16,13 +16,11 @@ import thegamebrett.model.elements.Board;
 public class Model {
     
     private ArrayList<Player> players;
-    private InteractionTemplates interactionTemplates;
     private GameLogic gameLogic;
     private Board board;
 
-    public Model(ArrayList<Player> players, InteractionTemplates interactionTemplates, GameLogic gameLogic, Board board) {
+    public Model(ArrayList<Player> players, GameLogic gameLogic, Board board) {
         this.players = players;
-        this.interactionTemplates = interactionTemplates;
         this.gameLogic = gameLogic;
         this.board = board;
     }
@@ -33,14 +31,6 @@ public class Model {
 
     public void setPlayers(ArrayList<Player> players) {
         this.players = players;
-    }
-
-    public InteractionTemplates getInteractionTemplates() {
-        return interactionTemplates;
-    }
-
-    public void setInteractionTemplates(InteractionTemplates interactionTemplates) {
-        this.interactionTemplates = interactionTemplates;
     }
 
     public GameLogic getGameLogic() {
