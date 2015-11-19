@@ -10,6 +10,6 @@ package thegamebrett.interaction;
  *
  * @author christiancolbach
  */
-public class Interaction {
+public class InteractionRequest {
     
 }
