@@ -7,12 +7,12 @@ package thegamebrett.network;
 public class HTMLGenerator {
     
     public final static String HTML_TOP = "<!DOCTYPE html><html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" /><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=no\"><link href=\"style.css\" type=\"text/css\" rel=\"stylesheet\"><title>The-Game-Brett</title>"
-                  + "<script type=\"text/javascript\">\n" +
+                  + "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js\" type=\"text/javascript\"></script> <script type=\"text/javascript\">\n" +
                     "     $(document).ready(function() {\n" +
-                    "       $(\"#refresh\").load(\"refresh.php\");\n" +
+                    "       $(\"#refresh\").load(\"refresh\");\n" +
                     "       var refreshId = setInterval(function() {\n" +
-                    "          $(\"#refresh\").load('refresh.php?' + 1*new Date());\n" +
-                    "       }, 1000);\n" +
+                    "          $(\"#refresh\").load('refresh?' + 1*new Date());\n" +
+                    "       }, 2000);\n" +
                     "    });\n" +
                     "</script>"
             + "</head>";

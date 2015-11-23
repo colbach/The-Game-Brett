@@ -16,6 +16,8 @@ public class ControlDirector implements Director {
             return HTMLGenerator.generateHTML(null, null);
         } else if(request.equals("/style.css")) {
             return HTMLGenerator.CSS;
+        } else if(request.startsWith("/refresh")) {
+            return "" + Math.random();
         } else {
             return "Fehler :(";
         }
