@@ -4,45 +4,44 @@ import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 
-
 /**
  * @author Christian Colbach
  */
 public class HttpSender {
 
-	protected static void sendFile(File file, DataOutputStream outputStream) throws Exception {
-		sendFile(HttpResponseHeader.STATUSCODE_OK, file, outputStream);
-	}
+    protected static void sendFile(File file, DataOutputStream outputStream) throws Exception {
+        sendFile(HttpResponseHeader.STATUSCODE_OK, file, outputStream);
+    }
 
-	protected static void sendFile(int statusCode, File file, DataOutputStream outputStream) throws Exception {
-		
-		// open FileInputStream
-		FileInputStream fis = new FileInputStream(file);
-		
-		// send Header
-		outputStream.write(HttpResponseHeader.generateResponseHeader(statusCode, Mimes.getMime(file), fis.available()));
+    protected static void sendFile(int statusCode, File file, DataOutputStream outputStream) throws Exception {
 
-		// send file [
-		byte[] buffer = new byte[1024];
-		int bytesRead;
-		while((bytesRead = fis.read(buffer)) != -1) {
-			outputStream.write(buffer, 0, bytesRead);
-		}
-		fis.close();
-		outputStream.close();
-		// ]
-		
-	}
-	
-	protected static void sendText(int statusCode, String text, DataOutputStream outputStream) throws Exception {
+        // FileInputStream oeffnen
+        FileInputStream fis = new FileInputStream(file);
 
-		sendText(statusCode, text, "text/html", outputStream);
-	}
-        
-        protected static void sendText(int statusCode, String text, String mime, DataOutputStream outputStream) throws Exception {
+        // schreibt Header
+        outputStream.write(HttpResponseHeader.generateResponseHeader(statusCode, Mimes.getMime(file), fis.available()));
 
-		outputStream.write(HttpResponseHeader.generateResponseHeader(statusCode, mime, text.length()));
-		outputStream.write(text.getBytes("UTF-8"));
-		outputStream.close();
-	}
+        // Datei senden [
+        byte[] buffer = new byte[1024];
+        int bytesRead;
+        while ((bytesRead = fis.read(buffer)) != -1) {
+            outputStream.write(buffer, 0, bytesRead);
+        }
+        fis.close();
+        outputStream.close();
+	// ]
+
+    }
+
+    protected static void sendText(int statusCode, String text, DataOutputStream outputStream) throws Exception {
+
+        sendText(statusCode, text, "text/html", outputStream);
+    }
+
+    protected static void sendText(int statusCode, String text, String mime, DataOutputStream outputStream) throws Exception {
+
+        outputStream.write(HttpResponseHeader.generateResponseHeader(statusCode, mime, text.length()));
+        outputStream.write(text.getBytes("UTF-8"));
+        outputStream.close();
+    }
 }

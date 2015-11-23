@@ -10,7 +10,6 @@ public class ControlDirector implements Director {
 
     @Override
     public Object query(String request) throws QueryException {
-        //System.out.println(request);
         
         if(request.equals("/") || request.equals("/index.html")) {
             return HTMLGenerator.generateHTML(null, null);
@@ -18,6 +17,8 @@ public class ControlDirector implements Director {
             return HTMLGenerator.CSS;
         } else if(request.startsWith("/refresh")) {
             return Test.usertext;
+        } else if(request.startsWith("/reply")) {
+            return "Thanks " + Math.random();
         } else {
             return "Fehler :(";
         }
