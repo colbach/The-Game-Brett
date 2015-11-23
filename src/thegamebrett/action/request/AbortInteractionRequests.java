@@ -1,4 +1,4 @@
-package thegamebrett.action;
+package thegamebrett.action.request;
 
 /**
  * @author Christian Colbach

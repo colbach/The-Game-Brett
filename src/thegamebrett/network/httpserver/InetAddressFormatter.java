@@ -5,7 +5,7 @@ import java.net.UnknownHostException;
 
 
 /**
- * @author christiancolbach
+ * @author Christian Colbach
  */
 public class InetAddressFormatter {
 

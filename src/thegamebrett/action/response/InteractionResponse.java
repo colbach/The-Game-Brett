@@ -1,4 +1,6 @@
-package thegamebrett.action;
+package thegamebrett.action.response;
+
+import thegamebrett.action.request.InteractionRequest;
 
 /**
  * @author Christian Colbach

@@ -1,8 +1,7 @@
 package thegamebrett.network;
 
 /**
- *
- * @author christiancolbach
+ * @author Christian Colbach
  */
 public class NetworkManager {
     

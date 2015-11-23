@@ -1,8 +1,7 @@
-package thegamebrett.action;
+package thegamebrett.action.request;
 
 /**
- *
- * @author christiancolbach
+ * @author Christian Colbach
  */
 public class GUIUpdateRequest implements GUIRequest {
     

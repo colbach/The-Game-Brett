@@ -1,17 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package thegamebrett.model;
 
 import java.util.ArrayList;
+import thegamebrett.action.ActionRequest;
+import thegamebrett.action.ActionResponse;
 import thegamebrett.model.elements.Board;
 
 /**
- *
- * @author christiancolbach
+ * @author Christian Colbach
  */
 public class Model {
     
@@ -23,6 +18,11 @@ public class Model {
         this.players = players;
         this.gameLogic = gameLogic;
         this.board = board;
+    }
+    
+    /** reicht ActionResponse-Object durch und gibt ActionRequest-Object zuruek */
+    public ActionRequest[] react(ActionResponse resonse) {
+        return gameLogic.next(resonse);
     }
 
     public ArrayList<Player> getPlayers() {

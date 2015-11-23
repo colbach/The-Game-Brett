@@ -1,10 +1,9 @@
-package thegamebrett.action;
+package thegamebrett.action.request;
 
 import thegamebrett.model.mediaeffect.SoundEffect;
 
 /**
- * 
- * @author christiancolbach
+ * @author Christian Colbach
  */
 public class PlaySoundRequest implements SoundRequest {
     
