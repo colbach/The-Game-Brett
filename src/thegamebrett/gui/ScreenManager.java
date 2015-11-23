@@ -6,7 +6,7 @@
 
 package thegamebrett.gui;
 
-import thegamebrett.interaction.Interaction;
+import thegamebrett.action.ActionRequest;
 
 /**
  *
@@ -16,7 +16,7 @@ public class ScreenManager {
     
     private ScreenView sv;
     
-    public void bla(Interaction i) {
+    public void bla(ActionRequest i) {
         
     }
 }

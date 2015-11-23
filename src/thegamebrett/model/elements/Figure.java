@@ -12,6 +12,9 @@ public class Figure implements Element {
     /** Besitzer dieser Figur */
     private Player owner;
     
+    /** Feld auf dem die Figur steht */
+    private Field field;
+    
     /** Layout von Figur */
     private Layout layout;
 
@@ -34,6 +37,14 @@ public class Figure implements Element {
 
     public void setLayout(Layout layout) {
         this.layout = layout;
+    }
+
+    public Field getField() {
+        return field;
+    }
+
+    public void setField(Field field) {
+        this.field = field;
     }
     
 }
