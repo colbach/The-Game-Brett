@@ -12,7 +12,11 @@ public class Mimes {
 	private static final MimeMap MIMEMAP = new MimeMap();
 	
 	public static String getMime(String name) {
-		return (String) MIMEMAP.get(getExtension(name));
+                if(name.equals("/")) {
+                    return (String) MIMEMAP.get(".html"); // fuer den Fall dass index.html automatisch zurückgegeben wird
+                } else {
+                    return (String) MIMEMAP.get(getExtension(name));
+                }
 	}
 	
 	public static String getMime(File file) {
