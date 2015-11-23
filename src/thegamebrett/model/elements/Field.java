@@ -1,6 +1,7 @@
 package thegamebrett.model.elements;
 
 import thegamebrett.model.Layout;
+import thegamebrett.model.RelativePoint;
 import thegamebrett.model.mediaeffect.MediaEffect;
 
 /**
@@ -11,7 +12,7 @@ import thegamebrett.model.mediaeffect.MediaEffect;
 public abstract class Field implements Element {
     
     /** gibt relative horizontale und vertikale Position zurueck. Wert [0d, 1d]*/
-    public abstract double getRelativePosition();
+    public abstract RelativePoint getRelativePosition();
     
     /** gibt relative Breite zurueck. Wert [0d, 1d]*/
     public abstract double getWidthRelative();
