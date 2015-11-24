@@ -42,17 +42,17 @@ public class HttpRequestHandler extends Thread {
             request = scanner.next();
 
 			// ]
-			// log
+            // log
             //Logger.log(Logger.LOGTYPE_QUERY, "ip=" + InetAddressFormatter.formatAddress(clientSocket.getInetAddress()) + " query=" + request.substring(1));
             if (method.equals("GET")) {
 
                 try {
 
-                    Object instruction = director.query(request);
+                    Object instruction = director.query(request, clientSocket);
 
                     if (instruction instanceof String) {
 
-                        HttpSender.sendText(HttpResponseHeader.STATUSCODE_OK, (String) instruction, /**/Mimes.getMime(request)/**/, outputStream);
+                        HttpSender.sendText(HttpResponseHeader.STATUSCODE_OK, (String) instruction, /**/ Mimes.getMime(request)/**/, outputStream);
 
                     } else if (instruction instanceof File) {
 
