@@ -27,16 +27,7 @@ public class MADNgameLogic extends GameLogic{
         super(dependingModel);
     }
 
-    @Override
-    public int getMaximumPlayers() {
-        return maximumPlayers;
-    }
-
-    @Override
-    public int getMinimumPlayers() {
-        return minimumPlayers;
-    }
-
+    
     @Override
     public Field getNextStartPositionForPlayer(Player player) {
         //was ist der sinn hiervon? Wenn ihr die Figuren meint muss das ein array sein, da es davon 4 gibt
@@ -49,7 +40,7 @@ public class MADNgameLogic extends GameLogic{
         ActionRequest nextRequest;
         //ein haufen if else anweisungen
         if(as instanceof InteractionResponse){
-        
+            
         } else if(as instanceof TimerResponse){
             
         } else{
@@ -57,5 +48,16 @@ public class MADNgameLogic extends GameLogic{
         } 
         return requests;
     }
+    
+    @Override
+    public int getMaximumPlayers() {
+        return maximumPlayers;
+    }
+
+    @Override
+    public int getMinimumPlayers() {
+        return minimumPlayers;
+    }
+
     
 }

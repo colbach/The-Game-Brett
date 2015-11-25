@@ -65,10 +65,9 @@ public class MADNboard extends Board{
                 case 21: case 29: case 35:    
                     direction = 4;
                     break;
-                default:    
-                    System.out.println("error");
+                default:   
                     break;
-            }
+                }
             
             
             switch (direction) {

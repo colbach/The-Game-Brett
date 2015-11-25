@@ -8,19 +8,19 @@ import thegamebrett.action.request.InteractionRequest;
 public class InteractionResponse {
 
     private final InteractionRequest concerningInteractionRequest;
-    private final int responseIndex;
+    private final int choiceIndex;
 
-    public InteractionResponse(InteractionRequest concerningInteractionRequest, int responseIndex) {
+    public InteractionResponse(InteractionRequest concerningInteractionRequest, int choiceIndex) {
         this.concerningInteractionRequest = concerningInteractionRequest;
-        this.responseIndex = responseIndex;
+        this.choiceIndex = choiceIndex;
     }
 
     public InteractionRequest getConcerningInteractionRequest() {
         return concerningInteractionRequest;
     }
 
-    public int getResponseIndex() {
-        return responseIndex;
+    public int getChoiceIndex() {
+        return choiceIndex;
     }
     
 }
