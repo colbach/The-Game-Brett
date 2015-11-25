@@ -6,7 +6,6 @@
 package thegamebrett.game.menschaergerdichnicht;
 import thegamebrett.action.ActionRequest;
 import thegamebrett.action.ActionResponse;
-import thegamebrett.action.request.TimerRequest;
 import thegamebrett.action.response.InteractionResponse;
 import thegamebrett.action.response.TimerResponse;
 import thegamebrett.model.GameLogic;
@@ -47,6 +46,12 @@ public class MADNgameLogic extends GameLogic{
             //schmeiße exception
         } 
         return requests;
+    }
+    
+    public int dice(){
+        //random nr zwischen 1 und 6
+        int random = (int)(Math.random()*6);
+        return random+1;
     }
     
     @Override
