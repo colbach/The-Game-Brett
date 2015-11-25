@@ -24,13 +24,13 @@ public class MADNfield extends Field{
     private MediaEffect me;
     
     
-    public MADNfield(double width, double height, RelativePoint position, MADNfield[] next, Layout layout, MediaEffect me){
+    public MADNfield(double width, double height, RelativePoint position, MADNfield[] next, Layout layout, MediaEffect mediaEffect){
         this.width = width;
         this.height = height;
         this.position = position;
         this.next = next;
         this.layout = layout;
-        this.me = me;
+        this.me = mediaEffect;
     }
     
     @Override
@@ -70,7 +70,21 @@ public class MADNfield extends Field{
     public void setNext(MADNfield[] next) {
         this.next = next;
     }
+    public void addNext(MADNfield nextOne) {
 
+        MADNfield[] newNext;
+        if(next != null){
+            newNext = new MADNfield[next.length];
+            for(int i=0; i<next.length; i++){
+                newNext[i] = next[i];
+            }
+        newNext[next.length] = nextOne;
+        } else {
+            newNext = new MADNfield[1];
+            newNext[0] = nextOne;
+        }
+        next = newNext;
+    }
     public void setMediaEffect(MediaEffect me) {
         this.me = me;
     }

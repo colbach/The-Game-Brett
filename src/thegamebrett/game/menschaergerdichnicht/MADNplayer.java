@@ -6,11 +6,18 @@
 package thegamebrett.game.menschaergerdichnicht;
 
 import thegamebrett.model.Player;
+import thegamebrett.model.elements.Figure;
 
 /**
  *
  * @author Korè
  */
 public class MADNplayer extends Player{
+    private int playerNr;
+    private Figure[] figures;
     
+    public MADNplayer(int playerNr, Figure[] figures){
+        this.playerNr = playerNr;
+        this.figures = figures;
+    }
 }
