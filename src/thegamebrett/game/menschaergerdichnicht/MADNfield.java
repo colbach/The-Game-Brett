@@ -74,7 +74,7 @@ public class MADNfield extends Field{
 
         MADNfield[] newNext;
         if(next != null){
-            newNext = new MADNfield[next.length];
+            newNext = new MADNfield[next.length+1];
             for(int i=0; i<next.length; i++){
                 newNext[i] = next[i];
             }
