@@ -89,6 +89,16 @@ public class MADNfield extends Field{
     public void setMediaEffect(MediaEffect me) {
         this.me = me;
     }
+
+    public RelativePoint getPosition() {
+        return position;
+    }
+
+    public int getFieldType() {
+        return fieldType;
+    }
+    
+    
     
     
     //nicht implementiert da nicht notwendig

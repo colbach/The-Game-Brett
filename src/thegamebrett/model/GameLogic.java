@@ -14,6 +14,10 @@ public abstract class GameLogic {
     public GameLogic(Model dependingModel) {
         this.dependingModel = dependingModel;
     }
+
+    public Model getDependingModel() {
+        return dependingModel;
+    }
     
     public abstract int getMaximumPlayers();
     public abstract int getMinimumPlayers();

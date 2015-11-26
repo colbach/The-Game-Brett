@@ -18,8 +18,8 @@ public class InteractionRequest implements GUIRequest, MobileRequest {
     private static long messageIdCounter = 0;
     private final Object userData;
 
-    public InteractionRequest(String titel, Object[] choices, Player player, boolean hidden) {
-        this(titel, choices, player, hidden, "", 0, null);
+    public InteractionRequest(String titel, Object[] choices, Player player, boolean hidden, Object userData) {
+        this(titel, choices, player, hidden, "", 0, userData);
     }
     
     public InteractionRequest(String titel, Object[] choices, Player player, boolean hidden, String acknowledgment, int delay, Object userData) {

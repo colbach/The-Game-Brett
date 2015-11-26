@@ -23,6 +23,8 @@ public class MADNgameLogic extends GameLogic{
     
     private ActionRequest expected;
     
+    
+    
     public MADNgameLogic(Model dependingModel) {
         super(dependingModel);
     }
@@ -38,14 +40,21 @@ public class MADNgameLogic extends GameLogic{
                 if(previous.getUserData() == INTERACTIONRESPONSE_CHOICES_DICE){
                     int dicedNr = dice();
                     MADNfigure[] figures = movableFigures((MADNplayer)previous.getPlayer(), dicedNr);
-                    nextRequest = new InteractionRequest("Sie haben eine "+dicedNr+" gewürfelt! Bitte eine Figur wählen!",
-                            figures, (MADNplayer)previous.getPlayer(), false);
+                    nextRequest = new InteractionRequest("Sie haben eine "+dicedNr+" gewuerfelt! Bitte eine Figur waehlen!",
+                            figures, (MADNplayer)previous.getPlayer(), false, INTERACTIONRESPONSE_CHOICES_CHOOSE_FIGURE);
+                    requests.add(nextRequest);
                 } else if(previous.getUserData() == INTERACTIONRESPONSE_CHOICES_CHOOSE_FIGURE){
                     
+                    //hier weiter die figur bewegen und abfragen ob zulässig und startfeld und gewonnen
+                    
+                    nextRequest = new InteractionRequest(getNextPlayer((MADNplayer)previous.getPlayer())+" ist dran. Bitte wuerfeln!",
+                            new String[]{"Wuerfeln"}, getNextPlayer((MADNplayer)previous.getPlayer()), false,INTERACTIONRESPONSE_CHOICES_DICE);                    
+                    requests.add(nextRequest);
                 } else{
                     throw new IllegalArgumentException("Illegal InteractionResponse Type");
                 }
             }
+            
         } else if(as instanceof TimerResponse){
             
         } else{
@@ -60,24 +69,32 @@ public class MADNgameLogic extends GameLogic{
         MADNfield destField;
         for(int i = 0; i<player.getFigures().length; i++){
             destField = (MADNfield)player.getFigures()[i].getField();
-            if(dicedNr == 6){
-                
-            } else{
-                for(int j = 0; j<dicedNr; j++){
-                    if((destField != null)&&(destField.getNext().length==1))
-                        destField = destField.getNext()[0];
-                    else if((destField != null)&&(destField.getNext().length>1)){
-                        if(player.getLastField() == destField){
-                            destField = destField.getNext()[1];                            
-                        } else {
-                            destField = destField.getNext()[0];                                                    
-                        }
-                    } else{
-                        break;
-                    }
-                }
-                if(destField != null){
+            if((dicedNr == 6)&&(((MADNfield)player.getFigures()[i].getField()).getFieldType()==1)){
+                if(occupiedWith((MADNfield)player.getFirstField())!= null){
+                    break;
+                } else {
                     figures.add(player.getFigures()[i]);
+                }
+            } else{
+                if(((MADNfield)player.getFigures()[i].getField()).getFieldType()==1){
+                    break;
+                }else{
+                    for(int j = 0; j<dicedNr; j++){
+                        if((destField != null)&&(destField.getNext().length==1))
+                            destField = destField.getNext()[0];
+                        else if((destField != null)&&(destField.getNext().length>1)){
+                            if(player.getLastField() == destField){
+                                destField = destField.getNext()[1];                            
+                            } else {
+                                destField = destField.getNext()[0];                                                    
+                            }
+                        } else{
+                            break;
+                        }
+                    }
+                    if(destField != null){
+                        figures.add(player.getFigures()[i]);
+                    }
                 }
             }
         }
@@ -85,7 +102,28 @@ public class MADNgameLogic extends GameLogic{
         return figures.toArray(new MADNfigure[0]);
     }
     
-     @Override
+    public MADNfigure occupiedWith(MADNfield field){
+        for(int i = 0; i<getDependingModel().getPlayers().size(); i++){
+            for(int j=0; j<4; i++){
+                if(getDependingModel().getPlayers().get(i).getFigures()[j].getField() == field){
+                    return (MADNfigure)getDependingModel().getPlayers().get(i).getFigures()[j];
+                }          
+            }
+        }
+        return null;
+    }
+    
+    public MADNplayer getNextPlayer(MADNplayer currentPlayer){
+        int currentPlayerNr = ((MADNplayer)currentPlayer).getPlayerNr();
+        for(int i = 0; i<getDependingModel().getPlayers().size(); i++){
+            if(((MADNplayer)getDependingModel().getPlayers().get(i)).getPlayerNr()==(currentPlayerNr+1)%4){
+                return (MADNplayer)getDependingModel().getPlayers().get(i);
+            }
+        }
+        throw new IllegalArgumentException("kein weiterer Player");
+    }
+    
+    @Override
     public Field getNextStartPositionForPlayer(Player player) {
         //was ist der sinn hiervon? Wenn ihr die Figuren meint muss das ein array sein, da es davon 4 gibt
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
