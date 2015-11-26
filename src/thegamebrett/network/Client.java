@@ -55,6 +55,7 @@ public class Client {
         return inetAddress;
     }
     
+    //???Kann man so vergleichen
     public boolean matchInetAddress(InetAddress ia) {
         return inetAddress.equals(ia);
     }
