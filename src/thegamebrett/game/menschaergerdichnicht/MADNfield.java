@@ -16,15 +16,22 @@ public class MADNfield extends Field{
     private MADNfield[] next;
     private Layout layout;
     private MediaEffect me;
+    private int fieldType;
+    
+    public final static int FIELD_TYPE_NORMAL = 0;
+    public final static int FIELD_TYPE_START = 1;
+    public final static int FIELD_TYPE_END = 2;
     
     
-    public MADNfield(double width, double height, RelativePoint position, MADNfield[] next, Layout layout, MediaEffect mediaEffect){
+    
+    public MADNfield(double width, double height, RelativePoint position, MADNfield[] next, Layout layout, MediaEffect mediaEffect, int fieldType){
         this.width = width;
         this.height = height;
         this.position = position;
         this.next = next;
         this.layout = layout;
         this.me = mediaEffect;
+        this.fieldType = fieldType;
     }
     
     @Override
@@ -43,7 +50,7 @@ public class MADNfield extends Field{
     }
 
     @Override
-    public Field[] getNext() {
+    public MADNfield[] getNext() {
         return next;
     }
 

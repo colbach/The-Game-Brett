@@ -14,6 +14,19 @@ public abstract class Player {
     private Client user;
     
     private int playerPositon;
+
+    public Figure[] getFigures() {
+        return figures.toArray(new Figure[0]);
+    }
+
+    public Client getUser() {
+        return user;
+    }
+
+    public int getPlayerPositon() {
+        return playerPositon;
+    }
+    
     
     
 }
