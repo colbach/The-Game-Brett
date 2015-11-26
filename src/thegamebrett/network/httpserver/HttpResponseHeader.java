@@ -9,6 +9,7 @@ import java.util.Date;
 public class HttpResponseHeader {
 
 	public static int STATUSCODE_OK = 200;
+	public static int STATUSCODE_NOT_MODIFIED = 304;
 	public static int STATUSCODE_BAD_REQUEST = 400;
 	public static int STATUSCODE_BAD_FORBIDDEN = 403;
 	public static int STATUSCODE_NOT_FOUND = 404;

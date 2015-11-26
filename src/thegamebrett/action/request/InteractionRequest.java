@@ -11,24 +11,22 @@ public class InteractionRequest implements GUIRequest, MobileRequest {
     private final String[] choices;
     private final Player player;
     private final boolean hidden;
+    private final String acknowledgment;
     private final int delay;
 
     public InteractionRequest(String titel, String[] choices, Player player, boolean hidden) {
-        this.titel = titel;
-        this.choices = choices;
-        this.player = player;
-        this.hidden = hidden;
-        this.delay = 0;
-    }
-
-    public InteractionRequest(String titel, String[] choices, Player player, boolean hidden, int delay) {
-        this.titel = titel;
-        this.choices = choices;
-        this.player = player;
-        this.hidden = hidden;
-        this.delay = delay;
+        this(titel, choices, player, hidden, "", 0);
     }
     
+    public InteractionRequest(String titel, String[] choices, Player player, boolean hidden, String acknowledgment, int delay) {
+        this.titel = titel;
+        this.choices = choices;
+        this.player = player;
+        this.hidden = hidden;
+        this.acknowledgment = acknowledgment;
+        this.delay = delay;
+    }
+
     public String getTitel() {
         return titel;
     }
@@ -45,9 +43,12 @@ public class InteractionRequest implements GUIRequest, MobileRequest {
         return hidden;
     }
 
+    public String getAcknowledgment() {
+        return acknowledgment;
+    }
+    
     public int getDelay() {
         return delay;
     }
-    
     
 }

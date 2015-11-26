@@ -1,5 +1,7 @@
 package thegamebrett.network.httpserver;
 
+import java.net.Socket;
+
 /**
  * @author Christian Colbach
  */
@@ -11,10 +13,8 @@ public interface Director {
 	}
 
 	/**
-	 * Returns 'File'-Object for file-transfer, 'String'-Object for html-transfer or "Integer" (show Results).
-	 *          Other Objects are (at this time) not allowed as return value.
-	 * @param request request-String received by client
-     */
-	public abstract Object query(String request) throws QueryException;
+	 * Gibt 'File'-Object fuer File-transfer, 'String'-Object fuer html-transfer oder "Integer" (siehe Results) zuruek.
+         */        
+	public abstract Object query(String request, Socket clientSocket) throws QueryException;
 	
 }
