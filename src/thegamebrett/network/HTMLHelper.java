@@ -55,6 +55,6 @@ public class HTMLHelper {
     }
     
     private static String generateHTMLButton(String choice, long messageID, int anwerID) {
-        return "<div align=\"center\"><button class=\"choices\" onclick=\"reply('" + messageID + "&" + anwerID+ "')\">" + choice + "</button></div>";
+        return "<div align=\"center\"><button class=\"choices\" onclick=\"reply('" + messageID + "?" + anwerID+ "')\">" + choice + "</button></div>";
     }
 }

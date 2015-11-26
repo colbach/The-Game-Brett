@@ -28,8 +28,8 @@ public class ControlDirector implements Director {
         } else if (request.equals("/style.css")) {
             return HTMLHelper.CSS;
         } else if (request.startsWith("/refresh")) {
-            return HTMLHelper.generateHTMLContent("Wie geht es dir?", new String[]{"gut", "schlecht", "es geht"}, 1001);
-
+            //return HTMLHelper.generateHTMLContent("Wie geht es dir?", new String[]{"gut", "schlecht", "es geht"}, 1001);
+            return Test.usertext;
             //return Test.usertext;
         } else if (request.startsWith("/reply")) {
             System.out.println(request);

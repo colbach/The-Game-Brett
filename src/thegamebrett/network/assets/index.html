@@ -12,7 +12,7 @@
             $("#refresh").load("refresh?start");
             var refreshId = setInterval(function() {
                 $("#refresh").load('refresh?' + 1 * new Date());
-            }, 1000);
+            }, 2000);
         });
 
         function reply(answer) {
