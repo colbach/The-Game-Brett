@@ -17,20 +17,8 @@ public class GUIUpdateRequest implements GUIRequest {
     
     private final int delay;
 
-        public GUIUpdateRequest(int value) {
-        
-        if(value < 0 || value > 7)
-            throw new IllegalArgumentException("0 <= value <= 7");
-        
-        this.updateBoardLayout = value >= 4;
-        value -= 4;
-        this.updateFigures = value >= 2;
-        value -= 2;
-        this.updateFields = value == 1;
-        
-        this.animated = false;
-        
-        this.delay = 0;
+    public GUIUpdateRequest(int value) {
+        this(value, false, 0);
     }
     
     public GUIUpdateRequest(int value, boolean animated, int delay) {
