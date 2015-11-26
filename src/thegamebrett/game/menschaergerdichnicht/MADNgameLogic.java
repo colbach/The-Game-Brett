@@ -46,6 +46,16 @@ public class MADNgameLogic extends GameLogic{
                 } else if(previous.getUserData() == INTERACTIONRESPONSE_CHOICES_CHOOSE_FIGURE){
                     
                     //hier weiter die figur bewegen und abfragen ob zulässig und startfeld und gewonnen
+                    MADNfigure figure = (MADNfigure)(previous.getChoices()[((InteractionResponse) as).getChoiceIndex()]);
+                            
+                    if(((MADNfield)figure.getField()).getFieldType() == 1){
+                        figure.setField(figure.getField().addNext());
+                    } else if(true){
+                    
+                    } else {
+                    
+                    }
+                    
                     
                     nextRequest = new InteractionRequest(getNextPlayer((MADNplayer)previous.getPlayer())+" ist dran. Bitte wuerfeln!",
                             new String[]{"Wuerfeln"}, getNextPlayer((MADNplayer)previous.getPlayer()), false,INTERACTIONRESPONSE_CHOICES_DICE);                    
