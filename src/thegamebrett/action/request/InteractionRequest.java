@@ -11,12 +11,43 @@ public class InteractionRequest implements GUIRequest, MobileRequest {
     private final String[] choices;
     private final Player player;
     private final boolean hidden;
+    private final int delay;
 
     public InteractionRequest(String titel, String[] choices, Player player, boolean hidden) {
         this.titel = titel;
         this.choices = choices;
         this.player = player;
         this.hidden = hidden;
+        this.delay = 0;
     }
+
+    public InteractionRequest(String titel, String[] choices, Player player, boolean hidden, int delay) {
+        this.titel = titel;
+        this.choices = choices;
+        this.player = player;
+        this.hidden = hidden;
+        this.delay = delay;
+    }
+    
+    public String getTitel() {
+        return titel;
+    }
+
+    public String[] getChoices() {
+        return choices;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public boolean isHidden() {
+        return hidden;
+    }
+
+    public int getDelay() {
+        return delay;
+    }
+    
     
 }
