@@ -25,8 +25,6 @@ public class MADNgameLogic extends GameLogic{
     private ActionRequest expected;
     private int lastDice; 
     
-    
-    
     public MADNgameLogic(Model dependingModel) {
         super(dependingModel);
     }
