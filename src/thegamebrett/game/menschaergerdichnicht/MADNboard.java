@@ -96,7 +96,7 @@ public class MADNboard extends Board{
                     break;
             }
             
-            MADNfield newField = new MADNfield(1, 1, pos, null, layout, null);
+            MADNfield newField = new MADNfield(1, 1, pos, null, layout, null, 0);
                 if(!fields.isEmpty()){
                     fields.get(fields.size()-1).addNext(newField);
                 }
