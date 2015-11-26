@@ -58,6 +58,8 @@ public class MADNgameLogic extends GameLogic{
                         }
                     }
                     
+                    //nach gewonnen fragen?
+                    
                     nextRequest = new InteractionRequest(getNextPlayer((MADNplayer)previous.getPlayer())+" ist dran. Bitte wuerfeln!",
                             new String[]{"Wuerfeln"}, getNextPlayer((MADNplayer)previous.getPlayer()), false,INTERACTIONRESPONSE_CHOICES_DICE);                    
                     requests.add(nextRequest);
