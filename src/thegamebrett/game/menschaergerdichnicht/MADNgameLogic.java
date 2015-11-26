@@ -2,6 +2,7 @@ package thegamebrett.game.menschaergerdichnicht;
 import java.util.ArrayList;
 import thegamebrett.action.ActionRequest;
 import thegamebrett.action.ActionResponse;
+import thegamebrett.action.request.GUIUpdateRequest;
 import thegamebrett.action.request.InteractionRequest;
 import thegamebrett.action.response.InteractionResponse;
 import thegamebrett.action.response.TimerResponse;
@@ -22,6 +23,7 @@ public class MADNgameLogic extends GameLogic{
     public final static Integer INTERACTIONRESPONSE_CHOICES_CHOOSE_FIGURE = new Integer(1);
     
     private ActionRequest expected;
+    private int lastDice; 
     
     
     
@@ -49,13 +51,12 @@ public class MADNgameLogic extends GameLogic{
                     MADNfigure figure = (MADNfigure)(previous.getChoices()[((InteractionResponse) as).getChoiceIndex()]);
                             
                     if(((MADNfield)figure.getField()).getFieldType() == 1){
-                        figure.setField(figure.getField().addNext());
-                    } else if(true){
-                    
+                        figure.setField(figure.getField().getNext()[0]);
                     } else {
-                    
+                        for(int i = 0; i<lastDice; i++){
+                            figure.setField(figure.getField().getNext()[0]);
+                        }
                     }
-                    
                     
                     nextRequest = new InteractionRequest(getNextPlayer((MADNplayer)previous.getPlayer())+" ist dran. Bitte wuerfeln!",
                             new String[]{"Wuerfeln"}, getNextPlayer((MADNplayer)previous.getPlayer()), false,INTERACTIONRESPONSE_CHOICES_DICE);                    
@@ -70,6 +71,9 @@ public class MADNgameLogic extends GameLogic{
         } else{
             //schmeiße exception
         } 
+        
+        //2 richtig??
+        requests.add(new GUIUpdateRequest(2));
         return requests.toArray(new ActionRequest[0]);
     }
     
@@ -142,6 +146,7 @@ public class MADNgameLogic extends GameLogic{
     public int dice(){
         //random nr zwischen 1 und 6
         int random = (int)(Math.random()*6)+1;
+        lastDice = random;
         return random;
     }
     
