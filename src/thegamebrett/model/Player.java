@@ -2,7 +2,7 @@ package thegamebrett.model;
 
 import java.util.ArrayList;
 import thegamebrett.model.elements.Figure;
-import thegamebrett.network.User;
+import thegamebrett.network.Client;
 
 /**
  * @author Christian Colbach
@@ -11,7 +11,7 @@ public abstract class Player {
    
     private ArrayList<Figure> figures = new ArrayList<Figure>();
     
-    private User user;
+    private Client user;
     
     private int playerPositon;
     
