@@ -8,7 +8,8 @@ import thegamebrett.model.Player;
 public class InteractionRequest implements GUIRequest, MobileRequest {
     
     private final String titel;
-    private final String[] choices;
+    //alle Objekte brauchen eine implementierte toString methode fuer die GUI
+    private final Object[] choices;
     private final Player player;
     private final boolean hidden;
     private final String acknowledgment;
@@ -17,11 +18,11 @@ public class InteractionRequest implements GUIRequest, MobileRequest {
     private static long messageIdCounter = 0;
     private final Object userData;
 
-    public InteractionRequest(String titel, String[] choices, Player player, boolean hidden) {
-        this(titel, choices, player, hidden, "", 0, null);
+    public InteractionRequest(String titel, Object[] choices, Player player, boolean hidden, Object userData) {
+        this(titel, choices, player, hidden, "", 0, userData);
     }
     
-    public InteractionRequest(String titel, String[] choices, Player player, boolean hidden, String acknowledgment, int delay, Object userData) {
+    public InteractionRequest(String titel, Object[] choices, Player player, boolean hidden, String acknowledgment, int delay, Object userData) {
         this.titel = titel;
         this.choices = choices;
         this.player = player;
@@ -36,7 +37,7 @@ public class InteractionRequest implements GUIRequest, MobileRequest {
         return titel;
     }
 
-    public String[] getChoices() {
+    public Object[] getChoices() {
         return choices;
     }
 
