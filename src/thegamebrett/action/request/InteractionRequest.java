@@ -13,18 +13,23 @@ public class InteractionRequest implements GUIRequest, MobileRequest {
     private final boolean hidden;
     private final String acknowledgment;
     private final int delay;
+    private final long messageId;
+    private static long messageIdCounter = 0;
+    private final Object userData;
 
     public InteractionRequest(String titel, String[] choices, Player player, boolean hidden) {
-        this(titel, choices, player, hidden, "", 0);
+        this(titel, choices, player, hidden, "", 0, null);
     }
     
-    public InteractionRequest(String titel, String[] choices, Player player, boolean hidden, String acknowledgment, int delay) {
+    public InteractionRequest(String titel, String[] choices, Player player, boolean hidden, String acknowledgment, int delay, Object userData) {
         this.titel = titel;
         this.choices = choices;
         this.player = player;
         this.hidden = hidden;
         this.acknowledgment = acknowledgment;
         this.delay = delay;
+        this.messageId = ++messageIdCounter;
+        this.userData = userData;
     }
 
     public String getTitel() {
@@ -50,5 +55,13 @@ public class InteractionRequest implements GUIRequest, MobileRequest {
     public int getDelay() {
         return delay;
     }
-    
+
+    public long getMessageId() {
+        return messageId;
+    }
+
+    public Object getUserData() {
+        return userData;
+    }
+
 }

@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package thegamebrett.game.menschaergerdichnicht;
+import java.util.ArrayList;
 import thegamebrett.action.ActionRequest;
 import thegamebrett.action.ActionResponse;
 import thegamebrett.action.request.InteractionRequest;
@@ -23,31 +24,34 @@ public class MADNgameLogic extends GameLogic{
     private final int maximumPlayers = 4;
     private final int minimumPlayers = 2;
     
+    private ActionRequest expected;
+    
     public MADNgameLogic(Model dependingModel) {
         super(dependingModel);
     }
 
-    
-    @Override
-    public Field getNextStartPositionForPlayer(Player player) {
-        //was ist der sinn hiervon? Wenn ihr die Figuren meint muss das ein array sein, da es davon 4 gibt
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     @Override
     public ActionRequest[] next(ActionResponse as) {
-        ActionRequest[] requests = null;
+        ArrayList<ActionRequest> requests = new ArrayList<>();
         ActionRequest nextRequest;
         //ein haufen if else anweisungen
         if(as instanceof InteractionResponse){
             InteractionRequest previous = ((InteractionResponse) as).getConcerningInteractionRequest();
-            
+            if(previous == expected){
+                
+            }
         } else if(as instanceof TimerResponse){
             
         } else{
             //schmeiße exception
         } 
-        return requests;
+        return requests.toArray(new ActionRequest[0]);
+    }
+    
+    @Override
+    public Field getNextStartPositionForPlayer(Player player) {
+        //was ist der sinn hiervon? Wenn ihr die Figuren meint muss das ein array sein, da es davon 4 gibt
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     public int dice(){
