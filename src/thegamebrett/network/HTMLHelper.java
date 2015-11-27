@@ -38,11 +38,11 @@ public class HTMLHelper {
         }
     }
     
-    public static String generateHTMLContent(String titel, String[] choices, long messageID) {
+    public static String generateHTMLContent(String titel, Object[] choices, long messageID) {
         StringBuilder sb = new StringBuilder();
         sb.append("<h1>" + titel + "</h1>");
         for(int i=0; i<choices.length; i++) {
-            sb.append(generateHTMLButton(choices[i], messageID, i));
+            sb.append(generateHTMLButton(choices[i].toString(), messageID, i));
         }
         return sb.toString();
     }

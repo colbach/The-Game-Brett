@@ -2,14 +2,28 @@ package thegamebrett.network;
 
 import java.net.InetAddress;
 import java.util.*;
+import thegamebrett.action.request.InteractionRequest;
+import thegamebrett.model.Player;
 
 /**
- *
- * @author christiancolbach
+ * Managt verschiedene Clients
+ * 
+ * @author Christian Colbach
  */
 public class ClientManager {
     
     private ArrayList<Client> clients = new ArrayList<Client>();
+    
+    public void deliverMessage(InteractionRequest ir) throws PlayerNotRegisteredException {
+        Player p = ir.getPlayer();
+        for(Client c : clients) {
+            if(p.getUser() == c) {
+                c.setActualInteractionRequest(ir);
+                return;
+            }
+        }
+        throw new PlayerNotRegisteredException();
+    }
     
     public Client getClientForInetAddress(InetAddress ia) {
         if(ia == null) {
