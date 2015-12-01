@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import thegamebrett.action.ActionRequest;
 import thegamebrett.action.ActionResponse;
 import thegamebrett.action.request.GUIUpdateRequest;
+import thegamebrett.action.request.GameEndRequest;
 import thegamebrett.action.request.InteractionRequest;
 import thegamebrett.action.response.InteractionResponse;
 import thegamebrett.action.response.TimerResponse;
@@ -10,6 +11,7 @@ import thegamebrett.model.GameLogic;
 import thegamebrett.model.Model;
 import thegamebrett.model.Player;
 import thegamebrett.model.elements.Field;
+import thegamebrett.model.elements.Figure;
 
 /**
  * @author Koré
@@ -42,6 +44,7 @@ public class MADNgameLogic extends GameLogic{
 
         /* abfragen ob interaction **/
         if(as instanceof InteractionResponse){
+            
             InteractionRequest previous = ((InteractionResponse) as).getConcerningInteractionRequest();
             /* abfragen ob die response eine antwort auf die erwartete request ist **/
             if(previous == expected){
@@ -53,6 +56,7 @@ public class MADNgameLogic extends GameLogic{
                     nextRequest = new InteractionRequest("Sie haben eine "+dicedNr+" gewuerfelt! Bitte eine Figur waehlen!",
                             figures, (MADNplayer)previous.getPlayer(), false, INTERACTIONRESPONSE_CHOICES_CHOOSE_FIGURE);
                     requests.add(nextRequest);
+                    
                 /* abfragen ob anfrage auswählen einer bestimmten figur **/
                 } else if(previous.getUserData() == INTERACTIONRESPONSE_CHOICES_CHOOSE_FIGURE){
                     
@@ -68,21 +72,29 @@ public class MADNgameLogic extends GameLogic{
                     
                     //abfragen ob gewonnen
                     if(((MADNfield)figure.getField()).getFieldType() == 2){
-                        for(int i = 0; i<previous.getPlayer().getFigures().length; i++){
-                            if(((MADNfield)previous.getPlayer().getFigures()[i].getField()).getFieldType() != 2){
+                        for (Figure figure1 : previous.getPlayer().getFigures()) {
+                            if (((MADNfield) figure1.getField()).getFieldType() == 2) {
+                                someoneWon = true;
+                            } else {
+                                someoneWon = false;
                                 break;
                             }
                         }
                         
-                        //dg
-                        /*hier muss irgendwas passieren falls gewonnen!! **/
-                        someoneWon = true;
-                        throw new UnsupportedOperationException("Not implemented yet");
+                        //request zum beenden senden
+                        if(someoneWon){
+                            nextRequest = new GameEndRequest(previous.getPlayer());                    
+                            requests.add(nextRequest);
+                        }
+                        
+                            
+                    } else {
+                        //neue würfelrequest senden 
+                        nextRequest = new InteractionRequest(getNextPlayer((MADNplayer)previous.getPlayer())+" ist dran. Bitte wuerfeln!",
+                                new String[]{"Wuerfeln"}, getNextPlayer((MADNplayer)previous.getPlayer()), false,INTERACTIONRESPONSE_CHOICES_DICE);                    
+                        requests.add(nextRequest);
                     }
                     
-                    nextRequest = new InteractionRequest(getNextPlayer((MADNplayer)previous.getPlayer())+" ist dran. Bitte wuerfeln!",
-                            new String[]{"Wuerfeln"}, getNextPlayer((MADNplayer)previous.getPlayer()), false,INTERACTIONRESPONSE_CHOICES_DICE);                    
-                    requests.add(nextRequest);
                 } else{
                     throw new IllegalArgumentException("Illegal InteractionResponse Type");
                 }
