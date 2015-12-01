@@ -73,6 +73,8 @@ public class MADNgameLogic extends GameLogic{
                                 break;
                             }
                         }
+                        
+                        //dg
                         /*hier muss irgendwas passieren falls gewonnen!! **/
                         someoneWon = true;
                         throw new UnsupportedOperationException("Not implemented yet");
