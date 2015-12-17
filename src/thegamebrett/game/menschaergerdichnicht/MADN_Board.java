@@ -15,9 +15,9 @@ import thegamebrett.model.elements.Field;
  *
  * @author Koré
  */
-public class MADNboard extends Board{
+public class MADN_Board extends Board{
 
-    private ArrayList<MADNfield> fields = new ArrayList<>();
+    private ArrayList<MADN_Field> fields = new ArrayList<>();
     //private ArrayList<MADNstartField> startFields;
     //private ArrayList<MADNendField> endFields;    
     private Layout layout;
@@ -25,7 +25,7 @@ public class MADNboard extends Board{
     private final double ratioY = 1;
     
     
-    public MADNboard(Layout layout/*, int fieldLength*/){
+    public MADN_Board(Layout layout/*, int fieldLength*/){
         
         this.layout = layout;
         fields = createFields();
@@ -33,7 +33,7 @@ public class MADNboard extends Board{
     }
     
     //hier ist noch alles zu tun
-    public ArrayList<MADNfield> createFields(){
+    public ArrayList<MADN_Field> createFields(){
         
         //koordinate zwischen 1 und 0
         double r = relativateRatio(13.0);
@@ -96,7 +96,7 @@ public class MADNboard extends Board{
                     break;
             }
             
-            MADNfield newField = new MADNfield(1, 1, pos, null, layout, null, 0);
+            MADN_Field newField = new MADN_Field(1, 1, pos, null, layout, null, 0);
                 if(!fields.isEmpty()){
                     fields.get(fields.size()-1).addNext(newField);
                 }
@@ -135,7 +135,7 @@ public class MADNboard extends Board{
         this.layout = layout;
     }
 
-    public ArrayList<MADNfield> getFields() {
+    public ArrayList<MADN_Field> getFields() {
         return fields;
     }
 

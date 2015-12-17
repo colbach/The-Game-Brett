@@ -5,10 +5,9 @@ import thegamebrett.model.Model;
 /**
  * @author Koré
  */
-public class MADNgameFactory implements GameFactory{
+public class MADN_GameFactory implements GameFactory {
 
-    @Override
-    public Model createGame() {
+    public static Model createGame() {
 
         
         

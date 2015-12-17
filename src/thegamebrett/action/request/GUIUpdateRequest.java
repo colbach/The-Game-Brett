@@ -5,9 +5,9 @@ package thegamebrett.action.request;
  */
 public class GUIUpdateRequest implements GUIRequest {
     
-    public final int GUIUPDATE_FIELDS = 1;
-    public final int GUIUPDATE_FIGURES = 2;
-    public final int GUIUPDATE_BOARDLAYOUT = 4;
+    public static final int GUIUPDATE_FIELDS = 1;
+    public static final int GUIUPDATE_FIGURES = 2;
+    public static final int GUIUPDATE_BOARDLAYOUT = 4;
     
     private final boolean updateFields;
     private final boolean updateFigures;

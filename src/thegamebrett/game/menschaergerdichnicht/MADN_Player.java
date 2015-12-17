@@ -6,15 +6,15 @@ import thegamebrett.model.Player;
 /**
  * @author Korè
  */
-public class MADNplayer extends Player{
+public class MADN_Player extends Player{
     private int playerNr;
-    private MADNfigure[] figures;
+    private MADN_Figure[] figures;
     //das erste feld nach den startfeldern
-    private MADNfield firstField;
+    private MADN_Field firstField;
     //das letzte feld vor den endfeldern
-    private MADNfield lastField;
+    private MADN_Field lastField;
     
-    public MADNplayer(int playerNr, MADNfigure[] figures, MADNfield firstField, MADNfield lastField){
+    public MADN_Player(int playerNr, MADN_Figure[] figures, MADN_Field firstField, MADN_Field lastField){
         this.playerNr = playerNr;
         this.figures = figures;
         this.firstField = firstField;
@@ -30,19 +30,19 @@ public class MADNplayer extends Player{
     }
 
     @Override
-    public MADNfigure[] getFigures() {
+    public MADN_Figure[] getFigures() {
         return figures;
     }
 
-    public void setFigures(MADNfigure[] figures) {
+    public void setFigures(MADN_Figure[] figures) {
         this.figures = figures;
     }
 
-    public MADNfield getFirstField() {
+    public MADN_Field getFirstField() {
         return firstField;
     }
 
-    public MADNfield getLastField() {
+    public MADN_Field getLastField() {
         return lastField;
     }
     

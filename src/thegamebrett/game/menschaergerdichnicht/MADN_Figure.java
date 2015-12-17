@@ -8,11 +8,11 @@ import thegamebrett.model.elements.Figure;
 /**
  * @author Koré
  */
-public class MADNfigure extends Figure{
+public class MADN_Figure extends Figure{
     
     private String description;
     
-    public MADNfigure(Player owner, Layout layout, String description) {
+    public MADN_Figure(Player owner, Layout layout, String description) {
         super(owner, layout);
         this.description = description;
     }
