@@ -147,6 +147,11 @@ public class Layout {
         this.subtext = subtext;
     }
 
+    public Layout() {
+        this.title = "";
+        this.subtext = "";
+    }
+    
     public boolean isVisible() {
         return visible;
     }

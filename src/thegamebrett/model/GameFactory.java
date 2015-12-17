@@ -1,7 +1,8 @@
 package thegamebrett.model;
 
 /**
- * Dieses Interface dient der erzeugung des Models der einzelnen spezifischen Spiele
+ * Dieses Interface gibt an dass es sich um eine GameFactory handelt.
+ * Eine Gamefactory soll die statische Methode MADN_GameFactory enthalten
  * 
  * @author Christian Colbach
  */
