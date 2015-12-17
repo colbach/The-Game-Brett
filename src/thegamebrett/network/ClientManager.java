@@ -22,7 +22,7 @@ public class ClientManager {
                 return;
             }
         }
-        throw new PlayerNotRegisteredException();
+        throw new PlayerNotRegisteredException(p);
     }
     
     public Client getClientForInetAddress(InetAddress ia) {
