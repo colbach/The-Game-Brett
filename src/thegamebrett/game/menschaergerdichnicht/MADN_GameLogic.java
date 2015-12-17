@@ -35,6 +35,8 @@ public class MADN_GameLogic extends GameLogic{
     public MADN_GameLogic(Model dependingModel) {
         super(dependingModel);
     }
+    
+    
 
     @Override
     public ActionRequest[] next(ActionResponse as) {
