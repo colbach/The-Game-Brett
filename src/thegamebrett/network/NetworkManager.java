@@ -1,5 +1,6 @@
 package thegamebrett.network;
 
+import thegamebrett.action.request.InteractionRequest;
 import thegamebrett.network.httpserver.HttpServer;
 
 /**
@@ -7,9 +8,9 @@ import thegamebrett.network.httpserver.HttpServer;
  */
 public class NetworkManager {
     
-    ClientManager clientManager;
-    ControlDirector controlDirector;
-    HttpServer httpServer;
+    private final ClientManager clientManager;
+    private final ControlDirector controlDirector;
+    private final HttpServer httpServer;
 
     public NetworkManager(ClientManager clientManager) {
         this.clientManager = clientManager;
@@ -22,5 +23,8 @@ public class NetworkManager {
         this(new ClientManager());
     }
     
+    public void deliverMessage(InteractionRequest ir) throws PlayerNotRegisteredException {
+        clientManager.deliverMessage(ir);
+    }
     
 }

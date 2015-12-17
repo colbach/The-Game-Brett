@@ -3,6 +3,7 @@ package thegamebrett.network;
 import java.net.InetAddress;
 import thegamebrett.action.request.InteractionRequest;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Benutzer des Systems aus technischer Sicht
@@ -10,25 +11,21 @@ import java.util.concurrent.atomic.AtomicLong;
  * @author Christian Colbach
  */
 public class Client {
-    private static AtomicLong messageIdCounter = new AtomicLong(1); // laufender counter
-    public long newMessageId() {
-        return messageIdCounter.getAndIncrement();
-    }
     
     /** Zugehöriger Character */
     private Character character = null;
     
-    private long lastSignOfLife = -1; //in ms
+    private volatile long lastSignOfLife = -1; //in ms
     
-    public int TIMEOUT = 15000; //in ms
+    public int TIMEOUT = 30000; //in ms (1s = 1000ms)
     
-    private InetAddress inetAddress;
+    private volatile InetAddress inetAddress;
         
-    private InteractionRequest actualInteractionRequest;
-    
-    private volatile long messageId = -1;
-    
-    private boolean delivered = false;
+    private volatile InteractionRequest actualInteractionRequest;
+        
+    private volatile boolean delivered = false;
+        
+    private final AtomicReference<String> htmlCache = new AtomicReference<>(null);
         
     public Client(InetAddress inetAddress) {
         this.inetAddress = inetAddress;
@@ -58,6 +55,7 @@ public class Client {
         return inetAddress;
     }
     
+    //???Kann man so vergleichen
     public boolean matchInetAddress(InetAddress ia) {
         return inetAddress.equals(ia);
     }
@@ -68,7 +66,7 @@ public class Client {
 
     public void setActualInteractionRequest(InteractionRequest actualInteractionRequest) {
         this.actualInteractionRequest = actualInteractionRequest;
-        this.messageId = newMessageId();
+        htmlCache.set(null);
     }
 
     public boolean isDelivered() {
@@ -80,8 +78,22 @@ public class Client {
     }
 
     public long getMessageId() {
-        return messageId;
+        if(actualInteractionRequest != null)
+            return actualInteractionRequest.getMessageId();
+        else
+            return -1;
     }
     
-    // Client koente eine Funktion haben welche aktuelle HTML-Frage ausgibt (caching)
+    public String getActualHTML() {
+        String htmlCacheString = this.htmlCache.get();
+        if(htmlCacheString != null) {
+            return htmlCacheString;
+        } else {
+            this.htmlCache.set(HTMLHelper.generateHTMLContent(
+                    actualInteractionRequest.getTitel(),
+                    actualInteractionRequest.getChoices(),
+                    actualInteractionRequest.getMessageId()));
+            return this.htmlCache.get();
+        }
+    }
 }
