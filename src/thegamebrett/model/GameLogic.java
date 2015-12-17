@@ -9,7 +9,7 @@ import thegamebrett.model.elements.Field;
  */
 public abstract class GameLogic {
     
-    private final Model dependingModel;
+    private Model dependingModel;
 
     public GameLogic(Model dependingModel) {
         this.dependingModel = dependingModel;
@@ -17,6 +17,10 @@ public abstract class GameLogic {
 
     public Model getDependingModel() {
         return dependingModel;
+    }
+    
+    public void setDependingModel(Model dependingModel) {
+        this.dependingModel = dependingModel;
     }
     
     public abstract int getMaximumPlayers();

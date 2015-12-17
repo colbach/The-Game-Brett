@@ -20,8 +20,8 @@ public class MADN_GameLogic extends GameLogic{
 
     
     /* maximal und minimale Anzahl an Spielern die im Spiel möglich sind**/
-    private final int maximumPlayers = 4;
-    private final int minimumPlayers = 2;
+    public static final int maximumPlayers = 4;
+    public static final int minimumPlayers = 2;
     
     /*Fall unterscheidung die angibt ob response würfeln oder bewegen ist**/
     public final static Integer INTERACTIONRESPONSE_CHOICES_DICE = new Integer(0);
