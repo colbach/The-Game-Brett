@@ -5,8 +5,4 @@ package thegamebrett.model;
  * 
  * @author Christian Colbach
  */
-public interface GameFactory {
-    
-    /** generiert Model mit allem drum und dran */
-    public Model createGame();
-}
+public interface GameFactory {}

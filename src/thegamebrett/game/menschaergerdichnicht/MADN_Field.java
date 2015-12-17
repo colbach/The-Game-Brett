@@ -8,12 +8,12 @@ import thegamebrett.model.mediaeffect.MediaEffect;
 /**
  * @author Koré
  */
-public class MADNfield extends Field{
+public class MADN_Field extends Field{
 
     private double width;
     private double height;
     private RelativePoint position;
-    private MADNfield[] next;
+    private MADN_Field[] next;
     private Layout layout;
     private MediaEffect me;
     private int fieldType;
@@ -24,7 +24,7 @@ public class MADNfield extends Field{
     
     
     
-    public MADNfield(double width, double height, RelativePoint position, MADNfield[] next, Layout layout, MediaEffect mediaEffect, int fieldType){
+    public MADN_Field(double width, double height, RelativePoint position, MADN_Field[] next, Layout layout, MediaEffect mediaEffect, int fieldType){
         this.width = width;
         this.height = height;
         this.position = position;
@@ -50,7 +50,7 @@ public class MADNfield extends Field{
     }
 
     @Override
-    public MADNfield[] getNext() {
+    public MADN_Field[] getNext() {
         return next;
     }
 
@@ -68,20 +68,20 @@ public class MADNfield extends Field{
         this.position = position;
     }
 
-    public void setNext(MADNfield[] next) {
+    public void setNext(MADN_Field[] next) {
         this.next = next;
     }
-    public void addNext(MADNfield nextOne) {
+    public void addNext(MADN_Field nextOne) {
 
-        MADNfield[] newNext;
+        MADN_Field[] newNext;
         if(next != null){
-            newNext = new MADNfield[next.length+1];
+            newNext = new MADN_Field[next.length+1];
             for(int i=0; i<next.length; i++){
                 newNext[i] = next[i];
             }
         newNext[next.length] = nextOne;
         } else {
-            newNext = new MADNfield[1];
+            newNext = new MADN_Field[1];
             newNext[0] = nextOne;
         }
         next = newNext;
