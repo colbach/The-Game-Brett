@@ -1,11 +1,12 @@
 package thegamebrett.action.response;
 
+import thegamebrett.action.ActionResponse;
 import thegamebrett.action.request.InteractionRequest;
 
 /**
  * @author Christian Colbach
  */
-public class InteractionResponse {
+public class InteractionResponse implements ActionResponse {
 
     private final InteractionRequest concerningInteractionRequest;
     private final int choiceIndex;

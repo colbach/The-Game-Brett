@@ -1,6 +1,7 @@
 package thegamebrett.network;
 
 import java.net.InetAddress;
+import thegamebrett.network.httpserver.InetAddressFormatter;
 import thegamebrett.action.request.InteractionRequest;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
@@ -14,6 +15,10 @@ public class Client {
     
     /** Zugehöriger Character */
     private Character character = null;
+    
+    private static volatile AtomicLong lastClientId = new AtomicLong(0);
+    
+    private final long clientId;
     
     private volatile long lastSignOfLife = -1; //in ms
     
@@ -29,6 +34,11 @@ public class Client {
         
     public Client(InetAddress inetAddress) {
         this.inetAddress = inetAddress;
+        clientId = lastClientId.addAndGet(1);
+    }
+
+    public long getClientId() {
+        return clientId;
     }
     
     public Character getCharacter() {
@@ -94,6 +104,14 @@ public class Client {
                     actualInteractionRequest.getChoices(),
                     actualInteractionRequest.getMessageId()));
             return this.htmlCache.get();
+        }
+    }
+    
+    public String toString() {
+        if(inetAddress != null) {
+            return "Client id=" + clientId + " address=" + InetAddressFormatter.formatAddress(inetAddress);
+        } else {
+            return "Client id=" + clientId;
         }
     }
 }
