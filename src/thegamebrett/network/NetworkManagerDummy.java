@@ -50,9 +50,6 @@ public class NetworkManagerDummy extends NetworkManager {
                 manager.react(response);
             }
         }, (int)(Math.random() * 5000));
-        
-        
-        clientManager.deliverMessage(ir);
     }
     
 }
