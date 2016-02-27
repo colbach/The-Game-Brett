@@ -5,6 +5,7 @@ import thegamebrett.network.httpserver.InetAddressFormatter;
 import thegamebrett.action.request.InteractionRequest;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
+import thegamebrett.action.response.InteractionResponse;
 
 /**
  * Benutzer des Systems aus technischer Sicht
@@ -105,6 +106,17 @@ public class Client {
                     actualInteractionRequest.getMessageId()));
             return this.htmlCache.get();
         }
+    }
+    
+    public void replyFromHTTP(int messageID, int answerID) {
+        if(actualInteractionRequest != null && actualInteractionRequest.getMessageId() == messageID) {
+            InteractionResponse response = new InteractionResponse(actualInteractionRequest, answerID);
+            // Sende es irgentwo hin...
+            System.err.println("Wohin mit der Antwort???");
+        } else {
+            System.err.println("Resonse doen't match Request");
+        }
+        
     }
     
     public String toString() {

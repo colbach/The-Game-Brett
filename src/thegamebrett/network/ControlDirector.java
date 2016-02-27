@@ -19,22 +19,20 @@ public class ControlDirector implements Director {
 
     ClientManager clientManager;
     
-    ControlDirector(ClientManager clientManager) {
+    public ControlDirector(ClientManager clientManager) {
         this.clientManager = clientManager;
     }
     
-    
-    
     @Override
     public Object query(String request, Socket clientSocket) throws QueryException {
-        
+        System.out.println(request);
         Client client = clientManager.getOrAddClientForInetAddress(clientSocket.getInetAddress());
         
         if (request.equals("/") || request.equals("/index.html")) {
             return HTMLHelper.HTML;
         } else if (request.equals("/style.css")) {
             return HTMLHelper.CSS;
-        } else if (request.startsWith("/refresh?start")) {
+        /*} else if(request.startsWith("/refresh?start")) {
             // messageID und InteractionRequest sicher aus client laden
             long messageID;
             InteractionRequest ir;
@@ -46,27 +44,39 @@ public class ControlDirector implements Director {
             if(ir == null) {
                 return "connected";
             } else {
-                
                 return HTMLHelper.generateHTMLContent(ir.getTitel(), ir.getChoices(), messageID);
-            }
+            }*/
         } else if (request.startsWith("/refresh")) {
-            // messageID und InteractionRequest sicher aus client laden
-            long messageID;
-            InteractionRequest ir;
-            do {
-                messageID = client.getMessageId();
-                ir = client.getActualInteractionRequest();
-            } while(messageID != client.getMessageId());
-            // ausgabe
-            if(ir == null) {
-                return "connected";
+            if(!clientManager.isSystemClient(client)) {
+                return clientManager.getHTMLSystemClientChoser();
             } else {
-                return HTMLHelper.generateHTMLContent(ir.getTitel(), ir.getChoices(), messageID);
+                // messageID und InteractionRequest sicher aus client laden
+                long messageID;
+                InteractionRequest ir;
+                do {
+                    messageID = client.getMessageId();
+                    ir = client.getActualInteractionRequest();
+                } while(messageID != client.getMessageId());
+                // ausgabe
+                if(ir == null) {
+                    return "connected";
+                } else {
+                    return HTMLHelper.generateHTMLContent(ir.getTitel(), ir.getChoices(), messageID);
+                }
             }
         } else if (request.startsWith("/reply")) {
-            System.out.println(request);
+            if(request.startsWith("/reply?login:")) {
+                try {
+                    clientManager.tryToSetSystemClient(request.substring("/reply?login:".length()), client);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                int messageID = Integer.valueOf(request.substring("/reply?".length(), request.lastIndexOf("?")));
+                int answerID = Integer.valueOf(request.substring(request.lastIndexOf("?")+1));
+                client.replyFromHTTP(messageID, answerID);
+            }
             return null;
-            //return "Thanks " + Math.random();
         } else {
             return "Fehler :(";
         }
