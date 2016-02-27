@@ -10,14 +10,14 @@ public class D_Figure extends Figure{
     
     private String description;
     
-    public D_Figure(Player owner, Layout layout, String description) {
+    public D_Figure(Player owner, Layout layout) {
         super(owner, layout);
         this.description = description;
     }
 
     @Override
     public String toString() {
-        return description;
+        return "Figur";
     }
     
 }

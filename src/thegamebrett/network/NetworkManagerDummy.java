@@ -7,7 +7,7 @@ import thegamebrett.Manager;
 import thegamebrett.action.ActionResponse;
 import thegamebrett.action.request.InteractionRequest;
 import thegamebrett.action.response.InteractionResponse;
-import thegamebrett.network.ClientManager;
+import thegamebrett.network.UserManager;
 import thegamebrett.network.ControlDirector;
 import thegamebrett.network.NetworkManager;
 import thegamebrett.network.PlayerNotRegisteredException;
@@ -21,7 +21,7 @@ import thegamebrett.network.httpserver.HttpServer;
 public class NetworkManagerDummy extends NetworkManager {
     
     /** Parameter 'clientManager' wird ignoriert */
-    public NetworkManagerDummy(ClientManager clientManager, Manager manager) {
+    public NetworkManagerDummy(UserManager clientManager, Manager manager) {
         super(clientManager, manager);
     }
     

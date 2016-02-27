@@ -17,16 +17,16 @@ import thegamebrett.network.httpserver.HttpResponseHeader;
  */
 public class ControlDirector implements Director {
 
-    ClientManager clientManager;
+    UserManager clientManager;
     
-    public ControlDirector(ClientManager clientManager) {
+    public ControlDirector(UserManager clientManager) {
         this.clientManager = clientManager;
     }
     
     @Override
     public Object query(String request, Socket clientSocket) throws QueryException {
         System.out.println(request);
-        Client client = clientManager.getOrAddClientForInetAddress(clientSocket.getInetAddress());
+        User client = clientManager.getOrAddClientForInetAddress(clientSocket.getInetAddress());
         
         if (request.equals("/") || request.equals("/index.html")) {
             return HTMLHelper.HTML;

@@ -23,8 +23,8 @@ public abstract class GameLogic {
         this.dependingModel = dependingModel;
     }
     
-    public abstract int getMaximumPlayers();
-    public abstract int getMinimumPlayers();
+    public abstract int getMaximumPlayers(); // DEL -> in Factor klaeren
+    public abstract int getMinimumPlayers(); // DEL -> in Factor klaeren
     
     public abstract Field getNextStartPositionForPlayer(Player player);
     

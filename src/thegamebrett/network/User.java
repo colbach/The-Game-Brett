@@ -12,7 +12,7 @@ import thegamebrett.action.response.InteractionResponse;
  *
  * @author Christian Colbach
  */
-public class Client {
+public class User {
     
     /** Zugehöriger Character */
     private Character character = null;
@@ -33,7 +33,7 @@ public class Client {
         
     private final AtomicReference<String> htmlCache = new AtomicReference<>(null);
         
-    public Client(InetAddress inetAddress) {
+    public User(InetAddress inetAddress) {
         this.inetAddress = inetAddress;
         clientId = lastClientId.addAndGet(1);
     }

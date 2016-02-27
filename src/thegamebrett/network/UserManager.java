@@ -10,7 +10,7 @@ import thegamebrett.model.Player;
  * 
  * @author Christian Colbach
  */
-public class ClientManager {
+public class UserManager {
     
     private String[] systemClientNames = new String[]{
         "Spieler 1",
@@ -26,7 +26,7 @@ public class ClientManager {
     };
     
     /** Liste in der Devices sich in System anmelden koenen */
-    private Client[] systemClients = new Client[systemClientNames.length];
+    private User[] systemClients = new User[systemClientNames.length];
     
     public String getHTMLSystemClientChoser() {
         StringBuilder sb = new StringBuilder();
@@ -39,7 +39,7 @@ public class ClientManager {
         return sb.toString();
     }
     
-    public boolean tryToSetSystemClient(String clientID, Client c) {
+    public boolean tryToSetSystemClient(String clientID, User c) {
         for(int i=0; i<systemClientNames.length; i++) {
             if(clientID.equals(systemClientIDs[i]) && (systemClients[i] == null || !systemClients[i].isAlife())) {
                 systemClients[i] = c;
@@ -49,7 +49,7 @@ public class ClientManager {
         return false;
     }
     
-    public boolean isSystemClient(Client c) {
+    public boolean isSystemClient(User c) {
         for(int i=0; i<systemClients.length; i++) {
             if(systemClients[i] == c) {
                 return true;
@@ -58,11 +58,11 @@ public class ClientManager {
         return false;
     }
     
-    private ArrayList<Client> clients = new ArrayList<Client>();
+    private ArrayList<User> clients = new ArrayList<User>();
     
     public void deliverMessage(InteractionRequest ir) throws PlayerNotRegisteredException {
         Player p = ir.getPlayer();
-        for(Client c : clients) {
+        for(User c : clients) {
             if(p.getUser() == c) {
                 c.setActualInteractionRequest(ir);
                 return;
@@ -71,11 +71,11 @@ public class ClientManager {
         throw new PlayerNotRegisteredException(p);
     }
     
-    public Client getClientForInetAddress(InetAddress ia) {
+    public User getClientForInetAddress(InetAddress ia) {
         if(ia == null) {
             throw new IllegalArgumentException("InetAddress must not be null");
         }
-        for(Client client : clients) {
+        for(User client : clients) {
             if(client.matchInetAddress(ia)) {
                 return client;
             }
@@ -83,16 +83,16 @@ public class ClientManager {
         return null;
     }
     
-    public Client getOrAddClientForInetAddress(InetAddress ia) {
+    public User getOrAddClientForInetAddress(InetAddress ia) {
         if(ia == null) {
             throw new IllegalArgumentException("InetAddress must not be null");
         }
-        for(Client client : clients) {
+        for(User client : clients) {
             if(client.matchInetAddress(ia)) {
                 return client;
             }
         }
-        Client newClient = new Client(ia);
+        User newClient = new User(ia);
         clients.add(newClient);
         return newClient;
     }

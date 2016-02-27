@@ -9,12 +9,12 @@ import thegamebrett.network.httpserver.HttpServer;
  */
 public class NetworkManager {
     
-    protected final ClientManager clientManager;
+    protected final UserManager clientManager;
     protected final ControlDirector controlDirector;
     protected final HttpServer httpServer;
     protected final Manager manager;
 
-    public NetworkManager(ClientManager clientManager, Manager manager) {
+    public NetworkManager(UserManager clientManager, Manager manager) {
         this.clientManager = clientManager;
         this.controlDirector = new ControlDirector(clientManager);
         if(clientManager != null) {
@@ -28,7 +28,7 @@ public class NetworkManager {
     }
     
     public NetworkManager(Manager manager) {
-        this(new ClientManager(), manager);
+        this(new UserManager(), manager);
     }
     
     public void deliverMessage(InteractionRequest ir) throws PlayerNotRegisteredException {
