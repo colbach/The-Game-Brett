@@ -47,14 +47,26 @@ public class Manager {
     }
     
     public ArrayList<Player> getPlayers() {
-        return model.getPlayers();
+        ArrayList<Player> players = getModel().getPlayers();
+        if(players == null)
+            throw new RuntimeException("players ist nicht gesetzt");
+        return players;
     }
     
     public Board getBoard() {
-        return model.getBoard();
+        Board board = getModel().getBoard();
+        if(board == null)
+            throw new RuntimeException("board ist nicht gesetzt");
+        return board;
     }
     
-    public void startGame(Model model) {
+    public Model getModel() {
+        if(model == null)
+            throw new RuntimeException("Model ist nicht gesetzt");
+        return model;
+    }
+    
+    public void startGame(Model model) { // Aufruf: startGame(D_GameFactory.createGame(ArrayList<User> users))
         this.model = model;
         //initialisiere Gamescreenmanager
         main.setView(gameScreenManager.getView());
@@ -80,16 +92,12 @@ public class Manager {
             }  else if(ar instanceof TimerRequest) {
                 timeManager.react((TimerRequest) ar);
             } else {
-                System.err.println("Unbekannte ActionResponse!");
+                throw new RuntimeException("Unbekannter ActionRequest-Typ");
             }
         }
     }
 
-    public Model getModel() {
-        if(model == null)
-            System.err.println("Model ist nicht gesetzt!");
-        return model;
-    }
+    
     
     
 }

@@ -24,4 +24,11 @@ public class InteractionResponse implements ActionResponse {
         return choiceIndex;
     }
     
+    public Object getChoice() {
+        return concerningInteractionRequest.getChoices()[getChoiceIndex()];
+    }
+    
+    public String getChoiceString() {
+        return getChoice().toString();
+    }
 }
