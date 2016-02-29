@@ -2,24 +2,32 @@ package thegamebrett.mobile;
 
 import thegamebrett.Manager;
 import thegamebrett.action.ActionRequest;
+import thegamebrett.action.request.InteractionRequest;
 import thegamebrett.action.request.MobileRequest;
 import thegamebrett.network.NetworkManager;
+import thegamebrett.network.NetworkManagerDummy;
+import thegamebrett.network.PlayerNotRegisteredException;
+import thegamebrett.network.UserManager;
 
 /**
  * @author Christian Colbach
  */
 public class MobileManager {
-    private MobileView mv;
-
-    public MobileManager(Manager aThis) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
-    public void bla(ActionRequest i) {
-        
+    private Manager manager;
+    private NetworkManager networkManager;
+    private UserManager userManager;
+    
+    public MobileManager(Manager manager) {
+        this.manager = manager;
+        userManager = new UserManager();
+        this.networkManager = new NetworkManagerDummy(userManager, manager);
     }
 
-    public void react(MobileRequest mobileRequest) {
-        // mach etwas
+    public void react(MobileRequest mobileRequest) throws PlayerNotRegisteredException {
+        if(mobileRequest instanceof InteractionRequest)
+            networkManager.deliverMessage((InteractionRequest) mobileRequest);
+        else
+            throw new UnsupportedOperationException("Not supported yet."); 
     }
 }

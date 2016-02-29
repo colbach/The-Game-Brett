@@ -7,6 +7,8 @@
 package thegamebrett;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import thegamebrett.gamescreen.GameScreenManager;
@@ -16,11 +18,13 @@ import thegamebrett.action.request.GUIRequest;
 import thegamebrett.action.request.MobileRequest;
 import thegamebrett.action.request.SoundRequest;
 import thegamebrett.action.request.TimerRequest;
+import thegamebrett.action.response.StartPseudoResonse;
 import thegamebrett.menuescreen.MenueScreenManager;
 import thegamebrett.mobile.MobileManager;
 import thegamebrett.model.Model;
 import thegamebrett.model.Player;
 import thegamebrett.model.elements.Board;
+import thegamebrett.network.PlayerNotRegisteredException;
 import thegamebrett.sound.SoundManager;
 import thegamebrett.timer.TimeManager;
 
@@ -68,8 +72,9 @@ public class Manager {
     
     public void startGame(Model model) { // Aufruf: startGame(D_GameFactory.createGame(ArrayList<User> users))
         this.model = model;
+        react(new StartPseudoResonse());
         //initialisiere Gamescreenmanager
-        main.setView(gameScreenManager.getView());
+        //main.setView(gameScreenManager.getView());
     }
     
     public void stopGame(Model model) {
@@ -85,19 +90,20 @@ public class Manager {
         for(ActionRequest ar : ars) {
             if(ar instanceof GUIRequest) {
                 gameScreenManager.react((GUIRequest) ar);
-            } else if(ar instanceof SoundRequest) {
+            }
+            if(ar instanceof SoundRequest) {
                 soundManager.react((SoundRequest) ar);
-            } else if(ar instanceof MobileRequest) {
-                mobileManager.react((MobileRequest) ar);
-            }  else if(ar instanceof TimerRequest) {
+            }
+            if(ar instanceof MobileRequest) {
+                try {
+                    mobileManager.react((MobileRequest) ar);
+                } catch (PlayerNotRegisteredException ex) {
+                    Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if(ar instanceof TimerRequest) {
                 timeManager.react((TimerRequest) ar);
-            } else {
-                throw new RuntimeException("Unbekannter ActionRequest-Typ");
             }
         }
     }
-
-    
-    
-    
 }

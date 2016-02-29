@@ -21,7 +21,8 @@ public class SoundManager {
     }
 
     public SoundManager(Manager aThis) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("SoundManager noch nicht implementiert");
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public void react(SoundRequest soundRequest) {

@@ -37,6 +37,7 @@ public class D_GameLogic extends GameLogic{
             Player p = getDependingModel().getPlayers().get(0);
             InteractionRequest ir = new InteractionRequest("Waehle einen Wert", new Object[]{new Integer(1), new Integer(2), new Integer(3)}, p, false, null);
             sent = ir;
+            requests.add(ir);
         } else if(as instanceof InteractionResponse) {
             InteractionResponse res = ((InteractionResponse) as);
             if(res.getConcerningInteractionRequest() == sent) {
@@ -50,6 +51,7 @@ public class D_GameLogic extends GameLogic{
                 Player p = getNextPlayer((D_Player) res.getConcerningInteractionRequest().getPlayer());
                 InteractionRequest ir = new InteractionRequest("Waehle einen Wert", new Object[]{new Integer(1), new Integer(2), new Integer(3)}, p, false, null);
                 sent = ir;
+                requests.add(ir);
             } else {
                 throw new RuntimeException("Unbekannte Antwort");
             }
@@ -60,7 +62,7 @@ public class D_GameLogic extends GameLogic{
     
     public D_Player getNextPlayer(D_Player currentPlayer){
         int currentPlayerNr = ((D_Player)currentPlayer).getPlayerNr();
-        int nextPlayerNr = currentPlayerNr + 1 % getDependingModel().getPlayers().size();
+        int nextPlayerNr = (currentPlayerNr + 1) % getDependingModel().getPlayers().size();
         for(Player p : getDependingModel().getPlayers())
             if(((D_Player)p).getPlayerNr() == nextPlayerNr)
                 return (D_Player) p;
