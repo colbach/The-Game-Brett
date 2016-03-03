@@ -13,7 +13,7 @@ public class MADN_Figure extends Figure{
     private String description;
     
     public MADN_Figure(Player owner, Layout layout, String description) {
-        super(owner, layout);
+        super(owner, layout, 0.05f, 0.05f);
         this.description = description;
     }
 

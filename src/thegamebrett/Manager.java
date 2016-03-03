@@ -11,7 +11,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import thegamebrett.gamescreen.GameScreenManager;
 import thegamebrett.action.ActionRequest;
 import thegamebrett.action.ActionResponse;
 import thegamebrett.action.request.GUIRequest;
@@ -19,7 +18,7 @@ import thegamebrett.action.request.MobileRequest;
 import thegamebrett.action.request.SoundRequest;
 import thegamebrett.action.request.TimerRequest;
 import thegamebrett.action.response.StartPseudoResonse;
-import thegamebrett.menuescreen.MenueScreenManager;
+import thegamebrett.gui.GUIApplication;
 import thegamebrett.mobile.MobileManager;
 import thegamebrett.model.Model;
 import thegamebrett.model.Player;
@@ -34,20 +33,17 @@ import thegamebrett.timer.TimeManager;
 public class Manager {
     
     private Model model;
-    private GameScreenManager gameScreenManager;
     private SoundManager soundManager;
     private MobileManager mobileManager;
     private TimeManager timeManager;
-    private MenueScreenManager menueManager;
         
-    private Main main;
+    private GUIApplication gui;
 
-    public Manager() {
-        gameScreenManager = new GameScreenManager(this);
+    public Manager(GUIApplication gui) {
         soundManager = new SoundManager(this);
         mobileManager = new MobileManager(this);
         timeManager = new TimeManager(this);
-        menueManager = new MenueScreenManager(this);
+        this.gui = gui;
     }
     
     public ArrayList<Player> getPlayers() {
@@ -77,10 +73,10 @@ public class Manager {
         //main.setView(gameScreenManager.getView());
     }
     
-    public void stopGame(Model model) {
+    /*public void stopGame(Model model) {
         main.setView(menueManager.getView());
         this.model = null;
-    }
+    }*/
     
     /** reicht ActionResponse-Object durch und gibt ActionRequest-Object zuruek */
     public void react(ActionResponse response) {
@@ -89,7 +85,7 @@ public class Manager {
         
         for(ActionRequest ar : ars) {
             if(ar instanceof GUIRequest) {
-                gameScreenManager.react((GUIRequest) ar);
+                gui.react((GUIRequest) ar);
             }
             if(ar instanceof SoundRequest) {
                 soundManager.react((SoundRequest) ar);

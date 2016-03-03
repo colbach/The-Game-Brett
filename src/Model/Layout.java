@@ -1,11 +1,8 @@
-package thegamebrett.model;
+package Model;
 
-import javafx.scene.paint.Color;
+import java.awt.Color;
 import java.awt.Image;
 
-/**
- * @author Christian Colbach
- */
 public class Layout {
     
     /**  Hintergrungbild füllt ganzes Feld (Bild wird abgeschnitten damit es passt)*/
@@ -47,12 +44,6 @@ public class Layout {
     
     /** Vergroesserungs / Verkleinerungsfaktor fuer Subtext. Wert [-1, 1]*/
     private float subtextScaleFactor = 0;
-    
-    /** Rand IN PIXEL! */
-    private float border = 1;
-    
-    /** Randfarbe */
-    private Color borderColor = Color.BLACK;
     
     /** Subtext */
     private String subtext;
@@ -153,11 +144,6 @@ public class Layout {
         this.subtext = subtext;
     }
 
-    public Layout() {
-        this.title = "";
-        this.subtext = "";
-    }
-    
     public boolean isVisible() {
         return visible;
     }
@@ -165,22 +151,5 @@ public class Layout {
     public void setVisible(boolean visible) {
         this.visible = visible;
     }
-
-    public float getBorder() {
-        return border;
-    }
-
-    public void setBorder(float border) {
-        this.border = border;
-    }
-
-    public Color getBorderColor() {
-        return borderColor;
-    }
-
-    public void setBorderColor(Color borderColor) {
-        this.borderColor = borderColor;
-    }
-    
     
 }

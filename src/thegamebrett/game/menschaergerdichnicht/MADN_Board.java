@@ -21,8 +21,6 @@ public class MADN_Board extends Board{
     //private ArrayList<MADNstartField> startFields;
     //private ArrayList<MADNendField> endFields;    
     private Layout layout;
-    private final double ratioX = 1;
-    private final double ratioY = 1;
     
     
     public MADN_Board(Layout layout/*, int fieldLength*/){
@@ -140,13 +138,13 @@ public class MADN_Board extends Board{
     }
 
     @Override
-    public double getRatioX() {
-        return ratioX;
+    public float getRatioX() {
+        return 1;
     }
 
     @Override
-    public double getRatioY() {
-        return ratioY;
+    public float getRatioY() {
+        return 1;
     }
     
     

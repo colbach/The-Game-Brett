@@ -2,7 +2,6 @@ package thegamebrett.network;
 
 import java.util.Timer;
 import java.util.TimerTask;
-import thegamebrett.Main;
 import thegamebrett.Manager;
 import thegamebrett.action.ActionResponse;
 import thegamebrett.action.request.InteractionRequest;
@@ -49,7 +48,7 @@ public class NetworkManagerDummy extends NetworkManager {
                         + response.getConcerningInteractionRequest().getChoices()[answer]);
                 manager.react(response);
             }
-        }, (int)(Math.random() * 2000));
+        }, (int)(1000 + Math.random() * 2000));
     }
     
 }

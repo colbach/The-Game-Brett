@@ -1,7 +1,7 @@
 package thegamebrett.game.dummy;
-import java.awt.Color;
 import thegamebrett.game.dummy.*;
 import java.util.ArrayList;
+import javafx.scene.paint.Color;
 import thegamebrett.model.GameFactory;
 import thegamebrett.model.GameLogic;
 import thegamebrett.model.Layout;

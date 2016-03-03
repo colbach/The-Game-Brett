@@ -1,6 +1,6 @@
 package thegamebrett.model;
 
-import thegamebrett.gamescreen.ScreenResolution;
+import thegamebrett.gui.ScreenResolution;
 
 /**
  * @author Christian Colbach
@@ -19,11 +19,11 @@ public class RelativePoint {
     }
     
     public double getXOnScreen() {
-        return xRelative * ScreenResolution.getScreenWidth();
+        return ScreenResolution.relativeToPixelX(xRelative);
     }
 
     public double getYOnScreen() {
-        return yRelative * ScreenResolution.getScreenHeigth();
+        return ScreenResolution.relativeToPixelY(yRelative);
     } 
 
     /** erwartet Werte: [0,1] */

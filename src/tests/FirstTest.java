@@ -15,7 +15,7 @@ import thegamebrett.network.User;
  */
 public class FirstTest {
     public static void main(String[] args) {
-        Manager m = new Manager();
+        /*Manager m = new Manager();
         
         ArrayList<User> al = new ArrayList<User>();
         al.add(new User(null));
@@ -29,6 +29,6 @@ public class FirstTest {
             Logger.getLogger(FirstTest.class.getName()).log(Level.SEVERE, null, ex);
         } catch (TooFewPlayers ex) {
             Logger.getLogger(FirstTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
     }
 }

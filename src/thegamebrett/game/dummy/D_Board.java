@@ -5,9 +5,9 @@
  */
 package thegamebrett.game.dummy;
 
-import java.awt.Color;
 import thegamebrett.game.dummy.*;
 import java.util.ArrayList;
+import javafx.scene.paint.Color;
 import thegamebrett.model.Layout;
 import thegamebrett.model.RelativePoint;
 import thegamebrett.model.elements.Board;
@@ -35,11 +35,11 @@ public class D_Board extends Board{
         
         Layout fieldLayout = new Layout();
         fieldLayout.setFormFactor(Layout.FORM_FACTOR_SQUARE);
-        fieldLayout.setBackgroundColor(Color.lightGray);
+        fieldLayout.setBackgroundColor(Color.LIGHTGRAY);
         
         {
-            float offX = 150;
-            for(int i=0; i<=4; i++) {
+            int offX = 150;
+            for(int i=0; i<4; i++) {
             al.add(new D_Field(0.1f, 0.1f, new RelativePoint(offX, 150), fieldLayout));
             offX += 200;
             }
@@ -48,8 +48,8 @@ public class D_Board extends Board{
             al.add(new D_Field(0.1f, 0.1f, new RelativePoint(750, 450), fieldLayout));
         }
         {
-            float offX = 750;
-            for(int i=0; i<=4; i++) {
+            int offX = 750;
+            for(int i=0; i<4; i++) {
                 al.add(new D_Field(0.1f, 0.1f, new RelativePoint(offX, 700), fieldLayout));
                 offX -= 200;
             }
@@ -91,12 +91,12 @@ public class D_Board extends Board{
     }
 
     @Override
-    public double getRatioX() {
+    public float getRatioX() {
         return 1;
     }
 
     @Override
-    public double getRatioY() {
+    public float getRatioY() {
         return 1;
     }
     

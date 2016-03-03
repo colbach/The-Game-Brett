@@ -1,6 +1,6 @@
-package thegamebrett.model.elements;
+package Model.Elements;
 
-import thegamebrett.model.Layout;
+import Model.Layout;
 
 /**
  * Definition des Spielbretts
@@ -16,9 +16,9 @@ public abstract class Board implements Element {
     
     public abstract Layout getLayout();
     
-    public abstract float getRatioX();
+    public abstract double getRatioX();
     
-    public abstract float getRatioY();
+    public abstract double getRatioY();
     
     
 }
