@@ -38,8 +38,8 @@ public class GUILoader {
         Layout layout = field.getLayout();
         
         Canvas c = new Canvas(w, h);
-        c.setLayoutX(x);
-        c.setLayoutY(y);
+        c.setLayoutX(ScreenResolution.getContentXOff()+x);
+        c.setLayoutY(ScreenResolution.getContentYOff()+y);
         
         GraphicsContext gc = c.getGraphicsContext2D();
         gc.setFill(layout.getBackgroundColor());
@@ -112,8 +112,8 @@ public class GUILoader {
         Layout layout = figure.getLayout();
         
         Canvas c = new Canvas(w+layout.getBorder()*4, h+layout.getBorder()*4);
-        c.setLayoutX(x-layout.getBorder()*2);
-        c.setLayoutY(y-layout.getBorder()*2);
+        c.setLayoutX(ScreenResolution.getContentXOff()+x-layout.getBorder()*2);
+        c.setLayoutY(ScreenResolution.getContentYOff()+y-layout.getBorder()*2);
         
         GraphicsContext gc = c.getGraphicsContext2D();
         gc.setFill(layout.getBackgroundColor());
@@ -135,8 +135,8 @@ public class GUILoader {
         double h = ScreenResolution.relativeToPixelY(1);
         
         Canvas c = new Canvas(w, h);
-        c.setLayoutX(0);
-        c.setLayoutY(0);
+        c.setLayoutX(ScreenResolution.getContentXOff()+0);
+        c.setLayoutY(ScreenResolution.getContentYOff()+0);
         
         GraphicsContext gc = c.getGraphicsContext2D();
         gc.setFill(layout.getBackgroundColor());

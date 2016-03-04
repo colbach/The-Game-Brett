@@ -5,8 +5,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import tests.FirstTest;
@@ -22,6 +24,7 @@ import thegamebrett.network.User;
 public class GUIApplication extends Application{
 
     private GameView gameView;
+    private MenueView menuView;
     private Manager manager;
     
     public static void main(String[] args) {
@@ -35,26 +38,26 @@ public class GUIApplication extends Application{
         
         manager = new Manager(this);
         gameView = new GameView();
+        menuView = new MenueView(manager);
         
-        ArrayList<User> al = new ArrayList<User>();
-        al.add(new User(null));
-        al.add(new User(null));
-        al.add(new User(null));
-        al.add(new User(null));
-        Model gameModel = D_GameFactory.createGame(al);
-        gameView.setGameModel(gameModel);
+        
         
         stage.setOnCloseRequest((WindowEvent we) -> {
             Platform.exit();
             System.exit(0);
         });
         
-        Scene scene = new Scene(gameView, 500, 500, Color.DARKGRAY);
+        Scene scene = new Scene(menuView, 500, 500, Color.DARKGRAY);
+        
+        stage.setFullScreen(true);
+        
+        Rectangle2D dimension = Screen.getPrimary().getBounds();
+        ScreenResolution.setScreenDimension((int)dimension.getWidth(), (int)dimension.getHeight());
+        ScreenResolution.setBoardRatios(1, 1);
         
         stage.setScene(scene);
         stage.show();
         
-        manager.startGame(gameModel);
         
     }
 

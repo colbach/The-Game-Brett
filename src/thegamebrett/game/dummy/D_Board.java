@@ -13,10 +13,6 @@ import thegamebrett.model.RelativePoint;
 import thegamebrett.model.elements.Board;
 import thegamebrett.model.elements.Field;
 
-/**
- *
- * @author Koré
- */
 public class D_Board extends Board{
 
     private ArrayList<D_Field> fields = new ArrayList<>();
@@ -27,6 +23,7 @@ public class D_Board extends Board{
     
     public D_Board(){
         this.boardLayout = new Layout();
+        boardLayout.setBackgroundColor(Color.ALICEBLUE);
         fields = createFields();
     }
     
@@ -60,7 +57,7 @@ public class D_Board extends Board{
         for(int i=0; i<al.size(); i++) {
             al.get(i).setNext(al.get((i+1)%al.size()));
         }
-        
+                    
         return al;
     }
     

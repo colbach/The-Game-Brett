@@ -39,6 +39,10 @@ public class Manager {
         
     private GUIApplication gui;
 
+    public GUIApplication getGui() {
+        return gui;
+    }
+    
     public Manager(GUIApplication gui) {
         soundManager = new SoundManager(this);
         mobileManager = new MobileManager(this);
