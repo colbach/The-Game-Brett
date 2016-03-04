@@ -20,8 +20,9 @@ public class MobileManager {
     
     public MobileManager(Manager manager) {
         this.manager = manager;
-        userManager = new UserManager();
-        this.networkManager = new NetworkManagerDummy(userManager, manager);
+        userManager = new UserManager(manager);
+        //this.networkManager = new NetworkManagerDummy(userManager, manager);
+        this.networkManager = new NetworkManager(userManager, manager);
     }
 
     public void react(MobileRequest mobileRequest) throws PlayerNotRegisteredException {
@@ -29,5 +30,13 @@ public class MobileManager {
             networkManager.deliverMessage((InteractionRequest) mobileRequest);
         else
             throw new UnsupportedOperationException("Not supported yet."); 
+    }
+
+    public NetworkManager getNetworkManager() {
+        return networkManager;
+    }
+
+    public UserManager getUserManager() {
+        return userManager;
     }
 }

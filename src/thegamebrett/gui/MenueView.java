@@ -13,6 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import thegamebrett.Manager;
 import thegamebrett.game.dummy.D_GameFactory;
+import thegamebrett.game.dummy.D_GameLogic;
 import thegamebrett.model.Model;
 import thegamebrett.model.exceptions.TooFewPlayers;
 import thegamebrett.model.exceptions.TooMuchPlayers;
@@ -47,6 +48,7 @@ public class MenueView extends Group {
         GraphicsContext gc1 = can1.getGraphicsContext2D();
         gc1.setFill(Color.ALICEBLUE);
         gc1.fillRect(0, 0, 100, 100);
+        
         GraphicsContext gc2 = can2.getGraphicsContext2D();
         gc2.setFill(Color.BLACK);
         gc2.fillRect(0, 0, 100, 100);
@@ -68,29 +70,29 @@ public class MenueView extends Group {
     
     public void startDummy() {
         ArrayList<User> al = new ArrayList<User>();
-        al.add(new User(null));
-        al.add(new User(null));
-        al.add(new User(null));
-        al.add(new User(null));
         
-        try {
-            Model gameModel = D_GameFactory.createGame(al);
-            manager.getGui().getGameView().setGameModel(gameModel);
-            manager.startGame(gameModel);
+        for(User systemUser : manager.getMobileManager().getUserManager().getSystemClients()) {
+            if(systemUser != null) {
+                al.add(systemUser);
+            }
+        }
+        
+        //try {
+            if(manager.getGui().getGameView().getGameModel() == null || !(manager.getGui().getGameView().getGameModel().getGameLogic() instanceof D_GameLogic)) {
+                /*
+                Model gameModel = D_GameFactory.createGame(al);
+                manager.getGui().getGameView().setGameModel(gameModel);
+                manager.startGame(gameModel);
+                */
+            }
             
             manager.getGui().showGameScene();
             
-        } catch (TooMuchPlayers ex) {
+        /*} catch (TooMuchPlayers ex) {
             Logger.getLogger(MenueView.class.getName()).log(Level.SEVERE, null, ex);
         } catch (TooFewPlayers ex) {
             Logger.getLogger(MenueView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        
-        
-        
-        
-        
+        }*/
     }
     
     

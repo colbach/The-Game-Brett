@@ -16,8 +16,8 @@ public class NetworkDeviceTest {
     
     //public static String usertext = "";
     public static void main(String[] args) {
-        HttpServer server = new HttpServer(8116, new ControlDirector(new UserManager()));
-        server.enableServer();
+        //HttpServer server = new HttpServer(8116, new ControlDirector(new UserManager()));
+        //server.enableServer();
         
         /*Scanner sc = new Scanner(System.in);
         System.out.println("Eingeben :D");

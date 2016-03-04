@@ -5,8 +5,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import static javafx.scene.input.KeyCode.T;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -23,14 +28,15 @@ import thegamebrett.network.User;
 
 public class GUIApplication extends Application{
 
+    private Group root;
     private GameView gameView;
     private MenueView menuView;
     private Manager manager;
     
     private Stage stage;
     
-    private Scene menueScene;
-    private Scene gameScene;
+    //private Scene menueScene;
+    //private Scene gameScene;
     
     public static void main(String[] args) {
         launch(new String[0]);
@@ -44,27 +50,34 @@ public class GUIApplication extends Application{
         stage.setTitle("The Game Brett");
         
         manager = new Manager(this);
+        
         gameView = new GameView();
         menuView = new MenueView(manager);
-        
-        
         
         stage.setOnCloseRequest((WindowEvent we) -> {
             Platform.exit();
             System.exit(0);
         });
-        
-        
-        
-        //stage.setFullScreen(true);
-        
+              
         Rectangle2D dimension = Screen.getPrimary().getBounds();
         ScreenResolution.setScreenDimension((int)dimension.getWidth(), (int)dimension.getHeight());
         ScreenResolution.setBoardRatios(1, 1);
-        
+                
+        stage.setFullScreen(true);
+        root = new Group();
+        Scene scene = new Scene(root, Color.GAINSBORO);
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if(event.getCode() == KeyCode.BACK_SPACE) {
+                    showMenuScene();
+                }
+            }
+        });
         showMenuScene();
-        stage.show();
         
+        stage.setScene(scene);
+        stage.show();
         
     }
 
@@ -73,22 +86,13 @@ public class GUIApplication extends Application{
     }
     
     public void showMenuScene() {
-        stage.setFullScreen(true);
-        if(menueScene == null)
-            menueScene = new Scene(menuView, Color.GOLD);
-        stage.setScene(menueScene);
+        root.getChildren().clear();
+        root.getChildren().add(menuView);
     }
     
     public void showGameScene() {
-        //stage.setFullScreen(true);
-        if(gameScene == null)
-            gameScene = new Scene(gameView, Color.BLACK);
-        stage.setScene(gameScene);
-        
-        
-        //stage.sizeToScene();
-        //stage.setFullScreen(false);
-        stage.setFullScreen(true);
+        root.getChildren().clear();
+        root.getChildren().add(gameView);
     }
     
     public void react(GUIRequest r) {

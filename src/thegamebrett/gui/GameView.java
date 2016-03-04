@@ -51,6 +51,10 @@ public class GameView extends Group {
 
     }
 
+    public Model getGameModel() {
+        return gameModel;
+    }
+
     public void updateOnFXThread(int value, boolean animated, int delay) {
         Platform.runLater(()->{
             update(value, animated, delay);

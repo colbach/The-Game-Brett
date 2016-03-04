@@ -5,6 +5,7 @@ import thegamebrett.network.httpserver.InetAddressFormatter;
 import thegamebrett.action.request.InteractionRequest;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
+import thegamebrett.Manager;
 import thegamebrett.action.response.InteractionResponse;
 
 /**
@@ -13,6 +14,8 @@ import thegamebrett.action.response.InteractionResponse;
  * @author Christian Colbach
  */
 public class User {
+    
+    private Manager manager;
     
     /** Zugehöriger Character */
     private Character character = null;
@@ -33,8 +36,9 @@ public class User {
         
     private final AtomicReference<String> htmlCache = new AtomicReference<>(null);
         
-    public User(InetAddress inetAddress) {
+    public User(InetAddress inetAddress, Manager m) {
         this.inetAddress = inetAddress;
+        this.manager = m;
         clientId = lastClientId.addAndGet(1);
     }
 
@@ -111,8 +115,9 @@ public class User {
     public void replyFromHTTP(int messageID, int answerID) {
         if(actualInteractionRequest != null && actualInteractionRequest.getMessageId() == messageID) {
             InteractionResponse response = new InteractionResponse(actualInteractionRequest, answerID);
-            // Sende es irgentwo hin...
-            System.err.println("Wohin mit der Antwort???");
+            actualInteractionRequest = null;
+            manager.react(response);
+            
         } else {
             System.err.println("Resonse doen't match Request");
         }

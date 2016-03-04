@@ -2,6 +2,7 @@ package thegamebrett.network;
 
 import java.net.InetAddress;
 import java.util.*;
+import thegamebrett.Manager;
 import thegamebrett.action.request.InteractionRequest;
 import thegamebrett.model.Player;
 
@@ -11,6 +12,8 @@ import thegamebrett.model.Player;
  * @author Christian Colbach
  */
 public class UserManager {
+    
+    private Manager manager;
     
     private String[] systemClientNames = new String[]{
         "Spieler 1",
@@ -27,6 +30,10 @@ public class UserManager {
     
     /** Liste in der Devices sich in System anmelden koenen */
     private User[] systemClients = new User[systemClientNames.length];
+
+    public UserManager(Manager manager) {
+        this.manager = manager;
+    }
     
     public String getHTMLSystemClientChoser() {
         StringBuilder sb = new StringBuilder();
@@ -62,6 +69,14 @@ public class UserManager {
     
     public void deliverMessage(InteractionRequest ir) throws PlayerNotRegisteredException {
         Player p = ir.getPlayer();
+        System.out.println("------");
+        System.out.println(p == null);
+        System.out.println(p.getUser() == null);
+        System.out.println(p.getUser().getClientId());
+        for(User c : clients) {
+            System.out.println(c.getClientId());
+        }
+        System.out.println("------");
         for(User c : clients) {
             if(p.getUser() == c) {
                 c.setActualInteractionRequest(ir);
@@ -92,9 +107,14 @@ public class UserManager {
                 return client;
             }
         }
-        User newClient = new User(ia);
+        User newClient = new User(ia, manager);
         clients.add(newClient);
         return newClient;
     }
+
+    public User[] getSystemClients() {
+        return systemClients;
+    }
+    
     
 }

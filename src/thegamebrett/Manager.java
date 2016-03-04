@@ -43,6 +43,8 @@ public class Manager {
         return gui;
     }
     
+    
+    
     public Manager(GUIApplication gui) {
         soundManager = new SoundManager(this);
         mobileManager = new MobileManager(this);
@@ -106,4 +108,18 @@ public class Manager {
             }
         }
     }
+
+    public SoundManager getSoundManager() {
+        return soundManager;
+    }
+
+    public MobileManager getMobileManager() {
+        return mobileManager;
+    }
+
+    public TimeManager getTimeManager() {
+        return timeManager;
+    }
+    
+    
 }

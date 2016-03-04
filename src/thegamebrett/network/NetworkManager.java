@@ -14,21 +14,21 @@ public class NetworkManager {
     protected final HttpServer httpServer;
     protected final Manager manager;
 
-    public NetworkManager(UserManager clientManager, Manager manager) {
-        this.clientManager = clientManager;
-        this.controlDirector = new ControlDirector(clientManager);
-        if(clientManager != null) {
+    public NetworkManager(UserManager userManager, Manager manager) {
+        this.clientManager = userManager;
+        this.controlDirector = new ControlDirector(userManager);
+        if(userManager != null) {
             this.httpServer = new HttpServer(8123, controlDirector);
             this.httpServer.enableServer();
-            System.err.println("clientManager is null! Server not startet");
         } else {
             this.httpServer = null;
+            System.err.println("userManager is null! Server not startet");
         }
         this.manager = manager;
     }
     
     public NetworkManager(Manager manager) {
-        this(new UserManager(), manager);
+        this(new UserManager(manager), manager);
     }
     
     public void deliverMessage(InteractionRequest ir) throws PlayerNotRegisteredException {

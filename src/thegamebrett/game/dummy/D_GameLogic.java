@@ -42,7 +42,7 @@ public class D_GameLogic extends GameLogic{
             InteractionResponse res = ((InteractionResponse) as);
             if(res.getConcerningInteractionRequest() == sent) {
                 int n = ((Integer)res.getChoice());
-                for(int i=0; i<=n; i++) {
+                for(int i=0; i<n; i++) {
                     Figure figure = res.getConcerningInteractionRequest().getPlayer().getFigures()[0];
                     figure.setField(figure.getField().getNext()[0]);
                 }

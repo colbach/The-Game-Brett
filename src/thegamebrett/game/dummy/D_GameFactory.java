@@ -1,6 +1,7 @@
 package thegamebrett.game.dummy;
 import thegamebrett.game.dummy.*;
 import java.util.ArrayList;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import thegamebrett.model.GameFactory;
 import thegamebrett.model.GameLogic;
@@ -15,7 +16,7 @@ import thegamebrett.network.User;
 
 public class D_GameFactory implements GameFactory {
 
-    public static Model createGame(ArrayList<User> users) throws TooMuchPlayers, TooFewPlayers {
+    public Model createGame(ArrayList<User> users) throws TooMuchPlayers, TooFewPlayers {
         D_GameLogic gl = new D_GameLogic(null);
         D_Board b = new D_Board();
         
@@ -27,7 +28,7 @@ public class D_GameFactory implements GameFactory {
         ArrayList<Player> players = new ArrayList<>();
         for(int i=0; i<users.size(); i++) {
             users.get(i);
-            D_Player p = new D_Player(i);
+            D_Player p = new D_Player(i, users.get(i));
             Layout l = new Layout();
             switch (i) {
                 case 0:
@@ -55,6 +56,16 @@ public class D_GameFactory implements GameFactory {
         gl.setDependingModel(model);
         
         return model;
+    }
+
+    @Override
+    public Image getGameIcon() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Image getGameName() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

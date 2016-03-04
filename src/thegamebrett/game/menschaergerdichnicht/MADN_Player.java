@@ -15,6 +15,7 @@ public class MADN_Player extends Player{
     private MADN_Field lastField;
     
     public MADN_Player(int playerNr, MADN_Figure[] figures, MADN_Field firstField, MADN_Field lastField){
+        super(null);//weg machen!!!!
         this.playerNr = playerNr;
         this.figures = figures;
         this.firstField = firstField;

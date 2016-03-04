@@ -12,9 +12,10 @@ public abstract class Player {
     private ArrayList<Figure> figures = new ArrayList<Figure>();
     
     private User user;
-    
-    private int playerPositon;
 
+    public Player(User user) {
+        this.user = user;
+    }
     public Figure[] getFigures() {
         return figures.toArray(new Figure[0]);
     }
@@ -23,10 +24,4 @@ public abstract class Player {
         return user;
     }
 
-    public int getPlayerPositon() {
-        return playerPositon;
-    }
-
-    
-    
 }
