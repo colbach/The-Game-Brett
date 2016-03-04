@@ -77,6 +77,9 @@ public class MenueView extends Group {
             Model gameModel = D_GameFactory.createGame(al);
             manager.getGui().getGameView().setGameModel(gameModel);
             manager.startGame(gameModel);
+            
+            manager.getGui().showGameScene();
+            
         } catch (TooMuchPlayers ex) {
             Logger.getLogger(MenueView.class.getName()).log(Level.SEVERE, null, ex);
         } catch (TooFewPlayers ex) {

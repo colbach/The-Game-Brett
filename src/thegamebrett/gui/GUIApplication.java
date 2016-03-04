@@ -27,12 +27,19 @@ public class GUIApplication extends Application{
     private MenueView menuView;
     private Manager manager;
     
+    private Stage stage;
+    
+    private Scene menueScene;
+    private Scene gameScene;
+    
     public static void main(String[] args) {
         launch(new String[0]);
     }
     
     @Override
     public void start(Stage stage) throws Exception {
+        
+        this.stage = stage;
         
         stage.setTitle("The Game Brett");
         
@@ -47,15 +54,15 @@ public class GUIApplication extends Application{
             System.exit(0);
         });
         
-        Scene scene = new Scene(menuView, 500, 500, Color.DARKGRAY);
         
-        stage.setFullScreen(true);
+        
+        //stage.setFullScreen(true);
         
         Rectangle2D dimension = Screen.getPrimary().getBounds();
         ScreenResolution.setScreenDimension((int)dimension.getWidth(), (int)dimension.getHeight());
         ScreenResolution.setBoardRatios(1, 1);
         
-        stage.setScene(scene);
+        showMenuScene();
         stage.show();
         
         
@@ -63,6 +70,25 @@ public class GUIApplication extends Application{
 
     public GameView getGameView() {
         return gameView;
+    }
+    
+    public void showMenuScene() {
+        stage.setFullScreen(true);
+        if(menueScene == null)
+            menueScene = new Scene(menuView, Color.GOLD);
+        stage.setScene(menueScene);
+    }
+    
+    public void showGameScene() {
+        //stage.setFullScreen(true);
+        if(gameScene == null)
+            gameScene = new Scene(gameView, Color.BLACK);
+        stage.setScene(gameScene);
+        
+        
+        //stage.sizeToScene();
+        //stage.setFullScreen(false);
+        stage.setFullScreen(true);
     }
     
     public void react(GUIRequest r) {
