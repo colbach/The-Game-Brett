@@ -1,8 +1,5 @@
 package thegamebrett.gui;
 
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -10,21 +7,14 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
-import static javafx.scene.input.KeyCode.T;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import tests.FirstTest;
 import thegamebrett.Manager;
 import thegamebrett.action.request.GUIRequest;
 import thegamebrett.action.request.GUIUpdateRequest;
-import thegamebrett.game.dummy.D_GameFactory;
-import thegamebrett.model.Model;
-import thegamebrett.model.exceptions.TooFewPlayers;
-import thegamebrett.model.exceptions.TooMuchPlayers;
-import thegamebrett.network.User;
 
 public class GUIApplication extends Application{
 
