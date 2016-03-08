@@ -1,14 +1,11 @@
 package thegamebrett.game.dummy;
-import thegamebrett.game.dummy.*;
 import java.util.ArrayList;
 import thegamebrett.action.ActionRequest;
 import thegamebrett.action.ActionResponse;
 import thegamebrett.action.request.GUIUpdateRequest;
-import thegamebrett.action.request.GameEndRequest;
 import thegamebrett.action.request.InteractionRequest;
 import thegamebrett.action.response.InteractionResponse;
 import thegamebrett.action.response.StartPseudoResonse;
-import thegamebrett.action.response.TimerResponse;
 import thegamebrett.model.GameLogic;
 import thegamebrett.model.Model;
 import thegamebrett.model.Player;

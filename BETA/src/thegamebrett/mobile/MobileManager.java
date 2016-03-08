@@ -1,11 +1,9 @@
 package thegamebrett.mobile;
 
 import thegamebrett.Manager;
-import thegamebrett.action.ActionRequest;
 import thegamebrett.action.request.InteractionRequest;
 import thegamebrett.action.request.MobileRequest;
 import thegamebrett.network.NetworkManager;
-import thegamebrett.network.NetworkManagerDummy;
 import thegamebrett.network.PlayerNotRegisteredException;
 import thegamebrett.network.UserManager;
 

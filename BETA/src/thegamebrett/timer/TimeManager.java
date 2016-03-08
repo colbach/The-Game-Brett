@@ -1,7 +1,6 @@
 package thegamebrett.timer;
 
 import thegamebrett.Manager;
-import thegamebrett.action.request.GUIRequest;
 import thegamebrett.action.request.TimerRequest;
 import thegamebrett.action.response.TimerResponse;
 import java.util.Timer;

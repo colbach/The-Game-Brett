@@ -5,8 +5,6 @@
  */
 package thegamebrett.model.mediaeffect;
 
-import java.io.File;
-
 /**
  *
  * @author christiancolbach
