@@ -3,14 +3,8 @@ package thegamebrett.network;
 import java.util.Timer;
 import java.util.TimerTask;
 import thegamebrett.Manager;
-import thegamebrett.action.ActionResponse;
 import thegamebrett.action.request.InteractionRequest;
 import thegamebrett.action.response.InteractionResponse;
-import thegamebrett.network.UserManager;
-import thegamebrett.network.ControlDirector;
-import thegamebrett.network.NetworkManager;
-import thegamebrett.network.PlayerNotRegisteredException;
-import thegamebrett.network.httpserver.HttpServer;
 
 /**
  * Dummy zum Simulieren des Netzwerkmanagers (thegamebrett.network.Networkmanager)
