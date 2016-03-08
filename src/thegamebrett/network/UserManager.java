@@ -69,14 +69,6 @@ public class UserManager {
     
     public void deliverMessage(InteractionRequest ir) throws PlayerNotRegisteredException {
         Player p = ir.getPlayer();
-        System.out.println("------");
-        System.out.println(p == null);
-        System.out.println(p.getUser() == null);
-        System.out.println(p.getUser().getClientId());
-        for(User c : clients) {
-            System.out.println(c.getClientId());
-        }
-        System.out.println("------");
         for(User c : clients) {
             if(p.getUser() == c) {
                 c.setActualInteractionRequest(ir);

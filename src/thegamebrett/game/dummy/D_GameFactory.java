@@ -1,8 +1,12 @@
 package thegamebrett.game.dummy;
 import thegamebrett.game.dummy.*;
 import java.util.ArrayList;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import thegamebrett.model.GameFactory;
 import thegamebrett.model.GameLogic;
 import thegamebrett.model.Layout;
@@ -60,12 +64,22 @@ public class D_GameFactory implements GameFactory {
 
     @Override
     public Image getGameIcon() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Canvas c = new Canvas(500,500);
+        WritableImage wi = new WritableImage(500, 500);
+        GraphicsContext g = c.getGraphicsContext2D();
+        g.setFill(Color.YELLOWGREEN);
+        g.fillRect(0, 0, 500, 500);
+        g.setFill(Color.BLUE);
+        g.fillOval(0, 0, 350, 350);
+        g.setFill(Color.RED);
+        g.fillOval(150, 150, 350, 350);
+        c.snapshot(null, wi);
+        return wi;
     }
 
     @Override
-    public Image getGameName() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String getGameName() {
+        return "Dummy";
     }
     
 }

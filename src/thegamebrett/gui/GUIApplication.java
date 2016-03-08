@@ -44,8 +44,12 @@ public class GUIApplication extends Application{
     
     @Override
     public void start(Stage stage) throws Exception {
-        
         this.stage = stage;
+        
+        Rectangle2D dimension = Screen.getPrimary().getBounds();
+        ScreenResolution.setScreenDimension((int)dimension.getWidth(), (int)dimension.getHeight());
+        ScreenResolution.setBoardRatios(1, 1);
+        
         
         stage.setTitle("The Game Brett");
         
@@ -58,10 +62,6 @@ public class GUIApplication extends Application{
             Platform.exit();
             System.exit(0);
         });
-              
-        Rectangle2D dimension = Screen.getPrimary().getBounds();
-        ScreenResolution.setScreenDimension((int)dimension.getWidth(), (int)dimension.getHeight());
-        ScreenResolution.setBoardRatios(1, 1);
                 
         stage.setFullScreen(true);
         root = new Group();
@@ -106,7 +106,7 @@ public class GUIApplication extends Application{
             if(ur.isUpdateFigures())
                 value += GameView.GUIUPDATE_FIGURES;
             
-            System.out.println(value);
+            //System.out.println(value);
             gameView.updateOnFXThread(value, ur.isAnimated(), ur.getDelay());
         }
     }

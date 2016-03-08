@@ -45,12 +45,12 @@ public class ScreenResolution {
         if(vhFactior >= 1) {
             contentWidth = screenHeigth / vhFactior;
             
-            System.out.println(contentWidth +"="+ screenWidth +"/"+ vhFactior);
+            //System.out.println(contentWidth +"="+ screenWidth +"/"+ vhFactior);
             contentHeigth = screenHeigth;
         } else {
             contentHeigth = screenWidth * vhFactior;
             
-            System.out.println(contentHeigth +"="+ screenHeigth +"*"+ vhFactior);
+            //System.out.println(contentHeigth +"="+ screenHeigth +"*"+ vhFactior);
             contentWidth = screenWidth;
         }
         contentXOff = (int)((screenWidth - contentWidth) / 2);

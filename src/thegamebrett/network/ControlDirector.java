@@ -25,7 +25,7 @@ public class ControlDirector implements Director {
     
     @Override
     public Object query(String request, Socket clientSocket) throws QueryException {
-        System.out.println(request);
+        //System.out.println(request);
         User client = clientManager.getOrAddClientForInetAddress(clientSocket.getInetAddress());
         
         if (request.equals("/") || request.equals("/index.html")) {

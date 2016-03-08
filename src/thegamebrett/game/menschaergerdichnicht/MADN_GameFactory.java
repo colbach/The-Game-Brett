@@ -39,7 +39,7 @@ public class MADN_GameFactory implements GameFactory {
     }
 
     @Override
-    public Image getGameName() {
+    public String getGameName() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

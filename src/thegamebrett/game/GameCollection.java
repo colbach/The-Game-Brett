@@ -6,18 +6,9 @@ import thegamebrett.model.GameFactory;
 
 public class GameCollection {
     
-    public GameFactory[] gameFactorys = {
-        new D_GameFactory()
+    /** Hier muessen alle Spiele(gameFactorys) eingetragen werden */
+    public static GameFactory[] gameFactorys = {
+        new D_GameFactory(), new D_GameFactory(), new D_GameFactory(), new D_GameFactory(), new D_GameFactory(), new D_GameFactory(), new D_GameFactory(), new D_GameFactory(), new D_GameFactory(), new D_GameFactory(), new D_GameFactory(), new D_GameFactory(), new D_GameFactory(), new D_GameFactory(), new D_GameFactory(), new D_GameFactory(), new D_GameFactory(), new D_GameFactory(), new D_GameFactory(), new D_GameFactory(), new D_GameFactory(), new D_GameFactory(), new D_GameFactory(), new D_GameFactory(), new D_GameFactory(), new D_GameFactory(), new D_GameFactory(), new D_GameFactory(), new D_GameFactory(), new D_GameFactory(), new D_GameFactory()
     };
-    
-    public static void main(String[] args) {
-        
-        
-        
-        D_GameFactory g = new D_GameFactory();
-        
-    }
-    
-    
     
 }

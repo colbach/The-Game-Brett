@@ -19,6 +19,6 @@ public interface GameFactory {
     /* gibt Quadratisches Bild zuruck */
     public Image getGameIcon();
     
-    public Image getGameName();
+    public String getGameName();
 
 }
