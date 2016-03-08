@@ -1,7 +1,6 @@
 
 package thegamebrett.game.dummy;
 
-import thegamebrett.game.dummy.*;
 import thegamebrett.model.Layout;
 import thegamebrett.model.Player;
 import thegamebrett.model.elements.Figure;

@@ -1,16 +1,9 @@
 package thegamebrett.network;
 
-import java.net.URL;
 import thegamebrett.network.HTMLHelper;
 import thegamebrett.network.httpserver.Director;
-import java.io.*;
 import java.net.Socket;
-import java.net.URISyntaxException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.Scanner;
 import thegamebrett.action.request.InteractionRequest;
-import thegamebrett.network.httpserver.HttpResponseHeader;
 
 /**
  * @author Christian Colbach

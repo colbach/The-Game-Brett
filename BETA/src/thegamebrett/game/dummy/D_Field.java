@@ -1,6 +1,5 @@
 package thegamebrett.game.dummy;
 
-import thegamebrett.game.dummy.*;
 import thegamebrett.model.Layout;
 import thegamebrett.model.RelativePoint;
 import thegamebrett.model.elements.Field;
