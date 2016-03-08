@@ -5,7 +5,6 @@
  */
 package thegamebrett.game.dummy;
 
-import thegamebrett.game.dummy.*;
 import java.util.ArrayList;
 import javafx.scene.paint.Color;
 import thegamebrett.model.Layout;
