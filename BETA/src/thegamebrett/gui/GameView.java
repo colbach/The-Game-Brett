@@ -3,7 +3,6 @@ package thegamebrett.gui;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import thegamebrett.model.Model;
 

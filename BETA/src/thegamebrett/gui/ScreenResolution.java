@@ -1,7 +1,5 @@
 package thegamebrett.gui;
 
-import javafx.geometry.Dimension2D;
-
 
 /**
  * Kuemert sich um Skalierungsfaktoren etc
