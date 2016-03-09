@@ -7,8 +7,8 @@ import thegamebrett.network.httpserver.*;
  * @author Christian Colbach
  */
 public class HttpServerTest {
-HALLO
-	//public static HttpServer manager = new HttpServer(8124, new RootDirectoryBasedDirector("/Users/christiancolbach/Desktop/root"));
+
+        //public static HttpServer manager = new HttpServer(8124, new RootDirectoryBasedDirector("/Users/christiancolbach/Desktop/root"));
 	
 	public static void main(String[] args) {
             
