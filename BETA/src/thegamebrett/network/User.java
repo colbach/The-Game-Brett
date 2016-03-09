@@ -14,28 +14,30 @@ import thegamebrett.action.response.InteractionResponse;
  * @author Christian Colbach
  */
 public class User {
-    
+
     private Manager manager;
-    
-    /** Zugehöriger Character */
+
+    /**
+     * Zugehöriger Character
+     */
     private Character character = null;
-    
+
     private static volatile AtomicLong lastClientId = new AtomicLong(0);
-    
+
     private final long clientId;
-    
+
     private volatile long lastSignOfLife = -1; //in ms
-    
+
     public int TIMEOUT = 30000; //in ms (1s = 1000ms)
-    
+
     private volatile InetAddress inetAddress;
-        
+
     private volatile InteractionRequest actualInteractionRequest;
-        
+
     private volatile boolean delivered = false;
-        
-    private final AtomicReference<String> htmlCache = new AtomicReference<>(null);
-        
+
+    private String htmlCache = null;
+
     public User(InetAddress inetAddress, Manager m) {
         this.inetAddress = inetAddress;
         this.manager = m;
@@ -45,7 +47,7 @@ public class User {
     public long getClientId() {
         return clientId;
     }
-    
+
     public Character getCharacter() {
         return character;
     }
@@ -53,11 +55,11 @@ public class User {
     public void setCharacter(Character character) {
         this.character = character;
     }
-    
+
     public void signOfLife() {
         lastSignOfLife = System.currentTimeMillis();
     }
-    
+
     public boolean isAlife() {
         return lastSignOfLife + TIMEOUT < System.currentTimeMillis();
     }
@@ -69,7 +71,7 @@ public class User {
     public InetAddress getInetAddress() {
         return inetAddress;
     }
-    
+
     //???Kann man so vergleichen
     public boolean matchInetAddress(InetAddress ia) {
         return inetAddress.equals(ia);
@@ -79,9 +81,9 @@ public class User {
         return actualInteractionRequest;
     }
 
-    public void setActualInteractionRequest(InteractionRequest actualInteractionRequest) {
+    public synchronized void setActualInteractionRequest(InteractionRequest actualInteractionRequest) {
         this.actualInteractionRequest = actualInteractionRequest;
-        htmlCache.set(null);
+        htmlCache = null;
     }
 
     public boolean isDelivered() {
@@ -93,39 +95,39 @@ public class User {
     }
 
     public long getMessageId() {
-        if(actualInteractionRequest != null)
+        if (actualInteractionRequest != null) {
             return actualInteractionRequest.getMessageId();
-        else
-            return -1;
-    }
-    
-    public String getActualHTML() {
-        String htmlCacheString = this.htmlCache.get();
-        if(htmlCacheString != null) {
-            return htmlCacheString;
         } else {
-            this.htmlCache.set(HTMLHelper.generateHTMLContent(
-                    actualInteractionRequest.getTitel(),
-                    actualInteractionRequest.getChoices(),
-                    actualInteractionRequest.getMessageId()));
-            return this.htmlCache.get();
+            return -1;
         }
     }
-    
+
+    public synchronized String getActualHTML() {
+        if (htmlCache != null) {
+            return htmlCache;
+        } else {
+            htmlCache = HTMLHelper.generateHTMLContent(
+                    actualInteractionRequest.getTitel(),
+                    actualInteractionRequest.getChoices(),
+                    actualInteractionRequest.getMessageId());
+            return htmlCache;
+        }
+    }
+
     public void replyFromHTTP(int messageID, int answerID) {
-        if(actualInteractionRequest != null && actualInteractionRequest.getMessageId() == messageID) {
+        if (actualInteractionRequest != null && actualInteractionRequest.getMessageId() == messageID) {
             InteractionResponse response = new InteractionResponse(actualInteractionRequest, answerID);
             actualInteractionRequest = null;
             manager.react(response);
-            
+
         } else {
             System.err.println("Resonse doen't match Request");
         }
-        
+
     }
-    
+
     public String toString() {
-        if(inetAddress != null) {
+        if (inetAddress != null) {
             return "Client id=" + clientId + " address=" + InetAddressFormatter.formatAddress(inetAddress);
         } else {
             return "Client id=" + clientId;

@@ -18,7 +18,7 @@ public class ControlDirector implements Director {
     
     @Override
     public Object query(String request, Socket clientSocket) throws QueryException {
-        //System.out.println(request);
+        System.out.println(request);
         User client = clientManager.getOrAddClientForInetAddress(clientSocket.getInetAddress());
         
         if (request.equals("/") || request.equals("/index.html")) {
@@ -69,7 +69,7 @@ public class ControlDirector implements Director {
                 int answerID = Integer.valueOf(request.substring(request.lastIndexOf("?")+1));
                 client.replyFromHTTP(messageID, answerID);
             }
-            return null;
+            return ":)";
         } else {
             return "Fehler :(";
         }

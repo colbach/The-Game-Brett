@@ -33,15 +33,17 @@ public class SoundHelper {
         URL url = classloader.getResource(resource);
         AudioClip sound;
         sound = Applet.newAudioClip(url);
-        sounds.add(sound);
+        synchronized(sounds) {
+            sounds.add(sound);
+        }
         sound.play();
     }
     
     public static void stopSounds() {
-        ArrayList<AudioClip> copy = (ArrayList<AudioClip>) sounds.clone();
-        sounds.clear();
-        for(AudioClip s : copy) {
-            s.stop();
+        synchronized(sounds) {
+            for(AudioClip s : sounds)
+                s.stop();
+            sounds.clear();
         }
     }
     

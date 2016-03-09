@@ -4,6 +4,7 @@ import thegamebrett.action.ActionRequest;
 import thegamebrett.action.ActionResponse;
 import thegamebrett.action.request.GUIUpdateRequest;
 import thegamebrett.action.request.InteractionRequest;
+import thegamebrett.action.request.PlaySoundRequest;
 import thegamebrett.action.response.InteractionResponse;
 import thegamebrett.action.response.StartPseudoResonse;
 import thegamebrett.model.GameLogic;
@@ -11,6 +12,7 @@ import thegamebrett.model.Model;
 import thegamebrett.model.Player;
 import thegamebrett.model.elements.Field;
 import thegamebrett.model.elements.Figure;
+import thegamebrett.model.mediaeffect.SoundEffect;
 
 public class D_GameLogic extends GameLogic{
     
@@ -44,7 +46,7 @@ public class D_GameLogic extends GameLogic{
                     figure.setField(figure.getField().getNext()[0]);
                 }
                 requests.add(new GUIUpdateRequest(GUIUpdateRequest.GUIUPDATE_FIGURES));
-                
+                requests.add(new PlaySoundRequest(new SoundEffect("thegamebrett/sound/assets/Mouth_45.wav")));
                 Player p = getNextPlayer((D_Player) res.getConcerningInteractionRequest().getPlayer());
                 InteractionRequest ir = new InteractionRequest("Waehle einen Wert", new Object[]{new Integer(1), new Integer(2), new Integer(3)}, p, false, null);
                 sent = ir;
