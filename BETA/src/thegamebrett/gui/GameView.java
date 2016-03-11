@@ -1,10 +1,17 @@
 package thegamebrett.gui;
 
+import javafx.animation.Animation;
 import javafx.application.Platform;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
+import thegamebrett.gui.animation.SpriteAnimation;
 import thegamebrett.model.Model;
+import thegamebrett.model.elements.Figure;
 
 /**
  *
@@ -95,5 +102,43 @@ public class GameView extends Group {
             }
         }
 
+    }
+    
+    private Animation createAnimation(Image img, int columns, int count, int offX, int offY, int width, int height) {
+        
+        int COLUMNS  =  columns; //   4;
+        int COUNT    =  count;   //  10;
+        int OFFSET_X =  offX;    //  18;
+        int OFFSET_Y =  offY;    //  25;
+        int WIDTH    =  width;   // 374;
+        int HEIGHT   =  height;  // 243;
+        
+        
+        final ImageView imageView = new ImageView(img);       // create imageView with animation image | ImageView mit animationsbild erstellen
+        imageView.setViewport(new Rectangle2D(OFFSET_X, OFFSET_Y, WIDTH, HEIGHT)); // create view in an 2D Rectangle | view in einem 2D Rechteck erstellen
+        
+        // create animation with param. and cycle duration of 1sec.
+        // animation mit parameter erstellen und wiederholungsdauer auf 1sec. setzen
+        final Animation animation = new SpriteAnimation(
+                imageView,
+                Duration.millis(1000),
+                COUNT, COLUMNS,
+                OFFSET_X, OFFSET_Y,
+                WIDTH, HEIGHT
+        );
+        animation.setCycleCount(Animation.INDEFINITE);  // set cyclecount to infinity | anzahl wiederholungen auf unendlich setzen
+        //animation.setCycleCount(1);
+        animation.play();                               // set animation mode to play | animation abspielen
+
+        // keine ahnung wie animation zu canvas bzw. layout zuweisen....
+        return animation;
+    }
+
+    public void updateFigurePositionX(Figure figure, double positionX) {
+        figure.setRelativePositionX(positionX+1); // .setRelativePositionX(double d) implementieren und inkrementierung anpassen
+    }
+
+    public void updateFigurePositionY(Figure figure, double positionY) {
+        figure.setRelativePositionY(positionY+1); // .setRelativePositionY(double d) implementieren und inkrementierung anpassen
     }
 }
