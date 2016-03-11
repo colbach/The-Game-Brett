@@ -1,13 +1,16 @@
 package thegamebrett.gui;
 
 import java.util.HashMap;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 import thegamebrett.model.Model;
 import thegamebrett.model.elements.Board;
 import thegamebrett.model.elements.Element;
+import thegamebrett.model.elements.Figure;
 
 /**
  *
@@ -79,9 +82,22 @@ public class GameView extends Group {
             boolean updateFields = value == 1;
 
             if (updateFigures) {
-                Canvas[] updatedFigures = GUILoader.createFigures(gameModel).getFirst();
+                Canvas[] updatedFigures = GUILoader.createFigures(gameModel);
                 groupTop.getChildren().clear();
                 groupTop.getChildren().addAll(updatedFigures);
+                
+                for(Canvas c : updatedFigures) {
+                    Transition t = (Transition)c.getUserData();
+                    
+                    
+                    TranslateTransition tt = new TranslateTransition(Duration.millis(2000), c);
+                    tt.setByX(t.getNewX()-t.getOldX());
+                    tt.setByY(t.getNewY()-t.getOldY());
+                    System.out.println(t.getNewX() + " " + t.getOldX() + " " + t.getNewY() + " " + t.getOldY());
+                    System.out.println("t.newX-t.oldX="+(t.getNewX()-t.getOldX()) + " t.newY-t.oldY=" + (t.getNewY()-t.getOldY()));
+                    tt.play();
+                    
+                }
             }
 
             if (updateFields) {
@@ -95,6 +111,10 @@ public class GameView extends Group {
                 groupBack.getChildren().clear();
                 groupBack.getChildren().add(updatedBoardBackground);
             }
+            
+            try {
+                    Thread.sleep(1000);
+            } catch (InterruptedException ex) { }
         }
 
     }

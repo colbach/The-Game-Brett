@@ -44,9 +44,9 @@ public class D_GameLogic extends GameLogic{
                 int n = ((Integer)res.getChoice());
                 for(int i=0; i<n; i++) {
                     Figure figure = res.getConcerningInteractionRequest().getPlayer().getFigures()[0];
-                    figure.setRelativeHeight(figure.getRelativeHeight() + 0.005);
+                    //figure.setRelativeHeight(figure.getRelativeHeight() + 0.005);
                     figure.setField(figure.getField().getNext()[0]);
-                    ((D_Field)figure.getField()).blub();
+                    //((D_Field)figure.getField()).blub();
                     //figure.getField().getLayout().setBackgroundColor(Color.RED);
                 }
                 requests.add(new GUIUpdateRequest(GUIUpdateRequest.GUIUPDATE_ALL));
