@@ -3,6 +3,7 @@ package thegamebrett.gui.animation;
 import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.time;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.canvas.Canvas;
 import thegamebrett.gui.GameView;
 import thegamebrett.model.RelativePoint;
 import thegamebrett.model.elements.Field;
@@ -15,7 +16,7 @@ import thegamebrett.model.elements.Figure;
 public class Move_Task {
     
     private final GameView gameView;
-    private Figure figure;
+    private Canvas start;
     
     double startX;
     double startY;
@@ -23,15 +24,15 @@ public class Move_Task {
     double endY;
     
     
-    public Move_Task(GameView view, Figure figure, Field destination) {
+    public Move_Task(GameView view, Canvas start, Canvas destination) {
         this.gameView   = view;
-        this.figure     = figure;
+        this.start     = start;
         
-        this.startX = figure.getField().getRelativePosition().getXOnScreen();
-        this.startY = figure.getField().getRelativePosition().getYOnScreen();
+        this.startX = start.getLayoutX();
+        this.startY = start.getLayoutY();
         
-        this.endX = destination.getRelativePosition().getXOnScreen();
-        this.endY = destination.getRelativePosition().getYOnScreen();
+        this.endX = destination.getLayoutX();
+        this.endY = destination.getLayoutY();
     }
     
     protected Object call() throws Exception {
@@ -43,28 +44,26 @@ public class Move_Task {
             count = endY;
         }
         
-        for(double d = 0; d < count; d++) { // inkrementierung noch anpassen
+        for(double d = 0; d < count; d+=0.01) { // inkrementierung noch anpassen
             
             updatePosition();
             
             try {
                     Thread.sleep(80);
-                } catch (InterruptedException ex) {   
-                }
+                } catch (InterruptedException ex) { }
         }
         
         return null;
     }
     
     private void updatePosition() {
-        RelativePoint rPosition = figure.getRelativePosition();
-
+        
         if(startX < endX) {
-            gameView.updateFigurePositionX(figure, rPosition.getXOnScreen());
+            
         }
         
         if(startY < endY) {
-            gameView.updateFigurePositionY(figure);
+            
         }
     }
 }

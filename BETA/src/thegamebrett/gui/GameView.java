@@ -134,11 +134,11 @@ public class GameView extends Group {
         return animation;
     }
 
-    public void updateFigurePositionX(Figure figure, double positionX) {
-        figure.setRelativePositionX(positionX+1); // .setRelativePositionX(double d) implementieren und inkrementierung anpassen
+    public void updateFigurePositionX(Canvas canvas) {
+         canvas.setLayoutX(canvas.getLayoutX()+0.01);// .setRelativePositionX(double d) implementieren und inkrementierung anpassen
     }
 
-    public void updateFigurePositionY(Figure figure, double positionY) {
-        figure.setRelativePositionY(positionY+1); // .setRelativePositionY(double d) implementieren und inkrementierung anpassen
+    public void updateFigurePositionY(Canvas canvas) {
+         canvas.setLayoutY(canvas.getLayoutY()+0.01);// .setRelativePositionY(double d) implementieren und inkrementierung anpassen
     }
 }
