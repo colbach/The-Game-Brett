@@ -27,6 +27,12 @@ public class D_Field extends Field{
     public RelativePoint getRelativePosition() {
         return position;
     }
+    
+    public void blub() {
+        registerChange();
+        height += 0.01;
+        width += 0.01;
+    }
 
     @Override
     public double getWidthRelative() {
@@ -54,6 +60,7 @@ public class D_Field extends Field{
     }
 
     public void setPosition(RelativePoint position) {
+        registerChange();
         this.position = position;
     }
 

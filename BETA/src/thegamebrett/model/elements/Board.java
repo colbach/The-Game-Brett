@@ -7,7 +7,7 @@ import thegamebrett.model.Layout;
  *
  * @author Christian Colbach
  */
-public abstract class Board implements Element {
+public abstract class Board extends Element {
     
     //Anz der Felder
     public abstract int getFieldLength();

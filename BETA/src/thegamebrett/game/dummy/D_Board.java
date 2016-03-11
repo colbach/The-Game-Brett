@@ -27,6 +27,7 @@ public class D_Board extends Board{
     }
     
     public ArrayList<D_Field> createFields(){
+        
         ArrayList<D_Field> al = new ArrayList<>();
         
         Layout fieldLayout = new Layout();
@@ -36,22 +37,22 @@ public class D_Board extends Board{
         {
             int offX = 150;
             for(int i=0; i<4; i++) {
-            al.add(new D_Field(0.1f, 0.1f, new RelativePoint(offX, 150), fieldLayout));
+            al.add(new D_Field(0.15f, 0.1f, new RelativePoint(offX, 150), fieldLayout));
             offX += 200;
             }
         }
         {
-            al.add(new D_Field(0.1f, 0.1f, new RelativePoint(750, 450), fieldLayout));
+            al.add(new D_Field(0.15f, 0.1f, new RelativePoint(750, 450), fieldLayout));
         }
         {
             int offX = 750;
             for(int i=0; i<4; i++) {
-                al.add(new D_Field(0.1f, 0.1f, new RelativePoint(offX, 700), fieldLayout));
+                al.add(new D_Field(0.15f, 0.1f, new RelativePoint(offX, 700), fieldLayout));
                 offX -= 200;
             }
         }
         {
-            al.add(new D_Field(0.1f, 0.1f, new RelativePoint(150, 450), fieldLayout));
+            al.add(new D_Field(0.15f, 0.1f, new RelativePoint(150, 450), fieldLayout));
         }
         for(int i=0; i<al.size(); i++) {
             al.get(i).setNext(al.get((i+1)%al.size()));
@@ -79,6 +80,7 @@ public class D_Board extends Board{
     }
     
     public void setLayout(Layout layout) {
+        registerChange();
         this.boardLayout = layout;
     }
 

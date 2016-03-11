@@ -6,7 +6,7 @@ import thegamebrett.model.Player;
 /**
  * @author Christian Colbach
  */
-public class Figure implements Element {
+public class Figure extends Element {
     
     /** Besitzer dieser Figur */
     private Player owner;
@@ -40,6 +40,7 @@ public class Figure implements Element {
     }
 
     public void setLayout(Layout layout) {
+        registerChange();
         this.layout = layout;
     }
 
@@ -48,14 +49,17 @@ public class Figure implements Element {
     }
 
     public void setField(Field field) {
+        registerChange();
         this.field = field;
     }
 
     public double getRelativeWidth() {
+        registerChange();
         return relativeWidth;
     }
 
     public void setRelativeWidth(double relativeWidth) {
+        registerChange();
         this.relativeWidth = relativeWidth;
     }
 
@@ -64,6 +68,7 @@ public class Figure implements Element {
     }
 
     public void setRelativeHeight(double relativeHeight) {
+        registerChange();
         this.relativeHeight = relativeHeight;
     }
     

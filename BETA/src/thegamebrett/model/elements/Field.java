@@ -9,7 +9,7 @@ import thegamebrett.model.mediaeffect.MediaEffect;
  *
  * @author Christian Colbach
  */
-public abstract class Field implements Element {
+public abstract class Field extends Element {
     
     /** gibt relative horizontale und vertikale Position zurueck. Wert [0d, 1d]*/
     public abstract RelativePoint getRelativePosition();

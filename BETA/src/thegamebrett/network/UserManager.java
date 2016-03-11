@@ -31,7 +31,7 @@ public class UserManager {
     /**
      * Liste in der Devices sich in System anmelden koenen
      */
-    private User[] systemClients = new User[systemClientNames.length];
+    protected User[] systemClients = new User[systemClientNames.length];
 
     public UserManager(Manager manager) {
         this.manager = manager;

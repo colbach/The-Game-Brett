@@ -1,10 +1,13 @@
 package thegamebrett.gui;
 
+import java.util.HashMap;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.shape.Rectangle;
 import thegamebrett.model.Model;
+import thegamebrett.model.elements.Board;
+import thegamebrett.model.elements.Element;
 
 /**
  *
@@ -26,7 +29,7 @@ public class GameView extends Group {
     Group groupBack;
     Group groupMid;
     Group groupTop;
-
+    
     public GameView() {
         super();
 
@@ -37,7 +40,6 @@ public class GameView extends Group {
         getChildren().add(groupMid);
         getChildren().add(groupTop);
 
-        System.out.println(getChildren().size());
     }
 
     public void setGameModel(Model gameModel) {
@@ -77,13 +79,13 @@ public class GameView extends Group {
             boolean updateFields = value == 1;
 
             if (updateFigures) {
-                Canvas[] updatedFigures = GUILoader.createFigures(gameModel);
+                Canvas[] updatedFigures = GUILoader.createFigures(gameModel).getFirst();
                 groupTop.getChildren().clear();
                 groupTop.getChildren().addAll(updatedFigures);
             }
 
             if (updateFields) {
-                Canvas[] updatedFields = GUILoader.createFields(gameModel.getBoard());
+                Canvas[] updatedFields = GUILoader.createFields(gameModel.getBoard()).getFirst();
                 groupMid.getChildren().clear();
                 groupMid.getChildren().addAll(updatedFields);
             }
@@ -96,4 +98,5 @@ public class GameView extends Group {
         }
 
     }
+    
 }
