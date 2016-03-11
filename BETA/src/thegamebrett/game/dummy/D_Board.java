@@ -79,6 +79,7 @@ public class D_Board extends Board{
     }
     
     public void setLayout(Layout layout) {
+        registerChange();
         this.boardLayout = layout;
     }
 

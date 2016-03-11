@@ -54,6 +54,7 @@ public class D_Field extends Field{
     }
 
     public void setPosition(RelativePoint position) {
+        registerChange();
         this.position = position;
     }
 

@@ -1,7 +1,7 @@
 package thegamebrett.model;
 
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import java.awt.Image;
 
 /**
  * @author Christian Colbach
@@ -12,11 +12,13 @@ public class Layout {
     public static final int BACKGROUND_IMAGE_FILL_FACTOR_FILL = 0;
     /** Hintergrungbild wird ganz angezeigt (Bild ist auf jeden Fall ganz im Feld)*/
     public static final int BACKGROUND_IMAGE_FILL_FACTOR_ASPECT = 1;
+    /** Hintergrungbild wird ganz angezeigt (Bild ist auf jeden Fall ganz im Feld)*/
+    public static final int BACKGROUND_IMAGE_FILL_FACTOR_REPEAT = 2;
     
     /**  Formfaktor quadratisch */
-    public static final int FORM_FACTOR_SQUARE = 0;
+    public static final int FORM_FACTOR_SQUARE = 3;
     /**  Formfaktor rund */
-    public static final int FORM_FACTOR_OVAL = 0;
+    public static final int FORM_FACTOR_OVAL = 4;
     
     /** gibt an ob Feld sichtbar ist */
     private boolean visible = true;

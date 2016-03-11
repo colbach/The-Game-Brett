@@ -4,6 +4,7 @@ import thegamebrett.Manager;
 import thegamebrett.action.request.InteractionRequest;
 import thegamebrett.action.request.MobileRequest;
 import thegamebrett.network.NetworkManager;
+import thegamebrett.network.NetworkManagerDummy;
 import thegamebrett.network.PlayerNotRegisteredException;
 import thegamebrett.network.UserManager;
 
@@ -16,11 +17,16 @@ public class MobileManager {
     private NetworkManager networkManager;
     private UserManager userManager;
     
+    private static final boolean USE_DUMMY_NETWORK_MANAGER = true; // fuer Debuging
+    
     public MobileManager(Manager manager) {
         this.manager = manager;
         userManager = new UserManager(manager);
-        //this.networkManager = new NetworkManagerDummy(userManager, manager);
-        this.networkManager = new NetworkManager(userManager, manager);
+        if(USE_DUMMY_NETWORK_MANAGER) {
+            this.networkManager = new NetworkManagerDummy(userManager, manager);
+        } else {
+            this.networkManager = new NetworkManager(userManager, manager);
+        }
     }
 
     public void react(MobileRequest mobileRequest) throws PlayerNotRegisteredException {

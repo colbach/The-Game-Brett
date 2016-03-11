@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
 import thegamebrett.model.Layout;
 import thegamebrett.model.Model;
 import thegamebrett.model.Player;
@@ -30,6 +32,7 @@ public class GUILoader {
         double w = ScreenResolution.relativeToPixelX(field.getWidthRelative());
         double h = ScreenResolution.relativeToPixelY(field.getHeightRelative());
         
+        /*
         Layout layout = field.getLayout();
         
         Canvas c = new Canvas(w, h);
@@ -42,7 +45,8 @@ public class GUILoader {
         gc.setLineWidth(layout.getBorder());
         gc.setStroke(layout.getBorderColor());
         gc.strokeRect(0, 0, w, h);
-        
+        */
+        Canvas c = createCanvas(field.getLayout(), x, y, w, h);
         
         //group.getChildren().add(rect);
         //group.addField(rect);
@@ -102,25 +106,7 @@ public class GUILoader {
         double x = figure.getField().getRelativePosition().getXOnScreen() + ScreenResolution.relativeToPixelX(figure.getField().getWidthRelative())/2 - w/2;
         double y = figure.getField().getRelativePosition().getYOnScreen() + ScreenResolution.relativeToPixelY(figure.getField().getHeightRelative())/2 - h/2;
         
-        //System.out.println(x + " " + y + " " + w + " " + h + " ");
-        
-        Layout layout = figure.getLayout();
-        
-        Canvas c = new Canvas(w+layout.getBorder()*4, h+layout.getBorder()*4);
-        c.setLayoutX(ScreenResolution.getContentXOff()+x-layout.getBorder()*2);
-        c.setLayoutY(ScreenResolution.getContentYOff()+y-layout.getBorder()*2);
-        
-        GraphicsContext gc = c.getGraphicsContext2D();
-        gc.setFill(layout.getBackgroundColor());
-        gc.fillOval(layout.getBorder()*2, layout.getBorder()*2, w, h);
-        gc.setLineWidth(layout.getBorder());
-        gc.setStroke(layout.getBorderColor());
-        gc.strokeOval(layout.getBorder()*2, layout.getBorder()*2, w, h);
-        
-        //group.getChildren().add(rect);
-        //group.addField(rect);
-        
-        c.toFront();
+        Canvas c = createCanvas(figure.getLayout(), x, y, w, h);
         
         return c;
     }
@@ -138,5 +124,53 @@ public class GUILoader {
         gc.fillRect(0, 0, w, h);
         
         return c;
+    }
+    
+    private static Canvas createCanvas(Layout layout, double x, double y, double w, double h) {
+        
+        Canvas c = new Canvas(w+layout.getBorder()*4, h+layout.getBorder()*4);
+        c.setLayoutX(ScreenResolution.getContentXOff()+x-layout.getBorder()*2);
+        c.setLayoutY(ScreenResolution.getContentYOff()+y-layout.getBorder()*2);
+        
+        GraphicsContext gc = c.getGraphicsContext2D();
+        
+        System.out.println(layout.getFormFactor());
+        
+        if(layout.getFormFactor() == Layout.FORM_FACTOR_OVAL) {
+            setFill(gc, layout, w, h);
+            gc.fillOval(layout.getBorder()*2, layout.getBorder()*2, w, h);
+            gc.setLineWidth(layout.getBorder());
+            gc.setStroke(layout.getBorderColor());
+            gc.strokeOval(layout.getBorder()*2, layout.getBorder()*2, w, h);
+        } else if(layout.getFormFactor() == Layout.FORM_FACTOR_SQUARE) {
+            setFill(gc, layout, w, h);
+            gc.fillRect(layout.getBorder()*2, layout.getBorder()*2, w, h);
+            gc.setLineWidth(layout.getBorder());
+            gc.setStroke(layout.getBorderColor());
+            gc.strokeRect(layout.getBorder()*2, layout.getBorder()*2, w, h);
+        } else {
+            System.err.println("Unbekannter Formfaktor");
+        }
+        
+        
+        return c;
+    }
+    
+    private static void setFill(GraphicsContext gc, Layout l, double w, double h) {
+        if(l.getBackgroundImage() != null) {
+            Image image = l.getBackgroundImage();
+            Image bg = l.getBackgroundImage();
+            ImagePattern imagePattern;
+            if(l.getBackgroundImageFillFactor() == Layout.BACKGROUND_IMAGE_FILL_FACTOR_REPEAT)
+                imagePattern = new ImagePattern(image, 0, 0, image.getWidth(), image.getHeight(), false);
+            else if(l.getBackgroundImageFillFactor() == Layout.BACKGROUND_IMAGE_FILL_FACTOR_FILL) {
+                imagePattern = new ImagePattern(image, 0, 0, w, h, false); // nicht getestet
+            } else {
+                imagePattern = new ImagePattern(image, 0, 0, w, h, false); // falsch
+            }
+            gc.setFill(imagePattern);
+        } else {
+            gc.setFill(l.getBackgroundColor());
+        }
     }
 }
