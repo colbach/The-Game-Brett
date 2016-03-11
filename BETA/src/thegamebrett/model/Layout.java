@@ -8,6 +8,27 @@ import javafx.scene.paint.Color;
  */
 public class Layout {
     
+    private volatile Boolean changeRegistrar = true;
+
+    /**
+     * Diese Methode muss bei JEDER AENDERUNG aufgerufen werden damit UI diese
+     * Aktualisiert.
+     */
+    public void registerChange() {
+        changeRegistrar = true;
+    }
+
+    public boolean isChangedSinceLastCall() {
+        synchronized (changeRegistrar) {
+            if (changeRegistrar) {
+                changeRegistrar = false;
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+    
     /**  Hintergrungbild füllt ganzes Feld (Bild wird abgeschnitten damit es passt)*/
     public static final int BACKGROUND_IMAGE_FILL_FACTOR_FILL = 0;
     /** Hintergrungbild wird ganz angezeigt (Bild ist auf jeden Fall ganz im Feld)*/
@@ -67,6 +88,7 @@ public class Layout {
     }
 
     public void setBackgroundImage(Image backgroundImage) {
+        registerChange();
         this.backgroundImage = backgroundImage;
     }
 
@@ -75,6 +97,7 @@ public class Layout {
     }
 
     public void setBackgroundImageFillFactor(int backgroundImageFillFactor) {
+        registerChange();
         this.backgroundImageFillFactor = backgroundImageFillFactor;
     }
 
@@ -83,6 +106,7 @@ public class Layout {
     }
 
     public void setIconImage(Image iconImage) {
+        registerChange();
         this.iconImage = iconImage;
     }
 
@@ -91,6 +115,7 @@ public class Layout {
     }
 
     public void setBackgroundColor(Color backgroundColor) {
+        registerChange();
         this.backgroundColor = backgroundColor;
     }
 
@@ -99,6 +124,7 @@ public class Layout {
     }
 
     public void setTitleColor(Color titleColor) {
+        registerChange();
         this.titleColor = titleColor;
     }
 
@@ -107,6 +133,7 @@ public class Layout {
     }
 
     public void setTitleScaleFactor(float titleScaleFactor) {
+        registerChange();
         this.titleScaleFactor = titleScaleFactor;
     }
 
@@ -115,6 +142,7 @@ public class Layout {
     }
 
     public void setTitle(String title) {
+        registerChange();
         this.title = title;
     }
 
@@ -123,6 +151,7 @@ public class Layout {
     }
 
     public void setSubtextColor(Color subtextColor) {
+        registerChange();
         this.subtextColor = subtextColor;
     }
 
@@ -131,6 +160,7 @@ public class Layout {
     }
 
     public void setSubtextScaleFactor(float subtextScaleFactor) {
+        registerChange();
         this.subtextScaleFactor = subtextScaleFactor;
     }
 
@@ -139,6 +169,7 @@ public class Layout {
     }
 
     public void setSubtext(String subtext) {
+        registerChange();
         this.subtext = subtext;
     }
 
@@ -147,6 +178,7 @@ public class Layout {
     }
 
     public void setFormFactor(int formFactor) {
+        registerChange();
         this.formFactor = formFactor;
     }
 
@@ -165,6 +197,7 @@ public class Layout {
     }
 
     public void setVisible(boolean visible) {
+        registerChange();
         this.visible = visible;
     }
 
@@ -173,6 +206,7 @@ public class Layout {
     }
 
     public void setBorder(float border) {
+        registerChange();
         this.border = border;
     }
 
@@ -181,6 +215,7 @@ public class Layout {
     }
 
     public void setBorderColor(Color borderColor) {
+        registerChange();
         this.borderColor = borderColor;
     }
     

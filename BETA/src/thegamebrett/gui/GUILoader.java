@@ -10,19 +10,61 @@ import thegamebrett.model.Layout;
 import thegamebrett.model.Model;
 import thegamebrett.model.Player;
 import thegamebrett.model.elements.Board;
+import thegamebrett.model.elements.Element;
 import thegamebrett.model.elements.Field;
 import thegamebrett.model.elements.Figure;
 
 public class GUILoader {
+    
+    public static class Transition {
+        public final double oldX, oldY, newX, newY;
+        public Transition(double oldX, double oldY, double newX, double newY) {
+            this.oldX = oldX;
+            this.oldY = oldY;
+            this.newX = newX;
+            this.newY = newY;
+        }
+        public double getOldX() {  return oldX;  }
+        public double getOldY() {  return oldY;  }
+        public double getNewX() {  return newX;  }
+        public double getNewY() {  return newY;  }
+    }
+    
+    public static class Pair<Y, V> {
+        private Y y;
+        private V v;
+        public Pair(Y y, V v) {
+            this.y = y;
+            this.v = v;
+        }
+        public Y getFirst() { return y; }
+        public V getSecond() { return v; }
+    }
+    
+    private static HashMap<Element, Canvas> drawnElements = new HashMap<>();
 
-    protected static Canvas[] createFields(Board board) {
-        
+    public static void clear() {
+        drawnElements.clear();
+    }
+    
+    protected static Pair<Canvas[], HashMap<Canvas, GUILoader.Transition>> createFields(Board board) {
+        HashMap<Canvas, GUILoader.Transition> movedFieldsCanvas = new HashMap<>();
         Canvas[] rs = new Canvas[board.getFieldLength()];
         for(int i=0; i<board.getFieldLength(); i++) {
-            rs[i] = createField(board.getField(i));
+            Field f = board.getField(i);
+            Canvas c = drawnElements.get(f);
+            if(c == null || f.isChangedSinceLastCall()) {
+                Canvas newC = createField(f);
+                if(c != null && (c.getLayoutX()!=newC.getLayoutX() || c.getLayoutY()!=newC.getLayoutY())) {
+                    movedFieldsCanvas.put(newC, new Transition(c.getLayoutX(), c.getLayoutY(), newC.getLayoutX(), newC.getLayoutY()));
+                }
+                rs[i] = newC;
+                drawnElements.put(f, newC);
+            } else {
+                rs[i] = c;
+            }
         }
-        
-        return rs;
+        return new Pair<Canvas[], HashMap<Canvas, GUILoader.Transition>>(rs, movedFieldsCanvas);
     }
     
     private static Canvas createField(Field field) {
@@ -32,31 +74,14 @@ public class GUILoader {
         double w = ScreenResolution.relativeToPixelX(field.getWidthRelative());
         double h = ScreenResolution.relativeToPixelY(field.getHeightRelative());
         
-        /*
-        Layout layout = field.getLayout();
-        
-        Canvas c = new Canvas(w, h);
-        c.setLayoutX(ScreenResolution.getContentXOff()+x);
-        c.setLayoutY(ScreenResolution.getContentYOff()+y);
-        
-        GraphicsContext gc = c.getGraphicsContext2D();
-        gc.setFill(layout.getBackgroundColor());
-        gc.fillRect(0, 0, w, h);
-        gc.setLineWidth(layout.getBorder());
-        gc.setStroke(layout.getBorderColor());
-        gc.strokeRect(0, 0, w, h);
-        */
         Canvas c = createCanvas(field.getLayout(), x, y, w, h);
-        
-        //group.getChildren().add(rect);
-        //group.addField(rect);
-        
         
         return c;
     }
     
-    protected static Canvas[] createFigures(Model model) {
-        
+    protected static Pair<Canvas[], HashMap<Canvas, GUILoader.Transition>> createFigures(Model model) {
+        HashMap<Canvas, GUILoader.Transition> movedFiguresCanvas = new HashMap<>();
+       
         int length = 0;
         for(Player p : model.getPlayers()) {
             length += p.getFigures().length;
@@ -72,7 +97,20 @@ public class GUILoader {
                 Figure[] fs = p.getFigures();
 
                 for (Figure f : fs) {
-                    rs[i] = createFigure(f);
+                    ////////
+                    Canvas c = drawnElements.get(f);
+                    if(c == null || f.isChangedSinceLastCall()) {
+                        Canvas newC = createFigure(f);
+                        if(c != null && (c.getLayoutX()!=newC.getLayoutX() || c.getLayoutY()!=newC.getLayoutY())) {
+                            movedFiguresCanvas.put(newC, new Transition(c.getLayoutX(), c.getLayoutY(), newC.getLayoutX(), newC.getLayoutY()));
+                        }
+                        rs[i] = newC;
+                        drawnElements.put(f, newC);
+                    } else {
+                        rs[i] = c;
+                    }
+                    ////////                    
+                    
                     if (fieldMap.containsKey(f.getField())) {
                         fieldMap.get(f.getField()).add(rs[i]);
                     } else {
@@ -91,13 +129,28 @@ public class GUILoader {
                 if (al.size() > 1) {
                     double shift = al.get(0).getWidth() / 4;
                     for (int i = 0; i < al.size(); i++) {
-                        al.get(i).setLayoutX(al.get(i).getLayoutX() + shifts[i%4][0]*shift);
-                        al.get(i).setLayoutY(al.get(i).getLayoutY() + shifts[i%4][1]*shift);
+                        Canvas critical = al.get(i);
+                        Transition correctedTransition = movedFiguresCanvas.get(critical);
+                        double newX = al.get(i).getLayoutX() + shifts[i%4][0]*shift;
+                        double newY = al.get(i).getLayoutY() + shifts[i%4][1]*shift;
+                        double oldX;
+                        double oldY;
+                        if(correctedTransition == null) {
+                            oldX = critical.getLayoutX();
+                            oldY = critical.getLayoutY();
+                        } else {
+                            oldX = correctedTransition.getOldX();
+                            oldY = correctedTransition.getOldY();
+                            movedFiguresCanvas.remove(correctedTransition);
+                        }
+                        movedFiguresCanvas.put(critical, new Transition(oldX, oldY, newX, newY));
+                        critical.setLayoutX(newX);
+                        critical.setLayoutY(newY);
                     }
                 }
             }
         }
-        return rs;
+        return new Pair<Canvas[], HashMap<Canvas, GUILoader.Transition>>(rs, movedFiguresCanvas);
     }
     
     private static Canvas createFigure(Figure figure) {
