@@ -2,7 +2,10 @@ package thegamebrett.gui;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import javafx.collections.ObservableList;
 import javafx.geometry.Point2D;
+import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -68,9 +71,9 @@ public class GUILoader {
         return c;
     }
     
-    protected static Canvas[] createFigures(Model model) {
+    protected static Canvas[] createFigures(Model model, ObservableList<Node> children) {
         //HashMap<Canvas, Transition> movedFiguresCanvas = new HashMap<>();
-       
+
         int length = 0;
         for(Player p : model.getPlayers()) {
             length += p.getFigures().length;
@@ -91,57 +94,53 @@ public class GUILoader {
                     if(c == null) {
                         c = createFigure(f);
                         c.setUserData(new Transition(c.getLayoutX(), c.getLayoutY(), c.getLayoutX(), c.getLayoutY()));
+                        children.add(c);
                     } else if(f.isChangedSinceLastCall()) {
                         Transition lastT = (Transition)c.getUserData();
+                        children.remove(c);
                         c = createFigure(f);
                         c.setUserData(new Transition(lastT.getNewX(), lastT.getNewY(), c.getLayoutX(), c.getLayoutY()));
                         c.setLayoutX(lastT.getNewX());
                         c.setLayoutY(lastT.getNewY());
+                        children.add(c);
                     } else {
-                        Canvas tmp = createFigure(f);
+                        Canvas tmp = createFigure(f); // aendern!!!!!
                         Transition lastT = (Transition)c.getUserData();
                         c.setUserData(new Transition(lastT.getNewX(), lastT.getNewY(), tmp.getLayoutX(), tmp.getLayoutY()));
                     }
                     rs[i] = c;
                     drawnElements.put(f, c);            
                     
-                    /*if (fieldMap.containsKey(f.getField())) {
+                    if (fieldMap.containsKey(f.getField())) {
                         fieldMap.get(f.getField()).add(rs[i]);
                     } else {
                         ArrayList<Canvas> al = new ArrayList<>();
                         al.add(rs[i]);
                         fieldMap.put(f.getField(), al);
                     }
-                    */
+                    
                     i++;
                 }
             }
         }
         {
-            /*final float[][] shifts = new float[][]{{-1, -1}, {1, 1}, {1, -1}, {-1, 1}};
+            final float[][] shifts = new float[][]{{-1, -1}, {1, 1}, {1, -1}, {-1, 1}};
             for (ArrayList<Canvas> al : fieldMap.values()) {
                 if (al.size() > 1) {
                     double shift = al.get(0).getWidth() / 4;
                     for (int i = 0; i < al.size(); i++) {
                         Canvas critical = al.get(i);
                         Transition transition = (Transition)critical.getUserData();
-                        double newX = al.get(i).getLayoutX() + shifts[i%4][0]*shift;
-                        double newY = al.get(i).getLayoutY() + shifts[i%4][1]*shift;
+                        double newX = transition.getNewX() + shifts[i%4][0]*shift;
+                        double newY = transition.getNewY() + shifts[i%4][1]*shift;
                         double oldX;
                         double oldY;
-                        if(transition == null) {
-                            oldX = critical.getLayoutX();
-                            oldY = critical.getLayoutY();
-                        } else {
-                            oldX = transition.getOldX();
-                            oldY = transition.getOldY();
-                        }
-                        
-                        critical.setUserData(new Transition(oldX, oldY, newX, newY));
+                        System.out.println("newX="+newX + " transition.getNewX()="+transition.getNewX());
+                        critical.setUserData(new Transition(transition.getOldX(), transition.getOldY(), newX, newY));
                         
                     }
                 }
-            }*/
+            }
         }
         return rs;
     }

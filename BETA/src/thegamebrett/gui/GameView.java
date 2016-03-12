@@ -1,9 +1,11 @@
 package thegamebrett.gui;
 
 import java.util.HashMap;
+import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
@@ -81,25 +83,6 @@ public class GameView extends Group {
             }
             boolean updateFields = value == 1;
 
-            if (updateFigures) {
-                Canvas[] updatedFigures = GUILoader.createFigures(gameModel);
-                groupTop.getChildren().clear();
-                groupTop.getChildren().addAll(updatedFigures);
-                
-                for(Canvas c : updatedFigures) {
-                    Transition t = (Transition)c.getUserData();
-                    
-                    
-                    TranslateTransition tt = new TranslateTransition(Duration.millis(2000), c);
-                    tt.setByX(t.getNewX()-t.getOldX());
-                    tt.setByY(t.getNewY()-t.getOldY());
-                    System.out.println(t.getNewX() + " " + t.getOldX() + " " + t.getNewY() + " " + t.getOldY());
-                    System.out.println("t.newX-t.oldX="+(t.getNewX()-t.getOldX()) + " t.newY-t.oldY=" + (t.getNewY()-t.getOldY()));
-                    tt.play();
-                    
-                }
-            }
-
             if (updateFields) {
                 Canvas[] updatedFields = GUILoader.createFields(gameModel.getBoard()).getFirst();
                 groupMid.getChildren().clear();
@@ -112,9 +95,29 @@ public class GameView extends Group {
                 groupBack.getChildren().add(updatedBoardBackground);
             }
             
-            try {
+            /*try {
                     Thread.sleep(1000);
-            } catch (InterruptedException ex) { }
+            } catch (InterruptedException ex) { }*/
+            
+            if (updateFigures) {
+                /*Canvas[] updatedFigures =*/ GUILoader.createFigures(gameModel, groupTop.getChildren());
+                //groupTop.getChildren().clear();
+                //groupTop.getChildren().addAll(updatedFigures);
+                
+                for(Node c : groupTop.getChildren()) {
+                    Transition t = (Transition)c.getUserData();
+                    if(t.getNewX() != t.getOldX() || t.getNewY() != t.getOldY()) {
+                        TranslateTransition tt = new TranslateTransition(Duration.millis(2000), c);
+                    
+                        tt.setByX(t.getNewX()-t.getOldX());
+                        tt.setByY(t.getNewY()-t.getOldY());
+                        System.out.println(t.getNewX() + " " + t.getOldX() + " " + t.getNewY() + " " + t.getOldY());
+                        System.out.println("t.newX-t.oldX="+(t.getNewX()-t.getOldX()) + " t.newY-t.oldY=" + (t.getNewY()-t.getOldY()));
+                        tt.play();
+                    }
+                    
+                }
+            }
         }
 
     }

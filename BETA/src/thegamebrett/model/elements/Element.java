@@ -13,7 +13,7 @@ public abstract class Element {
 
     /**
      * Diese Methode muss bei JEDER AENDERUNG aufgerufen werden damit UI diese
-     * Aktualisiert.
+     * Aktualisiert. AUSNAHME: Positionsaenderungen
      */
     public void registerChange() {
         changeRegistrar = true;
