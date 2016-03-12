@@ -60,7 +60,7 @@ public class D_Field extends Field{
     }
 
     public void setPosition(RelativePoint position) {
-        registerChange();
+        //registerChange(); // IST KEIN CHANGE!!!
         this.position = position;
     }
 
