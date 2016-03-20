@@ -72,7 +72,6 @@ public class GUILoader {
     }
     
     protected static Canvas[] createFigures(Model model, ObservableList<Node> children) {
-        //HashMap<Canvas, Transition> movedFiguresCanvas = new HashMap<>();
 
         int length = 0;
         for(Player p : model.getPlayers()) {

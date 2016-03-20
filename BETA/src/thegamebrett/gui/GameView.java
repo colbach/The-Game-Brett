@@ -82,7 +82,11 @@ public class GameView extends Group {
                 value -= 2;
             }
             boolean updateFields = value == 1;
-
+            
+            if (updateFigures) { // Figuren erzeugen
+                GUILoader.createFigures(gameModel, groupTop.getChildren());
+            }
+            
             if (updateFields) {
                 Canvas[] updatedFields = GUILoader.createFields(gameModel.getBoard()).getFirst();
                 groupMid.getChildren().clear();
@@ -95,15 +99,8 @@ public class GameView extends Group {
                 groupBack.getChildren().add(updatedBoardBackground);
             }
             
-            /*try {
-                    Thread.sleep(1000);
-            } catch (InterruptedException ex) { }*/
             
-            if (updateFigures) {
-                /*Canvas[] updatedFigures =*/ GUILoader.createFigures(gameModel, groupTop.getChildren());
-                //groupTop.getChildren().clear();
-                //groupTop.getChildren().addAll(updatedFigures);
-                
+            if (updateFigures) { // Figuren animieren
                 for(Node c : groupTop.getChildren()) {
                     Transition t = (Transition)c.getUserData();
                     if(t.getNewX() != t.getOldX() || t.getNewY() != t.getOldY()) {
@@ -115,7 +112,6 @@ public class GameView extends Group {
                         System.out.println("t.newX-t.oldX="+(t.getNewX()-t.getOldX()) + " t.newY-t.oldY=" + (t.getNewY()-t.getOldY()));
                         tt.play();
                     }
-                    
                 }
             }
         }
