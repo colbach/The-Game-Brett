@@ -1,13 +1,7 @@
 package thegamebrett.gui.animation;
 
-import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.time;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.scene.canvas.Canvas;
 import thegamebrett.gui.GameView;
-import thegamebrett.model.RelativePoint;
-import thegamebrett.model.elements.Field;
-import thegamebrett.model.elements.Figure;
 
 /**
  *
@@ -59,7 +53,7 @@ public class Move_Task {
     private void updatePosition() {
         
         if(startX < endX) {
-            
+            updateFigurePositionX();
         }
         
         if(startY < endY) {
