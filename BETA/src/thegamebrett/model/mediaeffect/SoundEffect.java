@@ -14,23 +14,26 @@ public class SoundEffect {
     /** Referenz auf Sounddatei. Format: .wav */
     private String resource;
     
-    /** laenge des SoundClips */
-    private double duration;
+    private long loopInterval;
+    
+    private int loopCount;
     
     /** gibt an ob Clip geloopt werden darf.
      * Wenn false kann clip kürzer als duration sein, wenn true wird clip so lange wiederholt bis duration fertig
      */
     private boolean loop;
 
-    public SoundEffect(String resource, double duration, boolean loop) {
+    public SoundEffect(String resource, boolean loop, long loopInterval, int loopCount) {
         this.resource = resource;
-        this.duration = duration;
+        this.loopInterval = loopInterval;
         this.loop = loop;
+        this.loopCount = loopCount;
     }
     
     public SoundEffect(String resource) {
         this.resource = resource;
-        this.duration = Double.NaN;
+        this.loopInterval = 0;
+        this.loopCount = 1;
         this.loop = false;
     }
 
@@ -42,12 +45,20 @@ public class SoundEffect {
         this.resource = resource;
     }
 
-    public double getDuration() {
-        return duration;
+    public long getLoopInterval() {
+        return loopInterval;
     }
 
-    public void setDuration(double duration) {
-        this.duration = duration;
+    public void setLoopInterval(long loopInterval) {
+        this.loopInterval = loopInterval;
+    }
+
+    public int getLoopCount() {
+        return loopCount;
+    }
+
+    public void setLoopCount(int loopCount) {
+        this.loopCount = loopCount;
     }
 
     public boolean isLoop() {
@@ -57,6 +68,7 @@ public class SoundEffect {
     public void setLoop(boolean loop) {
         this.loop = loop;
     }
+
     
     
 }

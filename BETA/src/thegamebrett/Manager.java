@@ -41,8 +41,6 @@ public class Manager {
         return gui;
     }
     
-    
-    
     public Manager(GUIApplication gui) {
         soundManager = new SoundManager(this);
         mobileManager = new MobileManager(this);
@@ -84,8 +82,10 @@ public class Manager {
     
     /** reicht ActionResponse-Object durch und gibt ActionRequest-Object zuruek */
     public void react(ActionResponse response) {
-        
-        ActionRequest[] ars = model.react(response);
+        ActionRequest[] ars;
+        synchronized(model) {
+            ars = model.react(response);
+        }
         
         for(ActionRequest ar : ars) {
             if(ar instanceof GUIRequest) {

@@ -3,6 +3,7 @@ package thegamebrett.sound;
 import java.applet.Applet;
 import java.applet.AudioClip;
 import java.net.URL;
+import java.util.ArrayList;
 
 /**
  * Stellt Hilfsmethoden zur Verfuegung. 
@@ -10,6 +11,8 @@ import java.net.URL;
  * @author Christian Colbach
  */
 public class SoundHelper {
+    
+    private static ArrayList<AudioClip> sounds = new ArrayList<>();
     
     /*
     BUGS:
@@ -30,7 +33,18 @@ public class SoundHelper {
         URL url = classloader.getResource(resource);
         AudioClip sound;
         sound = Applet.newAudioClip(url);
+        synchronized(sounds) {
+            sounds.add(sound);
+        }
         sound.play();
+    }
+    
+    public static void stopSounds() {
+        synchronized(sounds) {
+            for(AudioClip s : sounds)
+                s.stop();
+            sounds.clear();
+        }
     }
     
 }

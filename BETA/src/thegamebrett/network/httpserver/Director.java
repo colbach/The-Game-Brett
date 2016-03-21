@@ -8,8 +8,8 @@ import java.net.Socket;
 public interface Director {
 
 	public abstract class QueryException extends Exception {
-		public abstract int getStatusCode();
-		public abstract Object getErrorDocument();
+            public abstract int getStatusCode();
+            public abstract Object getErrorDocument();
 	}
 
 	/**

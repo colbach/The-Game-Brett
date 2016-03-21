@@ -1,5 +1,7 @@
 package thegamebrett.network;
 
+import java.net.Inet4Address;
+import java.net.InetAddress;
 import java.util.Timer;
 import java.util.TimerTask;
 import thegamebrett.Manager;
@@ -16,6 +18,10 @@ public class NetworkManagerDummy extends NetworkManager {
     /** Parameter 'clientManager' wird ignoriert */
     public NetworkManagerDummy(UserManager clientManager, Manager manager) {
         super(clientManager, manager);
+        clientManager.systemClients[0] = new User(null, manager);
+        clientManager.systemClients[1] = new User(null, manager);
+        clientManager.systemClients[2] = new User(null, manager);
+        clientManager.systemClients[3] = new User(null, manager);
     }
     
     public NetworkManagerDummy(Manager manager) {
@@ -42,7 +48,7 @@ public class NetworkManagerDummy extends NetworkManager {
                         + response.getConcerningInteractionRequest().getChoices()[answer]);
                 manager.react(response);
             }
-        }, (int)(1000 + Math.random() * 2000));
+        }, (int)(2000 + Math.random() * 2000));
     }
     
 }

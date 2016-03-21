@@ -3,6 +3,7 @@ package thegamebrett.network.httpserver;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.Scanner;
@@ -33,11 +34,17 @@ public class HttpRequestHandler extends Thread {
             outputStream = new DataOutputStream(clientSocket.getOutputStream());
 
             // scan Request [
-            Scanner scanner = new Scanner(
-                    new BufferedReader(
-                            new InputStreamReader(clientSocket.getInputStream())
-                    ).readLine()
-            );
+            Scanner scanner = null;
+            try {
+                scanner = new Scanner(
+                        new BufferedReader(
+                                new InputStreamReader(clientSocket.getInputStream())
+                        ).readLine()
+                );
+            } catch (Exception e) {
+                System.err.print("Korrupter Input Stream (" + e.getClass() + ")");
+                return;
+            }
             method = scanner.next();
             request = scanner.next();
 

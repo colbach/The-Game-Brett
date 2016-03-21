@@ -11,7 +11,7 @@ public abstract class Player {
    
     private ArrayList<Figure> figures = new ArrayList<Figure>();
     
-    private User user;
+    private volatile User user;
 
     public Player(User user) {
         this.user = user;

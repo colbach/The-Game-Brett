@@ -29,6 +29,9 @@ public class D_GameFactory implements GameFactory {
             users.get(i);
             D_Player p = new D_Player(i, users.get(i));
             Layout l = new Layout();
+            Image image = new Image("thegamebrett/gui/test.png");
+            l.setBackgroundImage(image);
+            l.setFormFactor(Layout.FORM_FACTOR_OVAL);
             switch (i) {
                 case 0:
                     l.setBackgroundColor(Color.RED);

@@ -1,10 +1,18 @@
 package thegamebrett.gui;
 
+import java.util.HashMap;
+import javafx.animation.Interpolator;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 import thegamebrett.model.Model;
+import thegamebrett.model.elements.Board;
+import thegamebrett.model.elements.Element;
+import thegamebrett.model.elements.Figure;
 
 /**
  *
@@ -26,7 +34,7 @@ public class GameView extends Group {
     Group groupBack;
     Group groupMid;
     Group groupTop;
-
+    
     public GameView() {
         super();
 
@@ -37,7 +45,6 @@ public class GameView extends Group {
         getChildren().add(groupMid);
         getChildren().add(groupTop);
 
-        System.out.println(getChildren().size());
     }
 
     public void setGameModel(Model gameModel) {
@@ -76,14 +83,8 @@ public class GameView extends Group {
             }
             boolean updateFields = value == 1;
 
-            if (updateFigures) {
-                Canvas[] updatedFigures = GUILoader.createFigures(gameModel);
-                groupTop.getChildren().clear();
-                groupTop.getChildren().addAll(updatedFigures);
-            }
-
             if (updateFields) {
-                Canvas[] updatedFields = GUILoader.createFields(gameModel.getBoard());
+                Canvas[] updatedFields = GUILoader.createFields(gameModel.getBoard()).getFirst();
                 groupMid.getChildren().clear();
                 groupMid.getChildren().addAll(updatedFields);
             }
@@ -93,7 +94,32 @@ public class GameView extends Group {
                 groupBack.getChildren().clear();
                 groupBack.getChildren().add(updatedBoardBackground);
             }
+            
+            /*try {
+                    Thread.sleep(1000);
+            } catch (InterruptedException ex) { }*/
+            
+            if (updateFigures) {
+                /*Canvas[] updatedFigures =*/ GUILoader.createFigures(gameModel, groupTop.getChildren());
+                //groupTop.getChildren().clear();
+                //groupTop.getChildren().addAll(updatedFigures);
+                
+                for(Node c : groupTop.getChildren()) {
+                    Transition t = (Transition)c.getUserData();
+                    if(t.getNewX() != t.getOldX() || t.getNewY() != t.getOldY()) {
+                        TranslateTransition tt = new TranslateTransition(Duration.millis(2000), c);
+                    
+                        tt.setByX(t.getNewX()-t.getOldX());
+                        tt.setByY(t.getNewY()-t.getOldY());
+                        System.out.println(t.getNewX() + " " + t.getOldX() + " " + t.getNewY() + " " + t.getOldY());
+                        System.out.println("t.newX-t.oldX="+(t.getNewX()-t.getOldX()) + " t.newY-t.oldY=" + (t.getNewY()-t.getOldY()));
+                        tt.play();
+                    }
+                    
+                }
+            }
         }
 
     }
+    
 }

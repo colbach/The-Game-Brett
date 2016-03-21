@@ -1,9 +1,11 @@
 package thegamebrett.game.dummy;
 import java.util.ArrayList;
+import javafx.scene.paint.Color;
 import thegamebrett.action.ActionRequest;
 import thegamebrett.action.ActionResponse;
 import thegamebrett.action.request.GUIUpdateRequest;
 import thegamebrett.action.request.InteractionRequest;
+import thegamebrett.action.request.PlaySoundRequest;
 import thegamebrett.action.response.InteractionResponse;
 import thegamebrett.action.response.StartPseudoResonse;
 import thegamebrett.model.GameLogic;
@@ -11,6 +13,7 @@ import thegamebrett.model.Model;
 import thegamebrett.model.Player;
 import thegamebrett.model.elements.Field;
 import thegamebrett.model.elements.Figure;
+import thegamebrett.model.mediaeffect.SoundEffect;
 
 public class D_GameLogic extends GameLogic{
     
@@ -41,10 +44,13 @@ public class D_GameLogic extends GameLogic{
                 int n = ((Integer)res.getChoice());
                 for(int i=0; i<n; i++) {
                     Figure figure = res.getConcerningInteractionRequest().getPlayer().getFigures()[0];
+                    //figure.setRelativeHeight(figure.getRelativeHeight() + 0.005);
                     figure.setField(figure.getField().getNext()[0]);
+                    //((D_Field)figure.getField()).blub();
+                    //figure.getField().getLayout().setBackgroundColor(Color.RED);
                 }
-                requests.add(new GUIUpdateRequest(GUIUpdateRequest.GUIUPDATE_FIGURES));
-                
+                requests.add(new GUIUpdateRequest(GUIUpdateRequest.GUIUPDATE_ALL));
+                requests.add(new PlaySoundRequest(new SoundEffect("thegamebrett/sound/assets/Mouth_45.wav")));
                 Player p = getNextPlayer((D_Player) res.getConcerningInteractionRequest().getPlayer());
                 InteractionRequest ir = new InteractionRequest("Waehle einen Wert", new Object[]{new Integer(1), new Integer(2), new Integer(3)}, p, false, null);
                 sent = ir;
