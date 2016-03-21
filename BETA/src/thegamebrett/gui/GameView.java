@@ -1,17 +1,29 @@
 package thegamebrett.gui;
 
+<<<<<<< HEAD
 import java.util.HashMap;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
+=======
+import javafx.animation.Animation;
+>>>>>>> origin/cenk-branch
 import javafx.application.Platform;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+<<<<<<< HEAD
 import thegamebrett.model.Model;
 import thegamebrett.model.elements.Board;
 import thegamebrett.model.elements.Element;
+=======
+import thegamebrett.gui.animation.SpriteAnimation;
+import thegamebrett.model.Model;
+>>>>>>> origin/cenk-branch
 import thegamebrett.model.elements.Figure;
 
 /**
@@ -122,4 +134,44 @@ public class GameView extends Group {
 
     }
     
+<<<<<<< HEAD
+=======
+    private Animation createAnimation(Image img, int columns, int count, int offX, int offY, int width, int height) {
+        
+        int COLUMNS  =  columns; //   4;
+        int COUNT    =  count;   //  10;
+        int OFFSET_X =  offX;    //  18;
+        int OFFSET_Y =  offY;    //  25;
+        int WIDTH    =  width;   // 374;
+        int HEIGHT   =  height;  // 243;
+        
+        
+        final ImageView imageView = new ImageView(img);       // create imageView with animation image | ImageView mit animationsbild erstellen
+        imageView.setViewport(new Rectangle2D(OFFSET_X, OFFSET_Y, WIDTH, HEIGHT)); // create view in an 2D Rectangle | view in einem 2D Rechteck erstellen
+        
+        // create animation with param. and cycle duration of 1sec.
+        // animation mit parameter erstellen und wiederholungsdauer auf 1sec. setzen
+        final Animation animation = new SpriteAnimation(
+                imageView,
+                Duration.millis(1000),
+                COUNT, COLUMNS,
+                OFFSET_X, OFFSET_Y,
+                WIDTH, HEIGHT
+        );
+        animation.setCycleCount(Animation.INDEFINITE);  // set cyclecount to infinity | anzahl wiederholungen auf unendlich setzen
+        //animation.setCycleCount(1);
+        animation.play();                               // set animation mode to play | animation abspielen
+
+        // keine ahnung wie animation zu canvas bzw. layout zuweisen....
+        return animation;
+    }
+
+    public void updateFigurePositionX(Canvas canvas) {
+         canvas.setLayoutX(canvas.getLayoutX()+0.01);// .setRelativePositionX(double d) implementieren und inkrementierung anpassen
+    }
+
+    public void updateFigurePositionY(Canvas canvas) {
+         canvas.setLayoutY(canvas.getLayoutY()+0.01);// .setRelativePositionY(double d) implementieren und inkrementierung anpassen
+    }
+>>>>>>> origin/cenk-branch
 }
