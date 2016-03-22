@@ -83,7 +83,7 @@ public class MADN_GameLogic extends GameLogic {
                         
                         //request zum beenden senden
                         if(someoneWon){
-                            nextRequest = new GameEndRequest(previous.getPlayer());                    
+                            nextRequest = new GameEndRequest(new Player[] { previous.getPlayer() });                    
                             requests.add(nextRequest);
                         }
                         
