@@ -72,6 +72,7 @@ public class GUILoader {
     }
     
     protected static Canvas[] createFigures(Model model, ObservableList<Node> children) {
+        //HashMap<Canvas, Transition> movedFiguresCanvas = new HashMap<>();
 
         int length = 0;
         for(Player p : model.getPlayers()) {
@@ -134,7 +135,7 @@ public class GUILoader {
                         double newY = transition.getNewY() + shifts[i%4][1]*shift;
                         double oldX;
                         double oldY;
-                        System.out.println("newX="+newX + " transition.getNewX()="+transition.getNewX());
+                        //System.out.println("newX="+newX + " transition.getNewX()="+transition.getNewX());
                         critical.setUserData(new Transition(transition.getOldX(), transition.getOldY(), newX, newY));
                         
                     }
@@ -171,7 +172,10 @@ public class GUILoader {
     }
     
     private static Canvas createCanvas(Layout layout, double x, double y, double w, double h) {
-        
+        if(layout == null) {
+            layout = new Layout();
+            System.err.println("Layout ist null");
+        }
         Canvas c = new Canvas(w+layout.getBorder()*4, h+layout.getBorder()*4);
         c.setLayoutX(ScreenResolution.getContentXOff()+x-layout.getBorder()*2);
         c.setLayoutY(ScreenResolution.getContentYOff()+y-layout.getBorder()*2);
