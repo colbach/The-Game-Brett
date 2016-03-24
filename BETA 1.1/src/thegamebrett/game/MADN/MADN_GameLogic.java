@@ -31,9 +31,11 @@ public class MADN_GameLogic extends GameLogic {
     private ActionRequest expected;
     private int lastDice;
     private boolean someoneWon = false;
+    private MADN_Board board;
     
     public MADN_GameLogic(Model dependingModel) {
         super(dependingModel);
+        this.board = null;
     }
 
     @Override
@@ -119,7 +121,7 @@ public class MADN_GameLogic extends GameLogic {
             for (MADN_Figure figure : player.getFigures()) {
                 destField = (MADN_Field) figure.getField();
                 if ((dicedNr == 6) && (((MADN_Field) figure.getField()).getFieldType() == 1)) {
-                    if (occupiedWith((MADN_Field)player.getFirstField())!= null) {
+                    if (occupiedWith((MADN_Field)board.getField(player.getPlayerNr()*10))!= null) {
                         break;
                     } else {
                         figures.add(figure);
@@ -132,7 +134,7 @@ public class MADN_GameLogic extends GameLogic {
                             if((destField != null)&&(destField.getNext().length==1))
                                 destField = destField.getNext()[0];
                             else if((destField != null)&&(destField.getNext().length>1)){
-                                if(player.getLastField() == destField){
+                                if(board.getField((player.getPlayerNr()*10+1)%41) == destField){
                                     destField = destField.getNext()[1];                            
                                 } else {
                                     destField = destField.getNext()[0];                                                    
@@ -198,6 +200,10 @@ public class MADN_GameLogic extends GameLogic {
     
     public void setExpected(InteractionRequest quest){
         this.expected = quest;
+    }
+    
+    public void setBoard(MADN_Board b){
+     this.board = b;
     }
  
 }

@@ -6,6 +6,7 @@
 package thegamebrett.game.MADN;
 
 import java.util.ArrayList;
+import javafx.scene.paint.Color;
 import thegamebrett.model.Layout;
 import thegamebrett.model.RelativePoint;
 import thegamebrett.model.elements.Board;
@@ -105,6 +106,48 @@ public class MADN_Board extends Board {
             }
             fields.add(newField);   
         }
+        
+        //Startfelder
+        startX = 2;
+        startY = 4;
+        
+        Layout fLayout = new Layout();
+        fLayout.setFormFactor(Layout.FORM_FACTOR_OVAL); // Farbe von Feldern etc
+        fLayout.setBackgroundColor(Color.BLUE);
+        for(int i = 0; i<4; i++){
+            pos = new RelativePoint(startX*r, startY*r);
+            MADN_Field newStartField1 = new MADN_Field(0.03, 0.03, pos, null, fLayout, null, 0);
+            if(!fields.isEmpty()){
+                fields.get(fields.size()-1).addNext(newStartField1);
+            }
+            fields.add(newStartField1); 
+            
+            pos = new RelativePoint((startX+1)*r, startY*r);
+            MADN_Field newStartField2 = new MADN_Field(0.03, 0.03, pos, null, fLayout, null, 0);
+            if(!fields.isEmpty()){
+                fields.get(fields.size()-1).addNext(newStartField2);
+            }
+            fields.add(newStartField2);
+            
+            pos = new RelativePoint(startX*r, (startY+1)*r);
+            MADN_Field newStartField3 = new MADN_Field(0.03, 0.03, pos, null, fLayout, null, 0);
+            if(!fields.isEmpty()){
+                fields.get(fields.size()-1).addNext(newStartField3);
+            }
+            fields.add(newStartField3);
+            
+            pos = new RelativePoint((startX+1)*r, (startY+1)*r);
+            MADN_Field newStartField4 = new MADN_Field(0.03, 0.03, pos, null, fLayout, null, 0);
+            if(!fields.isEmpty()){
+                fields.get(fields.size()-1).addNext(newStartField4);
+            }
+            fields.add(newStartField4); 
+        }
+        
+        //Endfelder
+        
+        
+        
         return fields;
     }
     
