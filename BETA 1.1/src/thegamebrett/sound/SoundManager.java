@@ -18,7 +18,6 @@ public class SoundManager {
     private static volatile long stopID = 0;
 
     public static void playSoundEffect(SoundEffect se) {
-
         if (se.isLoop()) {
             loopSoundEffect(se, se.getLoopInterval(), se.getLoopCount(), stopID);
         } else {

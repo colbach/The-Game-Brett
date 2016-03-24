@@ -1,10 +1,14 @@
 package thegamebrett.game.dummy;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
+import thegamebrett.assets.AssetNotExistsException;
+import thegamebrett.assets.AssetsLoader;
 import thegamebrett.model.GameFactory;
 import thegamebrett.model.Layout;
 import thegamebrett.model.Model;
@@ -29,8 +33,13 @@ public class D_GameFactory implements GameFactory {
             users.get(i);
             D_Player p = new D_Player(i, users.get(i));
             Layout l = new Layout();
-            Image image = new Image("thegamebrett/gui/test.png");
-            l.setBackgroundImage(image);
+            Image image;
+            try {
+                image = AssetsLoader.loadImage("images/test.png");
+                l.setBackgroundImage(image);
+            } catch (AssetNotExistsException ex) {
+                Logger.getLogger(D_GameFactory.class.getName()).log(Level.SEVERE, null, ex);
+            }
             l.setFormFactor(Layout.FORM_FACTOR_OVAL);
             switch (i) {
                 case 0:
