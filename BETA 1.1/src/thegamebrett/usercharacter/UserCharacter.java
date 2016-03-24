@@ -40,9 +40,9 @@ public class UserCharacter {
     
     private int colorIndex; // Spielerfarbe
     
-    private String avatarName; // Referenz auf Bild auf PC
+    private String avatarFileName; // Referenz auf Bild auf PC
 
-    public UserCharacter(String name, int colorIndex, String avatar) {
+    public UserCharacter(String name, int colorIndex, String avatarFileName) {
         setName(name);
         try {
             setColor(colorIndex);
@@ -52,7 +52,7 @@ public class UserCharacter {
             }
             throw new IllegalArgumentException("Farbe schon in Verwendung!");
         }
-        this.avatarName = avatar;
+        this.avatarFileName = avatarFileName;
     }
     
     public String getName() {
@@ -84,12 +84,12 @@ public class UserCharacter {
     }
 
     public String getAvatarName() {
-        return avatarName;
+        return avatarFileName;
     }
     
     public Image getAvatar() {
         try {
-            return AssetsLoader.loadImage("avatars/"+ avatarName);
+            return AssetsLoader.loadImage("avatars/"+ avatarFileName);
         } catch (AssetNotExistsException ex) {
             Logger.getLogger(UserCharacter.class.getName()).log(Level.SEVERE, null, ex);
             throw new RuntimeException("Datei existiert nicht");
@@ -97,11 +97,11 @@ public class UserCharacter {
     }
 
     public void setAvatar(String avatarName) {
-        this.avatarName = this.avatarName;
+        this.avatarFileName = this.avatarFileName;
     }
     
     public String toCSV() {
-        return name + ";" + colorIndex + ";" + avatarName; 
+        return name + ";" + colorIndex + ";" + avatarFileName; 
     }
     
     public static UserCharacter fromCSV(String csv) {

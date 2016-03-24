@@ -23,7 +23,7 @@ import javafx.scene.image.Image;
  */
 public class AssetsLoader {
 
-    private static String assetsfolder = null;
+    public static String assetsfolder = null;
 
     static {
         assetsfolder = System.getProperty("user.home") + "/GitHub/The-Game-Brett/BETA 1.1/src/assetsfolder/";
