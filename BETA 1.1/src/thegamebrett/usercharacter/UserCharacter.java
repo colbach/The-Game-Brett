@@ -13,6 +13,17 @@ import thegamebrett.assets.AssetsLoader;
  */
 public class UserCharacter {
     
+    public static ArrayList<String> getAvaibleColors() {
+        ArrayList<String> cs = new ArrayList<String>();
+        synchronized(userColerRegister) {
+            for(int i=0; i<USER_COLORS.length; i++) {
+                if(!userColerRegister[i])
+                    cs.add(USER_COLORS[i]);
+            }
+        }
+        return cs;
+    }
+    
     public static final String[] USER_COLORS = {
         "#FFFFFF", "#C0C0C0", "#808080", "#000000", "#FF0000",
         "#800000", "#FFFF00", "#808000", "#00FF00", "#008000",
@@ -32,8 +43,15 @@ public class UserCharacter {
     private String avatarName; // Referenz auf Bild auf PC
 
     public UserCharacter(String name, int colorIndex, String avatar) {
-        setColor(colorIndex);
-        this.name = name;
+        setName(name);
+        try {
+            setColor(colorIndex);
+        } catch (Exception e) {
+            synchronized(userNameRegister) {
+                userNameRegister.remove(name);
+            }
+            throw new IllegalArgumentException("Farbe schon in Verwendung!");
+        }
         this.avatarName = avatar;
     }
     
@@ -87,7 +105,11 @@ public class UserCharacter {
     }
     
     public static UserCharacter fromCSV(String csv) {
+        if(csv == null)
+            return null;
         String[] e = csv.split(";");
+        if(e.length != 3)
+            return null;
         return new UserCharacter(e[0], Integer.valueOf(e[1]), e[2]);
     }
     

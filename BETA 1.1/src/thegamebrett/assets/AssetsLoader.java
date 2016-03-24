@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -68,7 +69,7 @@ public class AssetsLoader {
             return loadText(filename);
         } catch (AssetNotExistsException ex) {
             Logger.getLogger(AssetsLoader.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
+            return "";
         }
     }
     
@@ -98,6 +99,16 @@ public class AssetsLoader {
         }
 
         throw new AssetNotExistsException();
+    }
+    
+    public static void saveText(String filename, String text) {
+        try {
+            try (PrintWriter out = new PrintWriter(assetsfolder + filename)) {
+                out.print(text);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static ArrayList<String> listImagesInFolder(String foldername) {
