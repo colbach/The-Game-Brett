@@ -50,7 +50,7 @@ public class D_GameLogic extends GameLogic{
                     //figure.getField().getLayout().setBackgroundColor(Color.RED);
                 }
                 requests.add(new GUIUpdateRequest(GUIUpdateRequest.GUIUPDATE_ALL));
-                requests.add(new PlaySoundRequest(new SoundEffect("thegamebrett/sound/assets/Mouth_45.wav")));
+                requests.add(new PlaySoundRequest(new SoundEffect("sounds/Mouth_45.wav")));
                 Player p = getNextPlayer((D_Player) res.getConcerningInteractionRequest().getPlayer());
                 InteractionRequest ir = new InteractionRequest("Waehle einen Wert", new Object[]{new Integer(1), new Integer(2), new Integer(3)}, p, false, null);
                 sent = ir;

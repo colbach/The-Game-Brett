@@ -182,7 +182,7 @@ public class GUILoader {
         
         GraphicsContext gc = c.getGraphicsContext2D();
         
-        System.out.println(layout.getFormFactor());
+        //System.out.println(layout.getFormFactor());
         
         if(layout.getFormFactor() == Layout.FORM_FACTOR_OVAL) {
             setFill(gc, layout, w, h);
@@ -199,7 +199,6 @@ public class GUILoader {
         } else {
             System.err.println("Unbekannter Formfaktor");
         }
-        
         
         return c;
     }
