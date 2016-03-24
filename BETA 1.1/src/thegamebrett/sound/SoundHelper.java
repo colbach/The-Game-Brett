@@ -4,6 +4,10 @@ import java.applet.Applet;
 import java.applet.AudioClip;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import thegamebrett.assets.AssetNotExistsException;
+import thegamebrett.assets.AssetsLoader;
 
 /**
  * Stellt Hilfsmethoden zur Verfuegung. 
@@ -29,14 +33,17 @@ public class SoundHelper {
      * BEISPIEL: playSound("thegamebrett/sound/assets/glitch.wav");
      */
     public static void playSound(String resource) {
-        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-        URL url = classloader.getResource(resource);
         AudioClip sound;
-        sound = Applet.newAudioClip(url);
-        synchronized(sounds) {
-            sounds.add(sound);
+        try {
+            sound = AssetsLoader.loadSound(resource);
+            synchronized(sounds) {
+                sounds.add(sound);
+            }
+            sound.play();
+            
+        } catch (AssetNotExistsException ex) {
+            System.out.println("Sound kann nicht abgespielt werden");
         }
-        sound.play();
     }
     
     public static void stopSounds() {

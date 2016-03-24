@@ -15,6 +15,7 @@ import javafx.stage.WindowEvent;
 import thegamebrett.Manager;
 import thegamebrett.action.request.GUIRequest;
 import thegamebrett.action.request.GUIUpdateRequest;
+import thegamebrett.assets.AssetsLoader;
 
 public class GUIApplication extends Application{
 
@@ -29,6 +30,10 @@ public class GUIApplication extends Application{
     //private Scene gameScene;
     
     public static void main(String[] args) {
+        if(args.length > 0) {
+            AssetsLoader.assetsfolder = args[0];
+        }
+        
         launch(new String[0]);
     }
     

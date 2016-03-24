@@ -111,8 +111,8 @@ public class GameView extends Group {
                     
                         tt.setByX(t.getNewX()-t.getOldX());
                         tt.setByY(t.getNewY()-t.getOldY());
-                        System.out.println(t.getNewX() + " " + t.getOldX() + " " + t.getNewY() + " " + t.getOldY());
-                        System.out.println("t.newX-t.oldX="+(t.getNewX()-t.getOldX()) + " t.newY-t.oldY=" + (t.getNewY()-t.getOldY()));
+                        //System.out.println(t.getNewX() + " " + t.getOldX() + " " + t.getNewY() + " " + t.getOldY());
+                        //System.out.println("t.newX-t.oldX="+(t.getNewX()-t.getOldX()) + " t.newY-t.oldY=" + (t.getNewY()-t.getOldY()));
                         tt.play();
                     }
                     

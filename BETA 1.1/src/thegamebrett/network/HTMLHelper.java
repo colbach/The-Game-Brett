@@ -7,6 +7,7 @@ import java.net.URL;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import thegamebrett.assets.AssetsLoader;
 
 /**
  *
@@ -14,8 +15,8 @@ import java.util.logging.Logger;
  */
 public class HTMLHelper {
 
-    public static String HTML = null;
-    static {
+    public static String HTML = AssetsLoader.loadText_SuppressExceptions("web/index.html");
+    /*static {
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
         URL url = classloader.getResource("thegamebrett/network/files/index.html");
         try {
@@ -24,10 +25,10 @@ public class HTMLHelper {
         } catch (URISyntaxException | FileNotFoundException ex) {
             Logger.getLogger(ControlDirector.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+    }*/
     
-    public static String CSS = null;
-    static {
+    public static String CSS = AssetsLoader.loadText_SuppressExceptions("web/style.css");
+    /*static {
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
         URL url = classloader.getResource("thegamebrett/network/files/style.css");
         try {
@@ -36,7 +37,7 @@ public class HTMLHelper {
         } catch (URISyntaxException | FileNotFoundException ex) {
             Logger.getLogger(ControlDirector.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+    }*/
     
     public static String generateHTMLContent(String titel, Object[] choices, long messageID) {
         StringBuilder sb = new StringBuilder();
