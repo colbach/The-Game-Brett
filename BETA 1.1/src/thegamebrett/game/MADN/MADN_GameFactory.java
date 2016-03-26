@@ -12,6 +12,7 @@ import thegamebrett.model.Player;
 import thegamebrett.model.exceptions.TooFewPlayers;
 import thegamebrett.model.exceptions.TooMuchPlayers;
 import thegamebrett.network.User;
+import thegamebrett.usercharacter.UserCharacter;
 
 /**
  * @author Koré
@@ -19,6 +20,7 @@ import thegamebrett.network.User;
 public class MADN_GameFactory implements GameFactory{
 
     MADN_Board board;
+    UserCharacter uc;
     
     public Model createGame(ArrayList<User> users) throws TooMuchPlayers, TooFewPlayers {
         board = new MADN_Board();
@@ -32,11 +34,12 @@ public class MADN_GameFactory implements GameFactory{
         ArrayList<Player> players = new ArrayList<>();
         for(int i=0; i<users.size(); i++) {
             users.get(i);
-            MADN_Player p = new MADN_Player(i, users.get(i), board);
             Layout l = new Layout();
             //Image image = new Image("thegamebrett/gui/test.png");
             //l.setBackgroundImage(image);
             l.setFormFactor(Layout.FORM_FACTOR_OVAL);
+//            uc = new UserCharacter("Player "+i, i, "");
+//            users.get(i).setUserCharacter(uc);
             switch (i) {
                 case 0:
                     l.setBackgroundColor(Color.RED);
@@ -53,6 +56,7 @@ public class MADN_GameFactory implements GameFactory{
                 default:
                     break;
             }
+            MADN_Player p = new MADN_Player(i, users.get(i), board, l);
             players.add(p);
         }
         

@@ -14,27 +14,44 @@ public class MADN_Player extends Player{
     private int playerNr;
     private MADN_Figure[] figures;
     private Layout layout;
-    private Layout figureLayout;
     private MADN_Board board;
     private MADN_Field startField;
     
     
-    public MADN_Player(int playerNr, User user, MADN_Board board){
+    public MADN_Player(int playerNr, User user, MADN_Board board, Layout layout){
         super(user);
+        this.layout = layout;
         this.playerNr = playerNr;
-        figureLayout = new Layout();
-        figureLayout.setBackgroundColor(Color.DARKGOLDENROD);
-        figureLayout.setFormFactor(Layout.FORM_FACTOR_OVAL);
         this.board = board;
         this.startField = (MADN_Field)board.getField(playerNr*10);
+        startField.setLayout(getCharacterLayout(user));
         this.figures = new MADN_Figure[4];
         int j = 0;
         for(int i=playerNr*4;i<playerNr*4+4;i++){
+            MADN_Field endField = (MADN_Field)board.getField(56+i);
+            endField.setLayout(getCharacterLayout(user));
             MADN_Field initField = (MADN_Field)board.getField(40+i);
-            figures[j] = new MADN_Figure(this, board, startField, startField, figureLayout, "Figur");
+            initField.setLayout(getCharacterLayout(user));
+            figures[j] = new MADN_Figure(this, board, startField, initField, getCharacterLayout(user), "Figur");
             figures[j].setField(initField);
             j++;
         }
+        
+    }
+    
+    private Layout getCharacterLayout(User user){
+        Layout figureLayout = new Layout();
+        if(user!=null&&user.getUserCharacter()!=null){
+            Color c = user.getUserCharacter().getColor();
+            figureLayout.setBackgroundColor(c);
+        } 
+        
+        /*else zweig wird nur zu dummyzwecken gebraucht,sollte später nicht mehr so verwendet werden*/
+        else {
+            figureLayout.setBackgroundColor(layout.getBackgroundColor());
+        }
+        figureLayout.setFormFactor(Layout.FORM_FACTOR_OVAL);
+        return figureLayout;
     }
 
     public int getPlayerNr() {
@@ -52,5 +69,9 @@ public class MADN_Player extends Player{
 
     public void setFigures(MADN_Figure[] figures) {
         this.figures = figures;
+    }
+    
+    public void setLayout(Layout l){
+        this.layout = l;
     }
 }
