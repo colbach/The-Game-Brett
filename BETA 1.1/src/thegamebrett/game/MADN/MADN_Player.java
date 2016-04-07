@@ -32,7 +32,7 @@ public class MADN_Player extends Player{
             endField.setLayout(getCharacterLayout(user));
             MADN_Field initField = (MADN_Field)board.getField(40+i);
             initField.setLayout(getCharacterLayout(user));
-            figures[j] = new MADN_Figure(this, board, startField, initField, getCharacterLayout(user), "Figur");
+            figures[j] = new MADN_Figure(this, board, startField, initField, getCharacterLayout(user), "Figur"+j);
             figures[j].setField(initField);
             j++;
         }
@@ -74,4 +74,9 @@ public class MADN_Player extends Player{
     public void setLayout(Layout l){
         this.layout = l;
     }
+
+    public MADN_Field getStartField() {
+        return startField;
+    }
+    
 }

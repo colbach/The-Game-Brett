@@ -48,7 +48,7 @@ public class NetworkManagerDummy extends NetworkManager {
                         + response.getConcerningInteractionRequest().getChoices()[answer]);
                 manager.react(response);
             }
-        }, (int)(2000 + Math.random() * 2000));
+        }, (int)(500 + Math.random() * 500));
     }
     
 }

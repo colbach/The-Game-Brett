@@ -43,7 +43,7 @@ public class MADN_Board extends Board {
         r = relativateRatio(12.0);
         createNormalFields();
         createInitFields();
-        createEndFields();        
+        createEndFields();  
         
         return fields;
     }
@@ -122,6 +122,9 @@ public class MADN_Board extends Board {
             if(!fields.isEmpty()){
                 fields.get(fields.size()-1).addNext(newField);
             }
+            if(i==39){
+                newField.addNext(fields.get(0));
+            }
             fields.add(newField);   
         }
     }
@@ -139,19 +142,19 @@ public class MADN_Board extends Board {
             int startY2 = startY;
             for(int j = 0; j<4;j++){
                 if(ersteReiheX&&ersteReiheY){
-                    drawInitFields(startX2,startY2);
+                    drawInitFields(startX2,startY2,j);
                     startX2+=1;
                     ersteReiheX = false;
                 }else if(!ersteReiheX&&ersteReiheY){
-                    drawInitFields(startX2, startY2);
+                    drawInitFields(startX2, startY2,j);
                     startY2+=1;
                     ersteReiheY = false;
                 }else if(!ersteReiheX&&!ersteReiheY){
-                    drawInitFields(startX2, startY2);
+                    drawInitFields(startX2, startY2,j);
                     startX2-=1;
                     ersteReiheX = true;                    
                 } else{
-                    drawInitFields(startX2, startY2);
+                    drawInitFields(startX2, startY2,j);
                 }
             }
             
@@ -206,9 +209,23 @@ public class MADN_Board extends Board {
         for(int i = 0; i<4;i++){
             pos = new RelativePoint(startX*r, startY*r);
             MADN_Field newEndField = new MADN_Field(0.05, 0.05, pos, null, fLayout1, null, MADN_Field.FIELD_TYPE_END);
-            if(!fields.isEmpty()){
-                fields.get(fields.size()-1).addNext(newEndField);
+            if(fields.get(fields.size()-1).getFieldType()!=MADN_Field.FIELD_TYPE_END){
+                switch (direction){
+                    case 0: fields.get(39).addNext(newEndField);
+                            break;
+                    case 1: fields.get(9).addNext(newEndField);
+                            break;
+                    case 2: fields.get(19).addNext(newEndField);
+                            break;
+                    case 3: fields.get(29).addNext(newEndField);
+                            break;
+                    default: break;
+                }
+            } else {
+                fields.get(fields.size()-1).addNext(newEndField);   
             }
+            fields.get(direction).addNext(newEndField);
+                
             fields.add(newEndField); 
             
             switch (direction){
@@ -226,17 +243,26 @@ public class MADN_Board extends Board {
         
         
     }
-    public void drawInitFields(int startX, int startY){
+    public void drawInitFields(int startX, int startY, int j){
         Layout fLayout1 = new Layout();
         fLayout1.setFormFactor(Layout.FORM_FACTOR_OVAL); // Farbe von Feldern etc
         
         pos = new RelativePoint(startX*r, startY*r);
         MADN_Field newInitField = new MADN_Field(0.05, 0.05, pos, null, fLayout1, null, MADN_Field.FIELD_TYPE_INIT);
-        if(!fields.isEmpty()){
-            fields.get(fields.size()-1).addNext(newInitField);
-        }
-        fields.add(newInitField); 
         
+        switch (j){
+                case 0: newInitField.addNext(fields.get(0));
+                        break;
+                case 1: newInitField.addNext(fields.get(10));
+                        break;
+                case 2: newInitField.addNext(fields.get(20));
+                        break;
+                case 3: newInitField.addNext(fields.get(30));
+                        break;
+                default: break;
+        }
+        
+        fields.add(newInitField);
         
     }
     
@@ -283,6 +309,18 @@ public class MADN_Board extends Board {
     @Override
     public float getRatioY() {
         return ratioY;
+    }
+    
+    @Override
+    public String toString(){
+        String s = null;
+        for(int i=0;i<fields.size(); i++){
+            if(fields.get(i)!=null){
+            System.out.println("Aktuelles Feld: "+i+" ist ein "+fields.get(i).getFieldType()+" Feld.\n"
+                    +"Nächstes Feld: "+""+"");
+            }
+        }
+        return s;
     }
     
     

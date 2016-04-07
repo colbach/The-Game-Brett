@@ -115,4 +115,5 @@ public class MADN_Field extends Field{
     public Field[] getPrevious() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
 }
