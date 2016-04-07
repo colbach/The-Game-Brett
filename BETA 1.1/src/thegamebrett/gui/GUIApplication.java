@@ -65,7 +65,13 @@ public class GUIApplication extends Application{
             @Override
             public void handle(KeyEvent event) {
                 if(event.getCode() == KeyCode.BACK_SPACE) {
-                    showMenuScene();
+                    if(go != null)
+                        hideOptions();
+                    else 
+                        showMenuScene();
+                    
+                } else if(event.getCode() == KeyCode.SPACE) {
+                    showOptions();
                 }
             }
         });
@@ -83,6 +89,17 @@ public class GUIApplication extends Application{
     public void showMenuScene() {
         root.getChildren().clear();
         root.getChildren().add(menuView);
+    }
+    
+    private GameOption go;
+    public void showOptions() {
+        go = new GameOption();
+        root.getChildren().add(go);
+    }
+    
+    public void hideOptions() {
+        root.getChildren().remove(go);
+        go = null;
     }
     
     public void showGameScene() {

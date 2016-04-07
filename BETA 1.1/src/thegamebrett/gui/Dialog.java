@@ -14,11 +14,11 @@ import javafx.scene.layout.Pane;
  */
 public  class Dialog extends Pane {
     
-    private Pane p;
-    private Label label;
-    private Button btn;
-    private int x;
-    private int y;
+    private final Pane p;
+    private final Label label;
+    private final Button btn;
+    private final int x;
+    private final int y;
     
     public Dialog(int width, int heigth, String labelText, String buttonText) {
         
