@@ -15,7 +15,7 @@ import thegamebrett.action.request.GUIRequest;
 import thegamebrett.action.request.MobileRequest;
 import thegamebrett.action.request.SoundRequest;
 import thegamebrett.action.request.TimerRequest;
-import thegamebrett.action.response.StartPseudoResonse;
+import thegamebrett.action.response.StartPseudoResponse;
 import thegamebrett.gui.GUIApplication;
 import thegamebrett.mobile.MobileManager;
 import thegamebrett.model.Model;
@@ -70,7 +70,7 @@ public class Manager {
     
     public void startGame(Model model) { // Aufruf: startGame(D_GameFactory.createGame(ArrayList<User> users))
         this.model = model;
-        react(new StartPseudoResonse());
+        react(new StartPseudoResponse());
         //initialisiere Gamescreenmanager
         //main.setView(gameScreenManager.getView());
     }

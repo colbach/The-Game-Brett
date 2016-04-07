@@ -5,4 +5,4 @@ import thegamebrett.action.ActionResponse;
 /**
  * @author christiancolbach
  */
-public class StartPseudoResonse implements ActionResponse {}
+public class StartPseudoResponse implements ActionResponse {}

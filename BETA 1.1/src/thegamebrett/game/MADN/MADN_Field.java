@@ -21,6 +21,7 @@ public class MADN_Field extends Field{
     public final static int FIELD_TYPE_NORMAL = 0;
     public final static int FIELD_TYPE_START = 1;
     public final static int FIELD_TYPE_END = 2;
+    public final static int FIELD_TYPE_INIT = 3;
     
     
     
@@ -105,11 +106,14 @@ public class MADN_Field extends Field{
     }
     
     
-    
+    public void setLayout(Layout l){
+        this.layout = l;
+    }
     
     //nicht implementiert da nicht notwendig
     @Override
     public Field[] getPrevious() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
 }
