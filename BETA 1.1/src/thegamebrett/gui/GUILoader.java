@@ -1,5 +1,6 @@
 package thegamebrett.gui;
 
+import com.sun.javafx.tk.Toolkit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.collections.ObservableList;
@@ -9,7 +10,12 @@ import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import thegamebrett.model.Layout;
 import thegamebrett.model.Model;
 import thegamebrett.model.Player;
@@ -172,6 +178,10 @@ public class GUILoader {
     }
     
     private static Canvas createCanvas(Layout layout, double x, double y, double w, double h) {
+        
+        // Done:  backgroundColor border borderColor formFactor backgroundImage
+        // To Do: 
+        
         if(layout == null) {
             layout = new Layout();
             System.err.println("Layout ist null");
@@ -182,8 +192,7 @@ public class GUILoader {
         
         GraphicsContext gc = c.getGraphicsContext2D();
         
-        //System.out.println(layout.getFormFactor());
-        
+        // --- Formfaktor ---
         if(layout.getFormFactor() == Layout.FORM_FACTOR_OVAL) {
             setFill(gc, layout, w, h);
             gc.fillOval(layout.getBorder()*2, layout.getBorder()*2, w, h);
@@ -200,7 +209,95 @@ public class GUILoader {
             System.err.println("Unbekannter Formfaktor");
         }
         
+        // --- Icon ---
+        
+        double down = 2+layout.getBorder();
+        
+        if(layout.getIconImage() != null) {
+            
+            down += 2+layout.getBorder();
+           
+            Canvas test = new Canvas(20, 20);
+            GraphicsContext ctest = test.getGraphicsContext2D();
+            ctest.setFill(Color.RED);
+            ctest.fillOval(0, 0, 20, 20);
+            WritableImage wi = new WritableImage(20, 20);
+            test.snapshot(null, wi);
+
+            gc.drawImage(wi, (w-wi.getWidth())/2d, down);
+        
+            down += wi.getHeight();
+        }
+        
+        
+        // --- Titel ---
+                
+        gc.setFill(layout.getTitleColor());
+        final double titelSize = 15*(1+layout.getTitleScaleFactor());
+        gc.setFont(Font.font("Arial", FontWeight.BOLD, titelSize));
+        
+        String line = "";
+        for(String word : layout.getTitle().split(" ")) {
+            if(textWidth(line + " " + word, gc) > w-2 && line.length() != 0) {
+                down += textHeight(line, gc);
+                double off = 2;
+                if(layout.isCenterTitle()) {
+                    off = (w - textWidth(line, gc))/2d;
+                }
+                gc.fillText(line, off, down);
+                line = "";
+            } else {
+                line += " " + word;
+            }
+        }
+        if(line.length() != 0) {
+            down += textHeight(line, gc);
+            double off = 2;
+            if(layout.isCenterTitle()) {
+                off = (w - textWidth(line, gc))/2d;
+            }
+            gc.fillText(line, off, 2+down);
+            line = "";
+        }
+        
+        // --- Subtext ---
+                
+        gc.setFill(layout.getTitleColor());
+        final double subtitelSize = 13*(1+layout.getTitleScaleFactor());
+        gc.setFont(Font.font("Arial", FontWeight.LIGHT, titelSize));
+        
+        for(String word : layout.getSubtext().split(" ")) {
+            if(textWidth(line + " " + word, gc) > w-2 && line.length() != 0) {
+                down += textHeight(line, gc);
+                double off = 2;
+                if(layout.isCenterSubtext()) {
+                    off = (w - textWidth(line, gc))/2d;
+                }
+                gc.fillText(line, off, 2+down);
+                line = "";
+            } else {
+                line += " " + word;
+            }
+        }
+        if(line.length() != 0) {
+            down += textHeight(line, gc);
+            double off = 2;
+            if(layout.isCenterSubtext()) {
+                off = (w - textWidth(line, gc))/2d;
+            }
+            gc.fillText(line, off, 2+down);
+            line = "";
+        }
+        
         return c;
+    }
+    
+    private static float textWidth(String s, GraphicsContext gc) {
+        return Toolkit.getToolkit().getFontLoader().computeStringWidth(s, gc.getFont());
+    }
+    
+    private static float textHeight(String s, GraphicsContext gc) {
+        return Toolkit.getToolkit().getFontLoader().getFontMetrics(gc.getFont()).getLineHeight();
     }
     
     private static void setFill(GraphicsContext gc, Layout l, double w, double h) {
@@ -211,9 +308,9 @@ public class GUILoader {
             if(l.getBackgroundImageFillFactor() == Layout.BACKGROUND_IMAGE_FILL_FACTOR_REPEAT)
                 imagePattern = new ImagePattern(image, 0, 0, image.getWidth(), image.getHeight(), false);
             else if(l.getBackgroundImageFillFactor() == Layout.BACKGROUND_IMAGE_FILL_FACTOR_FILL) {
-                imagePattern = new ImagePattern(image, 0, 0, w, h, false); // nicht getestet
-            } else {
-                imagePattern = new ImagePattern(image, 0, 0, w, h, false); // falsch
+                imagePattern = new ImagePattern(image, 0, 0, w, h, false);
+            } else { // default
+                imagePattern = new ImagePattern(image, 0, 0, w, h, false);
             }
             gc.setFill(imagePattern);
         } else {
