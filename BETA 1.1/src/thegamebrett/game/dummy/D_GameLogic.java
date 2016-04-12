@@ -7,7 +7,7 @@ import thegamebrett.action.request.GUIUpdateRequest;
 import thegamebrett.action.request.InteractionRequest;
 import thegamebrett.action.request.PlaySoundRequest;
 import thegamebrett.action.response.InteractionResponse;
-import thegamebrett.action.response.StartPseudoResonse;
+import thegamebrett.action.response.StartPseudoResponse;
 import thegamebrett.model.GameLogic;
 import thegamebrett.model.Model;
 import thegamebrett.model.Player;
@@ -32,7 +32,7 @@ public class D_GameLogic extends GameLogic{
         
         ArrayList<ActionRequest> requests = new ArrayList<>();
 
-        if(as instanceof StartPseudoResonse){
+        if(as instanceof StartPseudoResponse){
             requests.add(new GUIUpdateRequest(GUIUpdateRequest.GUIUPDATE_ALL));
             Player p = getDependingModel().getPlayers().get(0);
             InteractionRequest ir = new InteractionRequest("Waehle einen Wert", new Object[]{new Integer(1), new Integer(2), new Integer(3)}, p, false, null);

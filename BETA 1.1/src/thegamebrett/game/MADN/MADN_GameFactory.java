@@ -5,10 +5,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
-import thegamebrett.game.dummy.D_Board;
-import thegamebrett.game.dummy.D_Figure;
-import thegamebrett.game.dummy.D_GameLogic;
-import thegamebrett.game.dummy.D_Player;
 import thegamebrett.model.GameFactory;
 import thegamebrett.model.Layout;
 import thegamebrett.model.Model;
@@ -16,29 +12,34 @@ import thegamebrett.model.Player;
 import thegamebrett.model.exceptions.TooFewPlayers;
 import thegamebrett.model.exceptions.TooMuchPlayers;
 import thegamebrett.network.User;
+import thegamebrett.usercharacter.UserCharacter;
 
 /**
  * @author Koré
  */
 public class MADN_GameFactory implements GameFactory{
 
+    MADN_Board board;
+    UserCharacter uc;
+    
     public Model createGame(ArrayList<User> users) throws TooMuchPlayers, TooFewPlayers {
+        board = new MADN_Board();
         MADN_GameLogic gl = new MADN_GameLogic(null);
-        MADN_Board b = new MADN_Board();
         
-        if(4 < users.size()) {
+        if(gl.getMaximumPlayers() < users.size()) {
             throw new TooMuchPlayers();
-        } else if(1 > users.size()) {
+        } else if(gl.getMinimumPlayers() > users.size()) {
             throw new TooFewPlayers();
         }
         ArrayList<Player> players = new ArrayList<>();
         for(int i=0; i<users.size(); i++) {
             users.get(i);
-            D_Player p = new D_Player(i, users.get(i));
             Layout l = new Layout();
             //Image image = new Image("thegamebrett/gui/test.png");
             //l.setBackgroundImage(image);
             l.setFormFactor(Layout.FORM_FACTOR_OVAL);
+//            uc = new UserCharacter("Player "+i, i, "");
+//            users.get(i).setUserCharacter(uc);
             switch (i) {
                 case 0:
                     l.setBackgroundColor(Color.RED);
@@ -55,14 +56,13 @@ public class MADN_GameFactory implements GameFactory{
                 default:
                     break;
             }
-            D_Figure f = new D_Figure(p, l);
-            f.setField(b.getField(0));
-            p.setFigure(f);
+            MADN_Player p = new MADN_Player(i, users.get(i), board, l);
             players.add(p);
         }
         
-        Model model = new Model(players, gl, b);
+        Model model = new Model(players, gl, board);
         gl.setDependingModel(model);
+        gl.setBoard(board);
         
         return model;
     }
@@ -85,5 +85,9 @@ public class MADN_GameFactory implements GameFactory{
     @Override
     public String getGameName() {
         return "MADN";
+    }
+    
+    public MADN_Board getBoard(){
+        return board;
     }
 }

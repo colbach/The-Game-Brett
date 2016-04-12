@@ -25,9 +25,9 @@ public class MADNboard extends Board{
     private final float ratioY = 1;
     
     
-    public MADNboard(Layout layout/*, int fieldLength*/){
+    public MADNboard(){
         
-        this.layout = layout;
+        this.layout = new Layout();
         fields = createFields();
     
     }
