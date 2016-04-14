@@ -24,6 +24,8 @@ public class MADN_GameLogic extends GameLogic {
     /*Fall unterscheidung die angibt ob response würfeln oder bewegen ist**/
     public final static Integer INTERACTIONRESPONSE_CHOICES_DICE = new Integer(0);
     public final static Integer INTERACTIONRESPONSE_CHOICES_CHOOSE_FIGURE = new Integer(1);
+    public final static Integer INTERACTIONRESPONSE_SOMEONE_WON = new Integer(2);
+
     
     
     private ActionRequest expected;
@@ -32,6 +34,8 @@ public class MADN_GameLogic extends GameLogic {
     private boolean someoneWon = false;
     private MADN_Board board;
     private static boolean secondChance = false;
+    private int anzPlayer;
+
     
     public MADN_GameLogic(Model dependingModel) {
         super(dependingModel);
@@ -62,7 +66,10 @@ public class MADN_GameLogic extends GameLogic {
                 } else if(previous.getUserData().equals(INTERACTIONRESPONSE_CHOICES_CHOOSE_FIGURE)){
                     requests.add(nextChoose(as,previous));
                     
-                } else{
+                }else if(previous.getUserData().equals(INTERACTIONRESPONSE_SOMEONE_WON)){
+                    requests.add(new GameEndRequest(new Player[] { previous.getPlayer() }));                    
+                }
+                else{
                     throw new IllegalArgumentException("Illegal InteractionResponse Type");
                 }
             }
@@ -85,23 +92,23 @@ public class MADN_GameLogic extends GameLogic {
             figure.setField(figure.getStartField());
         } else {
             MADN_Field field = (MADN_Field)figure.getField();
-//            if((occupiedWith(field)!=null)&&(occupiedWith(field).getStartField()!=figure.getStartField())){
-                for(int i = 0; i<lastDice; i++){
+            for(int i = 0; i<lastDice; i++){
+                if(field.getNext()[0]==figure.getStartField()){
+                    field = field.getNext()[1];
+                } else {
                     field = field.getNext()[0];
                 }
-                if(occupiedWith(field)!=null)
-                    occupiedWith(field).setField(occupiedWith(field).getInitField());
-//            }
+            }
+            if(occupiedWith(field)!=null){
+                occupiedWith(field).setField(occupiedWith(field).getInitField());
+            }
+            
             for(int i = 0; i<lastDice; i++){
-                if(figure.getField().getNext().length>1){
                     if(figure.getField().getNext()[0]==figure.getStartField()){
                         figure.setField(figure.getField().getNext()[1]);
                     } else {
                         figure.setField(figure.getField().getNext()[0]);
                     }
-                } else {
-                    figure.setField(figure.getField().getNext()[0]);
-                }
             }
         }
 
@@ -119,7 +126,8 @@ public class MADN_GameLogic extends GameLogic {
 
         //request zum beenden senden
         if(someoneWon){
-            nextRequest = new GameEndRequest(new Player[] { previous.getPlayer() });                    
+            nextRequest = new InteractionRequest("Spieler "+((MADN_Player)previous.getPlayer()).getPlayerNr()+" hat gewonnen! Das Spiel ist vorbei!",
+                    new String[]{"Spielende"}, (MADN_Player)previous.getPlayer(), false,INTERACTIONRESPONSE_SOMEONE_WON);
         } else {
             //neue würfelrequest senden 
             if(lastDice==6){
@@ -143,22 +151,15 @@ public class MADN_GameLogic extends GameLogic {
         //Mögliche Figuren herausfinden
         MADN_Figure[] figures = movableFigures((MADN_Player)previous.getPlayer(), dicedNr);
         
-        if(figures!=null){
-            for(MADN_Figure f : figures){
-                System.err.println(f.toString());
-            }
-        }
-        
-        
         if(figures != null){
             nextRequest = new InteractionRequest("Du hast eine "+dicedNr+" gewuerfelt! Bitte eine Figur waehlen!",
                 figures, (MADN_Player)previous.getPlayer(), false, INTERACTIONRESPONSE_CHOICES_CHOOSE_FIGURE);
         } else if(secondChance) {
-            nextRequest = new InteractionRequest("Du kannst keine Figur bewegen! "+"Spieler "+getNextPlayer((MADN_Player)previous.getPlayer()).getPlayerNr()+" ist dran. Bitte wuerfeln!",
+            nextRequest = new InteractionRequest("Du hast eine "+lastDice+" gewürfelt und kannst keine Figur bewegen! "+"Spieler "+getNextPlayer((MADN_Player)previous.getPlayer()).getPlayerNr()+" ist dran. Bitte wuerfeln!",
                 new String[]{"Wuerfeln"}, getNextPlayer((MADN_Player)previous.getPlayer()), false,INTERACTIONRESPONSE_CHOICES_DICE);                    
             secondChance = false;
         } else {
-            nextRequest = new InteractionRequest("Du kannst keine Figur bewegen! Würfle nocheinmal!",
+            nextRequest = new InteractionRequest("Du hast eine "+lastDice+" gewürfelt und kannst keine Figur bewegen! Würfle nocheinmal!",
                 new String[]{"Wuerfeln"}, (MADN_Player)previous.getPlayer(), false,INTERACTIONRESPONSE_CHOICES_DICE);
             secondChance = true;
         }
@@ -179,6 +180,7 @@ public class MADN_GameLogic extends GameLogic {
         
         ArrayList<MADN_Figure> figures = new ArrayList<>();
         MADN_Field destField;
+        
         
         //Steht eine Figur auf dem Startfeld und ist es die eigene?
         //Wenn ja, muss diese Figur wenn möglich bewegt werden
@@ -209,19 +211,19 @@ public class MADN_GameLogic extends GameLogic {
         }
         
         //Sonst werden alle Figuren für die ein bewegen möglich ist in das array gelegt
-        else{
-            for (MADN_Figure figure : player.getFigures()) {
-                destField = (MADN_Field)figure.getField();
 
-                if ((destField.getFieldType() == MADN_Field.FIELD_TYPE_START)||
-                        (destField.getFieldType() == MADN_Field.FIELD_TYPE_NORMAL)) {
-                    if(checkField(dicedNr, figure)){
-                        figures.add(figure);
-                    }
+        for (MADN_Figure figure : player.getFigures()) {
+            destField = (MADN_Field)figure.getField();
+
+            if ((destField.getFieldType() == MADN_Field.FIELD_TYPE_START)||
+                    (destField.getFieldType() == MADN_Field.FIELD_TYPE_NORMAL)) {
+                if(checkField(dicedNr, figure)){
+                    figures.add(figure);
                 }
-
             }
+
         }
+        
         
         
         if(figures.size()>0){
@@ -257,7 +259,7 @@ public class MADN_GameLogic extends GameLogic {
         if(occupiedWith(ldestField)!=null){
             return (occupiedWith(ldestField).getStartField() != figure.getStartField());
         } else {
-            return false;
+            return true;
         }
     }
     
@@ -265,12 +267,10 @@ public class MADN_GameLogic extends GameLogic {
         for(int i = 0; i<getDependingModel().getPlayers().size(); i++){
             for(int j=0; j<4; j++){
                 if(field == getDependingModel().getPlayers().get(i).getFigures()[j].getField()){
-                    System.err.println("feld ist belegt mit "+getDependingModel().getPlayers().get(i).getFigures()[j].toString()+i);
                     return (MADN_Figure)getDependingModel().getPlayers().get(i).getFigures()[j];
                 }          
             }
         }
-        System.err.println("zielfeld ist leer");
         return null;
     }
     
@@ -281,7 +281,7 @@ public class MADN_GameLogic extends GameLogic {
         
         int currentPlayerNr = ((MADN_Player)currentPlayer).getPlayerNr();
         for(int i = 0; i<getDependingModel().getPlayers().size(); i++){
-            if(((MADN_Player)getDependingModel().getPlayers().get(i)).getPlayerNr()==(currentPlayerNr+1)%4){
+            if(((MADN_Player)getDependingModel().getPlayers().get(i)).getPlayerNr()==(currentPlayerNr+1)%anzPlayer){
                 return (MADN_Player)getDependingModel().getPlayers().get(i);
             }
         }
@@ -317,6 +317,14 @@ public class MADN_GameLogic extends GameLogic {
     
     public void setBoard(MADN_Board b){
      this.board = b;
+    }
+    
+    public int getAnzPlayer() {
+        return anzPlayer;
+    }
+
+    public void setAnzPlayer(int anzPlayer) {
+        this.anzPlayer = anzPlayer;
     }
  
 }

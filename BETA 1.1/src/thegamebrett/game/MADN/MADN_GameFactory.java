@@ -22,9 +22,11 @@ public class MADN_GameFactory implements GameFactory{
     MADN_Board board;
     UserCharacter uc;
     
+    @Override
     public Model createGame(ArrayList<User> users) throws TooMuchPlayers, TooFewPlayers {
         board = new MADN_Board();
         MADN_GameLogic gl = new MADN_GameLogic(null);
+        gl.setAnzPlayer(users.size());
         
         if(gl.getMaximumPlayers() < users.size()) {
             throw new TooMuchPlayers();

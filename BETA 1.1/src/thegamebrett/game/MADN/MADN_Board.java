@@ -209,7 +209,7 @@ public class MADN_Board extends Board {
         for(int i = 0; i<4;i++){
             pos = new RelativePoint(startX*r, startY*r);
             MADN_Field newEndField = new MADN_Field(0.05, 0.05, pos, null, fLayout1, null, MADN_Field.FIELD_TYPE_END);
-            if(fields.get(fields.size()-1).getFieldType()!=MADN_Field.FIELD_TYPE_END){
+            if(fields.get((fields.size()-1)-(direction*4)).getFieldType()!=MADN_Field.FIELD_TYPE_END){
                 switch (direction){
                     case 0: fields.get(39).addNext(newEndField);
                             break;
@@ -224,7 +224,7 @@ public class MADN_Board extends Board {
             } else {
                 fields.get(fields.size()-1).addNext(newEndField);   
             }
-            fields.get(direction).addNext(newEndField);
+ //           fields.get(direction).addNext(newEndField);
                 
             fields.add(newEndField); 
             
