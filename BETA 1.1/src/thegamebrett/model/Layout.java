@@ -1,6 +1,9 @@
 package thegamebrett.model;
 
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 
 /**
@@ -32,9 +35,7 @@ public class Layout {
     /**  Hintergrungbild füllt ganzes Feld (Bild wird abgeschnitten damit es passt)*/
     public static final int BACKGROUND_IMAGE_FILL_FACTOR_FILL = 0;
     /** Hintergrungbild wird ganz angezeigt (Bild ist auf jeden Fall ganz im Feld)*/
-    public static final int BACKGROUND_IMAGE_FILL_FACTOR_ASPECT = 1;
-    /** Hintergrungbild wird ganz angezeigt (Bild ist auf jeden Fall ganz im Feld)*/
-    public static final int BACKGROUND_IMAGE_FILL_FACTOR_REPEAT = 2;
+    public static final int BACKGROUND_IMAGE_FILL_FACTOR_REPEAT = 1;
     
     /**  Formfaktor quadratisch */
     public static final int FORM_FACTOR_SQUARE = 3;
@@ -62,6 +63,8 @@ public class Layout {
     /** Vergroesserungs / Verkleinerungsfaktor fuer Titel. Wert [-1, 1]*/
     private float titleScaleFactor = 0;
     
+    private boolean centerTitle = true;
+    
     /** Titel */
     private String title;
 
@@ -70,6 +73,8 @@ public class Layout {
     
     /** Vergroesserungs / Verkleinerungsfaktor fuer Subtext. Wert [-1, 1]*/
     private float subtextScaleFactor = 0;
+    
+    private boolean centerSubtext = true;
     
     /** Rand IN PIXEL! */
     private float border = 1;
@@ -91,6 +96,12 @@ public class Layout {
         registerChange();
         this.backgroundImage = backgroundImage;
     }
+    
+    public void setBackgroundImage(Canvas backgroundImage) {
+        WritableImage wi = new WritableImage((int)iconImage.getWidth(), (int)iconImage.getHeight());
+        backgroundImage.snapshot(null, wi);
+        setBackgroundImage(wi);
+    }
 
     public int getBackgroundImageFillFactor() {
         return backgroundImageFillFactor;
@@ -108,6 +119,12 @@ public class Layout {
     public void setIconImage(Image iconImage) {
         registerChange();
         this.iconImage = iconImage;
+    }
+    
+    public void setIconImage(Canvas iconImage) {
+        WritableImage wi = new WritableImage((int)iconImage.getWidth(), (int)iconImage.getHeight());
+        iconImage.snapshot(null, wi);
+        setIconImage(wi);
     }
 
     public Color getBackgroundColor() {
@@ -218,6 +235,23 @@ public class Layout {
         registerChange();
         this.borderColor = borderColor;
     }
+
+    public boolean isCenterTitle() {
+        return centerTitle;
+    }
+
+    public void setCenterTitle(boolean centerTitle) {
+        this.centerTitle = centerTitle;
+    }
+
+    public boolean isCenterSubtext() {
+        return centerSubtext;
+    }
+
+    public void setCenterSubtext(boolean centerSubtext) {
+        this.centerSubtext = centerSubtext;
+    }
+    
     
     
 }
