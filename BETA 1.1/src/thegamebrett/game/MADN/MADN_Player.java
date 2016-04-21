@@ -32,12 +32,12 @@ public class MADN_Player extends Player{
         for(int i=playerNr*4;i<playerNr*4+4;i++){
             
             Layout figureLayout = getCharacterLayout(user);
-            figureLayout.setTitle(j+"");
+            figureLayout.setTitle((j+1)+"");
             MADN_Field endField = (MADN_Field)board.getField(56+i);
             endField.setLayout(getCharacterLayout(user));
             MADN_Field initField = (MADN_Field)board.getField(40+i);
             initField.setLayout(getCharacterLayout(user));
-            figures[j] = new MADN_Figure(this, board, startField, initField, figureLayout, ""+j);
+            figures[j] = new MADN_Figure(this, board, startField, initField, figureLayout, ""+(j+1));
             figures[j].setField(initField);
             j++;
         }

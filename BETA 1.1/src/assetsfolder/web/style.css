@@ -3,6 +3,7 @@
     margin: 0;
 }
 body {
+    background-color: #B76E79;
     font-family: 'Open Sans', Arial, sans-serif;
     width: 100%;
 }
@@ -28,4 +29,24 @@ main {
     margin: 5px;
     width: 80%;
     height: 50px;
+}
+
+.chair{
+    padding: 10px;
+    
+    width: 20%;
+    height: 20%;
+    background-image: url("chair-icon.png");
+}
+
+#brettIcon{
+    
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -50px;
+    margin-left: -50px;
+    width: 100px;
+    height: 100px;
+    background-image: url("desc-icon.png");
 }
