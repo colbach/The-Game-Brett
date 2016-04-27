@@ -3,7 +3,11 @@ package thegamebrett.network;
 import thegamebrett.network.HTMLHelper;
 import thegamebrett.network.httpserver.Director;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import thegamebrett.action.request.InteractionRequest;
+import thegamebrett.assets.AssetNotExistsException;
+import thegamebrett.assets.AssetsLoader;
 
 /**
  * @author Christian Colbach
@@ -70,9 +74,16 @@ public class ControlDirector implements Director {
                 client.replyFromHTTP(messageID, answerID);
             }
             return ":)";
+        } else if (request.equals("/jquery.min.js")) {
+            try {
+                return AssetsLoader.loadFile("web/jquery.min.js");
+            } catch (AssetNotExistsException ex) {
+                Logger.getLogger(ControlDirector.class.getName()).log(Level.SEVERE, null, ex);
+                return "Fataler Fehler!!! jquery.min.js kann nicht geladen werden.";
+            }
         } else {
             return "Fehler :(";
-        }
+        } 
         
         
     }

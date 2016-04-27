@@ -42,6 +42,20 @@ public class AssetsLoader {
             throw new AssetNotExistsException();
         }
     }
+    
+    /**
+     * Parameter: Datei ausgehend von assetsfolder
+     */
+    public static File loadFile(String filename) throws AssetNotExistsException {
+        File file = new File(assetsfolder + filename);
+        System.out.println(assetsfolder + filename);
+        if(file.exists()) {
+            return file;
+        } else {
+            System.err.println(assetsfolder + filename + " existiert nicht!");
+            throw new AssetNotExistsException();
+        }
+    }
 
     /**
      * Parameter: Datei ausgehend von assetsfolder
