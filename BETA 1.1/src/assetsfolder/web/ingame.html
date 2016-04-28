@@ -6,22 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <link href="style.css" type="text/css" rel="stylesheet">
     <title>The-Game-Brett</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" type="text/javascript"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $("#refresh").load("refresh?start");
-            var refreshId = setInterval(function() {
-                $("#refresh").load('refresh?' + 1 * new Date());
-            }, 2000);
-        });
+    <script type="text/javascript" src="functions.js"></script>
 
-        function reply(answer) {
-            $("#refresh").load("reply?" + answer);
-        }
-    </script>
 </head>
 
-<body bgcolor="#B76E79">
+<body>
     <div align="center" id="content">
         <div id="refresh" style="text-align:center;"></div>
     </div>
