@@ -4,12 +4,15 @@
 }
 body {
     background-color: #B76E79;
+	
     font-family: 'Open Sans', Arial, sans-serif;
     width: 100%;
 }
 h1 {
     font-family: 'Open Sans', Arial, sans-serif;
     width: 100%;
+	padding: 30px;
+	
 }
 main {
     margin: 0 auto;
@@ -19,6 +22,7 @@ main {
     margin-left: 5px;
 }
 .buttons {
+	
     padding: 5px;
     margin: 5px;
     width: 35px;
@@ -32,10 +36,13 @@ main {
 }
 
 .chair{
-    padding: 10px;
-    
-    width: 20%;
-    height: 20%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -50px;
+    margin-left: -50px;
+    width: 40px;
+    height: 40px;
     background-image: url("chair-icon.png");
 }
 
