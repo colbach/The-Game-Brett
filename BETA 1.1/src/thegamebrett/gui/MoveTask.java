@@ -50,7 +50,7 @@ public class MoveTask extends Task {
         System.out.println("startTime="+startTime+" endTime="+endTime);
         long currentMillis;
         while (endTime > (currentMillis = System.currentTimeMillis())) {
-            System.out.println("*");
+            //System.out.println("*");
             long passedTime = currentMillis - startTime;
             double part = passedTime / (double)delay;
             

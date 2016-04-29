@@ -24,6 +24,8 @@ public class User {
     private UserCharacter character = null;
 
     private static volatile AtomicLong lastClientId = new AtomicLong(0);
+    
+    
 
     private final long clientId;
 
@@ -34,8 +36,6 @@ public class User {
     private volatile InetAddress inetAddress;
 
     private volatile InteractionRequest actualInteractionRequest;
-
-    private volatile boolean delivered = false;
 
     private String htmlCache = null;
 
@@ -85,14 +85,6 @@ public class User {
     public synchronized void setActualInteractionRequest(InteractionRequest actualInteractionRequest) {
         this.actualInteractionRequest = actualInteractionRequest;
         htmlCache = null;
-    }
-
-    public boolean isDelivered() {
-        return delivered;
-    }
-
-    public void setDelivered(boolean delivered) {
-        this.delivered = delivered;
     }
 
     public long getMessageId() {
