@@ -42,7 +42,7 @@ public class HttpRequestWaiter implements Runnable {
 
                 // Warten auf naechsten Zugriff
                 Socket client = serverSocket.accept();
-                System.out.println("*");
+                //System.out.println("*");
 
                 // Zugriff mittels Handler abarbeiten
                 new HttpRequestHandler(client, director).start();

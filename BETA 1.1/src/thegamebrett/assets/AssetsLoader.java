@@ -26,8 +26,8 @@ public class AssetsLoader {
     public static String assetsfolder = null;
 
     static {
-        assetsfolder = "/Users/Korè/Documents/Studium/5. Semester(WS)/Interdisziplinäres Teamprojekt/The-Game-Brett/BETA 1.1/src/assetsfolder/";
-        //assetsfolder = System.getProperty("user.home") + "/GitHub/The-Game-Brett/BETA 1.1/src/assetsfolder/";
+        //assetsfolder = "/Users/Korè/Documents/Studium/5. Semester(WS)/Interdisziplinäres Teamprojekt/The-Game-Brett/BETA 1.1/src/assetsfolder/";
+        assetsfolder = System.getProperty("user.home") + "/GitHub/The-Game-Brett/BETA 1.1/src/assetsfolder/";
         System.out.println("assetsfolder = " + assetsfolder);
     }
 
@@ -49,7 +49,6 @@ public class AssetsLoader {
      */
     public static File loadFile(String filename) throws AssetNotExistsException {
         File file = new File(assetsfolder + filename);
-        System.out.println(assetsfolder + filename);
         if(file.exists()) {
             return file;
         } else {
