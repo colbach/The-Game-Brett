@@ -4,21 +4,38 @@
 }
 body {
     background-color: #B76E79;
+	
     font-family: 'Open Sans', Arial, sans-serif;
     width: 100%;
 }
 h1 {
+	padding-top: 10px;
     font-family: 'Open Sans', Arial, sans-serif;
     width: 100%;
+}
+p {
+	font-family: 'Open Sans', Arial, sans-serif;
 }
 main {
     margin: 0 auto;
 }
+
+input[type="radio"] {
+	display: none;
+}
+input[type="radio"] + img{
+	border: 2px solid transparent;
+} 
+input[type="radio"]:checked + img{
+	border: 2px solid red;
+}
+
 #content {
     padding: 5px;
     margin-left: 5px;
 }
 .buttons {
+	
     padding: 5px;
     margin: 5px;
     width: 35px;
@@ -32,12 +49,23 @@ main {
 }
 
 .chair{
-    padding: 10px;
-    
-    width: 20%;
-    height: 20%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -50px;
+    margin-left: -50px;
+    width: 40px;
+    height: 40px;
     background-image: url("chair-icon.png");
 }
+
+.formular{
+	
+}
+
+/*choose Position aussehen*/
+
+/**
 
 #brettIcon{
     
@@ -48,5 +76,163 @@ main {
     margin-left: -50px;
     width: 100px;
     height: 100px;
-    background-image: url("desc-icon.png");
+	content: url(desk-icon.png);
 }
+
+.csstransforms .cn-wrapper {
+	
+	top: 50%;
+    left: 50%;
+    margin-top: -50px;
+    margin-left: -50px;
+	
+  font-size:1em;
+  width: 26em;
+  height: 26em;
+  overflow: hidden;
+  position: absolut;
+  z-index: 10;
+  border-radius: 50%;
+  transform: scale(0.1);
+  transition: all .3s ease;
+}
+
+.csstransforms .opened-nav {
+  border-radius: 50%;
+  transform: scale(1);
+}
+.cn-button {
+	
+	
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -50px;
+    margin-left: -50px;
+    width: 100px;
+    height: 100px;
+
+	border:none;
+	background:none;
+	color: white;
+	text-align: Center;
+	font-size: 1.5em;
+	padding-bottom: 1em;
+	height: 3.5em;
+	width: 3.5em;
+	background-color: #111;
+	border-radius: 50%;
+	cursor: pointer;
+	z-index: 11
+}
+.cn-button:hover,
+.cn-button:active,
+.cn-button:focus{
+  background-color: #222;
+}
+
+.csstransforms .cn-wrapper li {
+  position: absolute;
+  font-size: 1.5em;
+  width: 10em;
+  height: 10em;
+  transform-origin: 100% 100%;
+  overflow: hidden;
+  left: 50%;
+  top: 50%;
+  margin-top: -1.3em;
+  margin-left: -10em;
+  transition: border .3s ease;
+}
+
+.csstransforms .cn-wrapper li a {
+  display: block;
+  height: 14.5px;
+  width: 14.5px;
+  position: absolute;
+  border-radius: 50%;
+  color: #fff;
+  padding-top: 1.8em;
+  
+  -webkit-transform: skew(-45deg) rotate(-70deg) scale(1);
+  -ms-transform: skew(-45deg) rotate(-70deg) scale(1);
+  -moz-transform: skew(-45deg) rotate(-70deg) scale(1);
+  transform: skew(-45deg) rotate(-70deg) scale(1);
+  -webkit-backface-visibility: hidden;
+  -webkit-transition: opacity 0.3s, color 0.3s;
+  -moz-transition: opacity 0.3s, color 0.3s;
+  transition: opacity 0.3s, color 0.3s;
+}
+
+.csstransforms .cn-wrapper li:first-child {
+	-webkit-transform: rotate(0deg) skew(45deg);
+  -ms-transform: rotate(0deg) skew(45deg);
+  -moz-transform: rotate(0deg) skew(45deg);
+  
+  transform: rotate(0deg) skew(45deg);
+}
+
+.csstransforms .cn-wrapper li:nth-child(2) {
+  transform: rotate(45deg) skew(45deg);
+}
+
+.csstransforms .cn-wrapper li:nth-child(3) {
+  transform: rotate(90deg) skew(45deg)
+}
+
+.csstransforms .cn-wrapper li:nth-child(4) {
+  transform: rotate(135deg) skew(45deg);
+}
+
+.csstransforms .cn-wrapper li:nth-child(5) {
+  transform: rotate(180deg) skew(45deg);
+}
+
+.csstransforms .cn-wrapper li:nth-child(6) {
+  transform: rotate(225deg) skew(45deg);
+}
+
+.csstransforms .cn-wrapper li:nth-child(7) {
+  transform: rotate(270deg) skew(45deg);
+}
+
+.csstransforms .cn-wrapper li:nth-child(8) {
+  transform: rotate(315deg) skew(45deg);
+}
+.csstransforms .cn-wrapper li:nth-child(odd) a {
+  background-color: #a11313;
+  background-color: hsla(0, 88%, 63%, 1);
+}
+
+.csstransforms .cn-wrapper li:nth-child(even) a {
+  background-color: #a61414;
+  background-color: hsla(0, 88%, 65%, 1);
+}
+
+.csstransforms .cn-wrapper li.active a {
+  background-color: #b31515;
+  background-color: hsla(0, 88%, 70%, 1);
+}
+
+.csstransforms .cn-wrapper li:not(.active) a:hover,
+.csstransforms .cn-wrapper li:not(.active) a:active,
+.csstransforms .cn-wrapper li:not(.active) a:focus {
+  background-color: #b31515;
+  background-color: hsla(0, 88%, 70%, 1);
+}
+.csstransforms .cn-wrapper li:not(.active) a:focus {
+  position: absolut; 
+}
+
+@media screen and (max-width:320px){
+  .no-csstransforms .cn-wrapper{
+    width:15.15px;
+    margin-left: -7.5em;
+  }
+  .no-csstransforms .cn-wrapper li{
+    height:3em;
+    width:3em;
+  }
+}
+
+*/
