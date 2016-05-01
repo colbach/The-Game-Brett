@@ -16,7 +16,6 @@ import thegamebrett.model.GameLogic;
 import thegamebrett.model.Model;
 import thegamebrett.model.Player;
 import thegamebrett.model.elements.Field;
-import thegamebrett.model.elements.Figure;
 /**
  *
  * @author Korè
@@ -61,6 +60,8 @@ public class PSS_GameLogic extends GameLogic{
     public final static Integer INTERACTIONRESPONSE_CHOICES_OK = new Integer(1);
     public final static Integer INTERACTIONRESPONSE_NO_RESPONSE = new Integer(2);
     public final static Integer INTERACTIONRESPONSE_SOMEONE_WON = new Integer(3);
+    public final static Integer INTERACTIONRESPONSE_EVERYONE_DICES = new Integer(4);
+
 
     
     
@@ -71,6 +72,10 @@ public class PSS_GameLogic extends GameLogic{
     private PSS_Board board;
     private static boolean diceAgain = false;
     private int anzPlayer;
+    
+    private static int alreadyDiced = 0;
+    private static ArrayList<PSS_Player> dicedRight = new ArrayList<>();
+    private static boolean field55 = false;
 
     
     public PSS_GameLogic(Model dependingModel) {
@@ -92,7 +97,36 @@ public class PSS_GameLogic extends GameLogic{
             
             InteractionRequest previous = ((InteractionResponse) as).getConcerningInteractionRequest();
             /* abfragen ob die response eine antwort auf die erwartete request ist **/
-            if(previous.equals(expected)){
+            
+            if(previous.getUserData().equals(INTERACTIONRESPONSE_EVERYONE_DICES)){
+                
+                dice();
+                if((field55&&(lastDice==6))||(lastDice==1)){
+                   dicedRight.add((PSS_Player)(previous.getPlayer()));
+                }
+                
+                if(alreadyDiced>=anzPlayer-1){
+                    for(PSS_Player p : dicedRight){
+                        requests.add(new InteractionRequest("Du darfst trinken!", new String[]{"WUHU!"}, 
+                                p, false,INTERACTIONRESPONSE_NO_RESPONSE));
+                    }
+                    dicedRight = new ArrayList<>();
+                    alreadyDiced = 0;
+                } else {
+                    alreadyDiced++;
+                }
+                
+                if(previous.equals(expected)){
+                    InteractionRequest nextRequest = new InteractionRequest("Du bist dran mit wuerfeln!",
+                    new String[]{"GOGOGO"}, getNextPlayer((PSS_Player)previous.getPlayer()), 
+                            false,INTERACTIONRESPONSE_CHOICES_DICE);
+                    requests.add(nextRequest);   
+                    expected = nextRequest;
+
+                }
+            }
+            
+            else if(previous.equals(expected)){
                 /* abfragen ob anfrage zum wuerfeln **/
                 if(previous.getUserData().equals(INTERACTIONRESPONSE_CHOICES_DICE)){
                    requests.add(nextDice(as, previous));
@@ -182,7 +216,7 @@ public class PSS_GameLogic extends GameLogic{
 
     private ActionRequest nextOK(ActionResponse as, InteractionRequest previous) {
 
-        InteractionRequest nextRequest;
+        InteractionRequest nextRequest = null;
         PSS_Figure figure = ((PSS_Player)previous.getPlayer()).getFigure();
         PSS_Field field = (PSS_Field)figure.getField();
         int questIndex = field.getFieldIndex();
@@ -194,47 +228,135 @@ public class PSS_GameLogic extends GameLogic{
                 ((PSS_Player)previous.getPlayer()).getFigure().setField(field);
                 nextRequest = getOkRequest(as,previous, questIndex-2, field.getLayout().getTitle());
                 break;
+                
             case 5: case 66:
                 field = (PSS_Field)board.getField(32);
                 ((PSS_Player)previous.getPlayer()).getFigure().setField(field);
                 nextRequest = getOkRequest(as,previous, 32, field.getLayout().getTitle());
                 break;
-            case 13: case 21: case 70:
-                nextRequest = new InteractionRequest("Du bist wieder auf START!",
-                    new String[]{"Der Hammer!"}, (PSS_Player)previous.getPlayer(), false, INTERACTIONRESPONSE_NO_RESPONSE);
-                requests.add(new InteractionRequest("Du bist dran mit wuerfeln!",
-                    new String[]{"GOGOGO"}, getNextPlayer((PSS_Player)previous.getPlayer()), false,INTERACTIONRESPONSE_CHOICES_DICE));                    
-                break;
-            case 36: 
-                int lastIndex = 71;
-                PSS_Player leastPlayer = null;
-                for(int i=0;i<anzPlayer; i++){
-                    int index=((PSS_Field)(((PSS_Player)(getDependingModel().getPlayers().get(i))).getFigure().getField())).getFieldIndex();
-                    if(index<lastIndex){
-                        leastPlayer = (PSS_Player)(getDependingModel().getPlayers().get(i));
-                        lastIndex = index;
-                    }
-                }
-                nextRequest = new InteractionRequest("Du bist wieder auf START!",
-                    new String[]{"Der Hammer!"}, (PSS_Player)previous.getPlayer(), false, INTERACTIONRESPONSE_NO_RESPONSE);
-                requests.add(new InteractionRequest("Du bist dran mit wuerfeln!",
-                    new String[]{"GOGOGO"}, getNextPlayer((PSS_Player)previous.getPlayer()), false,INTERACTIONRESPONSE_CHOICES_DICE));                    
+                
+            case 13: case 21: case 36: case 70:
+                field = (PSS_Field)board.getField(0);
+                ((PSS_Player)previous.getPlayer()).getFigure().setField(field);
+                requests.add(new InteractionRequest("Du bist wieder auf START!",
+                    new String[]{"Der Hammer!"}, (PSS_Player)previous.getPlayer(), 
+                        false, INTERACTIONRESPONSE_NO_RESPONSE));
+                nextRequest = new InteractionRequest("Du bist dran mit wuerfeln!",
+                    new String[]{"GOGOGO"}, getNextPlayer((PSS_Player)previous.getPlayer()),
+                        false,INTERACTIONRESPONSE_CHOICES_DICE);                    
                 break;
                 
+            case 24: 
+                if(previous.getChoices().length>1){
+                    if(((InteractionResponse)as).getChoice().equals("PROST!")){
+                        nextRequest = new InteractionRequest("Du bist dran mit wuerfeln!",
+                        new String[]{"GOGOGO"}, getNextPlayer((PSS_Player)previous.getPlayer()), false,INTERACTIONRESPONSE_CHOICES_DICE);                    
+                        break;
+                    }else{
+                        field = (PSS_Field)board.getField(20);
+                        ((PSS_Player)previous.getPlayer()).getFigure().setField(field);
+                        nextRequest = getOkRequest(as, previous, 20, field.getLayout().getTitle());
+                        break;
+                    }
+                } else {
+                    nextRequest = new InteractionRequest("Willst du trinken oder zurueck?!",
+                    new String[]{"PROST!","Lieber zurueck..."}, (PSS_Player)previous.getPlayer(), false,INTERACTIONRESPONSE_CHOICES_OK);                    
+                    break;
+                }
+                
+            case 29:
+                field = (PSS_Field)board.getField(9);
+                ((PSS_Player)previous.getPlayer()).getFigure().setField(field);
+                nextRequest = getOkRequest(as,previous, 9, field.getLayout().getTitle());
+                break;
+                
+            case 35:
+                field = (PSS_Field)board.getField(6);
+                ((PSS_Player)previous.getPlayer()).getFigure().setField(field);
+                nextRequest = getOkRequest(as,previous, 6, field.getLayout().getTitle());
+                break;
+                
+            case 49:
+                field = (PSS_Field)board.getField(28);
+                ((PSS_Player)previous.getPlayer()).getFigure().setField(field);
+                nextRequest = new InteractionRequest("Du bist noch einmal dran mit wuerfeln!",
+                        new String[]{"DER HAMMER!"}, (PSS_Player)previous.getPlayer(), false,INTERACTIONRESPONSE_CHOICES_DICE);                    
+                break;
+            
+            case 56:
+                field = (PSS_Field)board.getField(18);
+                ((PSS_Player)previous.getPlayer()).getFigure().setField(field);
+                nextRequest = getOkRequest(as,previous, 18, null);
+                break;
+                
+            case 62:
+                
+                
+            case 69:
+                
+            case 17:
+                
+                ((PSS_Player)previous.getPlayer()).setSuspended(true);
+                requests.add(new InteractionRequest("Du musst eine Runde aussetzen!",
+                        new String[]{"-.-"}, (PSS_Player)previous.getPlayer(), 
+                        false,INTERACTIONRESPONSE_NO_RESPONSE));
+                nextRequest = new InteractionRequest("Du bist dran mit wuerfeln!",
+                        new String[]{"GOGOGO"}, getNextPlayer((PSS_Player)previous.getPlayer()), 
+                        false,INTERACTIONRESPONSE_CHOICES_DICE);                    
+                break;       
+                
+            case 20:
+                nextRequest = new InteractionRequest("Du bist noch einmal dran mit wuerfeln!",
+                        new String[]{"DER HAMMER!"}, (PSS_Player)previous.getPlayer(), false,INTERACTIONRESPONSE_CHOICES_DICE);                    
+                break;
+                
+            case 55:
+                field55 = true;
+                for(Player p : getDependingModel().getPlayers()){
+                    requests.add(new InteractionRequest("Wuerfle eine 6!",
+                        new String[]{"Wuerfeln!"}, (PSS_Player)p, 
+                            false,INTERACTIONRESPONSE_EVERYONE_DICES));                    
+                }
+                break;
+                
+            case 59:
+                field55 = false;
+                for(Player p : getDependingModel().getPlayers()){
+                    requests.add(new InteractionRequest("Wuerfle eine 1!",
+                        new String[]{"Wuerfeln!"}, (PSS_Player)p, 
+                            false,INTERACTIONRESPONSE_EVERYONE_DICES));                    
+                }
+                break;
+                
+            case 8: case 18: case 28: case 38: case 48: case 58: case 68:
+                requests.add(getOkRequest(as,previous, questIndex, null));
+                nextRequest = new InteractionRequest("Du bist dran mit wuerfeln!",
+                        new String[]{"GOGOGO"}, getNextPlayer((PSS_Player)previous.getPlayer()), 
+                        false,INTERACTIONRESPONSE_CHOICES_DICE);                    
+                break;       
+                
+            
             default:
+                nextRequest = getOkRequest(as,previous, questIndex, field.getLayout().getTitle());
                 break;
 
         }
         
-
-        return null;
+        expected = nextRequest;
+        return nextRequest;
     }
     
     
     private InteractionRequest getOkRequest(ActionResponse as, InteractionRequest previous, int fieldIndex, String quest) {
-        return new InteractionRequest("Du bist auf das Feld "+fieldIndex+" gekommen! "
+        
+        if(quest != null){
+            return new InteractionRequest("Du bist auf das Feld "+fieldIndex+" gekommen! "
                     + "Deine Aufgabe: " + quest,
                     new String[]{"Na gut..."}, (PSS_Player)previous.getPlayer(), false, INTERACTIONRESPONSE_CHOICES_OK);
+        } else {
+            return new InteractionRequest("Du bist auf das Feld "+fieldIndex+" gekommen!",
+                    new String[]{"Klasse!"}, (PSS_Player)previous.getPlayer(), false, INTERACTIONRESPONSE_CHOICES_OK);
+        }
     }
 
     
@@ -246,6 +368,10 @@ public class PSS_GameLogic extends GameLogic{
         int currentPlayerNr = ((PSS_Player)currentPlayer).getPlayerNr();
         for(int i = 0; i<getDependingModel().getPlayers().size(); i++){
             if(((PSS_Player)getDependingModel().getPlayers().get(i)).getPlayerNr()==(currentPlayerNr+1)%anzPlayer){
+                if(((PSS_Player)getDependingModel().getPlayers().get(i)).isSuspended()){
+                    ((PSS_Player)getDependingModel().getPlayers().get(i)).setSuspended(false);
+                    return getNextPlayer((PSS_Player)getDependingModel().getPlayers().get(i));
+                }
                 return (PSS_Player)getDependingModel().getPlayers().get(i);
             }
         }
