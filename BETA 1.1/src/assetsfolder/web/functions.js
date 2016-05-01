@@ -101,5 +101,15 @@ function loadUserColor() {
             }
         }
     };
-    
+}
+function createCharacter(){
+	window.location = "createCharacter.html";
+}
+
+function choosePosition(value){
+	window.location = "chooseCharacter.html";
+}
+
+function chooseCharacter(value){
+	window.location = "chooseGame.html";
 }
