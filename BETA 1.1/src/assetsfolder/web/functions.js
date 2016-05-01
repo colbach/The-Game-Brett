@@ -24,5 +24,13 @@ function setBackgroundColor(backgroundcolor){
 	document.getElementsByTagName("body")[0].style.backgroundColor = backgroundColor;
 }
 function createCharacter(){
-		window.location = "createCharacter.html";
+	window.location = "createCharacter.html";
+}
+
+function choosePosition(value){
+	window.location = "chooseCharacter.html";
+}
+
+function chooseCharacter(value){
+	window.location = "chooseGame.html";
 }

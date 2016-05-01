@@ -50,23 +50,20 @@ input[type="radio"]:checked + img{
 }
 
 .characterButton{
-    width: 100%;
-    height: 50px;
-	
+	width: 20%;
+	height:auto;
+	background-color:#36F;
+	padding:5px;
 }
 
-.image{
+.posImage{
 	width:100%;
 	height:100%;
 
 }
-
-.subline {
-	background-color:#36F;
-	height: 50px;
-	width: auto;
-	margin:auto;
-	display:inline;
+.charImage{
+	width:100%;
+	height:100%;
 }
 
 .position{
