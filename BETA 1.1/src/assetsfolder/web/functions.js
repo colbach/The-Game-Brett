@@ -1,14 +1,13 @@
-var backgroundColor = '#B70E79';
-
-$(document).ready(function () {
+/*$(document).ready(function () {
     //$("#refresh").load("refresh?start");
     update();
     var refreshId = setInterval(function () {
         update();
         //$("#refresh").load('refresh?' + 1 * new Date());
     }, 2000);
-});
+});*/
 
+var backgroundColor = '#B70E79';        
 var lastContentID = "#########";
 
 function reply(answer) {
@@ -46,6 +45,27 @@ function update() {
     };
 }
 
+function choosePosition(answer) {    
+    var url = "tryToChoosePosition?" + answer;
+    var response = new XMLHttpRequest();
+    response.open("GET", url, true);
+    response.send();
+    var w = window;
+    response.onreadystatechange = function () {
+            if (response.readyState === 4 && response.status === 200) {
+            console.log("response.responseText=" + response.responseText);
+
+            if (response.responseText === "YES") {
+                console.log("Position verfuegbar");
+                window.location = "createCharacter.html";
+            } else {
+                $("#refresh").load("refreshPositions");
+            }
+        }
+    };
+
+}
+
 function startGame() {
     /*hier muss geprueft werden welches Spiel gewaehlt ist und dieses dann mit allen spielern gestartet werden*/
     window.location = "ingame.html";
@@ -60,4 +80,26 @@ function setBackgroundColor(backgroundcolor) {
 }
 function createCharacter() {
     window.location = "createCharacter.html";
+}
+
+function loadUserColor() {
+    
+    var url = "getUserColor";
+    var response = new XMLHttpRequest();
+    response.open("GET", url, true);
+    response.send();
+    response.onreadystatechange = function () {
+        if (response.readyState === 4 && response.status === 200) {
+            
+            console.log("userColor=" + response.responseText);
+            
+            if (response.responseText !== "NONE") {
+                console.log("Keine Farbe gesetzt");
+                return "#FFFFFF";
+            } else {
+                return response.responseText;
+            }
+        }
+    };
+    
 }

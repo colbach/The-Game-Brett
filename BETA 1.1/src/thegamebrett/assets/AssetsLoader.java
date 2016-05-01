@@ -43,18 +43,34 @@ public class AssetsLoader {
             throw new AssetNotExistsException();
         }
     }
-    
+
+    /**
+     * Parameter: Datei ausgehend von assetsfolder
+     */
+    public static File loadFileIgnoreExceptions(String filename) {
+        try {
+            return loadFile(filename);
+        } catch (AssetNotExistsException ex) {
+            return null;
+        }
+    }
+
     /**
      * Parameter: Datei ausgehend von assetsfolder
      */
     public static File loadFile(String filename) throws AssetNotExistsException {
         File file = new File(assetsfolder + filename);
-        if(file.exists()) {
+        if (file.exists()) {
             return file;
         } else {
             System.err.println(assetsfolder + filename + " existiert nicht!");
             throw new AssetNotExistsException();
         }
+    }
+    
+    public static boolean fileExists(String filename) {
+        File file = new File(assetsfolder + filename);
+        return file.exists();
     }
 
     /**
@@ -86,7 +102,7 @@ public class AssetsLoader {
             return "";
         }
     }
-    
+
     /**
      * Parameter: Datei ausgehend von assetsfolder
      */
@@ -114,7 +130,7 @@ public class AssetsLoader {
 
         throw new AssetNotExistsException();
     }
-    
+
     public static void saveText(String filename, String text) {
         try {
             try (PrintWriter out = new PrintWriter(assetsfolder + filename)) {

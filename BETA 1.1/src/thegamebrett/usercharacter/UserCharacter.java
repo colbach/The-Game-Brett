@@ -72,6 +72,10 @@ public class UserCharacter {
     public Color getColor() {
         return Color.web(USER_COLORS[colorIndex]);
     }
+    
+    public String getColorString() {
+        return USER_COLORS[colorIndex];
+    }
 
     public void setColor(int colorIndex) {
         synchronized(userColerRegister) {
