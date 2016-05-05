@@ -38,7 +38,7 @@ public class WebGenerator {
     private static String generateHTMLButton(String choice, long messageID, int anwerID) {
         return "<div align=\"center\"><button class=\"choices\" onclick=\"reply('" + messageID + "?" + anwerID+ "')\">" + choice + "</button></div>";
     }
-    
+        
     public static String generateHTMLContent(String titel, String acknowledgment, long messageID) {
         StringBuilder sb = new StringBuilder();
         sb.append("<h1>" + titel + "</h1>");
@@ -174,6 +174,31 @@ public class WebGenerator {
             + "<button class=\"position\" "  + (bs[3] ? "onClick=\"tryToLogIn('" + UserManager.SYSTEM_CLIENT_IDS[3] + "')\"" : " disabled") + "><img src=\"position-" + (bs[3] ? "enabled" : "disabled") + ".png\" alt=\"" + UserManager.SYSTEM_CLIENT_NAMES[3] + "\" class=\"posImage\"></button>\n"
             + "<button class=\"position\" "  + (bs[2] ? "onClick=\"tryToLogIn('" + UserManager.SYSTEM_CLIENT_IDS[2] + "')\"" : " disabled") + "><img src=\"position-" + (bs[2] ? "enabled" : "disabled") + ".png\" alt=\"" + UserManager.SYSTEM_CLIENT_NAMES[2] + "\" class=\"posImage\"></button>\n"
         + "</div>\n";*/
+    }
+
+    static String generateFreePositionHTML(UserManager um) {
+        StringBuilder sb = new StringBuilder();
+        User[] scs = um.getSystemClients();
+        for(int i=0; i<scs.length; i++) {
+            if(scs[i]!= null && !scs[i].isAlife()) {
+                String name = "null";
+                try {
+                    name = scs[i].getUserCharacter().getName();
+                } catch(Exception e) {
+                    e.printStackTrace();
+                }
+                sb.append("<div align=\"center\"><button class=\"choices\" onclick=\"tryToLogIn('" + UserManager.SYSTEM_CLIENT_IDS[i] + "')\">" + name + "</button></div>");
+            }
+        }
+        /*
+        for (int i = 0; i < SYSTEM_CLIENT_NAMES.length; i++) {
+            if (systemClients[i] == null || !systemClients[i].isAlife()) {
+                sb.append("<div align=\"center\"><button class=\"choices\" onclick=\"tryToLogIn('" + SYSTEM_CLIENT_IDS[i] + "')\">" + SYSTEM_CLIENT_NAMES[i] + "</button></div>");
+            } else {
+                sb.append("<div align=\"center\"><button class=\"choices\" disabled>" + SYSTEM_CLIENT_NAMES[i] + "</button></div>");
+            }
+        }*/
+        return sb.toString();
     }
     
 }

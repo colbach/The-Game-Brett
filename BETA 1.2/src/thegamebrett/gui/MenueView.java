@@ -2,16 +2,22 @@ package thegamebrett.gui;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.PropertyResourceBundle;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.TranslateTransition;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -36,153 +42,171 @@ import thegamebrett.network.User;
  */
 public class MenueView extends Group {
 
-    Manager manager;
+    private Manager manager;
     private int soundValue;
     private boolean aktivated = false;
     private boolean charWindow = false;
     private boolean muted = false;
     private double textScaleFactor;
-
+    
+    private Button optionBtn;
+    private Button muteBtn;
+    private Button characterBtn;
+    private Label soundLbl;
+    private Label characterLbl;
+    private Label textSizeLbl;
+    private Label languageLbl;
+    private Slider soundSlider;
+    private Slider textSizeSlider;
+    private ComboBox languageCBox;
+    
+    private String language = "languages";
+    private String optionButton;
+    private String soundLabel;
+    private String muteButton;
+    private String characterButton;
+    private String characterLabel;
+    private String textSizeLabel;
+    private String languageLabel;
+    private String language1 = "Deutsch";
+    private String language2 = "English";
+    
+    private ResourceBundle rb = ResourceBundle.getBundle(language); 
+    
     public MenueView(Manager manager) {
+        
         this.manager = manager;
-
+        rb = PropertyResourceBundle.getBundle(language, Locale.GERMAN);
+      
         double d = Math.min(ScreenResolution.getScreenWidth(), ScreenResolution.getScreenHeigth());
-        double iconWH = d / 5.3;
-        int iconsInARow = Math.round((ScreenResolution.getScreenWidth() / (float) ScreenResolution.getScreenHeigth()) * 3);
-        double rowWidth = iconsInARow * iconWH + (iconsInARow - 1) * (iconWH / 2);
-        double rowMid = ScreenResolution.getScreenWidth() / 2;
-        double rowStart = rowMid - (rowWidth / 2);
-
+        double iconWH = d/5.3;
+        int iconsInARow = Math.round((ScreenResolution.getScreenWidth() / (float)ScreenResolution.getScreenHeigth()) * 3);
+        double rowWidth = iconsInARow*iconWH + (iconsInARow-1)*(iconWH/2);
+        double rowMid = ScreenResolution.getScreenWidth()/2;
+        double rowStart = rowMid-(rowWidth/2);
+        
         int count = 0;
         int rowCount = 0;
-        for (GameFactory game : GameCollection.gameFactorys) {
-
+        for(GameFactory game : GameCollection.gameFactorys) {
+            
             ImageView icon = new ImageView(game.getGameIcon());
-
-            icon.setLayoutX(rowStart + (1.5 * count * iconWH));
-            icon.setLayoutY(rowStart + (1.5 * rowCount * iconWH));
-
+            
+            icon.setLayoutX(rowStart + (1.5*count*iconWH));
+            icon.setLayoutY(rowStart + (1.5*rowCount*iconWH));
+            
             icon.setFitHeight(iconWH);
             icon.setFitWidth(iconWH);
             icon.addEventHandler(MouseEvent.MOUSE_PRESSED, (MouseEvent event) -> {
                 startGame(game);
             });
-
+            
             getChildren().add(icon);
-
-            count++;
-            if (count == iconsInARow) {
+            
+            count ++;
+            if(count == iconsInARow) {
                 count = 0;
                 rowCount += 1;
             }
         }
-
+        
         Group g = new Group();
-        MBar bar = new MBar();
-        Button b = new Button("xxxx");
-        b.setLayoutX(ScreenResolution.getScreenWidth() / 2);
-        b.setLayoutY(ScreenResolution.getScreenHeigth() - 50);
-
+        MenueBar bar = new MenueBar();
+        optionBtn = new Button(optionButton);
+        optionBtn.setLayoutX(ScreenResolution.getScreenWidth()/2 -30);
+        optionBtn.setLayoutY(ScreenResolution.getScreenHeigth()-50);
+        
         TranslateTransition tt = new TranslateTransition(Duration.millis(500), g);
         tt.setCycleCount(1);
-        tt.setAutoReverse(true);
-
-        b.setOnAction((ActionEvent t)
-                -> {
-            if (!aktivated) {
-                tt.setByY(-(120));
-                aktivated = true;
-            } else if (aktivated) {
-                tt.setByY(120);
-                aktivated = false;
+        tt.setAutoReverse(true);  
+        
+        optionBtn.setOnAction((ActionEvent t) -> 
+        {
+            if(!aktivated)
+            {
+             tt.setByY(-(120)); 
+             aktivated = true;
+            } else if(aktivated)
+            {
+             tt.setByY(120);  
+             aktivated = false;
             }
-            tt.play();
+           tt.play(); 
         });
-
+        
         g.getChildren().add(bar.getRoot());
-
+        
         Pane soundPane = new Pane();
-        soundPane.setStyle("-fx-background-color: white;");
         soundPane.setPrefSize(160, 100);
-        soundPane.setLayoutX((int) (rowStart + (-0.1 * iconWH)));
+        soundPane.setLayoutX((int)(rowStart));
         soundPane.setLayoutY(ScreenResolution.getScreenHeigth());
         createVolumeOption(soundPane);
-
+        
         Pane characterPane = new Pane();
-        characterPane.setStyle("-fx-background-color: white;");
         characterPane.setPrefSize(160, 100);
-        characterPane.setLayoutX((int) (rowStart + (1.6 * iconWH)));
+        characterPane.setLayoutX((int)(rowStart+(2*iconWH)));
         characterPane.setLayoutY(ScreenResolution.getScreenHeigth());
         createCharacterOption(characterPane);
-
+        
         Pane textPane = new Pane();
-        textPane.setStyle("-fx-background-color: white;");
         textPane.setPrefSize(160, 100);
-        textPane.setLayoutX((int) (rowStart + (3.2 * iconWH)));
+        textPane.setLayoutX((int)(rowStart+(4.2*iconWH)));
         textPane.setLayoutY(ScreenResolution.getScreenHeigth());
         createTextSizeOption(textPane);
-
-        Pane wlanPane = new Pane();
-        wlanPane.setStyle("-fx-background-color: white;");
-        wlanPane.setPrefSize(160, 100);
-        wlanPane.setLayoutX((int) (rowStart + (4.85 * iconWH)));
-        wlanPane.setLayoutY(ScreenResolution.getScreenHeigth());
-        createWLANOption(wlanPane);
-
+        
         Pane languagePane = new Pane();
-        languagePane.setStyle("-fx-background-color: white;");
         languagePane.setPrefSize(160, 100);
-        languagePane.setLayoutX((int) (rowStart + (6.45 * iconWH)));
+        languagePane.setLayoutX((int)(rowStart+(6.2*iconWH)));
         languagePane.setLayoutY(ScreenResolution.getScreenHeigth());
         createLanguageOption(languagePane);
-
-        g.getChildren().addAll(b, soundPane, characterPane, textPane, wlanPane, languagePane);
+        
+        g.getChildren().addAll(optionBtn,soundPane,characterPane,textPane, languagePane);
         this.getChildren().add(g);
-
+        setLanguage();
     }
-
+    
     public void startGame(GameFactory game) {
-
+        
         ArrayList<User> al = new ArrayList<User>();
-        for (User systemUser : manager.getMobileManager().getUserManager().getSystemClients()) {
-            if (systemUser != null) {
+        for(User systemUser : manager.getMobileManager().getUserManager().getSystemClients()) {
+            if(systemUser != null) {
                 al.add(systemUser);
             }
         }
-
+        
         try {
-            if (manager.getGui().getGameView().getGameModel() == null || !(manager.getGui().getGameView().getGameModel().getGameLogic() instanceof D_GameLogic)) {
-
+            if(manager.getGui().getGameView().getGameModel() == null || !(manager.getGui().getGameView().getGameModel().getGameLogic() instanceof D_GameLogic)) {
+                
                 Model gameModel = game.createGame(al);
                 manager.getGui().getGameView().setGameModel(gameModel);
                 manager.startGame(gameModel);
-
+                
             }
-
+            
             manager.getGui().showGameScene();
-
+            
         } catch (TooMuchPlayers ex) {
             Logger.getLogger(MenueView.class.getName()).log(Level.SEVERE, null, ex);
         } catch (TooFewPlayers ex) {
             Logger.getLogger(MenueView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    final public void createVolumeOption(Pane m) {
+    
+    final public void createVolumeOption(Pane m)
+    {
         Pane p = m;
-
-        Label label = new Label("Sound");
-        label.setLayoutX(60);
-        label.setLayoutY(10);
-
-        Slider slider = new Slider(0, 100, 0);
-        slider.setLayoutX(5);
-        slider.setLayoutY(30);
-        slider.setPadding(new Insets(5));
-        slider.setShowTickLabels(false);
-        slider.setShowTickMarks(true);
-        slider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val)
-                -> {
+        
+        soundLbl = new Label(soundLabel);
+        soundLbl.setLayoutX(50);
+        soundLbl.setLayoutY(10);
+        
+        soundSlider = new Slider(0,100,0);
+        soundSlider.setLayoutX(10);
+        soundSlider.setLayoutY(35);
+        soundSlider.setPadding(new Insets(5));
+        soundSlider.setShowTickLabels(false);
+        soundSlider.setShowTickMarks(true);
+        soundSlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> 
+        {
             int diff = (new_val.intValue() - soundValue);
             try {
                 if (diff > 0) {
@@ -190,117 +214,209 @@ public class MenueView extends Group {
                 } else {
                     Process p2 = Runtime.getRuntime().exec("amixer -D pulse sset Master " + diff + "%-");
                 }
-            } catch (IOException ex) {
+            }catch (IOException ex) 
+            {
                 System.out.println(ex);
             }
             soundValue = new_val.intValue();
         });
-
-        Button btn = new Button("Mute");
-        btn.setLayoutX(60);
-        btn.setLayoutY(65);
-        btn.setOnAction((ActionEvent t)
-                -> {
+        
+        muteBtn = new Button(muteButton);
+        muteBtn.setLayoutX(55);
+        muteBtn.setLayoutY(80);
+        muteBtn.setOnAction((ActionEvent t) -> 
+        {
             int sound;
-            if (muted) {
+            if(muted) 
+            {
                 sound = soundValue;
                 muted = false;
-            } else {
+            } else
+            {
                 sound = 0;
                 muted = true;
             }
-            System.out.println(muted);
+            //System.out.println(muted);
             try {
                 Process p1 = Runtime.getRuntime().exec("amixer -D pulse sset Master " + sound + "%+");
-            } catch (IOException ex) {
-                System.out.println(ex);
+            }catch (IOException ex) 
+            {
+                ex.printStackTrace();
             }
         });
-        p.getChildren().addAll(label, slider, btn);
+        p.getChildren().addAll(soundLbl,soundSlider, muteBtn);
     }
-
-    final public void createCharacterOption(Pane m) {
+    
+    final public void createCharacterOption(Pane m)
+    {
         Pane p = m;
-
+        
         Rectangle2D dimension = Screen.getPrimary().getBounds();
-        int x = (int) (dimension.getWidth() * 0.4);
-        int y = (int) (dimension.getHeight() * 0.6);
-
+        int x = (int)(dimension.getWidth()*0.4);
+        int y = (int)(dimension.getHeight()*0.6);
+        
         Pane characterPane = new Pane();
         characterPane.setStyle("-fx-background-color: white;");
         characterPane.setPrefSize(x, y);
-        characterPane.setLayoutX((dimension.getWidth() / 2) - (x / 2));
-        characterPane.setLayoutY((dimension.getHeight() / 2) - (y / 2));
-
-        Button btn = new Button("Character Option");
-        btn.setLayoutX(25);
-        btn.setLayoutY(40);
-        btn.setOnAction((ActionEvent t)
-                -> {
-            if (!charWindow) {
+        characterPane.setLayoutX((dimension.getWidth()/2)-(x/2));
+        characterPane.setLayoutY((dimension.getHeight()/2)-(y/2));
+        
+        characterBtn = new Button(characterButton);
+        characterBtn.setLayoutX(20);
+        characterBtn.setLayoutY(40);
+        characterBtn.setOnAction((ActionEvent t) -> 
+        {
+            if(!charWindow)
+            {
                 this.getChildren().add(characterPane);
                 charWindow = true;
-            } else if (charWindow) {
+            } else if(charWindow)
+            {
                 this.getChildren().remove(characterPane);
                 charWindow = false;
             }
         });
-
-        Label label = new Label("Character");
-        label.setLayoutX(55);
-        label.setLayoutY(10);
-
-        p.getChildren().addAll(label, btn);
+        
+        characterLbl = new Label(characterLabel);
+        characterLbl.setLayoutX(55);
+        characterLbl.setLayoutY(10);
+        
+        p.getChildren().addAll(characterLbl, characterBtn);
     }
-
-    final public void createTextSizeOption(Pane m) {
+    
+    final public void createTextSizeOption(Pane m)
+    {
         Pane p = m;
-
-        Slider slider = new Slider(0, 200, 0);
-        slider.setLayoutX(5);
-        slider.setLayoutY(30);
-        slider.setPadding(new Insets(5));
-        slider.setShowTickLabels(true);
-        slider.setShowTickMarks(true);
-        slider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val)
-                -> {
-            textScaleFactor = (double) new_val / 100;
-            System.out.println(textScaleFactor);
+        
+        textSizeSlider = new Slider(0,200,0);
+        textSizeSlider.setLayoutX(15);
+        textSizeSlider.setLayoutY(35);
+        textSizeSlider.setPadding(new Insets(5));
+        textSizeSlider.setShowTickLabels(true);
+        textSizeSlider.setShowTickMarks(true);
+        textSizeSlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> 
+        {
+            textScaleFactor = (double)new_val/100;
+            //System.out.println(textScaleFactor);
         });
-        Label label = new Label("Textgröße: ");
-        label.setLayoutX(55);
-        label.setLayoutY(10);
+        textSizeLbl = new Label(textSizeLabel);
+        textSizeLbl.setLayoutX(55);
+        textSizeLbl.setLayoutY(10);
 
-        p.getChildren().addAll(label, slider);
+        p.getChildren().addAll(textSizeLbl, textSizeSlider);
     }
-
-    final public void createWLANOption(Pane m) {
+    
+    final public void createLanguageOption(Pane m)
+    {
         Pane p = m;
-        Label label = new Label("WLAN");
+        
+        languageLbl = new Label(languageLabel);
+        languageLbl.setLayoutX(60);
+        languageLbl.setLayoutY(10);
+        
+        ObservableList<String> options = 
+        FXCollections.observableArrayList
+        (
+        language1,
+        language2
+        );
+        Label label = new Label(options.get(0));
+        label.setId("language_label");
+        label.setMinWidth(50);
         label.setLayoutX(60);
-        label.setLayoutY(10);
-
-        p.getChildren().add(label);
+        label.setLayoutY(53);
+        Button btn1 = new Button("<");
+        btn1.setId("prev_language");
+        btn1.setOnAction((ActionEvent t) -> 
+        {
+            int index = options.indexOf(label.getText())-1;
+            int maxIndex = options.size();
+            if(index < 0)
+            {
+                index = maxIndex-1;
+            }
+            label.setText(options.get(index));
+            chooseLanguage(options.get(index));
+        });
+        btn1.setLayoutX(25);
+        btn1.setLayoutY(50);
+        Button btn2 = new Button(">");
+        btn2.setId("next_language");
+        btn2.setOnAction((ActionEvent t) -> 
+        {
+            int index = options.indexOf(label.getText())+1;
+            int maxIndex = options.size();
+            if(index > maxIndex-1)
+            {
+                index = 0;
+            }
+            label.setText(options.get(index));
+            chooseLanguage(options.get(index));
+        });
+        btn2.setLayoutX(120);
+        btn2.setLayoutY(50);
+        
+        languageCBox = new ComboBox(options);
+        languageCBox.setLayoutX(40);
+        languageCBox.setLayoutY(40);
+        languageCBox.valueProperty().addListener(new ChangeListener<String>() 
+        {    
+            @Override 
+            public void changed(ObservableValue ov, String t, String t1) 
+            {
+                try
+                {
+                    if(t1.equals(language1))
+                    {
+                        rb = PropertyResourceBundle.getBundle(language, Locale.GERMAN);
+                        setLanguage();
+                    }
+                    else if(t1.equals(language2))
+                    {
+                        rb = PropertyResourceBundle.getBundle(language, Locale.ENGLISH);
+                        setLanguage();
+                    }
+                }
+                catch(Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }    
+        });
+        p.getChildren().addAll(languageLbl, label, btn1, btn2);
+    } 
+    
+    public void chooseLanguage(String lang)
+    {
+        System.out.println(lang + " " + language1 + " " + language2 + " " + language);
+        if(lang.equals(language1))
+        {
+            rb = PropertyResourceBundle.getBundle(language, Locale.GERMAN);
+            setLanguage();
+        }
+        else if(lang.equals(language2))
+        {
+            rb = PropertyResourceBundle.getBundle(language, Locale.ENGLISH);
+            setLanguage();
+        }
     }
-
-    final public void createLanguageOption(Pane m) {
-        Pane p = m;
-
-        Label label = new Label("Language");
-        label.setLayoutX(60);
-        label.setLayoutY(10);
-
-        ObservableList<String> options
-                = FXCollections.observableArrayList(
-                        "Deutsch",
-                        "Englisch",
-                        "Spanisch"
-                );
-
-        ComboBox comboBox = new ComboBox(options);
-        comboBox.setLayoutX(40);
-        comboBox.setLayoutY(40);
-        p.getChildren().addAll(label, comboBox);
+    
+    public void setLanguage()
+    {
+        optionButton = rb.getString("Options");
+        soundLabel = rb.getString("Sound");
+        muteButton = rb.getString("Mute");
+        characterButton = rb.getString("CharacterOption");
+        characterLabel = rb.getString("Character");
+        textSizeLabel = rb.getString("TextSize");
+        languageLabel = rb.getString("Language");
+        
+        optionBtn.setText(optionButton);
+        muteBtn.setText(muteButton);
+        characterBtn.setText(characterButton);
+        soundLbl.setText(soundLabel);
+        characterLbl.setText(characterLabel);
+        textSizeLbl.setText(textSizeLabel);
+        languageLbl.setText(languageLabel);
     }
-
 }

@@ -25,14 +25,6 @@ public class ScreenResolution {
         return screenHeigth;
     }
     
-    public static int getBoardWidth() {
-        throw new RuntimeException("Noch nicht implementiert");
-    }
-    
-    public static int getBoardHeigth() {
-        throw new RuntimeException("Noch nicht implementiert");
-    }
-    
     public static void setScreenDimension(int screenWidth, int screenHeigth) {
         ScreenResolution.screenWidth = screenWidth;
         ScreenResolution.screenHeigth = screenHeigth;

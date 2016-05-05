@@ -7,34 +7,12 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import thegamebrett.assets.AssetNotExistsException;
 import thegamebrett.assets.AssetsLoader;
+import thegamebrett.gui.UserImageCircle;
 
 /**
  * @author christiancolbach
  */
 public class UserCharacter {
-    
-    /*public static ArrayList<String> getAvaibleColors() {
-        ArrayList<String> cs = new ArrayList<String>();
-        synchronized(userColerRegister) {
-            for(int i=0; i<USER_COLORS.length; i++) {
-                if(!userColerRegister[i])
-                    cs.add(USER_COLORS[i]);
-            }
-        }
-        return cs;
-    }*/
-    
-    /*public static final String[] USER_COLORS = {
-        "#FFFFFF", "#C0C0C0", "#808080", "#000000", "#FF0000",
-        "#800000", "#FFFF00", "#808000", "#00FF00", "#008000",
-        "#00FFFF", "#008080", "#0000FF", "#000080", "#FF00FF",
-        "#800080"
-    };*/
-    
-    //public static final String[] USER_AVATARS_NAMES = AssetsLoader.listImagesInFolder("avatars").toArray(new String[0]);
-    
-    //private static boolean[] userColerRegister = new boolean[USER_COLORS.length];
-    //private static ArrayList<String> userNameRegister = new ArrayList<>(USER_COLORS.length);
     
     private boolean inUse = false;
     
@@ -48,6 +26,14 @@ public class UserCharacter {
         this.name = name;
         this.color = color;
         this.avatarFileName = avatarFileName;
+    }
+    
+    private UserImageCircle userImageCircleCache;
+    public UserImageCircle getUserImageCircle() {
+        if(userImageCircleCache == null) {
+            userImageCircleCache = new UserImageCircle(getAvatar(), getFXColor());
+        }
+        return userImageCircleCache;
     }
     
     public String getName() {

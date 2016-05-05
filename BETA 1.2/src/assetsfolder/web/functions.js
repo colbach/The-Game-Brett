@@ -156,24 +156,6 @@ function tryToCreateGame(index, name) {
     } else {
         console.log("nein");
     }
-    /*
-    var url = "tryToGetCharacter?" + index;
-    var response = new XMLHttpRequest();
-    response.open("GET", url, true);
-    response.send();
-    var w = window;
-    response.onreadystatechange = function () {
-            if (response.readyState === 4 && response.status === 200) {
-            console.log("response.responseText=" + response.responseText);
-
-            if (response.responseText === "YES") {
-                direct();
-            } else {
-                updateCharacterChooser();
-            }
-        }
-    };*/
-
 }
 
 function tryToGetCharacter(index) {    

@@ -33,7 +33,7 @@ public class ControlDirector implements Director {
     }
     
     public Object direct(User u) {
-        int webPage = u.getWebPage();
+        final int webPage = u.getWebPage();
             
         if(webPage == User.WEB_PAGE_CHOOSE_POSITION) {
             return AssetsLoader.loadFileIgnoreExceptions("web/choosePosition.html");
@@ -41,8 +41,6 @@ public class ControlDirector implements Director {
             return WebGenerator.getChooseCharacterWebPage();
         } else if(webPage == User.WEB_PAGE_CHOOSE_GAME) {
             return WebGenerator.getChooseGameWebPage();
-        } else if(webPage == User.WEB_PAGE_WAIT) {
-            return "noch nicht implementiert (Warten)";
         } else if(webPage == User.WEB_PAGE_PLAY_GAME) {
             return AssetsLoader.loadFileIgnoreExceptions("web/ingame.html");
         } else if(webPage == User.WEB_PAGE_GAME_ALREADY_STARTED) {
@@ -61,161 +59,189 @@ public class ControlDirector implements Director {
     @Override
     public Object query(String request, Socket clientSocket) throws QueryException {
         System.out.println(request);
-        User client = clientManager.getOrAddClientForInetAddress(clientSocket.getInetAddress());
-        
-        if (request.equals("/") || request.equals("/index.html")) {
-            return direct(client);
-        } if (request.startsWith("/tryToStartGame")) {
-            NetworkGameSelector ngs = clientManager.getManager().getMobileManager().getNetworkManager().getNetworkGameSelector();
-            boolean b = ngs.tryToStart();
-            if(b) {
-                return "YES";
-            } else {
-                return "NO";
-            }
-        } else if (request.equals("/logOut")) {
-            clientManager.logOutSystemClient(client);
-            client.removeUserCharacter();
-            return direct(client);
-        } else if (request.startsWith("/getUserColor")) {
-            if(client.hasUserCharacter()) {
-                String c = client.getUserCharacter().getColor();
-                if(c != null) {
-                    return c;
-                }
-            }
-            return NO_COLOR_SET;
-        } else if (request.startsWith("/refreshStartGameInfoText")) {
-            return clientManager.getManager().getMobileManager().getNetworkManager().getNetworkGameSelector().getInfo();
-        } else if (request.startsWith("/tryToLogIn")) {
-            try {
-                boolean gotIt = clientManager.tryToSetSystemClient(request.substring("/tryToLogIn?".length()), client);
-                if(gotIt) {
-                    client.setWebPage(User.WEB_PAGE_CHOOSE_CHARACTER);
-                    return "YES";
-                } else {
-                    return "NO";
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return "Fehler (Login)";
-        } else if (request.startsWith("/tryToJoinGame")) {
+        final NetworkGameSelector ngs = clientManager.getManager().getMobileManager().getNetworkManager().getNetworkGameSelector();
+        if(ngs.isGameStarted() && !clientManager.isSystemClient(clientSocket.getInetAddress())) {
             
-            NetworkGameSelector ngs = clientManager.getManager().getMobileManager().getNetworkManager().getNetworkGameSelector();
-            boolean b = ngs.tryToGetReady(client);
+            if(request.startsWith("/refreshFreePositionList")) {
+                return clientManager.generateFreePositionHTML();
+            } else if (request.equals("/") || request.equals("/index.html")) {
+                return AssetsLoader.loadFileIgnoreExceptions("web/gameAlreadyStarted.html");
+            } else if (request.startsWith("/tryToLogIn")) {
+                try {
+                    boolean gotIt = clientManager.tryToReplaceSystemClient(request.substring("/tryToLogIn?".length()), clientSocket.getInetAddress());
+                    if(gotIt) {
+                        return "YES";
+                    } else {
+                        return "NO";
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return "Fehler (Login)";
+            }
+        } else {
+            final User client = clientManager.getOrAddClientForInetAddress(clientSocket.getInetAddress());
+            client.signOfLife();
             
-            if(b) {
-                return "YES";
-            } else {
-                return "NO";
+            // Kontrolle State...
+            final int webPage = client.getWebPage();
+            final boolean gameStarted = ngs.isGameStarted();
+            final boolean gameSelected = ngs.isGameSelected();
+            if(gameStarted && (webPage != User.WEB_PAGE_PREFERENCES && webPage != User.WEB_PAGE_PLAY_GAME)) {
+                System.err.println("Client scheint falsche WebPage zu haben. Fallback: WEB_PAGE_PLAY_GAME");
+                client.setWebPage(User.WEB_PAGE_PLAY_GAME);
+            } else if(gameSelected && (webPage != User.WEB_PAGE_JOIN_GAME && webPage != User.WEB_PAGE_START_GAME)) {
+                System.err.println("Client scheint falsche WebPage zu haben. Fallback: WEB_PAGE_JOIN_GAME");
+                client.setWebPage(User.WEB_PAGE_JOIN_GAME);
             }
             
-        } else if (request.startsWith("/needsRedirect")) {
-            try {
-                int actualWebpage = Integer.valueOf(request.substring("/needsRedirect?".length()));
-                
-                if(actualWebpage == client.getWebPage()) {
-                    return "NO";
-                } else {
-                    return "YES";
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return "Fehler (Needs Redirect)";
-        } else if (request.startsWith("/tryToCreateGame")) {
-            try {
-                int gameToSelect = Integer.valueOf(request.substring("/tryToCreateGame?".length()));
-                System.out.println(gameToSelect);
-                GameFactory game = GameCollection.gameFactorys[gameToSelect];
-                NetworkGameSelector ngs = clientManager.getManager().getMobileManager().getNetworkManager().getNetworkGameSelector();
-                boolean b = ngs.tryToSelectGame(game, client);
+            // Analyse Request-String ...
+            if (request.equals("/") || request.equals("/index.html")) {
+                return direct(client);
+            } if (request.startsWith("/tryToStartGame")) {
+                boolean b = ngs.tryToStart();
                 if(b) {
                     return "YES";
                 } else {
                     return "NO";
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-                return "ERROR";
-            }
-        } else if (request.startsWith("/getGameIcon")) {
-            int i = Integer.valueOf(request.substring("/getGameIcon?".length()));
-            return WebGenerator.getGameImage(i);
-        } else if (request.startsWith("/tryToGetCharacter")) {
-            try {
-                int i = Integer.valueOf(request.substring("/tryToGetCharacter?".length()));
-                UserCharacter character = UserCharacterDatabase.getUserCharacter(i);
-                System.out.println(i);
-                boolean gotIt = client.tryToSetUserCharacter(character);
-                if(gotIt) {
-                    NetworkGameSelector ngs = clientManager.getManager().getMobileManager().getNetworkManager().getNetworkGameSelector();
-                    if(ngs.isGameSelected()) {
-                        client.setWebPage(User.WEB_PAGE_JOIN_GAME);
-                    } else {
-                        client.setWebPage(User.WEB_PAGE_CHOOSE_GAME);
+            } else if (request.equals("/logOut")) {
+                clientManager.logOutSystemClient(client);
+                client.removeUserCharacter();
+                return direct(client);
+            } else if (request.startsWith("/getUserColor")) {
+                if(client.hasUserCharacter()) {
+                    String c = client.getUserCharacter().getColor();
+                    if(c != null) {
+                        return c;
                     }
+                }
+                return NO_COLOR_SET;
+            } else if (request.startsWith("/refreshStartGameInfoText")) {
+                return ngs.getInfo();
+            } else if (request.startsWith("/tryToLogIn")) {
+                try {
+                    boolean gotIt = clientManager.tryToSetSystemClient(request.substring("/tryToLogIn?".length()), client);
+                    if(gotIt) {
+                        client.setWebPage(User.WEB_PAGE_CHOOSE_CHARACTER);
+                        return "YES";
+                    } else {
+                        return "NO";
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return "Fehler (Login)";
+            } else if (request.startsWith("/tryToJoinGame")) {
+
+                boolean b = ngs.tryToGetReady(client);
+
+                if(b) {
                     return "YES";
                 } else {
                     return "NO";
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-                return "Fehler (Login)";
-            }
-        } else if (request.startsWith("/getPositionsInfo")) {
-            return clientManager.generateSystemClientChooserAvailabilityInfoForAPI();
-        } else if (request.startsWith("/getCharacterInfo")) {
-            return WebGenerator.generateUserCharacterChooserAvailabilityInfoForAPI();
-        } else if (request.startsWith("/refreshGame")) {
-            // messageID und InteractionRequest sicher aus client laden
-            long messageID;
-            InteractionRequest ir;
-            do {
-                messageID = client.getMessageId();
-                ir = client.getActualInteractionRequest();
-            } while(messageID != client.getMessageId());
 
-            // ausgabe
-            if(ir == null) {
-                return NO_MESSAGE_ID + "connected";
-            } else {
-                // Kontrolle nach Updates
-                if(ir.matchMessageId(request.substring("/refreshGame?".length()))) {
-                    return NO_UPDATES;
-                } else {
-                    return ir.getMessageIdAs9CharacterString() + WebGenerator.generateHTMLContent(ir.getTitel(), ir.getChoices(), messageID);
+            } else if (request.startsWith("/needsRedirect")) {
+                try {
+                    int actualWebpage = Integer.valueOf(request.substring("/needsRedirect?".length()));
+
+                    if(actualWebpage == client.getWebPage()) {
+                        return "NO";
+                    } else {
+                        return "YES";
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+                return "Fehler (Needs Redirect)";
+            } else if (request.startsWith("/tryToCreateGame")) {
+                try {
+                    int gameToSelect = Integer.valueOf(request.substring("/tryToCreateGame?".length()));
+                    System.out.println(gameToSelect);
+                    GameFactory game = GameCollection.gameFactorys[gameToSelect];
+                    boolean b = ngs.tryToSelectGame(game, client);
+                    if(b) {
+                        return "YES";
+                    } else {
+                        return "NO";
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return "ERROR";
+                }
+            } else if (request.startsWith("/getGameIcon")) {
+                int i = Integer.valueOf(request.substring("/getGameIcon?".length()));
+                return WebGenerator.getGameImage(i);
+            } else if (request.startsWith("/tryToGetCharacter")) {
+                try {
+                    int i = Integer.valueOf(request.substring("/tryToGetCharacter?".length()));
+                    UserCharacter character = UserCharacterDatabase.getUserCharacter(i);
+                    System.out.println(i);
+                    boolean gotIt = client.tryToSetUserCharacter(character);
+                    if(gotIt) {
+                        if(ngs.isGameSelected()) {
+                            client.setWebPage(User.WEB_PAGE_JOIN_GAME);
+                        } else {
+                            client.setWebPage(User.WEB_PAGE_CHOOSE_GAME);
+                        }
+                        return "YES";
+                    } else {
+                        return "NO";
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return "Fehler (Login)";
+                }
+            } else if (request.startsWith("/getPositionsInfo")) {
+                return clientManager.generateSystemClientChooserAvailabilityInfoForAPI();
+            } else if (request.startsWith("/getCharacterInfo")) {
+                return WebGenerator.generateUserCharacterChooserAvailabilityInfoForAPI();
+            } else if (request.startsWith("/refreshGame")) {
+                // messageID und InteractionRequest sicher aus client laden
+                long messageID;
+                InteractionRequest ir;
+                do {
+                    messageID = client.getMessageId();
+                    ir = client.getActualInteractionRequest();
+                } while(messageID != client.getMessageId());
+
+                // ausgabe
+                if(ir == null) {
+                    return NO_MESSAGE_ID + "connected";
+                } else {
+                    // Kontrolle nach Updates
+                    if(ir.matchMessageId(request.substring("/refreshGame?".length()))) {
+                        return NO_UPDATES;
+                    } else {
+                        return ir.getMessageIdAs9CharacterString() + WebGenerator.generateHTMLContent(ir.getTitel(), ir.getChoices(), messageID);
+                    }
+                }
+            } else if (request.startsWith("/reply")) {
+
+                int messageID = Integer.valueOf(request.substring("/reply?".length(), request.lastIndexOf("?")));
+                int answerID = Integer.valueOf(request.substring(request.lastIndexOf("?")+1));
+                client.replyFromHTTP(messageID, answerID);
+
+                return "OK";
             }
-        } else if (request.startsWith("/reply")) {
-            
-            int messageID = Integer.valueOf(request.substring("/reply?".length(), request.lastIndexOf("?")));
-            int answerID = Integer.valueOf(request.substring(request.lastIndexOf("?")+1));
-            client.replyFromHTTP(messageID, answerID);
-            
-            return "OK";
-        } else if (request.equals("/jquery.min.js")) {
+        }
+        if (request.equals("/jquery.min.js")) {
             try {
                 return AssetsLoader.loadFile("web/jquery.min.js");
             } catch (AssetNotExistsException ex) {
                 Logger.getLogger(ControlDirector.class.getName()).log(Level.SEVERE, null, ex);
                 return "Fataler Fehler!!! jquery.min.js kann nicht geladen werden.";
             }
-        } else if (request.startsWith("/choosePosition")) {
-            return WebGenerator.getChooseCharacterWebPage();
         } else if (request.equals("/functions.js")) {
             return AssetsLoader.loadFileIgnoreExceptions("web/functions.js");
         } else if(request.startsWith("/avatars/")){
             return AssetsLoader.loadFileIgnoreExceptions(request.substring(1));
         } else if(AssetsLoader.fileExists("web/" + request.substring(1))){
             return AssetsLoader.loadFileIgnoreExceptions("web/" + request.substring(1));
-        } else {
-            System.err.println("Unbekannte Eingabe: " + request);
-            return "Fehler :(";
         }
-        
-        
+        System.err.println("Unbekannte Eingabe: " + request);
+        return "Fehler :(";
     }
     
 

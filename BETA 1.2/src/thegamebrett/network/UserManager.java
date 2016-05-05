@@ -59,11 +59,28 @@ public class UserManager {
         return sb.toString();*/
         return WebGenerator.generateSystemClientChooserAvailabilityInfoForAPI(this);
     }
+    
+    public String generateFreePositionHTML() {
+        return WebGenerator.generateFreePositionHTML(this);
+    }
 
     public boolean tryToSetSystemClient(String clientID, User c) {
+        
         for (int i = 0; i < SYSTEM_CLIENT_NAMES.length; i++) {
             if (clientID.equals(SYSTEM_CLIENT_IDS[i]) && (systemClients[i] == null || !systemClients[i].isAlife())) {
                 systemClients[i] = c;
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean tryToReplaceSystemClient(String clientID, InetAddress ia) {
+        final NetworkGameSelector ngs = manager.getMobileManager().getNetworkManager().getNetworkGameSelector();
+        
+        for (int i = 0; i < SYSTEM_CLIENT_NAMES.length; i++) {
+            if (clientID.equals(SYSTEM_CLIENT_IDS[i]) && !systemClients[i].isAlife()) {
+                systemClients[i].setInetAddress(ia);
                 return true;
             }
         }
@@ -97,6 +114,15 @@ public class UserManager {
     public boolean isSystemClient(User c) {
         for (int i = 0; i < systemClients.length; i++) {
             if (systemClients[i] == c) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean isSystemClient(InetAddress ia) {
+        for (User systemClient : systemClients) {
+            if (systemClient!=null && systemClient.matchInetAddress(ia)) {
                 return true;
             }
         }

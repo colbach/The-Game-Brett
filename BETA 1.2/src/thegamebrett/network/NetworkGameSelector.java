@@ -17,6 +17,7 @@ public class NetworkGameSelector {
 
     private final Manager manager;
     private GameFactory selectedGame;
+    private boolean gameStarted;
     private final ArrayList<User> readyList;
 
     public NetworkGameSelector(Manager manager) {
@@ -50,7 +51,11 @@ public class NetworkGameSelector {
     }
 
     public boolean isGameSelected() {
-        return selectedGame != null;
+        return selectedGame != null && !isGameStarted();
+    }
+    
+    public boolean isGameStarted() {
+        return gameStarted;
     }
 
     public synchronized boolean tryToGetReady(User user) {
@@ -73,32 +78,6 @@ public class NetworkGameSelector {
         return selectedGame.getMaximumPlayers() >= readyList.size() && selectedGame.getMinimumPlayers() <= readyList.size();
     }
 
-    /*public void startGame(GameFactory game) {
-
-        ArrayList<User> al = new ArrayList<User>();
-        for (User systemUser : manager.getMobileManager().getUserManager().getSystemClients()) {
-            if (systemUser != null) {
-                al.add(systemUser);
-            }
-        }
-
-        try {
-            if (manager.getGui().getGameView().getGameModel() == null || !(manager.getGui().getGameView().getGameModel().getGameLogic() instanceof D_GameLogic)) {
-
-                Model gameModel = game.createGame(al);
-                manager.getGui().getGameView().setGameModel(gameModel);
-                manager.startGame(gameModel);
-
-            }
-
-            manager.getGui().showGameScene();
-
-        } catch (TooMuchPlayers ex) {
-            Logger.getLogger(MenueView.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (TooFewPlayers ex) {
-            Logger.getLogger(MenueView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }*/
     public synchronized boolean tryToStart() {
         if (canStart()) {
 
@@ -109,20 +88,35 @@ public class NetworkGameSelector {
                 user.setWebPage(User.WEB_PAGE_PLAY_GAME);
             }
 
-            // Spieler sortieren
-            /*int[] positionList = new int[readyList.size()];
+            // Nichtteilnehmende Clients aussortieren
             User[] systemClients = manager.getMobileManager().getUserManager().getSystemClients();
-            for(int i1=0; i1<readyList.size(); i1++) {
-                for(int i2=0; i2<systemClients.length; i2++) {
-                    if(systemClients[i1] == readyList.get(i2)) {
-                        readyList.set()
+            for(int i=0; i<systemClients.length; i++) {
+                boolean plays = false;
+                for(User player : readyList) {
+                    if(systemClients[i] == player) {
+                        plays = true;
                     }
                 }
-            }*/
+                if(!plays) {
+                    systemClients[i] = null;
+                }
+            }
+            
+            // Spielerliste erstellen
+            ArrayList<User> players = new ArrayList<>();
+            for(User user : systemClients) {
+                if(user != null) {
+                    players.add(user);
+                }
+            }
+            if(players.size() != readyList.size()) {
+                System.err.println("Achtung: readyList.size()->" + readyList.size() + " aber players.size()->" + players.size());
+            }
+            
             // Spiel starten
             Platform.runLater(() -> {
                 try {
-                    Model gameModel = selectedGame.createGame(readyList);
+                    Model gameModel = selectedGame.createGame(players);
                     manager.getGui().getGameView().setGameModel(gameModel);
                     manager.startGame(gameModel);
                     manager.getGui().showGameScene();
@@ -132,6 +126,7 @@ public class NetworkGameSelector {
                     Logger.getLogger(MenueView.class.getName()).log(Level.SEVERE, null, ex);
                 }
             });
+            gameStarted = true;
             return true;
         } else {
             System.err.println("Spiel kann nicht gestartet werden");
