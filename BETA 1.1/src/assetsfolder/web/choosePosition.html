@@ -10,29 +10,43 @@ and open the template in the editor.
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
         <link href="style.css" type="text/css" rel="stylesheet">
+        <script src="jquery.min.js" type="text/javascript"></script>
         <script type="text/javascript" src="functions.js"></script>
-
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $("#refresh").load("refreshPositions");
+                var refreshId = setInterval(function() {
+                    $("#refresh").load("refreshPositions");
+                }, 2000);
+            });
+        </script>
         <title>Positionsauswahl</title>
     </head>
     <body>
         <div align="center" id="content">
             <h1>Position w&auml;hlen!</h1>
             
+            <div id="refresh" style="text-align:center;"></div>
+
+            <!--
+            
             <div>
             	<button class="position" onClick="choosePosition(0)"><img src="avatar1.png" alt="Seat 1" class="posImage"></button>
                 <button class="position" onClick="choosePosition(1)"><img src="avatar1.png" alt="Seat 2" class="posImage"></button>
                 <button class="position" onClick="choosePosition(2)"><img src="avatar1.png" alt="Seat 3" class="posImage"></button>
-           </div>
-           <div>
+            </div>
+            <div>
             	<button class="position" onClick="choosePosition(3)"><img src="avatar1.png" alt="Seat 4" class="posImage"></button>
                 <button class="position" disabled="true"><img src="desk_icon.png" alt="Desk" class="posImage"></button>
                 <button class="position" onClick="choosePosition(4)"><img src="avatar1.png" alt="Seat 5" class="posImage"></button>
-           </div>
-           <div>
+            </div>
+            <div>
             	<button class="position" onClick="choosePosition(5)"><img src="avatar1.png" alt="Seat 6" class="posImage"></button>
                 <button class="position" onClick="choosePosition(6)"><img src="avatar1.png" alt="Seat 7" class="posImage"></button>
                 <button class="position" onClick="choosePosition(7)"><img src="avatar1.png" alt="Seat 8" class="posImage"></button>
-           </div>
-	</div>
+            </div>
+            
+            -->
+        </div>
     </body>
 </html>

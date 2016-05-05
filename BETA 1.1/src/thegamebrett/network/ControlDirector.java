@@ -1,6 +1,5 @@
 package thegamebrett.network;
 
-import thegamebrett.network.HTMLHelper;
 import thegamebrett.network.httpserver.Director;
 import java.net.Socket;
 import java.util.logging.Level;
@@ -22,6 +21,9 @@ public class ControlDirector implements Director {
     /**  diese Id wird uebergeben um anzugeben dass keine ID verfuegbar ist */
     public static final String NO_MESSAGE_ID = "#########";
     
+    /**  diese Id wird uebergeben um anzugeben dass keine Farbe verfuegbar ist */
+    public static final String NO_COLOR_SET = "NONE";
+    
     public ControlDirector(UserManager clientManager) {
         this.clientManager = clientManager;
     }
@@ -32,9 +34,30 @@ public class ControlDirector implements Director {
         User client = clientManager.getOrAddClientForInetAddress(clientSocket.getInetAddress());
         
         if (request.equals("/") || request.equals("/index.html")) {
-            return HTMLHelper.HTML;
+            if(!clientManager.isSystemClient(client)) {
+                return "<html><head><meta http-equiv=\"refresh\" content=\"0; URL=choosePosition.html\"></head><body></body></html>";
+            }
+            return "Test";
+
+            //return HTMLHelper.HTML;
         } else if (request.equals("/style.css")) {
             return HTMLHelper.CSS;
+        } else if (request.startsWith("/getUserColor")) {
+            if(client.hasUserCharacter()) {
+                String c = client.getUserCharacter().getColorString();
+                if(c != null) {
+                    return c;
+                }
+            }
+            return NO_COLOR_SET;
+        } else if (request.startsWith("/tryToChoosePosition")) {
+            boolean gotIt = clientManager.tryToSetSystemClient(request.substring("/tryToChoosePosition?".length()), client);
+            System.out.println(gotIt ? "YES" : "NO");
+            return gotIt ? "YES" : "NO";
+        } else if (request.startsWith("/choosePosition.html")) {
+            return AssetsLoader.loadFileIgnoreExceptions("web/choosePosition.html");
+        } else if (request.startsWith("/refreshPositions")) {
+            return NO_MESSAGE_ID + clientManager.getHTMLSystemClientChoser();
         } else if (request.startsWith("/refresh")) {
             if(!clientManager.isSystemClient(client)) {
                 return NO_MESSAGE_ID + clientManager.getHTMLSystemClientChoser();
@@ -79,6 +102,10 @@ public class ControlDirector implements Director {
                 Logger.getLogger(ControlDirector.class.getName()).log(Level.SEVERE, null, ex);
                 return "Fataler Fehler!!! jquery.min.js kann nicht geladen werden.";
             }
+        } else if (request.equals("/functions.js")) {
+            return AssetsLoader.loadFileIgnoreExceptions("web/functions.js");
+        } else if(AssetsLoader.fileExists("web/" + request.substring(1))){
+            return AssetsLoader.loadFileIgnoreExceptions("web/" + request.substring(1));
         } else {
             return "Fehler :(";
         } 

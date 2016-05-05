@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<<<<<<< HEAD
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link href="style.css" type="text/css" rel="stylesheet">
+    <title>The-Game-Brett</title>
+    <script type="text/javascript" src="functions.js"></script>
+
+</head>
+
+<body>
+=======
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <link href="style.css" type="text/css" rel="stylesheet">
+        <title>The-Game-Brett</title>
+        <script src="jquery.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#refresh").load("refresh?start");
+                var refreshId = setInterval(function () {
+                    update();
+                    //$("#refresh").load('refresh?' + 1 * new Date());
+                }, 2000);
+            });
+
+            function reply(answer) {
+                //$("#refresh").load("reply?" + answer);
+                var url = "reply?" + answer;
+                var response = new XMLHttpRequest();
+                response.open("GET", url, true);
+                response.send();
+                
+                document.getElementById("refresh").innerHTML = "";
+            }
+            
+            function update() {
+                var url = 'refresh?' + 1 * new Date();
+                var response = new XMLHttpRequest();
+                response.open("GET", url, true);
+                response.send();
+                response.onreadystatechange = function () {
+                    if (response.readyState === 4 && response.status === 200) {
+                        if(response.responseText.length !== "%NO_UPDATE%") {
+                            document.getElementById("refresh").innerHTML = response.responseText;
+                        }
+                    }
+                }
+            }
+        </script>
+    </head>
+
+<<<<<<< HEAD
+<<<<<<< HEAD
+    <body>
+        <div align="center" id="content">
+            <div id="refresh" style="text-align:center;"></div>
+        </div>
+    </body>
+=======
+=======
+>>>>>>> master
+<body bgcolor="#B76E79">
+>>>>>>> refs/remotes/origin/master
+    <div align="center" id="content">
+        <div id="refresh" style="text-align:center;"></div>
+    </div>
+</body>
+>>>>>>> master
+
+</html>
