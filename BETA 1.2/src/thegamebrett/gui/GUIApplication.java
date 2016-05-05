@@ -77,6 +77,10 @@ public class GUIApplication extends Application{
                                 uic.setLayoutY(0-(uic.getHeight()/2));
                                 break;
                     }
+                    System.out.println("uic.getLayoutX() " + uic.getLayoutX());
+                    System.out.println("uic.getLayoutY() " + uic.getLayoutY());
+                    System.out.println("uic.getWidth() " + uic.getWidth());
+                    System.out.println("uic.getHeight() " + uic.getHeight());
                     uics.add(uic);
                 }
             }
