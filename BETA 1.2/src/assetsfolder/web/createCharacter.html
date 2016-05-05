@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link href="style.css" type="text/css" rel="stylesheet">
+    <title>Charaktererstellung</title>
+    
+    <script type="text/javascript" src="functions.js"></script>
+    
+</head>
+
+<body>
+    <div align="center" id="content">
+    
+    	<h1>Charakter erstellen!</h1>
+        
+        <form method="get" action="pfad">
+        
+        	<label for="username">Dein Username:<br />
+        		<input id="username" name="unsername" />
+            </label>
+            
+			<label><br />Deine Farbe:<br />
+            	<div id="refresh" style="text-align:center;"></div>
+            </label>
+            
+			<label><br />Dein Avatar:<br />
+            
+                <fieldset>
+                    <legend>Avatar</legend>
+                    <label><input type="radio" name="Avatar" value="Mode"> <img src="avatar1.png" alt="Mode" width="100px" height="100px"></label>
+                    <label><input type="radio" name="Avatar" value="Technik"> <img src="kruemel.png" alt="Technik" width="100px"></label>
+                    <label><input type="radio" name="Avatar" value="Sport"> <img src="slowpoke.jpg" alt="Sport" width="100px"></label>
+                    <label><input type="radio" name="Avatar" value="Mode"> <img src="avatar1.png" alt="Mode" width="100px" height="100px"></label>
+                    <label><input type="radio" name="Avatar" value="Technik"> <img src="kruemel.png" alt="Technik" width="100px"></label>
+                    <label><input type="radio" name="Avatar" value="Sport"> <img src="slowpoke.jpg" alt="Sport" width="100px"></label>
+                    <label><input type="radio" name="Avatar" value="Mode"> <img src="avatar1.png" alt="Mode" width="100px" height="100px"></label>
+                    <label><input type="radio" name="Avatar" value="Technik"> <img src="kruemel.png" alt="Technik" width="100px"></label>
+                </fieldset>
+            	<!--<div><table>
+                  <tr>
+                  	
+                    <td id="car1"></td>
+                    <td id="car2"></td>
+                  </tr>
+                  <tr>
+                  	<td id="car3"></td>
+                    <td id="car4"></td>
+                  </tr>
+                  <tr>
+                  	<td id="car5"></td>
+                    <td id="car6"></td>
+                  </tr>
+                  <tr>
+                  	<td id="car7"></td>
+                    <td id="car8"></td>
+                  </tr>
+    </table></div>-->
+            </label>
+                        
+        	<input class="choices" type="submit" value="Anlegen!">
+        </form>           
+        <button class="choices" onClick="returnToCharacter()">Zurueck!</button>
+    </div>
+</body>
+
+</html>

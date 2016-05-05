@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link href="style.css" type="text/css" rel="stylesheet">
+    <title>Spielauswahl</title>
+    <script src="jquery.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="functions.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            checkAndDoRedirect(2);
+            var refreshId = setInterval(function() {
+                checkAndDoRedirect(2);
+            }, 2000);
+        });
+    </script>
+    
+</head>
+
+<body>
+    <div align="center" id="content">
+    
+    	<h1>Spiel erstellen!</h1>
+        
+        <div id="refresh" style="text-align:center;"></div>
+        
+        
+        <!--vollgenden Kommentar nicht loeschen da Parser ihn genoetigt! -->
+        <!--replace-->
+        
+        
+        <!--<button class="choices" onClick="startGame()">Starten!</button>-->
+        <button class="choices" onClick="logOut()">Abmelden</button>
+    </div>
+</body>
+
+</html>
