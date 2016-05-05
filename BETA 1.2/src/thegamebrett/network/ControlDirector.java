@@ -168,7 +168,7 @@ public class ControlDirector implements Director {
             return clientManager.generateSystemClientChooserAvailabilityInfoForAPI();
         } else if (request.startsWith("/getCharacterInfo")) {
             return WebGenerator.generateUserCharacterChooserAvailabilityInfoForAPI();
-        } else if (request.startsWith("/refresh")) {
+        } else if (request.startsWith("/refreshGame")) {
             // messageID und InteractionRequest sicher aus client laden
             long messageID;
             InteractionRequest ir;
@@ -182,7 +182,7 @@ public class ControlDirector implements Director {
                 return NO_MESSAGE_ID + "connected";
             } else {
                 // Kontrolle nach Updates
-                if(ir.matchMessageId(request.substring("/refresh?".length()))) {
+                if(ir.matchMessageId(request.substring("/refreshGame?".length()))) {
                     return NO_UPDATES;
                 } else {
                     return ir.getMessageIdAs9CharacterString() + WebGenerator.generateHTMLContent(ir.getTitel(), ir.getChoices(), messageID);

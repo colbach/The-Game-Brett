@@ -39,10 +39,8 @@ public class NetworkGameSelector {
                 }
             }
             creator.setWebPage(User.WEB_PAGE_START_GAME);
-            System.out.println("Spiel erstellt");
             return true;
         } else {
-            System.err.println("Spiel kann nicht erstellt werden");
             return false;
         }
     }

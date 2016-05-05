@@ -71,7 +71,7 @@ public class User {
     }
     
     public boolean hasUserCharacter() {
-        return character == null;
+        return character!= null;
     }
     
     public void removeUserCharacter() {
@@ -156,6 +156,7 @@ public class User {
     }
 
     public void setWebPage(int webPage) {
+        System.out.println("webPage set:" + webPage);
         this.webPage = webPage;
     }
 
