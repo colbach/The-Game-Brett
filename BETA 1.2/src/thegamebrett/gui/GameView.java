@@ -1,5 +1,6 @@
 package thegamebrett.gui;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
@@ -7,13 +8,18 @@ import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import thegamebrett.model.Layout;
 import thegamebrett.model.Model;
+import thegamebrett.model.Player;
 import thegamebrett.model.elements.Board;
 import thegamebrett.model.elements.Element;
 import thegamebrett.model.elements.Figure;
+import thegamebrett.network.User;
+import thegamebrett.usercharacter.UserCharacter;
 
 /**
  *
@@ -35,6 +41,7 @@ public class GameView extends Group {
     Group groupBack;
     Group groupMid;
     Group groupTop;
+    Group groupUserImageCicles;
     
     public GameView() {
         super();
@@ -42,9 +49,11 @@ public class GameView extends Group {
         groupBack = new Group();
         groupMid = new Group();
         groupTop = new Group();
+        groupUserImageCicles = new Group();
         getChildren().add(groupBack);
         getChildren().add(groupMid);
         getChildren().add(groupTop);
+        getChildren().add(groupUserImageCicles);
 
     }
 
@@ -53,8 +62,10 @@ public class GameView extends Group {
         groupBack.getChildren().clear();
         groupMid.getChildren().clear();
         groupTop.getChildren().clear();
+        groupUserImageCicles.getChildren().clear();
 
         update(GUIUPDATE_ALL, false, 0);
+        addUserImageCircles(gameModel);
 
     }
 
@@ -122,5 +133,75 @@ public class GameView extends Group {
         }
 
     }
+    
+    public void addUserImageCircles(Model model) {
+        ArrayList<Player> us = model.getPlayers();
+        ArrayList<Canvas> uics = new ArrayList<>();
+        Platform.runLater(() -> {
+            for(int i=0; i<us.size(); i++) {
+                if(us.get(i)!= null && us.get(i).getUser() != null && us.get(i).getUser().getUserCharacter() != null) {
+                    UserCharacter uic = us.get(i).getUser().getUserCharacter();
+                    int size = 130;
+                    int placing = 40;
+                    Canvas c = GUILoader.createUserImageCircle(uic, size, size);
+                    int sp = us.get(i).getUser().getSittingPlace();
+                    switch(sp) {
+                            case(0):
+                                c.setLayoutX(ScreenResolution.getScreenWidth()-(size/2)-placing);
+                                c.setLayoutY(0-(size/2)+placing);
+                                break;
+                            case(1):
+                                c.setLayoutX(ScreenResolution.getScreenWidth()-(size/2)-placing);
+                                c.setLayoutY(ScreenResolution.getScreenHeigth()/2-(size/2));
+                                break;
+                            case(2):
+                                c.setLayoutX(ScreenResolution.getScreenWidth()-(size/2)-placing);
+                                c.setLayoutY(ScreenResolution.getScreenHeigth()-(size/2)-placing);
+                                break;
+                            case(3):
+                                c.setLayoutX(ScreenResolution.getScreenWidth()/2-(size/2));
+                                c.setLayoutY(ScreenResolution.getScreenHeigth()-(size/2)-placing);
+                                break;
+                            case(4):
+                                c.setLayoutX(0-(size/2)+placing);
+                                c.setLayoutY(ScreenResolution.getScreenHeigth()-(size/2)-placing);
+                                break;
+                            case(5):
+                                c.setLayoutX(0-(size/2)+placing);
+                                c.setLayoutY(ScreenResolution.getScreenHeigth()/2-(size/2));
+                                break;
+                            case(6):
+                                c.setLayoutX(0-(size/2)+placing);
+                                c.setLayoutY(0-(size/2)+placing);
+                                break;
+                            case(7):
+                                c.setLayoutX(ScreenResolution.getScreenWidth()/2-(size/2));
+                                c.setLayoutY(0-(size/2)+placing);
+                                break;
+                    }
+                    /*System.out.println("uic.getImage().getWidth() " + uic.getImage().getWidth());
+                    System.out.println("uic.getImage().getHeight() " + uic.getImage().getHeight());
+                    System.out.println("uic.getLayoutX() " + uic.getLayoutX());
+                    System.out.println("uic.getLayoutY() " + uic.getLayoutY());
+                    System.out.println("ScreenResolution.getScreenWidth() " + ScreenResolution.getScreenWidth());
+                    System.out.println("ScreenResolution.getScreenHeigth() " + ScreenResolution.getScreenHeigth());
+                    System.out.println("uic.getWidth() " + uic.getImage().getWidth());
+                    System.out.println("uic.getHeight() " + uic.getImage().getHeight());*/
+                    uics.add(c);
+                }
+            }
+            System.out.println("uics.size() " + uics.size());
+            groupUserImageCicles.getChildren().addAll(uics);
+            
+            /*for(int i=0; i<us.size(); i++) {
+                Layout l = us.get(i).getUser().getUserCharacter().getLayout();
+                Canvas c = GUILoader.createCanvas(l, 300, 300, 0.1, 0.1);
+                groupUserImageCicles.getChildren().add(c);
+            }*/
+        });
+        
+        
+    }
+    
     
 }

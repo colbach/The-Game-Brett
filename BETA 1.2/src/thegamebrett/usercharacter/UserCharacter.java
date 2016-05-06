@@ -8,6 +8,7 @@ import javafx.scene.paint.Color;
 import thegamebrett.assets.AssetNotExistsException;
 import thegamebrett.assets.AssetsLoader;
 import thegamebrett.gui.UserImageCircle;
+import thegamebrett.model.Layout;
 
 /**
  * @author christiancolbach
@@ -20,12 +21,25 @@ public class UserCharacter {
     
     private String color; // Spielerfarbe
     
-    private String avatarFileName; // Dateinamen von Datei 
+    private String avatarFileName; // Dateinamen von Datei
+    
+    private Layout layout;
 
     public UserCharacter(String name, String color, String avatarFileName) {
         this.name = name;
         this.color = color;
         this.avatarFileName = avatarFileName;
+        
+    }
+    
+    public Layout getLayout() {
+        if(layout == null) {
+            layout = new Layout();
+            layout.setIconImage(getAvatar());
+            layout.setBorder(4);
+            layout.setBorderColor(getFXColor());
+        }
+        return layout;
     }
     
     private UserImageCircle userImageCircleCache;

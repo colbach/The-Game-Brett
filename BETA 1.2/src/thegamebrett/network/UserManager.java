@@ -47,16 +47,6 @@ public class UserManager {
     }
 
     public String generateSystemClientChooserAvailabilityInfoForAPI() {
-        /*StringBuilder sb = new StringBuilder();
-        sb.append("<h1> Melden sie sich an System an </h1>");
-        for (int i = 0; i < SYSTEM_CLIENT_NAMES.length; i++) {
-            if (systemClients[i] == null || !systemClients[i].isAlife()) {
-                sb.append("<div align=\"center\"><button class=\"choices\" onclick=\"tryToLogIn('" + SYSTEM_CLIENT_IDS[i] + "')\">" + SYSTEM_CLIENT_NAMES[i] + "</button></div>");
-            } else {
-                sb.append("<div align=\"center\"><button class=\"choices\" disabled>" + SYSTEM_CLIENT_NAMES[i] + "</button></div>");
-            }
-        }
-        return sb.toString();*/
         return WebGenerator.generateSystemClientChooserAvailabilityInfoForAPI(this);
     }
     
@@ -68,7 +58,11 @@ public class UserManager {
         
         for (int i = 0; i < SYSTEM_CLIENT_NAMES.length; i++) {
             if (clientID.equals(SYSTEM_CLIENT_IDS[i]) && (systemClients[i] == null || !systemClients[i].isAlife())) {
+                if(systemClients[i] != null) {
+                    systemClients[i].setSittingPlace(-1);
+                }
                 systemClients[i] = c;
+                systemClients[i].setSittingPlace(i);
                 return true;
             }
         }
@@ -132,6 +126,9 @@ public class UserManager {
     public void logOutSystemClient(User c) {
         for (int i = 0; i < systemClients.length; i++) {
             if (systemClients[i] == c) {
+                if(systemClients[i] != null) {
+                    systemClients[i].setSittingPlace(-1);
+                }
                 systemClients[i] = null;
                 c.setWebPage(User.WEB_PAGE_CHOOSE_POSITION);
             }

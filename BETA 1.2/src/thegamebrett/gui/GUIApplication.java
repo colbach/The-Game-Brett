@@ -10,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
@@ -34,83 +35,6 @@ public class GUIApplication extends Application{
     
     private String title = "The Game Brett";
 
-    private ArrayList<UserImageCircle> allUserImageCircles = new ArrayList<>();
-    public void updateUserImageCircles() {
-        System.err.println("updateUserImageCircles()");
-        User[] users = manager.getMobileManager().getUserManager().getSystemClients();
-        ArrayList<UserImageCircle> uics = new ArrayList<>();
-        Platform.runLater(() -> {
-            for(int i=0; i<users.length; i++) {
-                if(users[i] != null && users[i].getUserCharacter() != null) {
-                    UserImageCircle uic = users[i].getUserCharacter().getUserImageCircle();
-                    switch(i) {
-                            case(0):
-                                uic.setLayoutX(ScreenResolution.getScreenWidth()-(uic.getWidth()/2));
-                                uic.setLayoutY(0-(uic.getHeight()/2));
-                                break;
-                            case(1):
-                                uic.setLayoutX(ScreenResolution.getScreenWidth()-(uic.getWidth()/2));
-                                uic.setLayoutY(ScreenResolution.getScreenHeigth()/2-(uic.getHeight()/2));
-                                break;
-                            case(2):
-                                uic.setLayoutX(ScreenResolution.getScreenWidth()-(uic.getWidth()/2));
-                                uic.setLayoutY(ScreenResolution.getScreenHeigth()-(uic.getHeight()/2));
-                                break;
-                            case(3):
-                                uic.setLayoutX(ScreenResolution.getScreenWidth()/2-(uic.getWidth()/2));
-                                uic.setLayoutY(ScreenResolution.getScreenHeigth()-(uic.getHeight()/2));
-                                break;
-                            case(4):
-                                uic.setLayoutX(0-(uic.getWidth()/2));
-                                uic.setLayoutY(ScreenResolution.getScreenHeigth()-(uic.getHeight()/2));
-                                break;
-                            case(5):
-                                uic.setLayoutX(0-(uic.getWidth()/2));
-                                uic.setLayoutY(ScreenResolution.getScreenHeigth()/2-(uic.getHeight()/2));
-                                break;
-                            case(6):
-                                uic.setLayoutX(0-(uic.getWidth()/2));
-                                uic.setLayoutY(0-(uic.getHeight()/2));
-                                break;
-                            case(7):
-                                uic.setLayoutX(ScreenResolution.getScreenWidth()/2-(uic.getWidth()/2));
-                                uic.setLayoutY(0-(uic.getHeight()/2));
-                                break;
-                    }
-                    System.out.println("uic.getLayoutX() " + uic.getLayoutX());
-                    System.out.println("uic.getLayoutY() " + uic.getLayoutY());
-                    System.out.println("uic.getWidth() " + uic.getWidth());
-                    System.out.println("uic.getHeight() " + uic.getHeight());
-                    uics.add(uic);
-                }
-            }
-            allUserImageCircles.addAll(uics);
-        root.getChildren().addAll(uics);
-            if(menuView != null) {
-                menuView.getChildren().addAll(uics);
-            } else {
-                System.err.println("menuView ist null");
-            }
-            if(gameView != null) {
-                gameView.getChildren().addAll(uics);
-                
-            } else {
-                System.err.println("gameView ist null");
-            }
-        });
-        
-        
-    }
-    
-    private class UserImageCirclesUpdateTask extends TimerTask {
-        protected UserImageCirclesUpdateTask() {}
-        public void run() {
-            updateUserImageCircles();
-            Timer timer = new Timer();
-            timer.schedule(new UserImageCirclesUpdateTask(), 5000);
-        }
-    }
-    
     public static void main(String[] args) {
         launch(new String[0]);
     }
@@ -157,10 +81,6 @@ public class GUIApplication extends Application{
         scene.getStylesheets().add(getClass().getResource("GUIStyle.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
-        
-        
-        Timer timer = new Timer();
-        timer.schedule(new UserImageCirclesUpdateTask(), 5000);
         
     }
 

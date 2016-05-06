@@ -52,6 +52,8 @@ public class User {
     private volatile InetAddress inetAddress;
 
     private volatile InteractionRequest actualInteractionRequest;
+    
+    private volatile int sittingPlace = -1;
 
     private String htmlCache = null;
 
@@ -165,4 +167,14 @@ public class User {
             return "Client id=" + clientId;
         }
     }
+
+    public int getSittingPlace() {
+        return sittingPlace;
+    }
+
+    public void setSittingPlace(int sittingPlace) {
+        this.sittingPlace = sittingPlace;
+    }
+    
+    
 }
