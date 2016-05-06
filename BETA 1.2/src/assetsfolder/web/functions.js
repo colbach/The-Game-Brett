@@ -20,6 +20,8 @@ function reply(answer) {
 
     document.getElementById("refresh").innerHTML = "";
 }
+
+var firstTime = true;
 function updatePositionChooser() {
     var url = "getPositionsInfo";
     var response = new XMLHttpRequest();
@@ -29,16 +31,19 @@ function updatePositionChooser() {
         if (response.readyState === 4 && response.status === 200) {
             var comps = response.responseText.split(" ");
             for(var i=0; i<comps.length; i++) {
-                if(comps[i] === "ON") {
+                var disabled = document.getElementById("button" + i).disabled === true
+                console.log("disabled=" + disabled);
+                if((firstTime && comps[i] === "ON") || (disabled && comps[i] === "ON")) {
+                    console.log("enable button");
                     document.getElementById("button" + i).disabled = false;
                     document.getElementById("button" + i).innerHTML = "<img src=\"position-enabled.png\" alt=\"Sitzplatz\" class=\"posImage\">";
-                    
-                } else {
+                } else if((firstTime && comps[i] === "OFF") || (!disabled && comps[i] === "OFF")) {
+                    console.log("disable button");
                     document.getElementById("button" + i).disabled = true;
                     document.getElementById("button" + i).innerHTML = "<img src=\"position-disabled.png\" alt=\"Sitzplatz\" class=\"posImage\">";
                 }
             }
-            
+            firstTime = false;
         }
     };
 }
@@ -53,9 +58,13 @@ function updateCharacterChooser() {
             var comps = response.responseText.split(" ");
             for(var i=0; i<comps.length; i++) {
                 if(comps[i] === "ON") {
-                    document.getElementById("chooseCharacterButton" + i).hidden = false;
+                    if(document.getElementById("chooseCharacterButton" + i).hidden) {
+                        document.getElementById("chooseCharacterButton" + i).hidden = false;
+                    }
                 } else {
-                    document.getElementById("chooseCharacterButton" + i).hidden = true;
+                    if(!document.getElementById("chooseCharacterButton" + i).hidden) {
+                        document.getElementById("chooseCharacterButton" + i).hidden = true;
+                    }
                 }
             }
             
@@ -147,24 +156,6 @@ function tryToCreateGame(index, name) {
     } else {
         console.log("nein");
     }
-    /*
-    var url = "tryToGetCharacter?" + index;
-    var response = new XMLHttpRequest();
-    response.open("GET", url, true);
-    response.send();
-    var w = window;
-    response.onreadystatechange = function () {
-            if (response.readyState === 4 && response.status === 200) {
-            console.log("response.responseText=" + response.responseText);
-
-            if (response.responseText === "YES") {
-                direct();
-            } else {
-                updateCharacterChooser();
-            }
-        }
-    };*/
-
 }
 
 function tryToGetCharacter(index) {    
@@ -203,7 +194,7 @@ function refreshStartGameInfoText() {
 
 function update() {
     console.log("lastContentID=" + lastContentID);
-    var url = "refresh?" + lastContentID;
+    var url = "refreshGame?" + lastContentID;
     var response = new XMLHttpRequest();
     response.open("GET", url, true);
     response.send();

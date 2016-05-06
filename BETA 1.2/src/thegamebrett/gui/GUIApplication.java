@@ -1,11 +1,16 @@
 package thegamebrett.gui;
 
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 import javafx.application.Application;
+import static javafx.application.Application.launch;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
@@ -15,7 +20,10 @@ import javafx.stage.WindowEvent;
 import thegamebrett.Manager;
 import thegamebrett.action.request.GUIRequest;
 import thegamebrett.action.request.GUIUpdateRequest;
-import thegamebrett.assets.AssetsLoader;
+import thegamebrett.action.request.TimerRequest;
+import thegamebrett.action.response.TimerResponse;
+import thegamebrett.network.User;
+import thegamebrett.timer.TimeManager;
 
 public class GUIApplication extends Application{
 
@@ -23,17 +31,11 @@ public class GUIApplication extends Application{
     private GameView gameView;
     private MenueView menuView;
     private Manager manager;
-    
     private Stage stage;
     
-    //private Scene menueScene;
-    //private Scene gameScene;
-    
+    private String title = "The Game Brett";
+
     public static void main(String[] args) {
-        if(args.length > 0) {
-            AssetsLoader.assetsfolder = args[0];
-        }
-        
         launch(new String[0]);
     }
     
@@ -46,7 +48,7 @@ public class GUIApplication extends Application{
         ScreenResolution.setBoardRatios(1, 1);
         
         
-        stage.setTitle("The Game Brett");
+        stage.setTitle(title);
         
         manager = new Manager(this);
         
@@ -60,7 +62,7 @@ public class GUIApplication extends Application{
                 
         stage.setFullScreen(true);
         root = new Group();
-        Scene scene = new Scene(root, Color.GAINSBORO);
+        Scene scene = new Scene(root, Color.DARKGRAY);
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -76,7 +78,7 @@ public class GUIApplication extends Application{
             }
         });
         showMenuScene();
-        
+        scene.getStylesheets().add(getClass().getResource("GUIStyle.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
         

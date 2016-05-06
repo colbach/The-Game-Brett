@@ -23,6 +23,7 @@ import thegamebrett.model.elements.Board;
 import thegamebrett.model.elements.Element;
 import thegamebrett.model.elements.Field;
 import thegamebrett.model.elements.Figure;
+import thegamebrett.usercharacter.UserCharacter;
 
 public class GUILoader {
     
@@ -177,7 +178,7 @@ public class GUILoader {
         return c;
     }
     
-    private static Canvas createCanvas(Layout layout, double x, double y, double w, double h) {
+    public static Canvas createCanvas(Layout layout, double x, double y, double w, double h) {
         
         // Done:  backgroundColor border borderColor formFactor backgroundImage
         // To Do: 
@@ -316,5 +317,22 @@ public class GUILoader {
         } else {
             gc.setFill(l.getBackgroundColor());
         }
+    }
+    
+    public static Canvas createUserImageCircle(UserCharacter uc, double w, double h) {
+        Canvas c = new Canvas(w, h);
+        double b = 20;
+        double wi=w-b;
+        double hi=h-b;
+        GraphicsContext gc = c.getGraphicsContext2D();
+        gc.setFill(uc.getFXColor());
+        gc.fillOval(0, 0, w, h);
+        gc.setFill(Color.WHITE);
+        gc.fillOval(b/4, b/4, w-b/2, h-b/2);
+        ImagePattern imagePattern;
+        imagePattern = new ImagePattern(uc.getAvatar(), b/2, b/2, wi, hi, false);
+        gc.setFill(imagePattern);
+        gc.fillOval(b/2, b/2, wi, hi);
+        return c;
     }
 }

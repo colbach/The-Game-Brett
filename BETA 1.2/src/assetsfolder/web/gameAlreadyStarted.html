@@ -6,8 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <link href="style.css" type="text/css" rel="stylesheet">
     <title>Spiel hat bereits begonnen</title>
-    <script type="text/javascript" src="functions.js"></script>
-
+        <script src="jquery.min.js" type="text/javascript"></script>
+        <script type="text/javascript" src="functions.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#refresh").load("refreshFreePositionList");
+                var refreshId = setInterval(function () {
+                    $("#refresh").load("refreshFreePositionList");
+                }, 2000);
+            });
+        </script>
 </head>
 
 <body>
