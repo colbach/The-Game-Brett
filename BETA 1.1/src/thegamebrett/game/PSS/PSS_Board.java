@@ -25,8 +25,9 @@ public class PSS_Board extends Board{
     private final float ratioX = 1;
     private final float ratioY = 1;
     
-    public PSS_Board(){
+    public PSS_Board(String[] fieldContent){
         super();
+        this.fieldContent = fieldContent;
         createFields();
     }
     

@@ -18,37 +18,86 @@ import thegamebrett.model.Player;
 import thegamebrett.model.elements.Field;
 /**
  *
- * @author Korè
+ * @author Kore
  */
 public class PSS_GameLogic extends GameLogic{
     
     
-    private static String[] fieldContent = {
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
+    private final static String[] FIELD_CONTENT = {
+        "START",
+        "Alle duerfen trinken!",
+        "Du und deine beiden Nebensitzer trinken.",
+        "Gehe 2 Felder zurueck.",
+        "Stimme ein Lied an. Wer nicht mitsingt trinkt 2.",
+        "Trinke und gehe auf Feld 32.",
+        "Endlich kannst du wieder trinken!",
+        "Alle ausser dir trinken.",
+        "8",
+        "Bestimme eine Person die trinken soll.",
+        "Alle Typen trinken.",
+        "Dein rechter Sitznachbar trinkt.",
+        "Eine Person deiner Wahl darf 2 trinken.",
+        "Trinke so viel wie du gewuerfelt hast und gehe auf START.",
+        "Es trinken die Personen die am nächsten dem START und ZIEL sind.",
+        "Das Maedchen deiner Wahl darf trinken.",
+        "Du trinkst und die erste Person die lacht trinkt 2.",
+        "Trinke und setze eine Runde aus.",
+        "18",
+        "Alle Maedels trinken.",
+        "Trinke und wuerfle noch einmal!",
+        "Gehe zurueck auf START.",
+        "Trinke so viel wie du gewuerfelt hast.",
+        "Alle die einen Bruder haben duerfen trinken!",
+        "Trinke 3 oder gehe 4 Felder zurueck.",
+        "Endlich kannst du wieder trinken!",
+        "Es trinken die, die ein gerades Alter haben.",
+        "Es trinken die, die ein ungerades Alter haben.",
+        "28",
+        "Gehe auf Feld 9 und trinke 5.",
+        "Jeder, der keine 10 Euro an sich hat, trinkt.",
+        "Alle Studenten trinken.",
+        "Trinke 3 und kuesse eine Person des anderen Geschlechts.",
+        "Trinke und ziehe ein Kleidungsstueck aus!",
+        "Trinke und bestimme eine Person die auf Feld 6 zurueck geht.",
+        "Gehe auf Feld 6 zurueck.",
+        "Es trinkt der, der dem START am naechsten ist und du gehst zurueck auf Start.",
+        "Alle die vor dir sind duerfen trinken.",
+        "38",
+        "Trinke und ziehe ein Kleidungsstueck aus!",
+        "Trinke so viel wie du gewuerfelt hast.",
+        "Es trinkt die Person, die am wenigsten Muenzen bei sich traegt.",
+        "Alle wuerfeln. Alle mit einer 1 duerfen trinken.",
+        "Alle die eine Schwester haben trinken.",
+        "Trinke und dein linker Sitznachbar entscheidet wer noch trinken darf.",
+        "Gehe 2 Felder vor und trinke.",
+        "Wirf eine Muenze. Bei Kopf trinken alle, bei Zahl nur du.",
+        "Kuesse jemanden nach deiner Wahl und trinke 2!",
+        "48",
+        "Gehe auf das Feld 28 und wuerfle noch einmal.",
+        "Trinke und ziehe ein Kleidungsstueck aus!",
+        "Bestimme zwei Personen die sich kuessen sollen und trinke 3.",
+        "Alle unter 25 duerfen trinken!",
+        "Deine beiden Sitznachbarn trinken.",
+        "Alle duerfen trinken!",
+        "Alle die eine 6 wuerfeln trinken.",
+        "Trinke und gehe auf Feld 18 zurueck.",
+        "Alle die in den 90ern geboren sind trinken.",
+        "58",
+        "Alle wuerfeln. Alle mit einer 1 duerfen trinken.",
+        "Stimme ein Lied an. Wer nicht mitsingt trinkt 5.",
+        "Alle trinken die weder Brille noch Kontaktlinsen tragen.",
+        "Alle die keinen BH tragen trinken.",
+        "Jeder, der eine Hose anhat darf trinken!",
+        "Alle trinken!",
+        "Trinke und ziehe ein Kleidungsstueck aus!",
+        "Gehe zurueck auf Feld 32.",
+        "Alle trinken 3 und ziehen ein Kleidungsstueck aus!",
+        "68",
+        "Gehe zurueck auf Feld 54. und trinke 4.",
+        "Trinke und gehe zurueck auf START.",
+        "ZIEL"
     };
+    
     
     
     /* maximal und minimale Anzahl an Spielern die im Spiel mÃ¶glich sind**/
@@ -289,10 +338,44 @@ public class PSS_GameLogic extends GameLogic{
                 nextRequest = getOkRequest(as,previous, 18, null);
                 break;
                 
-            case 62:
-                
+            case 45:
+                field = (PSS_Field)board.getField(47);
+                ((PSS_Player)previous.getPlayer()).getFigure().setField(field);
+                nextRequest = getOkRequest(as,previous, 47, field.getLayout().getTitle());
+                break;
+              
+            case 34:
+                if(previous.getChoices().length>1){
+                    for(int i = 0; i<anzPlayer;i++){
+                        if(((PSS_Player)getDependingModel().getPlayers().get(i)).getPlayerName().equals(((InteractionResponse)as).getChoice())){
+                            ((PSS_Player)getDependingModel().getPlayers().get(i)).getFigure().setField(board.getField(6));
+                            requests.add(new InteractionRequest("Du bist auf das Feld 6 gekommen! "
+                                + "Deine Aufgabe: " + board.getField(6).getLayout().getTitle(),
+                                new String[]{"Na gut..."}, (PSS_Player)previous.getPlayer(), 
+                                false, INTERACTIONRESPONSE_NO_RESPONSE));
+                            break;
+                        }
+                    }
+                    nextRequest = new InteractionRequest("Du bist dran mit wuerfeln!",
+                        new String[]{"GOGOGO"}, getNextPlayer((PSS_Player)previous.getPlayer()), 
+                        false,INTERACTIONRESPONSE_CHOICES_DICE);
+                } else {
+                    String[] s = new String[anzPlayer];
+                    for(int i = 0; i<anzPlayer;i++){
+                        s[i] = ((PSS_Player)getDependingModel().getPlayers().get(i)).getPlayerName();
+                    }
+                    nextRequest = new InteractionRequest("Du bist auf das Feld 34 gekommen! "
+                    + "Deine Aufgabe: " + board.getField(34).getLayout().getTitle(),
+                    s, (PSS_Player)previous.getPlayer(), false, INTERACTIONRESPONSE_CHOICES_OK);
+                }
+                break;                
                 
             case 69:
+                field = (PSS_Field)board.getField(54);
+                ((PSS_Player)previous.getPlayer()).getFigure().setField(field);
+                nextRequest = getOkRequest(as,previous, 54, field.getLayout().getTitle());
+                break;
+                
                 
             case 17:
                 
@@ -319,25 +402,19 @@ public class PSS_GameLogic extends GameLogic{
                 }
                 break;
                 
-            case 59:
+            case 59: case 42:
                 field55 = false;
                 for(Player p : getDependingModel().getPlayers()){
                     requests.add(new InteractionRequest("Wuerfle eine 1!",
                         new String[]{"Wuerfeln!"}, (PSS_Player)p, 
                             false,INTERACTIONRESPONSE_EVERYONE_DICES));                    
                 }
-                break;
-                
-            case 8: case 18: case 28: case 38: case 48: case 58: case 68:
-                requests.add(getOkRequest(as,previous, questIndex, null));
-                nextRequest = new InteractionRequest("Du bist dran mit wuerfeln!",
-                        new String[]{"GOGOGO"}, getNextPlayer((PSS_Player)previous.getPlayer()), 
-                        false,INTERACTIONRESPONSE_CHOICES_DICE);                    
-                break;       
-                
+                break;                
             
             default:
-                nextRequest = getOkRequest(as,previous, questIndex, field.getLayout().getTitle());
+                nextRequest = new InteractionRequest("Du bist dran mit wuerfeln!",
+                        new String[]{"GOGOGO"}, getNextPlayer((PSS_Player)previous.getPlayer()), 
+                        false,INTERACTIONRESPONSE_CHOICES_DICE);
                 break;
 
         }
@@ -414,6 +491,10 @@ public class PSS_GameLogic extends GameLogic{
     @Override
     public Field getNextStartPositionForPlayer(Player player) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public String[] getFieldContent(){
+        return FIELD_CONTENT;
     }
 
 }
