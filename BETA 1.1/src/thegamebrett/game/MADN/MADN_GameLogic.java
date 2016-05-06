@@ -13,7 +13,7 @@ import thegamebrett.model.elements.Field;
 import thegamebrett.model.elements.Figure;
 
 /**
- * @author KorÃ©
+ * @author Kore
  */
 public class MADN_GameLogic extends GameLogic {
 

@@ -11,11 +11,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
-import thegamebrett.game.MADN.MADN_Board;
-import thegamebrett.game.MADN.MADN_GameLogic;
-import thegamebrett.game.MADN.MADN_Player;
 import thegamebrett.model.GameFactory;
-import thegamebrett.model.Layout;
 import thegamebrett.model.Model;
 import thegamebrett.model.Player;
 import thegamebrett.model.exceptions.TooFewPlayers;
@@ -73,6 +69,10 @@ public class PSS_GameFactory implements GameFactory{
     @Override
     public String getGameName() {
         return "PSS";
+    }
+    
+    public PSS_Board getBoard(){
+        return board;
     }
     
 }
