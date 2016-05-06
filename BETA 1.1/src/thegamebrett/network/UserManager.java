@@ -42,7 +42,9 @@ public class UserManager {
         sb.append("<h1> Melden sie sich an System an </h1>");
         for (int i = 0; i < systemClientNames.length; i++) {
             if (systemClients[i] == null || !systemClients[i].isAlife()) {
-                sb.append("<div align=\"center\"><button class=\"choices\" onclick=\"reply('login:" + systemClientIDs[i] + "')\">" + systemClientNames[i] + "</button></div>");
+                sb.append("<div align=\"center\"><button class=\"choices\" onclick=\"choosePosition('" + systemClientIDs[i] + "')\">" + systemClientNames[i] + "</button></div>");
+            } else {
+                sb.append("<div align=\"center\"><button class=\"choices\" disabled>" + systemClientNames[i] + "</button></div>");
             }
         }
         return sb.toString();

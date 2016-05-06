@@ -52,6 +52,10 @@ public class User {
     public UserCharacter getUserCharacter() {
         return character;
     }
+    
+    public boolean hasUserCharacter() {
+        return character == null;
+    }
 
     public void setUserCharacter(UserCharacter character) {
         this.character = character;

@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <link href="style.css" type="text/css" rel="stylesheet">
+        <script src="jquery.min.js" type="text/javascript"></script>
+        <script type="text/javascript" src="functions.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                updatePositionChooser();
+                var refreshId = setInterval(function() {
+                    updatePositionChooser();
+                }, 2000);
+            });
+        </script>
+        <title>Positionsauswahl</title>
+    </head>
+    <body>
+        <div align="center" id="content">
+            <h1>Position w&auml;hlen!</h1>
+            <div>
+                <button class="position" id="button6" onClick="tryToLogIn('systemClient6')"> <!--<img src="position-enabled.png" alt="Spieler 7" class="posImage">--> </button>
+                <button class="position" id="button7" onClick="tryToLogIn('systemClient7')"> <!--<img src="position-enabled.png" alt="Spieler 8" class="posImage">--> </button>
+                <button class="position" id="button0" onClick="tryToLogIn('systemClient0')"> <!--<img src="position-disabled.png" alt="Spieler 3" class="posImage">--> </button>
+            </div>
+            <div>
+                <button class="position" id="button5" onClick="tryToLogIn('systemClient5')"> <!--<img src="position-enabled.png" alt="Spieler 6" class="posImage">--> </button>
+                <button class="position" disabled><img src="desk_icon.png" alt="Desk" class="posImage"></button>
+                <button class="position" id="button1" onClick="tryToLogIn('systemClient1')"> <!--<img src="position-enabled.png" alt="Spieler 2" class="posImage">--> </button>
+            </div>
+            <div>
+                <button class="position" id="button4" onClick="tryToLogIn('systemClient4')"> <!--<img src="position-disabled.png" alt="Spieler 5" class="posImage">--> </button>
+                <button class="position" id="button3" onClick="tryToLogIn('systemClient3')"> <!--<img src="position-enabled.png" alt="Spieler 4" class="posImage">--> </button>
+                <button class="position" id="button2" onClick="tryToLogIn('systemClient2')"> <!--<img src="position-disabled.png" alt="Spieler 3" class="posImage">--> </button>
+            </div>
+        </div>
+        
+            <!--
+            <div id="refresh" style="text-align:center;"></div>
+            <div>                
+                <button class="position" onClick="choosePosition(0)"><img src="avatar1.png" alt="Seat 1" class="posImage"></button>
+                <button class="position" onClick="choosePosition(1)"><img src="avatar1.png" alt="Seat 2" class="posImage"></button>
+                <button class="position" onClick="choosePosition(2)"><img src="avatar1.png" alt="Seat 3" class="posImage"></button>
+            </div>
+            <div>
+            	<button class="position" onClick="choosePosition(3)"><img src="avatar1.png" alt="Seat 4" class="posImage"></button>
+                <button class="position" disabled="true"><img src="desk_icon.png" alt="Desk" class="posImage"></button>
+                <button class="position" onClick="choosePosition(4)"><img src="avatar1.png" alt="Seat 5" class="posImage"></button>
+            </div>
+            <div>
+            	<button class="position" onClick="choosePosition(5)"><img src="avatar1.png" alt="Seat 6" class="posImage"></button>
+                <button class="position" onClick="choosePosition(6)"><img src="avatar1.png" alt="Seat 7" class="posImage"></button>
+                <button class="position" onClick="choosePosition(7)"><img src="avatar1.png" alt="Seat 8" class="posImage"></button>
+            </div>
+            -->
+    </body>
+</html>
