@@ -31,7 +31,7 @@ public  class Dialog extends Pane {
         
         
         p = new Pane();
-        p.setStyle("-fx-background-color: white;");
+        p.setStyle("-fx-background-color: black;");
         p.setPrefSize(x, y);
         p.setLayoutX((ScreenResolution.getScreenWidth()/2)-(x/2));
         p.setLayoutY((ScreenResolution.getScreenHeigth()/2)-(y/2));

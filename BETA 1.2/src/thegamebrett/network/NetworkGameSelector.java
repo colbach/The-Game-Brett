@@ -34,6 +34,7 @@ public class NetworkGameSelector {
             readyList.add(creator);
             for (User user : users) {
                 if (user != null) {
+                    user.setActualInteractionRequest(null);
                     if (user.hasUserCharacter()) {
                         user.setWebPage(User.WEB_PAGE_JOIN_GAME);
                     }
@@ -44,6 +45,21 @@ public class NetworkGameSelector {
         } else {
             return false;
         }
+    }
+    
+    public void endGame() {
+        
+        selectedGame = null;
+        gameStarted = false;
+        
+        User[] users = manager.getMobileManager().getUserManager().getSystemClients();
+        for(User user : users) {
+            if(user!=null && user.hasUserCharacter())
+                user.setWebPage(User.WEB_PAGE_CHOOSE_GAME);
+        }
+        
+        resetReadyList();
+        
     }
 
     private synchronized void resetReadyList() {

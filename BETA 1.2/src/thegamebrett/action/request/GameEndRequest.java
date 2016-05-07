@@ -8,7 +8,7 @@ public class GameEndRequest implements GUIRequest, MobileRequest {
     private final Player[] winner;
     private final String acknowledgment;
     private final int delay;
-    private final Image backgroundImage;
+    private Image backgroundImage;
 
     public GameEndRequest(Player[] winner, String acknowledgment, int delay, Image backgroundImage) {
         this.delay = delay;
@@ -21,6 +21,12 @@ public class GameEndRequest implements GUIRequest, MobileRequest {
         this(winner, "", 0, null);
     }
 
+    public GameEndRequest(Player[] winner, String acknowledgment, int delay) {
+        this.delay = delay;
+        this.winner = winner;
+        this.acknowledgment = acknowledgment;
+    }
+    
     public Player[] getWinner() {
         return winner;
     }
