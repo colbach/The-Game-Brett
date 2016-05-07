@@ -2,22 +2,33 @@ package thegamebrett.gui;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Screen;
 import javafx.util.Duration;
+import thegamebrett.Manager;
+import thegamebrett.action.request.GameEndRequest;
+import thegamebrett.action.request.InteractionRequestFromGUI;
+import thegamebrett.action.request.MobileRequest;
 import thegamebrett.model.Layout;
 import thegamebrett.model.Model;
 import thegamebrett.model.Player;
 import thegamebrett.model.elements.Board;
 import thegamebrett.model.elements.Element;
 import thegamebrett.model.elements.Figure;
+import thegamebrett.network.PlayerNotRegisteredException;
 import thegamebrett.network.User;
 import thegamebrett.usercharacter.UserCharacter;
 
@@ -37,15 +48,16 @@ public class GameView extends Group {
     //private Canvas[] figures = new Canvas[0];
 
     private Model gameModel = null;
+    private final Manager manager;
 
     Group groupBack;
     Group groupMid;
     Group groupTop;
     Group groupUserImageCicles;
-    
-    public GameView() {
-        super();
 
+    public GameView(Manager manager) {
+        super();
+        this.manager = manager;
         groupBack = new Group();
         groupMid = new Group();
         groupTop = new Group();
@@ -74,12 +86,13 @@ public class GameView extends Group {
     }
 
     public void updateOnFXThread(int value, boolean animated, int delay) {
-        Platform.runLater(()->{
+        Platform.runLater(() -> {
             update(value, animated, delay);
         });
     }
+
     private void update(int value, boolean animated, int delay) {
-        
+
         if (gameModel != null) {
             if (value < 0 || value > 7) {
                 throw new IllegalArgumentException("0 <= value <= 7");
@@ -106,78 +119,109 @@ public class GameView extends Group {
                 groupBack.getChildren().clear();
                 groupBack.getChildren().add(updatedBoardBackground);
             }
-            
+
             /*try {
                     Thread.sleep(1000);
             } catch (InterruptedException ex) { }*/
-            
             if (updateFigures) {
                 /*Canvas[] updatedFigures =*/ GUILoader.createFigures(gameModel, groupTop.getChildren());
                 //groupTop.getChildren().clear();
                 //groupTop.getChildren().addAll(updatedFigures);
-                
-                for(Node c : groupTop.getChildren()) {
-                    Transition t = (Transition)c.getUserData();
-                    if(t.getNewX() != t.getOldX() || t.getNewY() != t.getOldY()) {
+
+                for (Node c : groupTop.getChildren()) {
+                    Transition t = (Transition) c.getUserData();
+                    if (t.getNewX() != t.getOldX() || t.getNewY() != t.getOldY()) {
                         TranslateTransition tt = new TranslateTransition(Duration.millis(2000), c);
-                    
-                        tt.setByX(t.getNewX()-t.getOldX());
-                        tt.setByY(t.getNewY()-t.getOldY());
+
+                        tt.setByX(t.getNewX() - t.getOldX());
+                        tt.setByY(t.getNewY() - t.getOldY());
                         //System.out.println(t.getNewX() + " " + t.getOldX() + " " + t.getNewY() + " " + t.getOldY());
                         //System.out.println("t.newX-t.oldX="+(t.getNewX()-t.getOldX()) + " t.newY-t.oldY=" + (t.getNewY()-t.getOldY()));
                         tt.play();
                     }
-                    
+
                 }
             }
         }
 
     }
-    
+
+    public void gameEnd(GameEndRequest ger) {
+        System.out.println("Game Over");
+        Platform.runLater(() -> {
+            groupUserImageCicles.getChildren().add(0, GUILoader.createGameEndScreen(ger));
+            Button b = new Button(Manager.rb.getString("Ok"));
+            b.setPrefWidth(50d);
+            b.setLayoutX(ScreenResolution.getScreenWidth() / 2 - 25d);
+            b.setLayoutY(ScreenResolution.getScreenHeigth() / 3 * 2 + 60);
+
+            for (Player player : gameModel.getPlayers()) {
+                try {
+                    manager.getMobileManager().react(new InteractionRequestFromGUI(ger.getAcknowledgment(), new Object[]{Manager.rb.getString("Ok")}, player, true, gameModel));
+                } catch (PlayerNotRegisteredException ex) {
+                    System.err.println("PlayerNotRegisteredException");
+                }
+            }
+            b.setOnAction((e) -> {
+                gameEndButtonClick(gameModel);
+            });
+            groupUserImageCicles.getChildren().add(b);
+        });
+    }
+
+    public void gameEndButtonClick(Model concerningModel) {
+        if (concerningModel == gameModel) {
+            manager.getMobileManager().getNetworkManager().getNetworkGameSelector().endGame();
+            Platform.runLater(() -> {
+                manager.getGui().showMenuScene();
+            });
+        }
+    }
+
     public void addUserImageCircles(Model model) {
         ArrayList<Player> us = model.getPlayers();
         ArrayList<Canvas> uics = new ArrayList<>();
         Platform.runLater(() -> {
-            for(int i=0; i<us.size(); i++) {
-                if(us.get(i)!= null && us.get(i).getUser() != null && us.get(i).getUser().getUserCharacter() != null) {
+            for (int i = 0; i < us.size(); i++) {
+                if (us.get(i) != null && us.get(i).getUser() != null && us.get(i).getUser().getUserCharacter() != null) {
                     UserCharacter uic = us.get(i).getUser().getUserCharacter();
                     int size = 130;
                     int placing = 40;
                     Canvas c = GUILoader.createUserImageCircle(uic, size, size);
                     int sp = us.get(i).getUser().getSittingPlace();
-                    switch(sp) {
-                            case(0):
-                                c.setLayoutX(ScreenResolution.getScreenWidth()-(size/2)-placing);
-                                c.setLayoutY(0-(size/2)+placing);
-                                break;
-                            case(1):
-                                c.setLayoutX(ScreenResolution.getScreenWidth()-(size/2)-placing);
-                                c.setLayoutY(ScreenResolution.getScreenHeigth()/2-(size/2));
-                                break;
-                            case(2):
-                                c.setLayoutX(ScreenResolution.getScreenWidth()-(size/2)-placing);
-                                c.setLayoutY(ScreenResolution.getScreenHeigth()-(size/2)-placing);
-                                break;
-                            case(3):
-                                c.setLayoutX(ScreenResolution.getScreenWidth()/2-(size/2));
-                                c.setLayoutY(ScreenResolution.getScreenHeigth()-(size/2)-placing);
-                                break;
-                            case(4):
-                                c.setLayoutX(0-(size/2)+placing);
-                                c.setLayoutY(ScreenResolution.getScreenHeigth()-(size/2)-placing);
-                                break;
-                            case(5):
-                                c.setLayoutX(0-(size/2)+placing);
-                                c.setLayoutY(ScreenResolution.getScreenHeigth()/2-(size/2));
-                                break;
-                            case(6):
-                                c.setLayoutX(0-(size/2)+placing);
-                                c.setLayoutY(0-(size/2)+placing);
-                                break;
-                            case(7):
-                                c.setLayoutX(ScreenResolution.getScreenWidth()/2-(size/2));
-                                c.setLayoutY(0-(size/2)+placing);
-                                break;
+                    switch (sp) {
+                        case (0):
+                            c.setLayoutX(ScreenResolution.getScreenWidth() - (size / 2) - placing);
+                            c.setLayoutY(0 - (size / 2) + placing);
+                            break;
+                        case (1):
+                            c.setLayoutX(ScreenResolution.getScreenWidth() - (size / 2) - placing);
+                            c.setLayoutY(ScreenResolution.getScreenHeigth() / 2 - (size / 2));
+                            break;
+                        case (2):
+                            c.setLayoutX(ScreenResolution.getScreenWidth() - (size / 2) - placing);
+                            c.setLayoutY(ScreenResolution.getScreenHeigth() - (size / 2) - placing);
+                            break;
+                        case (3):
+                            c.setLayoutX(ScreenResolution.getScreenWidth() / 2 - (size / 2));
+                            c.setLayoutY(ScreenResolution.getScreenHeigth() - (size / 2) - placing);
+                            break;
+                        case (4):
+                            c.setLayoutX(0 - (size / 2) + placing);
+                            c.setLayoutY(ScreenResolution.getScreenHeigth() - (size / 2) - placing);
+                            break;
+                        case (5):
+                            c.setLayoutX(0 - (size / 2) + placing);
+                            c.setLayoutY(ScreenResolution.getScreenHeigth() / 2 - (size / 2));
+                            break;
+                        case (6):
+                            c.setLayoutX(0 - (size / 2) + placing);
+                            c.setLayoutY(0 - (size / 2) + placing);
+                            break;
+                        case (7):
+                            c.setLayoutX(ScreenResolution.getScreenWidth() / 2 - (size / 2));
+                            c.setLayoutY(0 - (size / 2) + placing);
+                            break;
                     }
                     /*System.out.println("uic.getImage().getWidth() " + uic.getImage().getWidth());
                     System.out.println("uic.getImage().getHeight() " + uic.getImage().getHeight());
@@ -192,16 +236,14 @@ public class GameView extends Group {
             }
             System.out.println("uics.size() " + uics.size());
             groupUserImageCicles.getChildren().addAll(uics);
-            
+
             /*for(int i=0; i<us.size(); i++) {
                 Layout l = us.get(i).getUser().getUserCharacter().getLayout();
                 Canvas c = GUILoader.createCanvas(l, 300, 300, 0.1, 0.1);
                 groupUserImageCicles.getChildren().add(c);
             }*/
         });
-        
-        
+
     }
-    
-    
+
 }

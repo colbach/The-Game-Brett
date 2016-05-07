@@ -20,8 +20,11 @@ import javafx.stage.WindowEvent;
 import thegamebrett.Manager;
 import thegamebrett.action.request.GUIRequest;
 import thegamebrett.action.request.GUIUpdateRequest;
+import thegamebrett.action.request.GameEndRequest;
 import thegamebrett.action.request.TimerRequest;
+import thegamebrett.action.response.InteractionResponse;
 import thegamebrett.action.response.TimerResponse;
+import thegamebrett.model.Model;
 import thegamebrett.network.User;
 import thegamebrett.timer.TimeManager;
 
@@ -52,7 +55,7 @@ public class GUIApplication extends Application{
         
         manager = new Manager(this);
         
-        gameView = new GameView();
+        gameView = new GameView(manager);
         menuView = new MenueView(manager);
         
         stage.setOnCloseRequest((WindowEvent we) -> {
@@ -99,6 +102,12 @@ public class GUIApplication extends Application{
         root.getChildren().add(go);
     }
     
+    public void takeResponse(InteractionResponse ir) {
+        if(ir.getConcerningInteractionRequest().getUserData() instanceof Model && gameView != null) {
+            gameView.gameEndButtonClick((Model) ir.getConcerningInteractionRequest().getUserData());
+        }
+    }
+    
     public void hideOptions() {
         root.getChildren().remove(go);
         go = null;
@@ -122,6 +131,10 @@ public class GUIApplication extends Application{
             
             //System.out.println(value);
             gameView.updateOnFXThread(value, ur.isAnimated(), ur.getDelay());
+        }
+        if(r instanceof GameEndRequest) {
+            GameEndRequest ger = (GameEndRequest) r;
+            gameView.gameEnd(ger);
         }
     }
     

@@ -4,6 +4,7 @@ import javafx.scene.paint.Color;
 import thegamebrett.action.ActionRequest;
 import thegamebrett.action.ActionResponse;
 import thegamebrett.action.request.GUIUpdateRequest;
+import thegamebrett.action.request.GameEndRequest;
 import thegamebrett.action.request.InteractionRequest;
 import thegamebrett.action.request.PlaySoundRequest;
 import thegamebrett.action.response.InteractionResponse;
@@ -20,8 +21,11 @@ public class D_GameLogic extends GameLogic{
     /*Fall unterscheidung die angibt ob response würfeln oder bewegen ist**/
     public final static Integer INTERACTIONRESPONSE_CHOICES_DICE = new Integer(0);
     public final static Integer INTERACTIONRESPONSE_CHOICES_CHOOSE_FIGURE = new Integer(1);
+    
+    int tt = 0;
         
     private InteractionRequest sent;
+    
     
     public D_GameLogic(Model dependingModel) {
         super(dependingModel);
@@ -29,6 +33,12 @@ public class D_GameLogic extends GameLogic{
     
     @Override
     public ActionRequest[] next(ActionResponse as) {
+        
+        tt++;
+        if(tt == 4) {
+            GameEndRequest ger = new GameEndRequest(getDependingModel().getPlayers().toArray(new Player[0]), "Jeder gewinnt", 0);
+            return new ActionRequest[] {ger};
+        }
         
         ArrayList<ActionRequest> requests = new ArrayList<>();
 

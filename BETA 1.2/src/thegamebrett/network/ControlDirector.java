@@ -22,6 +22,9 @@ public class ControlDirector implements Director {
     /**  Rueckgabe von Server wenn kein Update noetig ist */
     public static final String NO_UPDATES = "null";
     
+    /**  Rueckgabe von Server wenn Client redirecten soll */
+    public static final String DIRECT = "direct";
+    
     /**  diese Id wird uebergeben um anzugeben dass keine ID verfuegbar ist */
     public static final String NO_MESSAGE_ID = "#########";
     
@@ -198,6 +201,11 @@ public class ControlDirector implements Director {
             } else if (request.startsWith("/getCharacterInfo")) {
                 return WebGenerator.generateUserCharacterChooserAvailabilityInfoForAPI();
             } else if (request.startsWith("/refreshGame")) {
+                // Kontrolle ob Spieler ueberhaupt noch in Spiel
+                if(client.getWebPage() != User.WEB_PAGE_PLAY_GAME) {
+                    return DIRECT;
+                }
+                
                 // messageID und InteractionRequest sicher aus client laden
                 long messageID;
                 InteractionRequest ir;

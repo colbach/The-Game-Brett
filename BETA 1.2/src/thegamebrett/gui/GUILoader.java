@@ -16,6 +16,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import thegamebrett.action.request.GameEndRequest;
 import thegamebrett.model.Layout;
 import thegamebrett.model.Model;
 import thegamebrett.model.Player;
@@ -321,18 +322,81 @@ public class GUILoader {
     
     public static Canvas createUserImageCircle(UserCharacter uc, double w, double h) {
         Canvas c = new Canvas(w, h);
+        GraphicsContext gc = c.getGraphicsContext2D();
+        drawUserImageCircle(gc, uc, 0, 0, w, h);
+        return c;
+    }
+    
+    public static void drawUserImageCircle(GraphicsContext gc, UserCharacter uc, int x, int y, double w, double h) {
         double b = 20;
         double wi=w-b;
         double hi=h-b;
-        GraphicsContext gc = c.getGraphicsContext2D();
         gc.setFill(uc.getFXColor());
+        gc.fillOval(x, y, w, h);
+        gc.setFill(Color.WHITE);
+        gc.fillOval(x + b/4, y + b/4, w-b/2, h-b/2);
+        ImagePattern imagePattern;
+        imagePattern = new ImagePattern(uc.getAvatar(), x + b/2, y + b/2, wi, hi, false);
+        gc.setFill(imagePattern);
+        gc.fillOval(x + b/2, y + b/2, wi, hi);
+    }
+    
+    public static Canvas createGameEndScreen(GameEndRequest ger) {
+        double w = ScreenResolution.getScreenWidth();
+        double h = ScreenResolution.getScreenHeigth();
+        Canvas c = new Canvas(w, h);
+        
+        GraphicsContext gc = c.getGraphicsContext2D();
+        
+        if(ger.getBackgroundImage() != null) {
+            ImagePattern imagePattern;
+            imagePattern = new ImagePattern(ger.getBackgroundImage(), 0, 0, w, h, false);
+            gc.setFill(imagePattern);
+            gc.fillRect(0, 0, w, h);
+        } else {
+            double r=0, g=0, b=0;
+            for(Player p : ger.getWinner()) { // Gewinnerfarben mischen
+                r += p.getUser().getUserCharacter().getFXColor().getRed();
+                g += p.getUser().getUserCharacter().getFXColor().getGreen();
+                b += p.getUser().getUserCharacter().getFXColor().getBlue();
+            }
+            r /= ger.getWinner().length;
+            g /= ger.getWinner().length;
+            b /= ger.getWinner().length;
+            System.out.println(r + " " + g + " " + b);
+            Color bg = new Color(r, g, b, 1);
+            gc.setFill(bg);
+            gc.fillRect(0, 0, w, h);
+        }
+        
+        final int winnerImageSize = 300;
+        final int spacing = 150;
+        int i=0;
+        for(Player p : ger.getWinner()) {
+            drawUserImageCircle(gc, p.getUser().getUserCharacter(), ScreenResolution.getScreenWidth()/2 - winnerImageSize/2 - (ger.getWinner().length-1)*spacing/2 + spacing*i, ScreenResolution.getScreenHeigth()/2 - winnerImageSize/2, winnerImageSize, winnerImageSize);
+            i++;
+        }
+        
+        gc.setFont(Font.font("Arial", FontWeight.BOLD, 25));
+        gc.setFill(Color.BLACK);
+        gc.setStroke(Color.WHITE);
+        gc.setLineWidth(7);
+        String message = ger.getAcknowledgment();
+        float messageWidth = textWidth(message, gc);
+        
+        gc.strokeText(message, ScreenResolution.getScreenWidth()/2 - messageWidth/2, ScreenResolution.getScreenHeigth()/4);
+        gc.fillText(message, ScreenResolution.getScreenWidth()/2 - messageWidth/2, ScreenResolution.getScreenHeigth()/4);
+        
+        /*gc.setFill(ger.getFXColor());
         gc.fillOval(0, 0, w, h);
         gc.setFill(Color.WHITE);
         gc.fillOval(b/4, b/4, w-b/2, h-b/2);
         ImagePattern imagePattern;
         imagePattern = new ImagePattern(uc.getAvatar(), b/2, b/2, wi, hi, false);
         gc.setFill(imagePattern);
-        gc.fillOval(b/2, b/2, wi, hi);
+        gc.fillOval(b/2, b/2, wi, hi);*/
+        
+        
         return c;
     }
 }

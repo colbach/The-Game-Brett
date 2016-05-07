@@ -60,7 +60,6 @@ public class MenueView extends Group {
     private Slider textSizeSlider;
     private ComboBox languageCBox;
     
-    private String language = "languages";
     private String optionButton;
     private String soundLabel;
     private String muteButton;
@@ -71,13 +70,9 @@ public class MenueView extends Group {
     private String language1 = "Deutsch";
     private String language2 = "English";
     
-    private ResourceBundle rb = ResourceBundle.getBundle(language); 
-    
     public MenueView(Manager manager) {
         
         this.manager = manager;
-        rb = PropertyResourceBundle.getBundle(language, Locale.GERMAN);
-      
         double d = Math.min(ScreenResolution.getScreenWidth(), ScreenResolution.getScreenHeigth());
         double iconWH = d/5.3;
         int iconsInARow = Math.round((ScreenResolution.getScreenWidth() / (float)ScreenResolution.getScreenHeigth()) * 3);
@@ -145,7 +140,7 @@ public class MenueView extends Group {
         characterPane.setPrefSize(160, 100);
         characterPane.setLayoutX((int)(rowStart+(2*iconWH)));
         characterPane.setLayoutY(ScreenResolution.getScreenHeigth());
-        createCharacterOption(characterPane);
+        //createCharacterOption(characterPane);
         
         Pane textPane = new Pane();
         textPane.setPrefSize(160, 100);
@@ -247,7 +242,7 @@ public class MenueView extends Group {
         p.getChildren().addAll(soundLbl,soundSlider, muteBtn);
     }
     
-    final public void createCharacterOption(Pane m)
+    /*final public void createCharacterOption(Pane m)
     {
         Pane p = m;
         
@@ -282,7 +277,7 @@ public class MenueView extends Group {
         characterLbl.setLayoutY(10);
         
         p.getChildren().addAll(characterLbl, characterBtn);
-    }
+    }*/
     
     final public void createTextSizeOption(Pane m)
     {
@@ -368,12 +363,12 @@ public class MenueView extends Group {
                 {
                     if(t1.equals(language1))
                     {
-                        rb = PropertyResourceBundle.getBundle(language, Locale.GERMAN);
+                        Manager.rb = PropertyResourceBundle.getBundle(Manager.LANGUAGE, Locale.GERMAN);
                         setLanguage();
                     }
                     else if(t1.equals(language2))
                     {
-                        rb = PropertyResourceBundle.getBundle(language, Locale.ENGLISH);
+                        Manager.rb = PropertyResourceBundle.getBundle(Manager.LANGUAGE, Locale.ENGLISH);
                         setLanguage();
                     }
                 }
@@ -388,34 +383,34 @@ public class MenueView extends Group {
     
     public void chooseLanguage(String lang)
     {
-        System.out.println(lang + " " + language1 + " " + language2 + " " + language);
+        System.out.println(lang + " " + language1 + " " + language2 + " " + Manager.LANGUAGE);
         if(lang.equals(language1))
         {
-            rb = PropertyResourceBundle.getBundle(language, Locale.GERMAN);
+            Manager.rb = PropertyResourceBundle.getBundle(Manager.LANGUAGE, Locale.GERMAN);
             setLanguage();
         }
         else if(lang.equals(language2))
         {
-            rb = PropertyResourceBundle.getBundle(language, Locale.ENGLISH);
+            Manager.rb = PropertyResourceBundle.getBundle(Manager.LANGUAGE, Locale.ENGLISH);
             setLanguage();
         }
     }
     
     public void setLanguage()
     {
-        optionButton = rb.getString("Options");
-        soundLabel = rb.getString("Sound");
-        muteButton = rb.getString("Mute");
-        characterButton = rb.getString("CharacterOption");
-        characterLabel = rb.getString("Character");
-        textSizeLabel = rb.getString("TextSize");
-        languageLabel = rb.getString("Language");
+        optionButton = Manager.rb.getString("Options");
+        soundLabel = Manager.rb.getString("Sound");
+        muteButton = Manager.rb.getString("Mute");
+        //characterButton = Manager.rb.getString("CharacterOption");
+        //characterLabel = Manager.rb.getString("Character");
+        textSizeLabel = Manager.rb.getString("TextSize");
+        languageLabel = Manager.rb.getString("Language");
         
         optionBtn.setText(optionButton);
         muteBtn.setText(muteButton);
-        characterBtn.setText(characterButton);
+        //characterBtn.setText(characterButton);
         soundLbl.setText(soundLabel);
-        characterLbl.setText(characterLabel);
+        //characterLbl.setText(characterLabel);
         textSizeLbl.setText(textSizeLabel);
         languageLbl.setText(languageLabel);
     }
