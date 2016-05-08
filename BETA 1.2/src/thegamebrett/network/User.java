@@ -24,7 +24,6 @@ public class User {
     public static final int WEB_PAGE_CHOOSE_GAME = 2;
     public static final int WEB_PAGE_PLAY_GAME = 4;
     public static final int WEB_PAGE_GAME_ALREADY_STARTED = 5;
-    public static final int WEB_PAGE_PREFERENCES = 6;
     public static final int WEB_PAGE_START_GAME = 7;
     public static final int WEB_PAGE_JOIN_GAME = 8;
     
@@ -33,8 +32,9 @@ public class User {
     /**
      * Aktuelle Position des Spielers im System.
      * Auswahl:
-     *    WEB_PAGE_CHOOSE_POSITION,    WEB_PAGE_CHOOSE_CHARACTER,  WEB_PAGE_CHOOSE_GAME
-     *    WEB_PAGE_WAIT,               WEB_PAGE_PLAY_GAME,         WEB_PAGE_PREFERENCES
+     *    WEB_PAGE_CHOOSE_POSITION,    WEB_PAGE_CHOOSE_CHARACTER,       WEB_PAGE_CHOOSE_GAME
+     *    WEB_PAGE_PLAY_GAME,          WEB_PAGE_GAME_ALREADY_STARTED,   WEB_PAGE_START_GAME
+     *    WEB_PAGE_JOIN_GAME
      */
     private volatile int webPage = WEB_PAGE_CHOOSE_POSITION;
     
@@ -150,14 +150,37 @@ public class User {
             System.err.println("Resonse doen't match Request");
         }
     }
-
+    
+    /**
+     * Return: Position des Spielers im System.
+     *    WEB_PAGE_CHOOSE_POSITION,    WEB_PAGE_CHOOSE_CHARACTER,       WEB_PAGE_CHOOSE_GAME
+     *    WEB_PAGE_PLAY_GAME,          WEB_PAGE_GAME_ALREADY_STARTED,   WEB_PAGE_START_GAME
+     *    WEB_PAGE_JOIN_GAME
+     */
     public int getWebPage() {
-        return webPage;
-    }
-
-    public void setWebPage(int webPage) {
-        System.out.println("webPage set:" + webPage);
-        this.webPage = webPage;
+        
+        if(getSittingPlace() < 0 || getSittingPlace() > UserManager.SYSTEM_CLIENT_IDS.length) {
+            return WEB_PAGE_CHOOSE_POSITION;
+        } else if(!hasUserCharacter()) {
+            return WEB_PAGE_CHOOSE_CHARACTER;
+        } else {
+            NetworkGameSelector ngs = manager.getMobileManager().getNetworkManager().getNetworkGameSelector();
+            if(ngs.isGameSelected()) {
+                if(ngs.getPlayers().contains(this)) {
+                    return WEB_PAGE_START_GAME;
+                } else {
+                    return WEB_PAGE_JOIN_GAME;
+                }
+            } else if(ngs.isGameStarted()) {
+                if(ngs.getPlayers().contains(this)) {
+                    return WEB_PAGE_PLAY_GAME;
+                } else {
+                    return WEB_PAGE_GAME_ALREADY_STARTED;
+                }
+            } else {
+                return WEB_PAGE_CHOOSE_GAME;
+            }
+        }
     }
 
     public String toString() {

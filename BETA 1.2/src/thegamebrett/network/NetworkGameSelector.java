@@ -18,19 +18,19 @@ public class NetworkGameSelector {
     private final Manager manager;
     private GameFactory selectedGame;
     private boolean gameStarted;
-    private final ArrayList<User> readyList;
+    private final ArrayList<User> players;
     
     private User firstCanceler = null;
     private long cancelTime = 0;
 
     public NetworkGameSelector(Manager manager) {
         this.manager = manager;
-        this.readyList = new ArrayList<>();
+        this.players = new ArrayList<>();
     }
     
     public synchronized boolean tryToCancelGame(User canceler) {
-        System.out.println(readyList.size());
-        if((firstCanceler != canceler && System.currentTimeMillis()-cancelTime<10000) || readyList.size() <= 1) {
+        System.out.println(players.size());
+        if((firstCanceler != canceler && System.currentTimeMillis()-cancelTime<10000) || players.size() <= 1) {
             System.out.println("%%%%%+");
             endGame();
             Platform.runLater(() -> {
@@ -50,19 +50,17 @@ public class NetworkGameSelector {
             selectedGame = game;
             UserManager um = manager.getMobileManager().getUserManager();
             User[] users = um.getSystemClients();
-            readyList.clear();
+            players.clear();
             if(creator != null)
-                readyList.add(creator);
+                players.add(creator);
             for (User user : users) {
                 if (user != null) {
                     user.setActualInteractionRequest(null);
                     if (user.hasUserCharacter()) {
-                        user.setWebPage(User.WEB_PAGE_JOIN_GAME);
                     }
                 }
             }
             if(creator != null)
-                creator.setWebPage(User.WEB_PAGE_START_GAME);
             if(manager.getGui() != null && manager.getGui().getMenuView() != null)
                 manager.getGui().getMenuView().refreshGameSelectedScreen();
             return true;
@@ -77,17 +75,13 @@ public class NetworkGameSelector {
         gameStarted = false;
         
         User[] users = manager.getMobileManager().getUserManager().getSystemClients();
-        for(User user : users) {
-            if(user!=null && user.hasUserCharacter())
-                user.setWebPage(User.WEB_PAGE_CHOOSE_GAME);
-        }
         
         resetReadyList();
         
     }
 
     private synchronized void resetReadyList() {
-        readyList.clear();
+        players.clear();
     }
 
     public boolean isGameSelected() {
@@ -101,9 +95,8 @@ public class NetworkGameSelector {
     public synchronized boolean tryToGetReady(User user) {
         if (!isGameSelected()) {
             return false;
-        } else if (selectedGame.getMaximumPlayers() >= readyList.size() + 1) {
-            readyList.add(user);
-            user.setWebPage(User.WEB_PAGE_START_GAME);
+        } else if (selectedGame.getMaximumPlayers() >= players.size() + 1) {
+            players.add(user);
             if(manager.getGui() != null && manager.getGui().getMenuView() != null)
                 manager.getGui().getMenuView().refreshGameSelectedScreen();
             return true;
@@ -113,7 +106,7 @@ public class NetworkGameSelector {
     }
 
     public synchronized void notReady(User user) {
-        readyList.remove(user);
+        players.remove(user);
     }
 
     public boolean canStart() {
@@ -121,7 +114,7 @@ public class NetworkGameSelector {
             System.err.println("Game is not selected.");
             return false;
         } else {
-            return selectedGame.getMaximumPlayers() >= readyList.size() && selectedGame.getMinimumPlayers() <= readyList.size();
+            return selectedGame.getMaximumPlayers() >= players.size() && selectedGame.getMinimumPlayers() <= players.size();
         }
     }
 
@@ -130,16 +123,11 @@ public class NetworkGameSelector {
 
             System.out.println("Starte Spiel...");
 
-            // Webview von Spielern setzen
-            for (User user : readyList) {
-                user.setWebPage(User.WEB_PAGE_PLAY_GAME);
-            }
-
             // Nichtteilnehmende Clients aussortieren
             User[] systemClients = manager.getMobileManager().getUserManager().getSystemClients();
             for(int i=0; i<systemClients.length; i++) {
                 boolean plays = false;
-                for(User player : readyList) {
+                for(User player : players) {
                     if(systemClients[i] == player) {
                         plays = true;
                     }
@@ -156,8 +144,8 @@ public class NetworkGameSelector {
                     players.add(user);
                 }
             }
-            if(players.size() != readyList.size()) {
-                System.err.println("Achtung: readyList.size()->" + readyList.size() + " aber players.size()->" + players.size());
+            if(players.size() != this.players.size()) {
+                System.err.println("Achtung: readyList.size()->" + this.players.size() + " aber players.size()->" + players.size());
             }
             
             // Spiel starten
@@ -186,12 +174,12 @@ public class NetworkGameSelector {
             return "Es ist noch kein Spiel ausgewählt";
         } else {
             return selectedGame.getGameName() + " wurde angelegt.<br>"
-                    + "Es sind bereits " + readyList.size() + " Spieler eingetreten.<br>"
+                    + "Es sind bereits " + players.size() + " Spieler eingetreten.<br>"
                     + "(Minimum: " + selectedGame.getMinimumPlayers() + " Maximum: " + selectedGame.getMaximumPlayers() + ")";
         }
     }
 
-    public ArrayList<User> getReadyList() {
-        return readyList;
+    public ArrayList<User> getPlayers() {
+        return players;
     }
 }

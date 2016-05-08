@@ -49,8 +49,6 @@ public class ControlDirector implements Director {
             return AssetsLoader.loadText_localized_SuppressExceptions("web/inGame.html");
         } else if(webPage == User.WEB_PAGE_GAME_ALREADY_STARTED) {
             return AssetsLoader.loadText_localized_SuppressExceptions("web/gameAlreadyStarted.html");
-        } else if(webPage == User.WEB_PAGE_PREFERENCES) {
-            return "noch nicht implementiert (Einstellungen)";
         } else if(webPage == User.WEB_PAGE_START_GAME) {
             return AssetsLoader.loadText_localized_SuppressExceptions("web/startGame.html");
         } else if(webPage == User.WEB_PAGE_JOIN_GAME) {
@@ -91,12 +89,10 @@ public class ControlDirector implements Director {
             final int webPage = client.getWebPage();
             final boolean gameStarted = ngs.isGameStarted();
             final boolean gameSelected = ngs.isGameSelected();
-            if(gameStarted && (webPage != User.WEB_PAGE_PREFERENCES && webPage != User.WEB_PAGE_PLAY_GAME)) {
+            if(gameStarted && (webPage != User.WEB_PAGE_PLAY_GAME)) {
                 System.err.println("Client scheint falsche WebPage zu haben. Fallback: WEB_PAGE_PLAY_GAME");
-                client.setWebPage(User.WEB_PAGE_PLAY_GAME);
             } else if(gameSelected && (webPage != User.WEB_PAGE_JOIN_GAME && webPage != User.WEB_PAGE_START_GAME)) {
                 System.err.println("Client scheint falsche WebPage zu haben. Fallback: WEB_PAGE_JOIN_GAME");
-                client.setWebPage(User.WEB_PAGE_JOIN_GAME);
             }
             
             // Analyse Request-String ...
@@ -130,7 +126,6 @@ public class ControlDirector implements Director {
                 try {
                     boolean gotIt = clientManager.tryToSetSystemClient(request.substring("/tryToLogIn?".length()), client);
                     if(gotIt) {
-                        client.setWebPage(User.WEB_PAGE_CHOOSE_CHARACTER);
                         return "YES";
                     } else {
                         return "NO";
@@ -187,11 +182,6 @@ public class ControlDirector implements Director {
                     System.out.println(i);
                     boolean gotIt = client.tryToSetUserCharacter(character);
                     if(gotIt) {
-                        if(ngs.isGameSelected()) {
-                            client.setWebPage(User.WEB_PAGE_JOIN_GAME);
-                        } else {
-                            client.setWebPage(User.WEB_PAGE_CHOOSE_GAME);
-                        }
                         return "YES";
                     } else {
                         return "NO";

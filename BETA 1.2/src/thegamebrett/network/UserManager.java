@@ -130,7 +130,6 @@ public class UserManager {
                     systemClients[i].setSittingPlace(-1);
                 }
                 systemClients[i] = null;
-                c.setWebPage(User.WEB_PAGE_CHOOSE_POSITION);
             }
         }
     }
