@@ -31,7 +31,7 @@ public class ControlDirector implements Director {
     
     /**  diese Id wird uebergeben um anzugeben dass keine Farbe verfuegbar ist */
     public static final String NO_COLOR_SET = "NONE";
-    
+        
     public ControlDirector(UserManager clientManager) {
         this.clientManager = clientManager;
     }
@@ -46,7 +46,7 @@ public class ControlDirector implements Director {
         } else if(webPage == User.WEB_PAGE_CHOOSE_GAME) {
             return WebGenerator.getChooseGameWebPage();
         } else if(webPage == User.WEB_PAGE_PLAY_GAME) {
-            return AssetsLoader.loadText_localized_SuppressExceptions("web/ingame.html");
+            return AssetsLoader.loadText_localized_SuppressExceptions("web/inGame.html");
         } else if(webPage == User.WEB_PAGE_GAME_ALREADY_STARTED) {
             return AssetsLoader.loadText_localized_SuppressExceptions("web/gameAlreadyStarted.html");
         } else if(webPage == User.WEB_PAGE_PREFERENCES) {
@@ -102,7 +102,10 @@ public class ControlDirector implements Director {
             // Analyse Request-String ...
             if (request.equals("/") || request.equals("/index.html")) {
                 return direct(client);
-            } if (request.startsWith("/tryToStartGame")) {
+            } else if (request.startsWith("/tryToCancelGame")) {
+                ngs.tryToCancelGame(client);
+                return "OK";
+            } else if (request.startsWith("/tryToStartGame")) {
                 boolean b = ngs.tryToStart();
                 if(b) {
                     return "YES";

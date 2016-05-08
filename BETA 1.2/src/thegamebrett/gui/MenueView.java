@@ -139,29 +139,29 @@ public class MenueView extends Group {
 
         Pane soundPane = new Pane();
         soundPane.setPrefSize(160, 100);
-        soundPane.setLayoutX((int) (rowStart));
+        soundPane.setLayoutX((int) (rowStart + iconWH));
         soundPane.setLayoutY(ScreenResolution.getScreenHeigth());
         createVolumeOption(soundPane);
 
-        Pane characterPane = new Pane();
+        /*Pane characterPane = new Pane();
         characterPane.setPrefSize(160, 100);
         characterPane.setLayoutX((int) (rowStart + (2 * iconWH)));
         characterPane.setLayoutY(ScreenResolution.getScreenHeigth());
-        //createCharacterOption(characterPane);
+        createCharacterOption(characterPane);*/
 
         Pane textPane = new Pane();
         textPane.setPrefSize(160, 100);
-        textPane.setLayoutX((int) (rowStart + (4.2 * iconWH)));
+        textPane.setLayoutX((int) (rowStart + (2.8 * iconWH)));
         textPane.setLayoutY(ScreenResolution.getScreenHeigth());
         createTextSizeOption(textPane);
 
         Pane languagePane = new Pane();
         languagePane.setPrefSize(160, 100);
-        languagePane.setLayoutX((int) (rowStart + (6.2 * iconWH)));
+        languagePane.setLayoutX((int) (rowStart + (4.6 * iconWH)));
         languagePane.setLayoutY(ScreenResolution.getScreenHeigth());
         createLanguageOption(languagePane);
 
-        g.getChildren().addAll(optionBtn, soundPane, characterPane, textPane, languagePane);
+        g.getChildren().addAll(optionBtn, soundPane, textPane, languagePane);
         this.getChildren().add(g);
         addressLbl = new Label();
         addressLbl.setFont(Font.font("Arial", 20));

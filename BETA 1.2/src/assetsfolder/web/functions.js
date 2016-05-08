@@ -77,7 +77,6 @@ function checkAndDoRedirect(actualPage) {
     var response = new XMLHttpRequest();
     response.open("GET", url, true);
     response.send();
-    var w = window;
     response.onreadystatechange = function () {
             if (response.readyState === 4 && response.status === 200) {
             console.log("response.responseText=" + response.responseText);
@@ -117,7 +116,6 @@ function tryToJoinGame() {
     var response = new XMLHttpRequest();
     response.open("GET", url, true);
     response.send();
-    var w = window;
     response.onreadystatechange = function () {
             if (response.readyState === 4 && response.status === 200) {
             console.log("response.responseText=" + response.responseText);
@@ -140,7 +138,6 @@ function tryToCreateGame(index, name) {
         var response = new XMLHttpRequest();
         response.open("GET", url, true);
         response.send();
-        var w = window;
         response.onreadystatechange = function () {
                 if (response.readyState === 4 && response.status === 200) {
                 console.log("response.responseText=" + response.responseText);
@@ -163,7 +160,6 @@ function tryToGetCharacter(index) {
     var response = new XMLHttpRequest();
     response.open("GET", url, true);
     response.send();
-    var w = window;
     response.onreadystatechange = function () {
             if (response.readyState === 4 && response.status === 200) {
             console.log("response.responseText=" + response.responseText);
@@ -224,7 +220,6 @@ function tryToLogIn(position) {
     var response = new XMLHttpRequest();
     response.open("GET", url, true);
     response.send();
-    var w = window;
     response.onreadystatechange = function () {
             if (response.readyState === 4 && response.status === 200) {
             console.log("response.responseText=" + response.responseText);
@@ -245,7 +240,27 @@ function logOut() {
     var response = new XMLHttpRequest();
     response.open("GET", url, true);
     response.send();
-    direct();
+    response.onreadystatechange = function () {
+        if (response.readyState === 4 && response.status === 200) {
+            if (response.responseText === "OK") {
+                direct();
+            }
+        }
+    };
+}
+
+function tryToCancelGame() {
+    var url = "tryToCancelGame";
+    var response = new XMLHttpRequest();
+    response.open("GET", url, true);
+    response.send();
+    response.onreadystatechange = function () {
+        if (response.readyState === 4 && response.status === 200) {
+            if (response.responseText === "OK") {
+                direct();
+            }
+        }
+    };
 }
 
 function direct() {

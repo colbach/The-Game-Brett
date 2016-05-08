@@ -19,10 +19,30 @@ public class NetworkGameSelector {
     private GameFactory selectedGame;
     private boolean gameStarted;
     private final ArrayList<User> readyList;
+    
+    private User firstCanceler = null;
+    private long cancelTime = 0;
 
     public NetworkGameSelector(Manager manager) {
         this.manager = manager;
         this.readyList = new ArrayList<>();
+    }
+    
+    public synchronized boolean tryToCancelGame(User canceler) {
+        System.out.println(readyList.size());
+        if((firstCanceler != canceler && System.currentTimeMillis()-cancelTime<10000) || readyList.size() <= 1) {
+            System.out.println("%%%%%+");
+            endGame();
+            Platform.runLater(() -> {
+                manager.getGui().showMenuScene();
+            });
+            return true;
+        } else {
+            System.out.println("%%%%%-");
+            firstCanceler = canceler;
+            cancelTime = System.currentTimeMillis();
+            return false;
+        }
     }
 
     public synchronized boolean tryToSelectGame(GameFactory game, User creator) {

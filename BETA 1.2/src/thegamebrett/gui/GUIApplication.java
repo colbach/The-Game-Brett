@@ -28,6 +28,8 @@ import thegamebrett.model.Model;
 import thegamebrett.network.User;
 import thegamebrett.timer.TimeManager;
 import static javafx.application.Application.launch;
+import thegamebrett.action.request.RemoveScreenMessageRequest;
+import thegamebrett.action.request.ScreenMessageRequest;
 
 public class GUIApplication extends Application{
 
@@ -139,6 +141,12 @@ public class GUIApplication extends Application{
             
             //System.out.println(value);
             gameView.updateOnFXThread(value, ur.isAnimated(), ur.getDelay());
+        } else if(r instanceof ScreenMessageRequest) {
+            ScreenMessageRequest smr = (ScreenMessageRequest) r;
+            
+            gameView.setRotatingTextField(smr.getLabel(), smr.getPlayer());
+        } else if (r instanceof RemoveScreenMessageRequest)  {
+            gameView.removeRotatingTextField();
         }
         if(r instanceof GameEndRequest) {
             GameEndRequest ger = (GameEndRequest) r;
