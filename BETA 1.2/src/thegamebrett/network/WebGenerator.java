@@ -21,8 +21,6 @@ import thegamebrett.usercharacter.UserCharacterDatabase;
  * @author christiancolbach
  */
 public class WebGenerator {
-
-    public static String HTML = AssetsLoader.loadText_SuppressExceptions("web/index.html");
     
     public static String generateHTMLContent(String titel, Object[] choices, long messageID) {
         StringBuilder sb = new StringBuilder();
@@ -67,7 +65,7 @@ public class WebGenerator {
     }
     
     private static String generateChooseCharacterWebPage() {
-        String template = AssetsLoader.loadText_SuppressExceptions("web/chooseCharacter.html");
+        String template = AssetsLoader.loadText_localized_SuppressExceptions("web/chooseCharacter.html");
         return template.replaceFirst("<!--replace-->", generateUserCharacterChooserHTML());
     }
 
@@ -83,7 +81,7 @@ public class WebGenerator {
     public static File getGameImage(int i) {
         File f = gameImagesCache.get(i);
         if(f == null) {
-            f = AssetsLoader.saveImage("web/generated/gameIcon" + i, GameCollection.imageCache[i]);
+            f = AssetsLoader.saveImage("web/temp/gameIcon" + i, GameCollection.imageCache[i]);
             gameImagesCache.put(i, f);
         }
         return f;
@@ -102,7 +100,7 @@ public class WebGenerator {
     }
     
     private static String generateChooseGameWebPage() {
-        String template = AssetsLoader.loadText_SuppressExceptions("web/chooseGame.html");
+        String template = AssetsLoader.loadText_localized_SuppressExceptions("web/chooseGame.html");
         return template.replaceFirst("<!--replace-->", generateGameChooserHTML());
     }
     

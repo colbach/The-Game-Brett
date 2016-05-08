@@ -45,7 +45,7 @@ public class MenueBar
     private void drawShapes(GraphicsContext gc) 
     {
         gc.setLineWidth(4);
-        gc.setFill(Color.LIGHTGRAY);
+        gc.setFill(Color.gray(0.8));
         gc.fillArc(-100, 100, (int)dimension.getWidth()+200, 350, 0, 300, ArcType.OPEN);
     }
 

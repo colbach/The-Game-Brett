@@ -31,12 +31,17 @@ public class D_GameLogic extends GameLogic{
         super(dependingModel);
     }
     
+    private boolean gameEnded = false;
     @Override
     public ActionRequest[] next(ActionResponse as) {
+        if(gameEnded) {
+            return null;
+        }
         
         tt++;
         if(tt == 4) {
-            GameEndRequest ger = new GameEndRequest(getDependingModel().getPlayers().toArray(new Player[0]), "Jeder gewinnt", 0);
+            GameEndRequest ger = new GameEndRequest(getDependingModel().getPlayers().toArray(new Player[0]), "Jeder gewinnt", 5000);
+            gameEnded = true;
             return new ActionRequest[] {ger};
         }
         

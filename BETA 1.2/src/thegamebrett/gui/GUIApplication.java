@@ -27,6 +27,7 @@ import thegamebrett.action.response.TimerResponse;
 import thegamebrett.model.Model;
 import thegamebrett.network.User;
 import thegamebrett.timer.TimeManager;
+import static javafx.application.Application.launch;
 
 public class GUIApplication extends Application{
 
@@ -65,7 +66,7 @@ public class GUIApplication extends Application{
                 
         stage.setFullScreen(true);
         root = new Group();
-        Scene scene = new Scene(root, Color.DARKGRAY);
+        Scene scene = new Scene(root, Color.LIGHTGREY);
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -90,9 +91,16 @@ public class GUIApplication extends Application{
     public GameView getGameView() {
         return gameView;
     }
+
+    public MenueView getMenuView() {
+        return menuView;
+    }
+    
+    
     
     public void showMenuScene() {
         root.getChildren().clear();
+        menuView.refreshGameSelectedScreen();
         root.getChildren().add(menuView);
     }
     
@@ -134,7 +142,7 @@ public class GUIApplication extends Application{
         }
         if(r instanceof GameEndRequest) {
             GameEndRequest ger = (GameEndRequest) r;
-            gameView.gameEnd(ger);
+            gameView.handleGameEndRequest(ger);
         }
     }
     

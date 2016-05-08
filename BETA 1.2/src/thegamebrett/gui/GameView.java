@@ -3,6 +3,8 @@ package thegamebrett.gui;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.Interpolator;
@@ -22,6 +24,8 @@ import thegamebrett.Manager;
 import thegamebrett.action.request.GameEndRequest;
 import thegamebrett.action.request.InteractionRequestFromGUI;
 import thegamebrett.action.request.MobileRequest;
+import thegamebrett.action.request.TimerRequest;
+import thegamebrett.action.response.TimerResponse;
 import thegamebrett.model.Layout;
 import thegamebrett.model.Model;
 import thegamebrett.model.Player;
@@ -30,6 +34,7 @@ import thegamebrett.model.elements.Element;
 import thegamebrett.model.elements.Figure;
 import thegamebrett.network.PlayerNotRegisteredException;
 import thegamebrett.network.User;
+import thegamebrett.timer.TimeManager;
 import thegamebrett.usercharacter.UserCharacter;
 
 /**
@@ -145,9 +150,26 @@ public class GameView extends Group {
         }
 
     }
+    
+    private class GameEndTask extends TimerTask {
+        private final GameView gv;
+        private final GameEndRequest ger;
+        public GameEndTask(GameView gv, GameEndRequest ger) {
+            this.gv = gv;
+            this.ger = ger;
+        }
+        public void run() {
+            gv.gameEnd(ger);
+        }
+    }
+    public void handleGameEndRequest(GameEndRequest ger) {
+        Timer timer = new Timer();
+        timer.schedule(new GameEndTask(this, ger), ger.getDelay());
+    }
 
-    public void gameEnd(GameEndRequest ger) {
+    private void gameEnd(GameEndRequest ger) {
         System.out.println("Game Over");
+        
         Platform.runLater(() -> {
             groupUserImageCicles.getChildren().add(0, GUILoader.createGameEndScreen(ger));
             Button b = new Button(Manager.rb.getString("Ok"));
