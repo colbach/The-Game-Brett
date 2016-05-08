@@ -26,7 +26,7 @@ public class RotatingTextField extends Canvas {
         this.gc.fillRect(0, 0, this.getWidth(), this.getHeight());
         this.gc.setStroke(Color.BLACK);
         this.gc.setLineWidth(2);
-        this.gc.strokeRect(0, 0, 150, 100);
+        this.gc.strokeRect(0, 0, width, height);
         this.gc.setFill(Color.BLACK);
         this.gc.setTextAlign(TextAlignment.CENTER);
         this.gc.setTextBaseline(VPos.CENTER);

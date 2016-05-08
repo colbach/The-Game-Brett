@@ -41,5 +41,9 @@ public class NetworkManager {
     public NetworkGameSelector getNetworkGameSelector() {
         return networkGameSelector;
     }
+
+    public HttpServer getHttpServer() {
+        return httpServer;
+    }
     
 }

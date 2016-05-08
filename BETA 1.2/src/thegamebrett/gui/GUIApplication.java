@@ -27,6 +27,9 @@ import thegamebrett.action.response.TimerResponse;
 import thegamebrett.model.Model;
 import thegamebrett.network.User;
 import thegamebrett.timer.TimeManager;
+import static javafx.application.Application.launch;
+import thegamebrett.action.request.RemoveScreenMessageRequest;
+import thegamebrett.action.request.ScreenMessageRequest;
 
 public class GUIApplication extends Application{
 
@@ -65,7 +68,7 @@ public class GUIApplication extends Application{
                 
         stage.setFullScreen(true);
         root = new Group();
-        Scene scene = new Scene(root, Color.DARKGRAY);
+        Scene scene = new Scene(root, Color.LIGHTGREY);
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -90,9 +93,16 @@ public class GUIApplication extends Application{
     public GameView getGameView() {
         return gameView;
     }
+
+    public MenueView getMenuView() {
+        return menuView;
+    }
+    
+    
     
     public void showMenuScene() {
         root.getChildren().clear();
+        menuView.refreshGameSelectedScreen();
         root.getChildren().add(menuView);
     }
     
@@ -131,10 +141,16 @@ public class GUIApplication extends Application{
             
             //System.out.println(value);
             gameView.updateOnFXThread(value, ur.isAnimated(), ur.getDelay());
+        } else if(r instanceof ScreenMessageRequest) {
+            ScreenMessageRequest smr = (ScreenMessageRequest) r;
+            
+            gameView.setRotatingTextField(smr.getLabel(), smr.getPlayer());
+        } else if (r instanceof RemoveScreenMessageRequest)  {
+            gameView.removeRotatingTextField();
         }
         if(r instanceof GameEndRequest) {
             GameEndRequest ger = (GameEndRequest) r;
-            gameView.gameEnd(ger);
+            gameView.handleGameEndRequest(ger);
         }
     }
     

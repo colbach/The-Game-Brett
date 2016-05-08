@@ -3,8 +3,9 @@ package thegamebrett.model.mediaeffect;
 import thegamebrett.model.RelativePoint;
 
 /**
- *
- * @author christiancolbach
+ * Diese Klasse ist nicht implementiert, aber soll die Grundlage fuer spaetere Erweiterungen legen
+ * 
+ * @author Christian Colbach
  */
 public abstract class ViewEffect {
    

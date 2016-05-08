@@ -1,35 +1,22 @@
 package thegamebrett.gui;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.animation.Interpolator;
+import java.util.Timer;
+import java.util.TimerTask;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Screen;
 import javafx.util.Duration;
 import thegamebrett.Manager;
 import thegamebrett.action.request.GameEndRequest;
 import thegamebrett.action.request.InteractionRequestFromGUI;
-import thegamebrett.action.request.MobileRequest;
-import thegamebrett.model.Layout;
 import thegamebrett.model.Model;
 import thegamebrett.model.Player;
-import thegamebrett.model.elements.Board;
-import thegamebrett.model.elements.Element;
-import thegamebrett.model.elements.Figure;
 import thegamebrett.network.PlayerNotRegisteredException;
-import thegamebrett.network.User;
 import thegamebrett.usercharacter.UserCharacter;
 
 /**
@@ -44,11 +31,11 @@ public class GameView extends Group {
     public static final int GUIUPDATE_ALL = GUIUPDATE_FIELDS + GUIUPDATE_FIGURES + GUIUPDATE_BOARDLAYOUT;
 
     public Rectangle r = new Rectangle();
-    //private Canvas[] fields = new Canvas[0];
-    //private Canvas[] figures = new Canvas[0];
 
     private Model gameModel = null;
     private final Manager manager;
+    
+    private RotatingTextField rotatingTextField;
 
     Group groupBack;
     Group groupMid;
@@ -68,7 +55,61 @@ public class GameView extends Group {
         getChildren().add(groupUserImageCicles);
 
     }
+    
+    public void setRotatingTextField(String message,Player p) {
+        int width = ScreenResolution.getScreenWidth()*1/3;
+        int height = ScreenResolution.getScreenHeigth()*1/3;
+        
+        rotatingTextField = new RotatingTextField(width, height, message);
+        
+        rotatingTextField.setLayoutX(ScreenResolution.getScreenWidth()/2 - width/2);
+        rotatingTextField.setLayoutY(ScreenResolution.getScreenHeigth()/2 - height/2);
+        if(p != null) {
+            int playerPosition = p.getUser().getSittingPlace();
+       
+            switch(playerPosition) {
+                case(0):
+                   rotatingTextField.rotate(240);
+                  break;
+                case(1):
+                  rotatingTextField.rotate(270);
+                   break;
+                case(2):
+                  rotatingTextField.rotate(320);
+                  break;
+                case(3):
+                   rotatingTextField.rotate(0);
+                   break;
+                case(4):
+                   rotatingTextField.rotate(60);
+                   break;
+                case(5):
+                   rotatingTextField.rotate(90);
+                   break;
+                case(6):
+                   rotatingTextField.rotate(150);
+                   break;
+                case(7):
+                   rotatingTextField.rotate(180);
+                   break;    
+            }
+        } else {
+            rotatingTextField.rotate(0);
+        }
+        Platform.runLater(() -> {
+            groupUserImageCicles.getChildren().add(rotatingTextField);
+        });
+        
+    }
 
+    public void removeRotatingTextField() {
+        if(rotatingTextField != null) {
+            Platform.runLater(() -> {
+            groupUserImageCicles.getChildren().remove(rotatingTextField);
+            });
+        }
+    }
+    
     public void setGameModel(Model gameModel) {
         this.gameModel = gameModel;
         groupBack.getChildren().clear();
@@ -145,9 +186,26 @@ public class GameView extends Group {
         }
 
     }
+    
+    private class GameEndTask extends TimerTask {
+        private final GameView gv;
+        private final GameEndRequest ger;
+        public GameEndTask(GameView gv, GameEndRequest ger) {
+            this.gv = gv;
+            this.ger = ger;
+        }
+        public void run() {
+            gv.gameEnd(ger);
+        }
+    }
+    public void handleGameEndRequest(GameEndRequest ger) {
+        Timer timer = new Timer();
+        timer.schedule(new GameEndTask(this, ger), ger.getDelay());
+    }
 
-    public void gameEnd(GameEndRequest ger) {
+    private void gameEnd(GameEndRequest ger) {
         System.out.println("Game Over");
+        
         Platform.runLater(() -> {
             groupUserImageCicles.getChildren().add(0, GUILoader.createGameEndScreen(ger));
             Button b = new Button(Manager.rb.getString("Ok"));
@@ -177,6 +235,8 @@ public class GameView extends Group {
             });
         }
     }
+    
+    
 
     public void addUserImageCircles(Model model) {
         ArrayList<Player> us = model.getPlayers();

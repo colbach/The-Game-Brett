@@ -7,6 +7,8 @@ import thegamebrett.action.request.GUIUpdateRequest;
 import thegamebrett.action.request.GameEndRequest;
 import thegamebrett.action.request.InteractionRequest;
 import thegamebrett.action.request.PlaySoundRequest;
+import thegamebrett.action.request.RemoveScreenMessageRequest;
+import thegamebrett.action.request.ScreenMessageRequest;
 import thegamebrett.action.response.InteractionResponse;
 import thegamebrett.action.response.StartPseudoResponse;
 import thegamebrett.model.GameLogic;
@@ -31,17 +33,30 @@ public class D_GameLogic extends GameLogic{
         super(dependingModel);
     }
     
+    private boolean gameEnded = false;
     @Override
     public ActionRequest[] next(ActionResponse as) {
+        if(gameEnded) {
+            return null;
+        }
         
         tt++;
-        if(tt == 4) {
-            GameEndRequest ger = new GameEndRequest(getDependingModel().getPlayers().toArray(new Player[0]), "Jeder gewinnt", 0);
+        if(tt == 10) {
+            GameEndRequest ger = new GameEndRequest(getDependingModel().getPlayers().toArray(new Player[0]), "Jeder gewinnt", 5000);
+            gameEnded = true;
             return new ActionRequest[] {ger};
         }
         
+        
         ArrayList<ActionRequest> requests = new ArrayList<>();
-
+        if(tt == 4) {
+            ScreenMessageRequest ger = new ScreenMessageRequest("Dummy", getDependingModel().getPlayers().get(0));
+            requests.add(ger);
+        }
+        if(tt == 5) {
+            RemoveScreenMessageRequest rsmr = new RemoveScreenMessageRequest();
+            requests.add(rsmr);
+        }
         if(as instanceof StartPseudoResponse){
             requests.add(new GUIUpdateRequest(GUIUpdateRequest.GUIUPDATE_ALL));
             Player p = getDependingModel().getPlayers().get(0);

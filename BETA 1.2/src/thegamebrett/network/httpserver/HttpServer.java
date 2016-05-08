@@ -18,7 +18,13 @@ public class HttpServer {
 
     private int port;
     private final Director director;
+    
+    private String addressText = "";
 
+    public String getAddressText() {
+        return addressText;
+    }
+    
     public void setPort(int port) {
         this.port = port;
 
@@ -60,7 +66,8 @@ public class HttpServer {
                 uhe.printStackTrace();
             }
 
-            System.out.println("webserver local available under: " + localHost + ":" + port);
+            addressText = localHost + ":" + port;
+            System.out.println("webserver local available under: " + addressText);
 			//Logger.log(Logger.LOGTYPE_NOTE, "webserver local available under: " + SystemInformation.getLocalHost() + ":" + port);
             // ]
 
