@@ -26,7 +26,7 @@ public class PSS_Figure extends Figure {
     }
     
     public PSS_Figure(Player owner, PSS_Board board, Layout layout) {
-        super(owner, layout,0.05,0.05);
+        super(owner, layout,0.08,0.08);
         this.board = board;
     }
     

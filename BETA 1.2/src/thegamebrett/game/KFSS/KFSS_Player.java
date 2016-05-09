@@ -5,7 +5,6 @@
  */
 package thegamebrett.game.KFSS;
 
-import thegamebrett.game.PSS.*;
 import javafx.scene.paint.Color;
 import thegamebrett.model.Layout;
 import thegamebrett.model.Player;
@@ -33,27 +32,13 @@ public class KFSS_Player extends Player{
         
         layout = new Layout();
         layout.setFormFactor(Layout.FORM_FACTOR_OVAL);
-        /*if((user != null)&&(user.getUserCharacter()!=null)){
-            playerName = user.getUserCharacter().getAvatarName();
-            if(user.getUserCharacter().getAvatar()!= null){
-                layout.setBackgroundImage(user.getUserCharacter().getAvatar());
-            } else {
-                layout.setBackgroundColor(user.getUserCharacter().getColor());
-            }
-        } else {*/
-            playerName = "Spieler "+playerNr;
-            layout.setBackgroundColor(Color.DARKGOLDENROD);
-        //}
-        layout.setTitle(playerName);
-        Layout fl = new Layout(playerName,"");
-        fl.setBackgroundColor(Color.DARKGOLDENROD);
-        fl.setFormFactor(Layout.FORM_FACTOR_OVAL);
-        figure = new KFSS_Figure(this, board, fl);
+        playerName = user.getUserCharacter().getName();
+        layout.setBackgroundImage(user.getUserCharacter().getAvatar());
+        
+        figure = new KFSS_Figure(this, board, layout);
         figure.setField(board.getField(0));
         
-    }
-    
-    
+    }    
     
     public boolean isSuspended() {
         return suspended;
@@ -73,6 +58,13 @@ public class KFSS_Player extends Player{
     
     public KFSS_Figure getFigure() {
         return figure;
+    }
+    
+    @Override
+    public KFSS_Figure[] getFigures() {
+        return new KFSS_Figure[]{
+            figure
+        };
     }
 
     public void setFigure(KFSS_Figure figure) {

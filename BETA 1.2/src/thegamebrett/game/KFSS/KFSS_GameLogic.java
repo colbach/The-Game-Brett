@@ -32,7 +32,7 @@ public class KFSS_GameLogic extends GameLogic{
         "Gehe auf Feld 32.",
         "Schreie so laut wie du kannst!",
         "Alle trinken einen Schluck Apfelsaft.",
-        "8",
+        "Habt Spass!",
         "Bestimme eine Person die einen Kuselkopf machen soll.",
         "Alle Erwachsenen halten sich die Augen zu.",
         "Dein rechter Sitznachbar verraet dir ein Geheimnis.",
@@ -42,7 +42,7 @@ public class KFSS_GameLogic extends GameLogic{
         "Das Maedchen deiner Wahl huepft 4 mal auf und ab.",
         "Denke dir einen Tanz aus. Alle muessen ihn nachmachen!",
         "Setze eine Runde aus.",
-        "18",
+        "Habt Spass!",
         "Alle Maedels bekommen eine Suessigkeit.",
         "Schenke jemandem deiner Wahl eine Suessigkeit und wuerfle noch einmal!",
         "Gehe zurueck auf START.",
@@ -52,7 +52,7 @@ public class KFSS_GameLogic extends GameLogic{
         "Sing ein Lied so laut wie du kannst!",
         "Alle die ein gerades Alter haben erzaehlen ein Geheimnis.",
         "Alle die ein ungerades Alter haben erzaehlen ein Geheimnis.",
-        "28",
+        "Habt Spass!",
         "Gehe auf Feld 9 und schenke jemandem eine Suessigkeit.",
         "Du bestimmst jemandem dem die Haare zerzaust werden!",
         "Alle Erwachsenen bekommen eine Suessigkeit.",
@@ -61,40 +61,40 @@ public class KFSS_GameLogic extends GameLogic{
         "Bestimme eine Person die auf Feld 6 zurueck geht.",
         "Gehe auf Feld 6 zurueck.",
         "Deine Nebensitzer bekommen eine Suessigkeit und du gehst zurueck auf Start.",
-        "Alle die vor dir sind duerfen 3 mal huepfen.",
-        "38",
-        "Trinke und ziehe ein Kleidungsstueck aus!",
-        "Trinke so viel wie du gewuerfelt hast.",
-        "Es trinkt die Person, die am wenigsten Muenzen bei sich traegt.",
-        "Alle wuerfeln. Alle mit einer 1 duerfen trinken.",
-        "Alle die eine Schwester haben trinken.",
-        "Trinke und dein linker Sitznachbar entscheidet wer noch trinken darf.",
-        "Gehe 2 Felder vor und trinke.",
-        "Wirf eine Muenze. Bei Kopf trinken alle, bei Zahl nur du.",
-        "Kuesse jemanden nach deiner Wahl und trinke 2!",
-        "48",
+        "Alle die vor dir sind muessen 3 mal huepfen.",
+        "Habt Spass!",
+        "Male deinem linken Nebensitzer etwas auf den Arm!",
+        "Singe ein Lied!",
+        "Jeder darf sich eine Aufgabe für seinen rechten Nebensitzer ausdenken.",
+        "Alle wuerfeln. Alle mit einer 1 bekommen eine Suessigkeit.",
+        "Alle die eine Schwester haben klettern einmal ueber den Tisch.",
+        "Gurgle Alle meine Entchen.",
+        "Gehe 2 Felder vor und bringe die Person vor dir zum Lachen!",
+        "Tausche zwei Kleidungsstuecke mit einer Person deiner Wahl!",
+        "Ertaste einen deiner Mitspieler. Schaffst du es, bekommst du eine Suessigkeit. Wenn nicht, der Andere!",
+        "Habt Spass!",
         "Gehe auf das Feld 28 und wuerfle noch einmal.",
-        "Trinke und ziehe ein Kleidungsstueck aus!",
-        "Bestimme zwei Personen die sich kuessen sollen und trinke 3.",
-        "Alle unter 25 duerfen trinken!",
-        "Deine beiden Sitznachbarn trinken.",
-        "Alle duerfen trinken!",
-        "Alle die eine 6 wuerfeln trinken.",
-        "Trinke und gehe auf Feld 18 zurueck.",
-        "Alle die in den 90ern geboren sind trinken.",
-        "58",
-        "Alle wuerfeln. Alle mit einer 1 duerfen trinken.",
-        "Stimme ein Lied an. Wer nicht mitsingt trinkt 5.",
-        "Alle trinken die weder Brille noch Kontaktlinsen tragen.",
-        "Alle die keinen BH tragen trinken.",
-        "Jeder, der eine Hose anhat darf trinken!",
-        "Alle trinken!",
-        "Trinke und ziehe ein Kleidungsstueck aus!",
+        "Trinke dein Getraenk leer!",
+        "Bestimme zwei Personen die eine Suessigkeit bekommen.",
+        "Erzaehle zwei Minuten ohne Unterbrechung ueber ein Thema, welches dein linker Nebensitzer vorgibt.",
+        "Erklaere ohne Reden ein Tier.",
+        "Alle bekommen eine Suessigkeit!",
+        "Alle die eine 6 wuerfeln klettern auf ihren Stuhl und bleiben eine Runde da.",
+        "Erzaehle einen Witz und gehe auf Feld 18 zurueck.",
+        "Binde deinen Schuh mit einer Hand.",
+        "Habt Spass!",
+        "Alle wuerfeln. Alle mit einer 1 bekommen eine Suessigkeit.",
+        "Alle singen ein Lied!",
+        "Alle Brillentraeger reichen ihre Brille nach links weiter.",
+        "Male eine Karikatur einer Person die alle kennen.",
+        "Suche etwas Rotes und gib es der Person im Raum der du etwas schenken willst!",
+        "Alle lachen so laut sie koennen!",
+        "Sage ein Gedicht auf!",
         "Gehe zurueck auf Feld 32.",
-        "Alle trinken 3 und ziehen ein Kleidungsstueck aus!",
-        "68",
-        "Gehe zurueck auf Feld 54. und trinke 4.",
-        "Trinke und gehe zurueck auf START.",
+        "Alle ziehen zwei Kleidungsstücke von ihrem linken Nebensitzer an!",
+        "Habt Spass!",
+        "Gehe zurueck auf Feld 54. und setze dir etwas auf den Kopf.",
+        "Mache einen Handstand und gehe zurueck auf START.",
         "ZIEL"
     };
     
@@ -146,32 +146,40 @@ public class KFSS_GameLogic extends GameLogic{
             
             InteractionRequest previous = ((InteractionResponse) as).getConcerningInteractionRequest();
             /* abfragen ob die response eine antwort auf die erwartete request ist **/
-            
+       
             if(previous.getUserData().equals(INTERACTIONRESPONSE_EVERYONE_DICES)){
-                
+                boolean prevP = false;
+                String s;
                 dice();
-                if((field55&&(lastDice==6))||(lastDice==1)){
+                if((field55&&(lastDice==6))||((!field55)&&(lastDice==1))){
                    dicedRight.add((KFSS_Player)(previous.getPlayer()));
                 }
-                
-                if(alreadyDiced>=anzPlayer-1){
-                    for(KFSS_Player p : dicedRight){
-                        requests.add(new InteractionRequest("Du darfst trinken!", new String[]{"WUHU!"}, 
-                                p, false,INTERACTIONRESPONSE_NO_RESPONSE));
+                alreadyDiced++;
+                if(alreadyDiced>=anzPlayer){
+                    if(field55){
+                        s = "Du hast eine 6 gewuerfelt. Klettere auf deinen Stuhl!";
+                    } else {
+                        s = "Du hast eine 1 gewuerfelt und bekommst eine Suessigkeit!";
                     }
-                    dicedRight = new ArrayList<>();
-                    alreadyDiced = 0;
-                } else {
-                    alreadyDiced++;
-                }
-                
-                if(previous.equals(expected)){
-                    InteractionRequest nextRequest = new InteractionRequest("Du bist dran mit wuerfeln!",
-                    new String[]{"GOGOGO"}, getNextPlayer((KFSS_Player)previous.getPlayer()), 
-                            false,INTERACTIONRESPONSE_CHOICES_DICE);
-                    requests.add(nextRequest);   
-                    expected = nextRequest;
-
+                    
+                    for(KFSS_Player p : dicedRight){
+                        if(previous.getPlayer() == p){
+                            prevP = true;
+                            InteractionRequest nR = new InteractionRequest(s, new String[]{"OK!"}, 
+                                p, false,INTERACTIONRESPONSE_CHOICES_OK);
+                            expected = nR;
+                            requests.add(nR);
+                        } else {
+                            requests.add(new InteractionRequest(s, new String[]{"OK!"}, 
+                                p, false,INTERACTIONRESPONSE_NO_RESPONSE));
+                        }
+                        if(!prevP){
+                        InteractionRequest nR = new InteractionRequest("Du darfst leider nicht trinken.", new String[]{"Ouh..."}, 
+                                (KFSS_Player)previous.getPlayer(), false,INTERACTIONRESPONSE_CHOICES_OK);
+                            expected = nR;
+                            requests.add(nR);
+                        }
+                    }
                 }
             }
             
@@ -212,56 +220,45 @@ public class KFSS_GameLogic extends GameLogic{
     }
     
     private ActionRequest nextDice(ActionResponse as, InteractionRequest previous) {
+        
         dice();
-        InteractionRequest nextRequest;
+        InteractionRequest nextRequest = null;
         
-        KFSS_Figure figure = ((KFSS_Player)previous.getPlayer()).getFigure();
+        KFSS_Figure figure = ((KFSS_Player)previous.getPlayer()).getFigure();        
         
-        KFSS_Field field = (KFSS_Field)figure.getField();
-        boolean toFar = false;
-        for(int i = 0; i<lastDice; i++){
-            if(field.getNext() != null)
-                field = field.getSingleNext();
-            else
-                toFar = true;
-        }
+        if(isBeyondEndField((KFSS_Field)figure.getField(),lastDice)){
+            nextRequest = new InteractionRequest("Schon so nah dran! Aber du hast eine "+lastDice+" gewuerfelt und kannst dich nicht bewegen!",
+                new String[]{"Verdammt!"}, (KFSS_Player)previous.getPlayer(), false,INTERACTIONRESPONSE_CHOICES_OK);
         
-        if(!toFar){
+        } else if(isEndField((KFSS_Field)figure.getField(),lastDice)){
             for(int i = 0; i<lastDice; i++){
                 figure.setField(((KFSS_Field)figure.getField()).getSingleNext());
             }
-            
-            if(figure.getField().getNext() == null){
-                InteractionRequest req;
-            
-                for(int i = 0; i<anzPlayer-1;i++){
-                    req = new InteractionRequest(((KFSS_Player)previous.getPlayer()).getPlayerName()+" hat gewonnen! Das Spiel ist vorbei!",
-                        new String[]{"Meh"}, (KFSS_Player)getDependingModel().getPlayers().get(i), false,INTERACTIONRESPONSE_SOMEONE_WON);
-                    requests.add(req);
+            for(Player p : getDependingModel().getPlayers()){
+                if(p != previous.getPlayer()){
+                    requests.add(new InteractionRequest(((KFSS_Player)previous.getPlayer()).getPlayerName()+" hat gewonnen! Das Spiel ist vorbei!",
+                        new String[]{"OK!"}, p, false,INTERACTIONRESPONSE_NO_RESPONSE));
+                } else {
+                    nextRequest = new InteractionRequest("Du hast gewonnen! Das Spiel ist vorbei!",
+                        new String[]{"WIE TOLL!"}, p, false,INTERACTIONRESPONSE_SOMEONE_WON);
                 }
-                nextRequest = new InteractionRequest(((KFSS_Player)previous.getPlayer()).getPlayerName()+" hat gewonnen! Das Spiel ist vorbei!",
-                        new String[]{"Meh"}, (KFSS_Player)getDependingModel().getPlayers().get(anzPlayer), false,INTERACTIONRESPONSE_SOMEONE_WON);
-
-            }else{
-                String quest = figure.getField().getLayout().getSubtext();
-            
-                nextRequest = new InteractionRequest("Du hast eine "+lastDice+" gewuerfelt! "
-                    + "Deine Aufgabe: " + quest,
-                    new String[]{"OK!"}, (KFSS_Player)previous.getPlayer(), false, INTERACTIONRESPONSE_CHOICES_OK);
-            
             }
-            
-        }else{
-            InteractionRequest req = new InteractionRequest("Schon so nah dran! Aber du hast eine "+lastDice+" gewuerfelt und kannst dich nicht bewegen!",
-                new String[]{"Verdammt!"}, (KFSS_Player)previous.getPlayer(), false,INTERACTIONRESPONSE_NO_RESPONSE);
-            requests.add(req);
-            nextRequest = new InteractionRequest("Du bist dran mit wuerfeln!",
-                    new String[]{"GOGOGO"}, getNextPlayer((KFSS_Player)previous.getPlayer()), false,INTERACTIONRESPONSE_CHOICES_DICE);                    
-
+                    
+        } else {
+            for(int i = 0; i<lastDice; i++){
+                figure.setField(((KFSS_Field)figure.getField()).getSingleNext());
+            }
+            String quest = figure.getField().getLayout().getSubtext();
+            nextRequest = new InteractionRequest("Du hast eine "+lastDice+" gewuerfelt! "
+                + "Deine Aufgabe: " + quest,
+                new String[]{"OK!"}, (KFSS_Player)previous.getPlayer(), false, INTERACTIONRESPONSE_CHOICES_OK);
         }
         
         expected = nextRequest;       
         return nextRequest;
+        
+        //blblblblbl
+        
     }
 
     private ActionRequest nextOK(ActionResponse as, InteractionRequest previous) {
@@ -289,18 +286,18 @@ public class KFSS_GameLogic extends GameLogic{
                 field = (KFSS_Field)board.getField(0);
                 ((KFSS_Player)previous.getPlayer()).getFigure().setField(field);
                 requests.add(new InteractionRequest("Du bist wieder auf START!",
-                    new String[]{"Der Hammer!"}, (KFSS_Player)previous.getPlayer(), 
+                    new String[]{"OK!"}, (KFSS_Player)previous.getPlayer(), 
                         false, INTERACTIONRESPONSE_NO_RESPONSE));
                 nextRequest = new InteractionRequest("Du bist dran mit wuerfeln!",
-                    new String[]{"GOGOGO"}, getNextPlayer((KFSS_Player)previous.getPlayer()),
+                    new String[]{"Wuerfeln!"}, getNextPlayer((KFSS_Player)previous.getPlayer()),
                         false,INTERACTIONRESPONSE_CHOICES_DICE);                    
                 break;
                 
             case 24: 
                 if(previous.getChoices().length>1){
-                    if(((InteractionResponse)as).getChoice().equals("PROST!")){
+                    if(((InteractionResponse)as).getChoice().equals("Kniebeugen!")){
                         nextRequest = new InteractionRequest("Du bist dran mit wuerfeln!",
-                        new String[]{"GOGOGO"}, getNextPlayer((KFSS_Player)previous.getPlayer()), false,INTERACTIONRESPONSE_CHOICES_DICE);                    
+                        new String[]{"Wuerfeln!"}, getNextPlayer((KFSS_Player)previous.getPlayer()), false,INTERACTIONRESPONSE_CHOICES_DICE);                    
                         break;
                     }else{
                         field = (KFSS_Field)board.getField(20);
@@ -309,8 +306,8 @@ public class KFSS_GameLogic extends GameLogic{
                         break;
                     }
                 } else {
-                    nextRequest = new InteractionRequest("Willst du trinken oder zurueck?!",
-                    new String[]{"PROST!","Lieber zurueck..."}, (KFSS_Player)previous.getPlayer(), false,INTERACTIONRESPONSE_CHOICES_OK);                    
+                    nextRequest = new InteractionRequest("Willst du Kniebeugen machen oder zurueck?!",
+                    new String[]{"Kniebeugen!","Lieber zurueck..."}, (KFSS_Player)previous.getPlayer(), false,INTERACTIONRESPONSE_CHOICES_OK);                    
                     break;
                 }
                 
@@ -330,7 +327,7 @@ public class KFSS_GameLogic extends GameLogic{
                 field = (KFSS_Field)board.getField(28);
                 ((KFSS_Player)previous.getPlayer()).getFigure().setField(field);
                 nextRequest = new InteractionRequest("Du bist noch einmal dran mit wuerfeln!",
-                        new String[]{"DER HAMMER!"}, (KFSS_Player)previous.getPlayer(), false,INTERACTIONRESPONSE_CHOICES_DICE);                    
+                        new String[]{"Super!"}, (KFSS_Player)previous.getPlayer(), false,INTERACTIONRESPONSE_CHOICES_DICE);                    
                 break;
             
             case 56:
@@ -346,19 +343,18 @@ public class KFSS_GameLogic extends GameLogic{
                 break;
               
             case 34:
-                if(previous.getChoices().length>1){
+                if(!previous.getChoices()[0].equals("OK!")){
                     for(int i = 0; i<anzPlayer;i++){
                         if(((KFSS_Player)getDependingModel().getPlayers().get(i)).getPlayerName().equals(((InteractionResponse)as).getChoice())){
                             ((KFSS_Player)getDependingModel().getPlayers().get(i)).getFigure().setField(board.getField(6));
                             requests.add(new InteractionRequest("Du bist auf das Feld 6 gekommen! "
                                 + "Deine Aufgabe: " + board.getField(6).getLayout().getSubtext(),
-                                new String[]{"Na gut..."}, (KFSS_Player)previous.getPlayer(), 
+                                new String[]{"OK!"}, (KFSS_Player)previous.getPlayer(), 
                                 false, INTERACTIONRESPONSE_NO_RESPONSE));
-                            break;
                         }
                     }
                     nextRequest = new InteractionRequest("Du bist dran mit wuerfeln!",
-                        new String[]{"GOGOGO"}, getNextPlayer((KFSS_Player)previous.getPlayer()), 
+                        new String[]{"Wuerfeln!"}, getNextPlayer((KFSS_Player)previous.getPlayer()), 
                         false,INTERACTIONRESPONSE_CHOICES_DICE);
                 } else {
                     String[] s = new String[anzPlayer];
@@ -382,39 +378,50 @@ public class KFSS_GameLogic extends GameLogic{
                 
                 ((KFSS_Player)previous.getPlayer()).setSuspended(true);
                 requests.add(new InteractionRequest("Du musst eine Runde aussetzen!",
-                        new String[]{"-.-"}, (KFSS_Player)previous.getPlayer(), 
+                        new String[]{"OK!"}, (KFSS_Player)previous.getPlayer(), 
                         false,INTERACTIONRESPONSE_NO_RESPONSE));
                 nextRequest = new InteractionRequest("Du bist dran mit wuerfeln!",
-                        new String[]{"GOGOGO"}, getNextPlayer((KFSS_Player)previous.getPlayer()), 
+                        new String[]{"Wuerfeln!"}, getNextPlayer((KFSS_Player)previous.getPlayer()), 
                         false,INTERACTIONRESPONSE_CHOICES_DICE);                    
                 break;       
                 
             case 20:
                 nextRequest = new InteractionRequest("Du bist noch einmal dran mit wuerfeln!",
-                        new String[]{"DER HAMMER!"}, (KFSS_Player)previous.getPlayer(), false,INTERACTIONRESPONSE_CHOICES_DICE);                    
+                        new String[]{"Super!"}, (KFSS_Player)previous.getPlayer(), false,INTERACTIONRESPONSE_CHOICES_DICE);                    
                 break;
                 
             case 55:
                 field55 = true;
                 for(Player p : getDependingModel().getPlayers()){
+                    if(p == previous.getPlayer()){
+                        nextRequest = new InteractionRequest("Wuerfle eine 6!",
+                        new String[]{"Wuerfeln!"}, (KFSS_Player)p, 
+                            false,INTERACTIONRESPONSE_EVERYONE_DICES);
+                    } else {
                     requests.add(new InteractionRequest("Wuerfle eine 6!",
                         new String[]{"Wuerfeln!"}, (KFSS_Player)p, 
-                            false,INTERACTIONRESPONSE_EVERYONE_DICES));                    
+                            false,INTERACTIONRESPONSE_EVERYONE_DICES));  
+                    }
                 }
                 break;
                 
             case 59: case 42:
                 field55 = false;
-                for(Player p : getDependingModel().getPlayers()){
-                    requests.add(new InteractionRequest("Wuerfle eine 1!",
-                        new String[]{"Wuerfeln!"}, (KFSS_Player)p, 
-                            false,INTERACTIONRESPONSE_EVERYONE_DICES));                    
-                }
-                break;                
+                if(alreadyDiced==0){
+                    for(Player p : getDependingModel().getPlayers()){
+                        requests.add(new InteractionRequest("Wuerfle eine 1!",
+                            new String[]{"Wuerfeln!"}, (KFSS_Player)p, 
+                                false,INTERACTIONRESPONSE_EVERYONE_DICES));                    
+                    }
+                    break;                    
+                } else {
+                    alreadyDiced = 0;
+                    dicedRight.clear();
+                }       
             
             default:
                 nextRequest = new InteractionRequest("Du bist dran mit wuerfeln!",
-                        new String[]{"GOGOGO"}, getNextPlayer((KFSS_Player)previous.getPlayer()), 
+                        new String[]{"Wuerfeln!"}, getNextPlayer((KFSS_Player)previous.getPlayer()), 
                         false,INTERACTIONRESPONSE_CHOICES_DICE);
                 break;
 
@@ -430,10 +437,10 @@ public class KFSS_GameLogic extends GameLogic{
         if(quest != null){
             return new InteractionRequest("Du bist auf das Feld "+fieldIndex+" gekommen! "
                     + "Deine Aufgabe: " + quest,
-                    new String[]{"Na gut..."}, (KFSS_Player)previous.getPlayer(), false, INTERACTIONRESPONSE_CHOICES_OK);
+                    new String[]{"OK!"}, (KFSS_Player)previous.getPlayer(), false, INTERACTIONRESPONSE_CHOICES_OK);
         } else {
             return new InteractionRequest("Du bist auf das Feld "+fieldIndex+" gekommen!",
-                    new String[]{"Klasse!"}, (KFSS_Player)previous.getPlayer(), false, INTERACTIONRESPONSE_CHOICES_OK);
+                    new String[]{"OK!"}, (KFSS_Player)previous.getPlayer(), false, INTERACTIONRESPONSE_CHOICES_OK);
         }
     }
 
@@ -454,6 +461,26 @@ public class KFSS_GameLogic extends GameLogic{
             }
         }
         throw new IllegalArgumentException("Not a legal player.");
+    }
+    
+        private boolean isBeyondEndField(KFSS_Field oldField, int lastDice) {
+        KFSS_Field field = oldField;
+        int l = 0;
+        while((field.getFieldIndex()<71) && (l<lastDice)){
+            field = field.getSingleNext();
+            l++;
+        }
+        return l<lastDice;
+    }
+
+    private boolean isEndField(KFSS_Field oldField, int lastDice) {
+        KFSS_Field field = oldField;
+        int l = 0;
+        while(l<lastDice){
+            field = field.getSingleNext();
+            l++;
+        }
+        return field.getFieldIndex()==71;
     }
     
     public int dice(){

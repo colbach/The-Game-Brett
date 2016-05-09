@@ -139,7 +139,7 @@ public class MADN_GameLogic extends GameLogic {
                 
         
         } else {
-            //neue wÃ¼rfelrequest senden 
+            //neue wuerfelrequest senden 
             if(lastDice==6){
                 nextRequest = new InteractionRequest("Du bist nocheinmal dran. Bitte wuerfeln!",
                     new String[]{"Wuerfeln"}, (MADN_Player)previous.getPlayer(), false,INTERACTIONRESPONSE_CHOICES_DICE);                    
