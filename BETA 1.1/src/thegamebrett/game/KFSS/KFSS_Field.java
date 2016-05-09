@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package thegamebrett.game.PSS;
+package thegamebrett.game.KFSS;
 
+import thegamebrett.game.PSS.*;
 import thegamebrett.model.Layout;
 import thegamebrett.model.RelativePoint;
 import thegamebrett.model.elements.Field;
@@ -14,18 +15,18 @@ import thegamebrett.model.mediaeffect.MediaEffect;
  *
  * @author Kore
  */
-public class PSS_Field extends Field{
+public class KFSS_Field extends Field{
     
     
     private double width;
     private double height;
     private RelativePoint position;
-    private PSS_Field next;
+    private KFSS_Field next;
     private Layout layout;
     private MediaEffect me;
     private int fieldIndex;
 
-    public PSS_Field(int fieldIndex, double width, double height, RelativePoint position, PSS_Field next, Layout layout, MediaEffect mediaEffect) {
+    public KFSS_Field(int fieldIndex, double width, double height, RelativePoint position, KFSS_Field next, Layout layout, MediaEffect mediaEffect) {
         this.fieldIndex = fieldIndex;
         this.height = height;
         this.width = width;
@@ -35,7 +36,7 @@ public class PSS_Field extends Field{
         this.next = next;
     }
 
-    public void addNext(PSS_Field newField) {
+    public void addNext(KFSS_Field newField) {
         this.next = newField;
     }
 @Override
@@ -53,7 +54,7 @@ public class PSS_Field extends Field{
         return height;
     }
 
-    public PSS_Field getSingleNext(){
+    public KFSS_Field getSingleNext(){
         return next;
     }
     
@@ -64,7 +65,7 @@ public class PSS_Field extends Field{
     
     @Override
     public Field[] getNext() {
-        PSS_Field[] fields = {next};
+        KFSS_Field[] fields = {next};
         return fields;
     }
 

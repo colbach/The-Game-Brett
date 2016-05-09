@@ -17,7 +17,7 @@ public class MobileManager {
     private NetworkManager networkManager;
     private UserManager userManager;
     
-    private static final boolean USE_DUMMY_NETWORK_MANAGER = false; // fuer Debuging
+    private static final boolean USE_DUMMY_NETWORK_MANAGER = true; // fuer Debuging
     
     public MobileManager(Manager manager) {
         this.manager = manager;

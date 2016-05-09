@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package thegamebrett.game.PSS;
+package thegamebrett.game.KFSS;
 
+import thegamebrett.game.PSS.*;
 import thegamebrett.model.Layout;
 import thegamebrett.model.Player;
 import thegamebrett.model.elements.Figure;
@@ -13,19 +14,19 @@ import thegamebrett.model.elements.Figure;
  *
  * @author Kore
  */
-public class PSS_Figure extends Figure {
+public class KFSS_Figure extends Figure {
     
-    private PSS_Board board;
+    private KFSS_Board board;
 
-    public PSS_Board getBoard() {
+    public KFSS_Board getBoard() {
         return board;
     }
 
-    public void setBoard(PSS_Board board) {
+    public void setBoard(KFSS_Board board) {
         this.board = board;
     }
     
-    public PSS_Figure(Player owner, PSS_Board board, Layout layout) {
+    public KFSS_Figure(Player owner, KFSS_Board board, Layout layout) {
         super(owner, layout,0.05,0.05);
         this.board = board;
     }

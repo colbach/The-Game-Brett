@@ -7,7 +7,7 @@ import thegamebrett.model.Player;
 import thegamebrett.network.User;
 
 /**
- * @author Korè
+ * @author Kore
  */
 public class MADN_Player extends Player{
     private User user;
