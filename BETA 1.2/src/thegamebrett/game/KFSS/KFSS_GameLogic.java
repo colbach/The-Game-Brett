@@ -11,6 +11,7 @@ import thegamebrett.action.ActionResponse;
 import thegamebrett.action.request.GUIUpdateRequest;
 import thegamebrett.action.request.GameEndRequest;
 import thegamebrett.action.request.InteractionRequest;
+import thegamebrett.action.request.ScreenMessageRequest;
 import thegamebrett.action.response.*;
 import thegamebrett.model.GameLogic;
 import thegamebrett.model.Model;
@@ -71,12 +72,12 @@ public class KFSS_GameLogic extends GameLogic{
         "Gurgle Alle meine Entchen.",
         "Gehe 2 Felder vor und bringe die Person vor dir zum Lachen!",
         "Tausche zwei Kleidungsstuecke mit einer Person deiner Wahl!",
-        "Ertaste einen deiner Mitspieler. Schaffst du es, bekommst du eine Suessigkeit. Wenn nicht, der Andere!",
+        "Ertaste einen deiner Mitspieler. Schaffst du es, bekommst du eine Suessigkeit!",
         "Habt Spass!",
         "Gehe auf das Feld 28 und wuerfle noch einmal.",
         "Trinke dein Getraenk leer!",
         "Bestimme zwei Personen die eine Suessigkeit bekommen.",
-        "Erzaehle zwei Minuten ohne Unterbrechung ueber ein Thema, welches dein linker Nebensitzer vorgibt.",
+        "Erzaehle zwei Minuten ueber ein Thema, welches dein linker Nebensitzer vorgibt.",
         "Erklaere ohne Reden ein Tier.",
         "Alle bekommen eine Suessigkeit!",
         "Alle die eine 6 wuerfeln klettern auf ihren Stuhl und bleiben eine Runde da.",
@@ -239,6 +240,7 @@ public class KFSS_GameLogic extends GameLogic{
                     requests.add(new InteractionRequest(((KFSS_Player)previous.getPlayer()).getPlayerName()+" hat gewonnen! Das Spiel ist vorbei!",
                         new String[]{"OK!"}, p, false,INTERACTIONRESPONSE_NO_RESPONSE));
                 } else {
+                    requests.add(new ScreenMessageRequest("ZIEL", previous.getPlayer()));
                     nextRequest = new InteractionRequest("Du hast gewonnen! Das Spiel ist vorbei!",
                         new String[]{"WIE TOLL!"}, p, false,INTERACTIONRESPONSE_SOMEONE_WON);
                 }
@@ -249,6 +251,7 @@ public class KFSS_GameLogic extends GameLogic{
                 figure.setField(((KFSS_Field)figure.getField()).getSingleNext());
             }
             String quest = figure.getField().getLayout().getSubtext();
+            requests.add(new ScreenMessageRequest(quest, previous.getPlayer()));
             nextRequest = new InteractionRequest("Du hast eine "+lastDice+" gewuerfelt! "
                 + "Deine Aufgabe: " + quest,
                 new String[]{"OK!"}, (KFSS_Player)previous.getPlayer(), false, INTERACTIONRESPONSE_CHOICES_OK);
@@ -256,9 +259,7 @@ public class KFSS_GameLogic extends GameLogic{
         
         expected = nextRequest;       
         return nextRequest;
-        
-        //blblblblbl
-        
+                
     }
 
     private ActionRequest nextOK(ActionResponse as, InteractionRequest previous) {
@@ -349,8 +350,9 @@ public class KFSS_GameLogic extends GameLogic{
                             ((KFSS_Player)getDependingModel().getPlayers().get(i)).getFigure().setField(board.getField(6));
                             requests.add(new InteractionRequest("Du bist auf das Feld 6 gekommen! "
                                 + "Deine Aufgabe: " + board.getField(6).getLayout().getSubtext(),
-                                new String[]{"OK!"}, (KFSS_Player)previous.getPlayer(), 
+                                new String[]{"OK!"}, (KFSS_Player)getDependingModel().getPlayers().get(i), 
                                 false, INTERACTIONRESPONSE_NO_RESPONSE));
+                            requests.add(new ScreenMessageRequest(board.getField(6).getLayout().getSubtext(), (KFSS_Player)getDependingModel().getPlayers().get(i)));
                         }
                     }
                     nextRequest = new InteractionRequest("Du bist dran mit wuerfeln!",
@@ -361,6 +363,7 @@ public class KFSS_GameLogic extends GameLogic{
                     for(int i = 0; i<anzPlayer;i++){
                         s[i] = ((KFSS_Player)getDependingModel().getPlayers().get(i)).getPlayerName();
                     }
+                    requests.add(new ScreenMessageRequest(board.getField(34).getLayout().getSubtext(), (KFSS_Player)previous.getPlayer()));
                     nextRequest = new InteractionRequest("Du bist auf das Feld 34 gekommen! "
                     + "Deine Aufgabe: " + board.getField(34).getLayout().getSubtext(),
                     s, (KFSS_Player)previous.getPlayer(), false, INTERACTIONRESPONSE_CHOICES_OK);
@@ -392,6 +395,7 @@ public class KFSS_GameLogic extends GameLogic{
                 
             case 55:
                 field55 = true;
+                requests.add(new ScreenMessageRequest(board.getField(55).getLayout().getSubtext(), previous.getPlayer()));
                 for(Player p : getDependingModel().getPlayers()){
                     if(p == previous.getPlayer()){
                         nextRequest = new InteractionRequest("Wuerfle eine 6!",
@@ -407,6 +411,7 @@ public class KFSS_GameLogic extends GameLogic{
                 
             case 59: case 42:
                 field55 = false;
+                requests.add(new ScreenMessageRequest(board.getField(questIndex).getLayout().getSubtext(), previous.getPlayer()));
                 if(alreadyDiced==0){
                     for(Player p : getDependingModel().getPlayers()){
                         requests.add(new InteractionRequest("Wuerfle eine 1!",
@@ -435,6 +440,7 @@ public class KFSS_GameLogic extends GameLogic{
     private InteractionRequest getOkRequest(ActionResponse as, InteractionRequest previous, int fieldIndex, String quest) {
         
         if(quest != null){
+            requests.add(new ScreenMessageRequest(quest, previous.getPlayer()));
             return new InteractionRequest("Du bist auf das Feld "+fieldIndex+" gekommen! "
                     + "Deine Aufgabe: " + quest,
                     new String[]{"OK!"}, (KFSS_Player)previous.getPlayer(), false, INTERACTIONRESPONSE_CHOICES_OK);

@@ -11,6 +11,7 @@ import thegamebrett.action.ActionResponse;
 import thegamebrett.action.request.GUIUpdateRequest;
 import thegamebrett.action.request.GameEndRequest;
 import thegamebrett.action.request.InteractionRequest;
+import thegamebrett.action.request.ScreenMessageRequest;
 import thegamebrett.action.response.*;
 import thegamebrett.model.GameLogic;
 import thegamebrett.model.Model;
@@ -60,7 +61,7 @@ public class PSS_GameLogic extends GameLogic{
         "Trinke und ziehe ein Kleidungsstueck aus!",
         "Trinke und bestimme eine Person die auf Feld 6 zurueck geht.",
         "Gehe auf Feld 6 zurueck.",
-        "Es trinkt der, der dem START am naechsten ist und du gehst zurueck auf Start.",
+        "Es trinkt der am naechsten des STARTS und du gehst zurueck auf START.",
         "Alle die vor dir sind duerfen trinken.",
         "Trinke!",
         "Trinke und ziehe ein Kleidungsstueck aus!",
@@ -174,7 +175,7 @@ public class PSS_GameLogic extends GameLogic{
                 /* abfragen ob anfrage zum wuerfeln **/
                 if(previous.getUserData().equals(INTERACTIONRESPONSE_CHOICES_DICE)){
                    requests.add(nextDice(as, previous));
-                /* abfragen ob anfrage auswÃ¤hlen einer bestimmten figur **/
+                /* abfragen ob anfrage auswaehlen einer bestimmten figur **/
                 } else if(previous.getUserData().equals(INTERACTIONRESPONSE_CHOICES_OK)){
                     requests.add(nextOK(as,previous));
                     
@@ -225,6 +226,7 @@ public class PSS_GameLogic extends GameLogic{
                     requests.add(new InteractionRequest(((PSS_Player)previous.getPlayer()).getPlayerName()+" hat gewonnen! Das Spiel ist vorbei!",
                         new String[]{"Meh"}, p, false,INTERACTIONRESPONSE_NO_RESPONSE));
                 } else {
+                    requests.add(new ScreenMessageRequest("ZIEL", previous.getPlayer()));
                     nextRequest = new InteractionRequest("Du hast gewonnen! Das Spiel ist vorbei!",
                         new String[]{"OUH YEAH!"}, p, false,INTERACTIONRESPONSE_SOMEONE_WON);
                 }
@@ -235,6 +237,7 @@ public class PSS_GameLogic extends GameLogic{
                 figure.setField(((PSS_Field)figure.getField()).getSingleNext());
             }
             String quest = figure.getField().getLayout().getSubtext();
+            requests.add(new ScreenMessageRequest(quest, previous.getPlayer()));
             nextRequest = new InteractionRequest("Du hast eine "+lastDice+" gewuerfelt! "
                 + "Deine Aufgabe: " + quest,
                 new String[]{"OK!"}, (PSS_Player)previous.getPlayer(), false, INTERACTIONRESPONSE_CHOICES_OK);
@@ -334,6 +337,8 @@ public class PSS_GameLogic extends GameLogic{
                                 + "Deine Aufgabe: " + board.getField(6).getLayout().getSubtext(),
                                 new String[]{"OK!"}, (PSS_Player)previous.getPlayer(), 
                                 false, INTERACTIONRESPONSE_NO_RESPONSE));
+                            requests.add(new ScreenMessageRequest(board.getField(6).getLayout().getSubtext(), (PSS_Player)getDependingModel().getPlayers().get(i)));
+
                         }
                     }
                     nextRequest = new InteractionRequest("Du bist dran mit wuerfeln!",
@@ -344,6 +349,7 @@ public class PSS_GameLogic extends GameLogic{
                     for(int i = 0; i<anzPlayer;i++){
                         s[i] = ((PSS_Player)getDependingModel().getPlayers().get(i)).getPlayerName();
                     }
+                    requests.add(new ScreenMessageRequest(board.getField(34).getLayout().getSubtext(), (PSS_Player)previous.getPlayer()));
                     nextRequest = new InteractionRequest("Du bist auf das Feld 34 gekommen! "
                     + "Deine Aufgabe: " + board.getField(34).getLayout().getSubtext(),
                     s, (PSS_Player)previous.getPlayer(), false, INTERACTIONRESPONSE_CHOICES_OK);
@@ -377,12 +383,13 @@ public class PSS_GameLogic extends GameLogic{
                 field55 = true;
                 for(Player p : getDependingModel().getPlayers()){
                     if(p == previous.getPlayer()){
+                        requests.add(new ScreenMessageRequest(board.getField(55).getLayout().getSubtext(), previous.getPlayer()));
                         nextRequest = new InteractionRequest("Wuerfle eine 6!",
-                        new String[]{"Wuerfeln!"}, (PSS_Player)p, 
+                            new String[]{"Wuerfeln!"}, (PSS_Player)p, 
                             false,INTERACTIONRESPONSE_EVERYONE_DICES);
                     } else {
-                    requests.add(new InteractionRequest("Wuerfle eine 6!",
-                        new String[]{"Wuerfeln!"}, (PSS_Player)p, 
+                        requests.add(new InteractionRequest("Wuerfle eine 6!",
+                            new String[]{"Wuerfeln!"}, (PSS_Player)p, 
                             false,INTERACTIONRESPONSE_EVERYONE_DICES));  
                     }
                 }
@@ -391,6 +398,7 @@ public class PSS_GameLogic extends GameLogic{
             case 59: case 42:
                 field55 = false;
                 if(alreadyDiced==0){
+                    requests.add(new ScreenMessageRequest(board.getField(questIndex).getLayout().getSubtext(), previous.getPlayer()));
                     for(Player p : getDependingModel().getPlayers()){
                         requests.add(new InteractionRequest("Wuerfle eine 1!",
                             new String[]{"Wuerfeln!"}, (PSS_Player)p, 
@@ -419,6 +427,7 @@ public class PSS_GameLogic extends GameLogic{
     private InteractionRequest getOkRequest(ActionResponse as, InteractionRequest previous, int fieldIndex, String quest) {
         
         if(quest != null){
+            requests.add(new ScreenMessageRequest(quest, previous.getPlayer()));
             return new InteractionRequest("Du bist auf das Feld "+fieldIndex+" gekommen! "
                     + "Deine Aufgabe: " + quest,
                     new String[]{"Na gut..."}, (PSS_Player)previous.getPlayer(), false, INTERACTIONRESPONSE_CHOICES_OK);

@@ -19,11 +19,11 @@ public class PSS_Board extends Board{
 
     private ArrayList<PSS_Field> fields = new ArrayList<>();
     private String[] fieldContent;
-    private double r;
+    private float rX,rY;
     private RelativePoint pos;
     private Layout layout;
     
-    private final float ratioX = 1;
+    private final float ratioX = 1.2f;
     private final float ratioY = 1;
     
     public PSS_Board(String[] fieldContent){
@@ -35,13 +35,14 @@ public class PSS_Board extends Board{
     
     private void createFields() {
         
-        r = relativateRatio(9.0);
+        rX = relativateRatioX(9.0f);
+        rY = relativateRatioY(10.0f);
         //1=rechts, 2= oben, 3=unten, 4=links
         int direction = 0;
         pos = new RelativePoint(0, 0);
         
         int startX = 0;
-        int startY = 7;
+        int startY = 8;
             
         for(int i = 0; i<72; i++){
              
@@ -71,19 +72,19 @@ public class PSS_Board extends Board{
             
             switch (direction) {
                 case 1:
-                    pos = new RelativePoint(startX*r, startY*r);
+                    pos = new RelativePoint(startX*rX, startY*rY);
                     startX += 1;
                     break;
                 case 2:
-                    pos = new RelativePoint(startX*r, startY*r);
+                    pos = new RelativePoint(startX*rX, startY*rY);
                     startY += -1;
                     break;
                 case 3:
-                    pos = new RelativePoint(startX*r, startY*r);
+                    pos = new RelativePoint(startX*rX, startY*rY);
                     startY += 1;
                     break;
                 case 4: 
-                    pos = new RelativePoint(startX*r, startY*r);
+                    pos = new RelativePoint(startX*rX, startY*rY);
                     startX += -1;
                     break;
                 default:
@@ -93,8 +94,7 @@ public class PSS_Board extends Board{
             Layout fieldLayout = new Layout(i+"", fieldContent[i]);
             fieldLayout.setFormFactor(Layout.FORM_FACTOR_SQUARE);
             
-            float rat = 1.0f/9.0f;
-            PSS_Field newField = new PSS_Field(i,ratioX/9,ratioY/9,pos,null,fieldLayout,null);
+            PSS_Field newField = new PSS_Field(i,relativateRatioX(9.0f),relativateRatioY(10.0f),pos,null,fieldLayout,null);
             if(!fields.isEmpty()){
                 fields.get(fields.size()-1).addNext(newField);
             }
@@ -111,8 +111,12 @@ public class PSS_Board extends Board{
     }
 
     //speziell auf das Feld, nicht allgemein
-    public double relativateRatio(double i){
-        return 1/i;
+    public float relativateRatioX(float i){
+        return 1.0f/i;
+    }
+    
+    public float relativateRatioY(float i){
+        return 1.0f/i;
     }
     
     @Override
