@@ -19,8 +19,6 @@ import thegamebrett.model.elements.Field;
 public class MADN_Board extends Board {
 
     private ArrayList<MADN_Field> fields = new ArrayList<>();
-    //private ArrayList<MADNstartField> startFields;
-    //private ArrayList<MADNendField> endFields;    
     private Layout layout;
     private double r;
     private RelativePoint pos;
@@ -49,12 +47,8 @@ public class MADN_Board extends Board {
     }
     public Layout getFLayout(int fieldType){
         Layout fLayout = new Layout();
-        fLayout.setFormFactor(Layout.FORM_FACTOR_OVAL); // Farbe von Feldern etc
-        if(fieldType == MADN_Field.FIELD_TYPE_START||fieldType==MADN_Field.FIELD_TYPE_END){
-            fLayout.setBackgroundColor(Color.BROWN);
-        } else {
-            fLayout.setBackgroundColor(Color.BEIGE);
-        }
+        fLayout.setFormFactor(Layout.FORM_FACTOR_OVAL);
+        fLayout.setBackgroundColor(Color.BEIGE);
         return fLayout;
     }
     

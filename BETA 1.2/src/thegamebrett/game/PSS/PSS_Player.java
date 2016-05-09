@@ -5,14 +5,13 @@
  */
 package thegamebrett.game.PSS;
 
-import javafx.scene.paint.Color;
 import thegamebrett.model.Layout;
 import thegamebrett.model.Player;
 import thegamebrett.network.User;
 
 /**
  *
- * @author Korè
+ * @author Kore
  */
 public class PSS_Player extends Player{
     
@@ -32,26 +31,13 @@ public class PSS_Player extends Player{
         
         layout = new Layout();
         layout.setFormFactor(Layout.FORM_FACTOR_OVAL);
-        /*if((user != null)&&(user.getUserCharacter()!=null)){
-            playerName = user.getUserCharacter().getAvatarName();
-            if(user.getUserCharacter().getAvatar()!= null){
-                layout.setBackgroundImage(user.getUserCharacter().getAvatar());
-            } else {
-                layout.setBackgroundColor(user.getUserCharacter().getColor());
-            }
-        } else {*/
-            playerName = "Spieler "+playerNr;
-            layout.setBackgroundColor(Color.DARKGOLDENROD);
-        //}
-        layout.setTitle(playerName);
-        Layout fl = new Layout(playerName,"");
-        fl.setBackgroundColor(Color.DARKGOLDENROD);
-        fl.setFormFactor(Layout.FORM_FACTOR_OVAL);
-        figure = new PSS_Figure(this, board, fl);
-        figure.setField(board.getField(0));
+        playerName = user.getUserCharacter().getName();
+        layout.setBackgroundImage(user.getUserCharacter().getAvatar());
+        
+        figure = new PSS_Figure(this, board, layout);
+        figure.setField(board.getField(41));   
         
     }
-    
     
     
     public boolean isSuspended() {
@@ -72,6 +58,13 @@ public class PSS_Player extends Player{
     
     public PSS_Figure getFigure() {
         return figure;
+    }
+    
+    @Override
+    public PSS_Figure[] getFigures() {
+        return new PSS_Figure[]{
+            figure
+        };
     }
 
     public void setFigure(PSS_Figure figure) {

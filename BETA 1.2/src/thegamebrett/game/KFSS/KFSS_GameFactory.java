@@ -43,6 +43,7 @@ public class KFSS_GameFactory implements GameFactory{
         for(int i=0; i<users.size(); i++) {
             KFSS_Player p = new KFSS_Player(i, users.get(i), board);
             players.add(p);
+            System.out.println("Spielername: "+p.getPlayerName());
         }
         
         Model model = new Model(players, gl, board);
@@ -68,7 +69,7 @@ public class KFSS_GameFactory implements GameFactory{
     }
     @Override
     public String getGameName() {
-        return "PSS";
+        return "KFSS";
     }
     
     public KFSS_Board getBoard(){
