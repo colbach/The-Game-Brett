@@ -98,6 +98,8 @@ public class PSS_Board extends Board{
             if(!fields.isEmpty()){
                 fields.get(fields.size()-1).addNext(newField);
             }
+            fieldLayout.setSubtextScaleFactor(-0.2f);
+            
             
             fields.add(newField);   
         }        

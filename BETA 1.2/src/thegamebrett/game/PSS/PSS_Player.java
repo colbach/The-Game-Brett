@@ -8,6 +8,7 @@ package thegamebrett.game.PSS;
 import javafx.scene.paint.Color;
 import thegamebrett.model.Layout;
 import thegamebrett.model.Player;
+import thegamebrett.model.elements.Figure;
 import thegamebrett.network.User;
 
 /**

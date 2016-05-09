@@ -12,7 +12,7 @@ import javafx.scene.paint.Color;
 public class Layout {
     
     private volatile Boolean changeRegistrar = true;
-
+    
     /**
      * Diese Methode muss bei JEDER AENDERUNG aufgerufen werden damit UI diese
      * Aktualisiert.
@@ -251,7 +251,4 @@ public class Layout {
     public void setCenterSubtext(boolean centerSubtext) {
         this.centerSubtext = centerSubtext;
     }
-    
-    
-    
 }
