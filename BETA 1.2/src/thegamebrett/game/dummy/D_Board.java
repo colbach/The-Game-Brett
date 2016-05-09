@@ -90,7 +90,7 @@ public class D_Board extends Board{
 
     @Override
     public float getRatioX() {
-        return 1f;
+        return 1.5f;
     }
 
     @Override

@@ -8,6 +8,7 @@ import javafx.application.Platform;
 import thegamebrett.Manager;
 import thegamebrett.game.dummy.D_GameLogic;
 import thegamebrett.gui.MenueView;
+import thegamebrett.gui.ScreenResolution;
 import thegamebrett.model.GameFactory;
 import thegamebrett.model.Model;
 import thegamebrett.model.exceptions.TooFewPlayers;
@@ -153,6 +154,8 @@ public class NetworkGameSelector {
             Platform.runLater(() -> {
                 try {
                     Model gameModel = selectedGame.createGame(players);
+                    ScreenResolution.setBoardRatios(gameModel.getBoard().getRatioX(), gameModel.getBoard().getRatioY());
+                    
                     manager.getGui().getGameView().setGameModel(gameModel);
                     manager.startGame(gameModel);
                     manager.getGui().showGameScene();
