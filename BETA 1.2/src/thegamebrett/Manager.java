@@ -7,14 +7,19 @@
 package thegamebrett;
 
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.PropertyResourceBundle;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import thegamebrett.action.ActionRequest;
 import thegamebrett.action.ActionResponse;
 import thegamebrett.action.request.GUIRequest;
+import thegamebrett.action.request.InteractionRequestFromGUI;
 import thegamebrett.action.request.MobileRequest;
 import thegamebrett.action.request.SoundRequest;
 import thegamebrett.action.request.TimerRequest;
+import thegamebrett.action.response.InteractionResponse;
 import thegamebrett.action.response.StartPseudoResponse;
 import thegamebrett.gui.GUIApplication;
 import thegamebrett.mobile.MobileManager;
@@ -34,6 +39,8 @@ public class Manager {
     private SoundManager soundManager;
     private MobileManager mobileManager;
     private TimeManager timeManager;
+    public static final String LANGUAGE = "languages";
+    public static ResourceBundle rb = PropertyResourceBundle.getBundle(LANGUAGE, Locale.GERMAN);
         
     private GUIApplication gui;
 
@@ -82,6 +89,16 @@ public class Manager {
     
     /** reicht ActionResponse-Object durch und gibt ActionRequest-Object zuruek */
     public void react(ActionResponse response) {
+        // fuer UI
+        if(response instanceof InteractionResponse) { 
+            InteractionResponse ir = (InteractionResponse) response;
+            if(ir.getConcerningInteractionRequest() instanceof InteractionRequestFromGUI) {
+                gui.takeResponse(ir);
+                return;
+            }
+        }
+        
+        // fuer Model
         ActionRequest[] ars;
         synchronized(model) {
             ars = model.react(response);

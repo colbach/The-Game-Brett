@@ -17,14 +17,14 @@ import javafx.util.Duration;
  *
  * @author Cenk
  */
-public class MBar 
+public class MenueBar 
 {
     private Rectangle2D dimension;
     private Canvas c;
     private Pane root;
     private boolean aktivated;
     
-    public MBar()
+    public MenueBar()
     {
       dimension = Screen.getPrimary().getBounds();
       root = new Pane();
@@ -36,7 +36,7 @@ public class MBar
       tt.setCycleCount(1);
       tt.setAutoReverse(true);
       
-      Canvas menuBar = new Canvas((int)dimension.getWidth(),400);
+      Canvas menuBar = new Canvas((int)dimension.getWidth(),600);
       GraphicsContext gc = menuBar.getGraphicsContext2D();
       drawShapes(gc);
       root.getChildren().add(menuBar);
@@ -45,8 +45,8 @@ public class MBar
     private void drawShapes(GraphicsContext gc) 
     {
         gc.setLineWidth(4);
-        gc.setFill(Color.LIGHTGRAY);
-        gc.fillArc(-50, 100, (int)dimension.getWidth()+200, 350, 0, 300, ArcType.OPEN);
+        gc.setFill(Color.gray(0.8));
+        gc.fillArc(-100, 100, (int)dimension.getWidth()+200, 350, 0, 300, ArcType.OPEN);
     }
 
     public Pane getRoot() {

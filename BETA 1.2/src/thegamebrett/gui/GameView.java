@@ -1,19 +1,23 @@
 package thegamebrett.gui;
 
-import java.util.HashMap;
-import javafx.animation.Interpolator;
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.control.Button;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import thegamebrett.Manager;
+import thegamebrett.action.request.GameEndRequest;
+import thegamebrett.action.request.InteractionRequestFromGUI;
 import thegamebrett.model.Model;
-import thegamebrett.model.elements.Board;
-import thegamebrett.model.elements.Element;
-import thegamebrett.model.elements.Figure;
+import thegamebrett.model.Player;
+import thegamebrett.network.PlayerNotRegisteredException;
+import thegamebrett.usercharacter.UserCharacter;
 
 /**
  *
@@ -27,34 +31,94 @@ public class GameView extends Group {
     public static final int GUIUPDATE_ALL = GUIUPDATE_FIELDS + GUIUPDATE_FIGURES + GUIUPDATE_BOARDLAYOUT;
 
     public Rectangle r = new Rectangle();
-    //private Canvas[] fields = new Canvas[0];
-    //private Canvas[] figures = new Canvas[0];
 
     private Model gameModel = null;
+    private final Manager manager;
+    
+    private RotatingTextField rotatingTextField;
 
     Group groupBack;
     Group groupMid;
     Group groupTop;
-    
-    public GameView() {
-        super();
+    Group groupUserImageCicles;
 
+    public GameView(Manager manager) {
+        super();
+        this.manager = manager;
         groupBack = new Group();
         groupMid = new Group();
         groupTop = new Group();
+        groupUserImageCicles = new Group();
         getChildren().add(groupBack);
         getChildren().add(groupMid);
         getChildren().add(groupTop);
+        getChildren().add(groupUserImageCicles);
 
     }
+    
+    public void setRotatingTextField(String message,Player p) {
+        int width = ScreenResolution.getScreenWidth()*1/3;
+        int height = ScreenResolution.getScreenHeigth()*1/3;
+        
+        rotatingTextField = new RotatingTextField(width, height, message);
+        
+        rotatingTextField.setLayoutX(ScreenResolution.getScreenWidth()/2 - width/2);
+        rotatingTextField.setLayoutY(ScreenResolution.getScreenHeigth()/2 - height/2);
+        if(p != null) {
+            int playerPosition = p.getUser().getSittingPlace();
+       
+            switch(playerPosition) {
+                case(0):
+                   rotatingTextField.rotate(240);
+                  break;
+                case(1):
+                  rotatingTextField.rotate(270);
+                   break;
+                case(2):
+                  rotatingTextField.rotate(320);
+                  break;
+                case(3):
+                   rotatingTextField.rotate(0);
+                   break;
+                case(4):
+                   rotatingTextField.rotate(60);
+                   break;
+                case(5):
+                   rotatingTextField.rotate(90);
+                   break;
+                case(6):
+                   rotatingTextField.rotate(150);
+                   break;
+                case(7):
+                   rotatingTextField.rotate(180);
+                   break;    
+            }
+        } else {
+            rotatingTextField.rotate(0);
+        }
+        Platform.runLater(() -> {
+            groupUserImageCicles.getChildren().add(rotatingTextField);
+        });
+        
+    }
 
+    public void removeRotatingTextField() {
+        if(rotatingTextField != null) {
+            Platform.runLater(() -> {
+            groupUserImageCicles.getChildren().remove(rotatingTextField);
+            });
+        }
+    }
+    
     public void setGameModel(Model gameModel) {
         this.gameModel = gameModel;
         groupBack.getChildren().clear();
         groupMid.getChildren().clear();
         groupTop.getChildren().clear();
+        groupUserImageCicles.getChildren().clear();
 
         update(GUIUPDATE_ALL, false, 0);
+        addUserImageCircles(gameModel);
 
     }
 
@@ -63,12 +127,13 @@ public class GameView extends Group {
     }
 
     public void updateOnFXThread(int value, boolean animated, int delay) {
-        Platform.runLater(()->{
+        Platform.runLater(() -> {
             update(value, animated, delay);
         });
     }
+
     private void update(int value, boolean animated, int delay) {
-        
+
         if (gameModel != null) {
             if (value < 0 || value > 7) {
                 throw new IllegalArgumentException("0 <= value <= 7");
@@ -95,32 +160,150 @@ public class GameView extends Group {
                 groupBack.getChildren().clear();
                 groupBack.getChildren().add(updatedBoardBackground);
             }
-            
+
             /*try {
                     Thread.sleep(1000);
             } catch (InterruptedException ex) { }*/
-            
             if (updateFigures) {
                 /*Canvas[] updatedFigures =*/ GUILoader.createFigures(gameModel, groupTop.getChildren());
                 //groupTop.getChildren().clear();
                 //groupTop.getChildren().addAll(updatedFigures);
-                
-                for(Node c : groupTop.getChildren()) {
-                    Transition t = (Transition)c.getUserData();
-                    if(t.getNewX() != t.getOldX() || t.getNewY() != t.getOldY()) {
+
+                for (Node c : groupTop.getChildren()) {
+                    Transition t = (Transition) c.getUserData();
+                    if (t.getNewX() != t.getOldX() || t.getNewY() != t.getOldY()) {
                         TranslateTransition tt = new TranslateTransition(Duration.millis(2000), c);
-                    
-                        tt.setByX(t.getNewX()-t.getOldX());
-                        tt.setByY(t.getNewY()-t.getOldY());
+
+                        tt.setByX(t.getNewX() - t.getOldX());
+                        tt.setByY(t.getNewY() - t.getOldY());
                         //System.out.println(t.getNewX() + " " + t.getOldX() + " " + t.getNewY() + " " + t.getOldY());
                         //System.out.println("t.newX-t.oldX="+(t.getNewX()-t.getOldX()) + " t.newY-t.oldY=" + (t.getNewY()-t.getOldY()));
                         tt.play();
                     }
-                    
+
                 }
             }
         }
 
     }
     
+    private class GameEndTask extends TimerTask {
+        private final GameView gv;
+        private final GameEndRequest ger;
+        public GameEndTask(GameView gv, GameEndRequest ger) {
+            this.gv = gv;
+            this.ger = ger;
+        }
+        public void run() {
+            gv.gameEnd(ger);
+        }
+    }
+    public void handleGameEndRequest(GameEndRequest ger) {
+        Timer timer = new Timer();
+        timer.schedule(new GameEndTask(this, ger), ger.getDelay());
+    }
+
+    private void gameEnd(GameEndRequest ger) {
+        System.out.println("Game Over");
+        
+        Platform.runLater(() -> {
+            groupUserImageCicles.getChildren().add(0, GUILoader.createGameEndScreen(ger));
+            Button b = new Button(Manager.rb.getString("Ok"));
+            b.setPrefWidth(50d);
+            b.setLayoutX(ScreenResolution.getScreenWidth() / 2 - 25d);
+            b.setLayoutY(ScreenResolution.getScreenHeigth() / 3 * 2 + 60);
+
+            for (Player player : gameModel.getPlayers()) {
+                try {
+                    manager.getMobileManager().react(new InteractionRequestFromGUI(ger.getAcknowledgment(), new Object[]{Manager.rb.getString("Ok")}, player, true, gameModel));
+                } catch (PlayerNotRegisteredException ex) {
+                    System.err.println("PlayerNotRegisteredException");
+                }
+            }
+            b.setOnAction((e) -> {
+                gameEndButtonClick(gameModel);
+            });
+            groupUserImageCicles.getChildren().add(b);
+        });
+    }
+
+    public void gameEndButtonClick(Model concerningModel) {
+        if (concerningModel == gameModel) {
+            manager.getMobileManager().getNetworkManager().getNetworkGameSelector().endGame();
+            Platform.runLater(() -> {
+                manager.getGui().showMenuScene();
+            });
+        }
+    }
+    
+    
+
+    public void addUserImageCircles(Model model) {
+        ArrayList<Player> us = model.getPlayers();
+        ArrayList<Canvas> uics = new ArrayList<>();
+        Platform.runLater(() -> {
+            for (int i = 0; i < us.size(); i++) {
+                if (us.get(i) != null && us.get(i).getUser() != null && us.get(i).getUser().getUserCharacter() != null) {
+                    UserCharacter uic = us.get(i).getUser().getUserCharacter();
+                    int size = 130;
+                    int placing = 40;
+                    Canvas c = GUILoader.createUserImageCircle(uic, size, size);
+                    int sp = us.get(i).getUser().getSittingPlace();
+                    switch (sp) {
+                        case (0):
+                            c.setLayoutX(ScreenResolution.getScreenWidth() - (size / 2) - placing);
+                            c.setLayoutY(0 - (size / 2) + placing);
+                            break;
+                        case (1):
+                            c.setLayoutX(ScreenResolution.getScreenWidth() - (size / 2) - placing);
+                            c.setLayoutY(ScreenResolution.getScreenHeigth() / 2 - (size / 2));
+                            break;
+                        case (2):
+                            c.setLayoutX(ScreenResolution.getScreenWidth() - (size / 2) - placing);
+                            c.setLayoutY(ScreenResolution.getScreenHeigth() - (size / 2) - placing);
+                            break;
+                        case (3):
+                            c.setLayoutX(ScreenResolution.getScreenWidth() / 2 - (size / 2));
+                            c.setLayoutY(ScreenResolution.getScreenHeigth() - (size / 2) - placing);
+                            break;
+                        case (4):
+                            c.setLayoutX(0 - (size / 2) + placing);
+                            c.setLayoutY(ScreenResolution.getScreenHeigth() - (size / 2) - placing);
+                            break;
+                        case (5):
+                            c.setLayoutX(0 - (size / 2) + placing);
+                            c.setLayoutY(ScreenResolution.getScreenHeigth() / 2 - (size / 2));
+                            break;
+                        case (6):
+                            c.setLayoutX(0 - (size / 2) + placing);
+                            c.setLayoutY(0 - (size / 2) + placing);
+                            break;
+                        case (7):
+                            c.setLayoutX(ScreenResolution.getScreenWidth() / 2 - (size / 2));
+                            c.setLayoutY(0 - (size / 2) + placing);
+                            break;
+                    }
+                    /*System.out.println("uic.getImage().getWidth() " + uic.getImage().getWidth());
+                    System.out.println("uic.getImage().getHeight() " + uic.getImage().getHeight());
+                    System.out.println("uic.getLayoutX() " + uic.getLayoutX());
+                    System.out.println("uic.getLayoutY() " + uic.getLayoutY());
+                    System.out.println("ScreenResolution.getScreenWidth() " + ScreenResolution.getScreenWidth());
+                    System.out.println("ScreenResolution.getScreenHeigth() " + ScreenResolution.getScreenHeigth());
+                    System.out.println("uic.getWidth() " + uic.getImage().getWidth());
+                    System.out.println("uic.getHeight() " + uic.getImage().getHeight());*/
+                    uics.add(c);
+                }
+            }
+            System.out.println("uics.size() " + uics.size());
+            groupUserImageCicles.getChildren().addAll(uics);
+
+            /*for(int i=0; i<us.size(); i++) {
+                Layout l = us.get(i).getUser().getUserCharacter().getLayout();
+                Canvas c = GUILoader.createCanvas(l, 300, 300, 0.1, 0.1);
+                groupUserImageCicles.getChildren().add(c);
+            }*/
+        });
+
+    }
+
 }

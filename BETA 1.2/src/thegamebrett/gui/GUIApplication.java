@@ -1,11 +1,16 @@
 package thegamebrett.gui;
 
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 import javafx.application.Application;
+import static javafx.application.Application.launch;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
@@ -15,7 +20,16 @@ import javafx.stage.WindowEvent;
 import thegamebrett.Manager;
 import thegamebrett.action.request.GUIRequest;
 import thegamebrett.action.request.GUIUpdateRequest;
-import thegamebrett.assets.AssetsLoader;
+import thegamebrett.action.request.GameEndRequest;
+import thegamebrett.action.request.TimerRequest;
+import thegamebrett.action.response.InteractionResponse;
+import thegamebrett.action.response.TimerResponse;
+import thegamebrett.model.Model;
+import thegamebrett.network.User;
+import thegamebrett.timer.TimeManager;
+import static javafx.application.Application.launch;
+import thegamebrett.action.request.RemoveScreenMessageRequest;
+import thegamebrett.action.request.ScreenMessageRequest;
 
 public class GUIApplication extends Application{
 
@@ -23,17 +37,11 @@ public class GUIApplication extends Application{
     private GameView gameView;
     private MenueView menuView;
     private Manager manager;
-    
     private Stage stage;
     
-    //private Scene menueScene;
-    //private Scene gameScene;
-    
+    private String title = "The Game Brett";
+
     public static void main(String[] args) {
-        if(args.length > 0) {
-            AssetsLoader.assetsfolder = args[0];
-        }
-        
         launch(new String[0]);
     }
     
@@ -46,11 +54,11 @@ public class GUIApplication extends Application{
         ScreenResolution.setBoardRatios(1, 1);
         
         
-        stage.setTitle("The Game Brett");
+        stage.setTitle(title);
         
         manager = new Manager(this);
         
-        gameView = new GameView();
+        gameView = new GameView(manager);
         menuView = new MenueView(manager);
         
         stage.setOnCloseRequest((WindowEvent we) -> {
@@ -60,7 +68,7 @@ public class GUIApplication extends Application{
                 
         stage.setFullScreen(true);
         root = new Group();
-        Scene scene = new Scene(root, Color.GAINSBORO);
+        Scene scene = new Scene(root, Color.LIGHTGREY);
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -76,7 +84,7 @@ public class GUIApplication extends Application{
             }
         });
         showMenuScene();
-        
+        scene.getStylesheets().add(getClass().getResource("GUIStyle.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
         
@@ -85,9 +93,16 @@ public class GUIApplication extends Application{
     public GameView getGameView() {
         return gameView;
     }
+
+    public MenueView getMenuView() {
+        return menuView;
+    }
+    
+    
     
     public void showMenuScene() {
         root.getChildren().clear();
+        menuView.refreshGameSelectedScreen();
         root.getChildren().add(menuView);
     }
     
@@ -95,6 +110,12 @@ public class GUIApplication extends Application{
     public void showOptions() {
         go = new GameOption();
         root.getChildren().add(go);
+    }
+    
+    public void takeResponse(InteractionResponse ir) {
+        if(ir.getConcerningInteractionRequest().getUserData() instanceof Model && gameView != null) {
+            gameView.gameEndButtonClick((Model) ir.getConcerningInteractionRequest().getUserData());
+        }
     }
     
     public void hideOptions() {
@@ -120,6 +141,16 @@ public class GUIApplication extends Application{
             
             //System.out.println(value);
             gameView.updateOnFXThread(value, ur.isAnimated(), ur.getDelay());
+        } else if(r instanceof ScreenMessageRequest) {
+            ScreenMessageRequest smr = (ScreenMessageRequest) r;
+            
+            gameView.setRotatingTextField(smr.getLabel(), smr.getPlayer());
+        } else if (r instanceof RemoveScreenMessageRequest)  {
+            gameView.removeRotatingTextField();
+        }
+        if(r instanceof GameEndRequest) {
+            GameEndRequest ger = (GameEndRequest) r;
+            gameView.handleGameEndRequest(ger);
         }
     }
     

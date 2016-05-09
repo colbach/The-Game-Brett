@@ -47,23 +47,34 @@ public class UserManager {
     }
 
     public String generateSystemClientChooserAvailabilityInfoForAPI() {
-        /*StringBuilder sb = new StringBuilder();
-        sb.append("<h1> Melden sie sich an System an </h1>");
-        for (int i = 0; i < SYSTEM_CLIENT_NAMES.length; i++) {
-            if (systemClients[i] == null || !systemClients[i].isAlife()) {
-                sb.append("<div align=\"center\"><button class=\"choices\" onclick=\"tryToLogIn('" + SYSTEM_CLIENT_IDS[i] + "')\">" + SYSTEM_CLIENT_NAMES[i] + "</button></div>");
-            } else {
-                sb.append("<div align=\"center\"><button class=\"choices\" disabled>" + SYSTEM_CLIENT_NAMES[i] + "</button></div>");
-            }
-        }
-        return sb.toString();*/
         return WebGenerator.generateSystemClientChooserAvailabilityInfoForAPI(this);
+    }
+    
+    public String generateFreePositionHTML() {
+        return WebGenerator.generateFreePositionHTML(this);
     }
 
     public boolean tryToSetSystemClient(String clientID, User c) {
+        
         for (int i = 0; i < SYSTEM_CLIENT_NAMES.length; i++) {
             if (clientID.equals(SYSTEM_CLIENT_IDS[i]) && (systemClients[i] == null || !systemClients[i].isAlife())) {
+                if(systemClients[i] != null) {
+                    systemClients[i].setSittingPlace(-1);
+                }
                 systemClients[i] = c;
+                systemClients[i].setSittingPlace(i);
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean tryToReplaceSystemClient(String clientID, InetAddress ia) {
+        final NetworkGameSelector ngs = manager.getMobileManager().getNetworkManager().getNetworkGameSelector();
+        
+        for (int i = 0; i < SYSTEM_CLIENT_NAMES.length; i++) {
+            if (clientID.equals(SYSTEM_CLIENT_IDS[i]) && !systemClients[i].isAlife()) {
+                systemClients[i].setInetAddress(ia);
                 return true;
             }
         }
@@ -103,9 +114,21 @@ public class UserManager {
         return false;
     }
     
+    public boolean isSystemClient(InetAddress ia) {
+        for (User systemClient : systemClients) {
+            if (systemClient!=null && systemClient.matchInetAddress(ia)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
     public void logOutSystemClient(User c) {
         for (int i = 0; i < systemClients.length; i++) {
             if (systemClients[i] == c) {
+                if(systemClients[i] != null) {
+                    systemClients[i].setSittingPlace(-1);
+                }
                 systemClients[i] = null;
                 c.setWebPage(User.WEB_PAGE_CHOOSE_POSITION);
             }

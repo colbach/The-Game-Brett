@@ -16,13 +16,12 @@ import thegamebrett.action.response.InteractionResponse;
  */
 public class User {
     
-    public int TIMEOUT = 30000; //in ms (1s = 1000ms)
+    public int TIMEOUT = 7000; //in ms (1s = 1000ms)
     
     // Achtung: Werte Niemals aendern da sie in Webseiten hard-gecodet sind
     public static final int WEB_PAGE_CHOOSE_POSITION = 0;
     public static final int WEB_PAGE_CHOOSE_CHARACTER = 1;
     public static final int WEB_PAGE_CHOOSE_GAME = 2;
-    public static final int WEB_PAGE_WAIT = 3;
     public static final int WEB_PAGE_PLAY_GAME = 4;
     public static final int WEB_PAGE_GAME_ALREADY_STARTED = 5;
     public static final int WEB_PAGE_PREFERENCES = 6;
@@ -53,6 +52,8 @@ public class User {
     private volatile InetAddress inetAddress;
 
     private volatile InteractionRequest actualInteractionRequest;
+    
+    private volatile int sittingPlace = -1;
 
     private String htmlCache = null;
 
@@ -71,7 +72,7 @@ public class User {
     }
     
     public boolean hasUserCharacter() {
-        return character == null;
+        return character!= null;
     }
     
     public void removeUserCharacter() {
@@ -95,7 +96,7 @@ public class User {
     }
 
     public boolean isAlife() {
-        return lastSignOfLife + TIMEOUT < System.currentTimeMillis();
+        return lastSignOfLife + TIMEOUT > System.currentTimeMillis();
     }
 
     public void setInetAddress(InetAddress inetAddress) {
@@ -106,7 +107,6 @@ public class User {
         return inetAddress;
     }
 
-    //???Kann man so vergleichen
     public boolean matchInetAddress(InetAddress ia) {
         return inetAddress.equals(ia);
     }
@@ -156,6 +156,7 @@ public class User {
     }
 
     public void setWebPage(int webPage) {
+        System.out.println("webPage set:" + webPage);
         this.webPage = webPage;
     }
 
@@ -166,4 +167,14 @@ public class User {
             return "Client id=" + clientId;
         }
     }
+
+    public int getSittingPlace() {
+        return sittingPlace;
+    }
+
+    public void setSittingPlace(int sittingPlace) {
+        this.sittingPlace = sittingPlace;
+    }
+    
+    
 }

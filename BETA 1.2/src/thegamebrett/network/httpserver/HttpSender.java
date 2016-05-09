@@ -39,9 +39,9 @@ public class HttpSender {
     }
 
     protected static void sendText(int statusCode, String text, String mime, DataOutputStream outputStream) throws Exception {
-
-        outputStream.write(HttpResponseHeader.generateResponseHeader(statusCode, mime, text.length()));
-        outputStream.write(text.getBytes("UTF-8"));
+        byte[] bytes = text.getBytes("UTF-8");
+        outputStream.write(HttpResponseHeader.generateResponseHeader(statusCode, mime, /*text.length()*/bytes.length));
+        outputStream.write(bytes);
         outputStream.close();
     }
 }

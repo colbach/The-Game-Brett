@@ -14,22 +14,25 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import javax.imageio.ImageIO;
+import thegamebrett.Manager;
 
 /**
  * @author Christian Colbach
  */
 public class AssetsLoader {
-
+    
     public static String assetsfolder = null;
 
     static {
         //assetsfolder = "/Users/Korè/Documents/Studium/5. Semester(WS)/Interdisziplinäres Teamprojekt/The-Game-Brett/BETA 1.1/src/assetsfolder/";
-        assetsfolder = System.getProperty("user.home") + "/GitHub/The-Game-Brett/BETA 1.1/src/assetsfolder/";
+        assetsfolder = System.getProperty("user.home") + "/GitHub/The-Game-Brett/BETA 1.2/src/assetsfolder/";
         System.out.println("assetsfolder = " + assetsfolder);
     }
 
@@ -69,7 +72,7 @@ public class AssetsLoader {
     /**
      * Parameter: Datei ausgehend von assetsfolder
      */
-    public static File loadFileIgnoreExceptions(String filename) {
+    public static File loadFile_SuppressExceptions(String filename) {
         try {
             return loadFile(filename);
         } catch (AssetNotExistsException ex) {
@@ -123,6 +126,55 @@ public class AssetsLoader {
             Logger.getLogger(AssetsLoader.class.getName()).log(Level.SEVERE, null, ex);
             return "";
         }
+    }
+    
+    public static String loadText_localized_SuppressExceptions(String filename) {
+        try {
+            return loadText_localized(filename);
+        } catch (AssetNotExistsException ex) {
+            Logger.getLogger(AssetsLoader.class.getName()).log(Level.SEVERE, null, ex);
+            return "";
+        }
+    }
+    
+    private static HashMap<String, String> localizedCache = new HashMap<>();
+    public static String loadText_localized(String filename) throws AssetNotExistsException {
+        String language = Manager.rb.getLocale().getDisplayCountry();
+        String localizedFilename = filename + "_" + language;
+        if(localizedCache.containsKey(localizedFilename)) {
+            return localizedCache.get(localizedFilename);
+        }
+        String srcText = loadText(filename);
+        String[] separatedText = srcText.split("##");
+        StringBuilder localizedText = new StringBuilder();
+        
+        ResourceBundle rb = Manager.rb;
+        int i=0;
+        if(separatedText.length > 0 && srcText.startsWith("##")) {
+            if(rb.containsKey(separatedText[i])) {
+                localizedText.append(rb.getString(separatedText[i]));
+            } else {
+                localizedText.append("??" + separatedText[i] + "??");
+            }
+            i++;
+        }
+        boolean toogleLocTxt = false;
+        while(i<separatedText.length) {
+            if(toogleLocTxt) {
+                if(rb.containsKey(separatedText[i])) {
+                    localizedText.append(rb.getString(separatedText[i]));
+                } else {
+                    localizedText.append("??" + separatedText[i] + "??");
+                }
+            } else {
+                localizedText.append(separatedText[i]);
+            }
+            toogleLocTxt = !toogleLocTxt;
+            i++;
+        }
+        String localizedTextString = localizedText.toString();
+        localizedCache.put(localizedFilename, localizedTextString);
+        return localizedTextString;
     }
 
     /**

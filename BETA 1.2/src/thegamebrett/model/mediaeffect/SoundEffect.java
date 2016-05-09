@@ -7,7 +7,7 @@ package thegamebrett.model.mediaeffect;
 
 /**
  *
- * @author christiancolbach
+ * @author Christian Colbach
  */
 public class SoundEffect {
     

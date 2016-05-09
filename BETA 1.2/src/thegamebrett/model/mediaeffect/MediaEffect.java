@@ -6,7 +6,7 @@ import thegamebrett.sound.SoundManager;
 /**
  * Animation und Sound Wiedergabe
  * 
- * @author christiancolbach
+ * @author Christian Colbach
  */
 public class MediaEffect {
     

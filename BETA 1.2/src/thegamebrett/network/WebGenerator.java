@@ -21,8 +21,6 @@ import thegamebrett.usercharacter.UserCharacterDatabase;
  * @author christiancolbach
  */
 public class WebGenerator {
-
-    public static String HTML = AssetsLoader.loadText_SuppressExceptions("web/index.html");
     
     public static String generateHTMLContent(String titel, Object[] choices, long messageID) {
         StringBuilder sb = new StringBuilder();
@@ -38,7 +36,7 @@ public class WebGenerator {
     private static String generateHTMLButton(String choice, long messageID, int anwerID) {
         return "<div align=\"center\"><button class=\"choices\" onclick=\"reply('" + messageID + "?" + anwerID+ "')\">" + choice + "</button></div>";
     }
-    
+        
     public static String generateHTMLContent(String titel, String acknowledgment, long messageID) {
         StringBuilder sb = new StringBuilder();
         sb.append("<h1>" + titel + "</h1>");
@@ -67,7 +65,7 @@ public class WebGenerator {
     }
     
     private static String generateChooseCharacterWebPage() {
-        String template = AssetsLoader.loadText_SuppressExceptions("web/chooseCharacter.html");
+        String template = AssetsLoader.loadText_localized_SuppressExceptions("web/chooseCharacter.html");
         return template.replaceFirst("<!--replace-->", generateUserCharacterChooserHTML());
     }
 
@@ -83,7 +81,7 @@ public class WebGenerator {
     public static File getGameImage(int i) {
         File f = gameImagesCache.get(i);
         if(f == null) {
-            f = AssetsLoader.saveImage("web/generated/gameIcon" + i, GameCollection.imageCache[i]);
+            f = AssetsLoader.saveImage("web/temp/gameIcon" + i, GameCollection.imageCache[i]);
             gameImagesCache.put(i, f);
         }
         return f;
@@ -102,7 +100,7 @@ public class WebGenerator {
     }
     
     private static String generateChooseGameWebPage() {
-        String template = AssetsLoader.loadText_SuppressExceptions("web/chooseGame.html");
+        String template = AssetsLoader.loadText_localized_SuppressExceptions("web/chooseGame.html");
         return template.replaceFirst("<!--replace-->", generateGameChooserHTML());
     }
     
@@ -174,6 +172,31 @@ public class WebGenerator {
             + "<button class=\"position\" "  + (bs[3] ? "onClick=\"tryToLogIn('" + UserManager.SYSTEM_CLIENT_IDS[3] + "')\"" : " disabled") + "><img src=\"position-" + (bs[3] ? "enabled" : "disabled") + ".png\" alt=\"" + UserManager.SYSTEM_CLIENT_NAMES[3] + "\" class=\"posImage\"></button>\n"
             + "<button class=\"position\" "  + (bs[2] ? "onClick=\"tryToLogIn('" + UserManager.SYSTEM_CLIENT_IDS[2] + "')\"" : " disabled") + "><img src=\"position-" + (bs[2] ? "enabled" : "disabled") + ".png\" alt=\"" + UserManager.SYSTEM_CLIENT_NAMES[2] + "\" class=\"posImage\"></button>\n"
         + "</div>\n";*/
+    }
+
+    static String generateFreePositionHTML(UserManager um) {
+        StringBuilder sb = new StringBuilder();
+        User[] scs = um.getSystemClients();
+        for(int i=0; i<scs.length; i++) {
+            if(scs[i]!= null && !scs[i].isAlife()) {
+                String name = "null";
+                try {
+                    name = scs[i].getUserCharacter().getName();
+                } catch(Exception e) {
+                    e.printStackTrace();
+                }
+                sb.append("<div align=\"center\"><button class=\"choices\" onclick=\"tryToLogIn('" + UserManager.SYSTEM_CLIENT_IDS[i] + "')\">" + name + "</button></div>");
+            }
+        }
+        /*
+        for (int i = 0; i < SYSTEM_CLIENT_NAMES.length; i++) {
+            if (systemClients[i] == null || !systemClients[i].isAlife()) {
+                sb.append("<div align=\"center\"><button class=\"choices\" onclick=\"tryToLogIn('" + SYSTEM_CLIENT_IDS[i] + "')\">" + SYSTEM_CLIENT_NAMES[i] + "</button></div>");
+            } else {
+                sb.append("<div align=\"center\"><button class=\"choices\" disabled>" + SYSTEM_CLIENT_NAMES[i] + "</button></div>");
+            }
+        }*/
+        return sb.toString();
     }
     
 }

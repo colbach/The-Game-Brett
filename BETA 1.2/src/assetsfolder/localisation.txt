@@ -1,3 +1,0 @@
-ID, English, Deutsch, Französisch
--------------------------------------
-h, hello, Hallo, Bonjour

@@ -33,7 +33,7 @@ public class MobileManager {
         if(mobileRequest instanceof InteractionRequest)
             networkManager.deliverMessage((InteractionRequest) mobileRequest);
         else
-            throw new UnsupportedOperationException("Not supported yet."); 
+            System.err.println("Not supported yet."); 
     }
 
     public NetworkManager getNetworkManager() {
