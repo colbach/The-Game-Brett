@@ -30,6 +30,8 @@ import thegamebrett.timer.TimeManager;
 import static javafx.application.Application.launch;
 import thegamebrett.action.request.RemoveScreenMessageRequest;
 import thegamebrett.action.request.ScreenMessageRequest;
+import static javafx.application.Application.launch;
+import static javafx.application.Application.launch;
 
 public class GUIApplication extends Application{
 
@@ -145,7 +147,9 @@ public class GUIApplication extends Application{
             ScreenMessageRequest smr = (ScreenMessageRequest) r;
             
             gameView.setRotatingTextField(smr.getLabel(), smr.getPlayer());
-        } else if (r instanceof RemoveScreenMessageRequest)  {
+        } else if(r instanceof RemoveScreenMessageRequest) {            
+            gameView.removeRotatingTextField();
+        }else if (r instanceof RemoveScreenMessageRequest)  {
             gameView.removeRotatingTextField();
         }
         if(r instanceof GameEndRequest) {

@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package thegamebrett.game.PSS;
+package thegamebrett.game.KFSS;
 
+import thegamebrett.game.PSS.*;
 import java.util.ArrayList;
 import thegamebrett.model.Layout;
 import thegamebrett.model.RelativePoint;
@@ -15,9 +16,9 @@ import thegamebrett.model.elements.Field;
  *
  * @author Kore
  */
-public class PSS_Board extends Board{
+public class KFSS_Board extends Board{
 
-    private ArrayList<PSS_Field> fields = new ArrayList<>();
+    private ArrayList<KFSS_Field> fields = new ArrayList<>();
     private String[] fieldContent;
     private double r;
     private RelativePoint pos;
@@ -26,7 +27,7 @@ public class PSS_Board extends Board{
     private final float ratioX = 1;
     private final float ratioY = 1;
     
-    public PSS_Board(String[] fieldContent){
+    public KFSS_Board(String[] fieldContent){
         super();
         this.layout = new Layout();
         this.fieldContent = fieldContent;
@@ -94,7 +95,7 @@ public class PSS_Board extends Board{
             fieldLayout.setFormFactor(Layout.FORM_FACTOR_SQUARE);
             
             float rat = 1.0f/9.0f;
-            PSS_Field newField = new PSS_Field(i,ratioX/9,ratioY/9,pos,null,fieldLayout,null);
+            KFSS_Field newField = new KFSS_Field(i,ratioX/9,ratioY/9,pos,null,fieldLayout,null);
             if(!fields.isEmpty()){
                 fields.get(fields.size()-1).addNext(newField);
             }
@@ -125,7 +126,7 @@ public class PSS_Board extends Board{
     }
     
     
-    public ArrayList<PSS_Field> getFields() {
+    public ArrayList<KFSS_Field> getFields() {
         return fields;
     }
 

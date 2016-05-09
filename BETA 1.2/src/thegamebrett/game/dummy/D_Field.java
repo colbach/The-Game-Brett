@@ -13,14 +13,22 @@ public class D_Field extends Field{
     private D_Field next;
     private Layout layout;
     private MediaEffect me;
-    private int fieldType;
+    private int index;
     
-    public D_Field(double width, double height, RelativePoint position, Layout layout){
+    public D_Field(double width, double height, RelativePoint position, Layout layout, int index) {
         this.width = width;
         this.height = height;
         this.position = position;
         this.layout = layout;
-        this.fieldType = fieldType;
+        this.index = index;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
     
     @Override
@@ -28,12 +36,6 @@ public class D_Field extends Field{
         return position;
     }
     
-    public void blub() {
-        registerChange();
-        height += 0.01;
-        width += 0.01;
-    }
-
     @Override
     public double getWidthRelative() {
         return width;
@@ -78,10 +80,6 @@ public class D_Field extends Field{
 
     public RelativePoint getPosition() {
         return position;
-    }
-
-    public int getFieldType() {
-        return fieldType;
     }
     
     @Override

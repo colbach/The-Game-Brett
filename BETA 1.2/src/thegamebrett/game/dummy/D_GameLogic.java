@@ -34,29 +34,23 @@ public class D_GameLogic extends GameLogic{
     }
     
     private boolean gameEnded = false;
+    private boolean messageShown = false;
+    
     @Override
     public ActionRequest[] next(ActionResponse as) {
         if(gameEnded) {
             return null;
         }
         
-        tt++;
-        if(tt == 10) {
-            GameEndRequest ger = new GameEndRequest(getDependingModel().getPlayers().toArray(new Player[0]), "Jeder gewinnt", 5000);
-            gameEnded = true;
-            return new ActionRequest[] {ger};
-        }
-        
-        
         ArrayList<ActionRequest> requests = new ArrayList<>();
-        if(tt == 4) {
-            ScreenMessageRequest ger = new ScreenMessageRequest("Dummy", getDependingModel().getPlayers().get(0));
-            requests.add(ger);
-        }
-        if(tt == 5) {
+        
+        if(messageShown) {
             RemoveScreenMessageRequest rsmr = new RemoveScreenMessageRequest();
             requests.add(rsmr);
+            messageShown = false;
         }
+        
+        
         if(as instanceof StartPseudoResponse){
             requests.add(new GUIUpdateRequest(GUIUpdateRequest.GUIUPDATE_ALL));
             Player p = getDependingModel().getPlayers().get(0);
@@ -69,10 +63,19 @@ public class D_GameLogic extends GameLogic{
                 int n = ((Integer)res.getChoice());
                 for(int i=0; i<n; i++) {
                     Figure figure = res.getConcerningInteractionRequest().getPlayer().getFigures()[0];
-                    //figure.setRelativeHeight(figure.getRelativeHeight() + 0.005);
-                    figure.setField(figure.getField().getNext()[0]);
-                    //((D_Field)figure.getField()).blub();
-                    //figure.getField().getLayout().setBackgroundColor(Color.RED);
+                    D_Field field = (D_Field)figure.getField().getNext()[0];
+                    figure.setField(field);
+                    if(field.getIndex() == 4) {
+                        //ScreenMessageRequest ger = new ScreenMessageRequest("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet,", res.getConcerningInteractionRequest().getPlayer());
+                        ScreenMessageRequest ger = new ScreenMessageRequest(res.getConcerningInteractionRequest().getPlayer().getUser().getUserCharacter().getName() + " hat eine halbe Runde geschafft", res.getConcerningInteractionRequest().getPlayer());
+                        messageShown = true;
+                        requests.add(ger);
+                    }
+                    if(field.getIndex() == 9) {
+                        GameEndRequest ger = new GameEndRequest(new Player[] {res.getConcerningInteractionRequest().getPlayer()}, res.getConcerningInteractionRequest().getPlayer().getUser().getUserCharacter().getName() + " hat gewonnen!", 1000);
+                        gameEnded = true;
+                        return new ActionRequest[] {new RemoveScreenMessageRequest(), new GUIUpdateRequest(GUIUpdateRequest.GUIUPDATE_ALL), ger};
+                    }
                 }
                 requests.add(new GUIUpdateRequest(GUIUpdateRequest.GUIUPDATE_ALL));
                 requests.add(new PlaySoundRequest(new SoundEffect("sounds/Mouth_45.wav")));
