@@ -63,8 +63,8 @@ public class KFSS_GameLogic extends GameLogic{
         "Deine Nebensitzer bekommen eine Suessigkeit und du gehst zurueck auf Start.",
         "Alle die vor dir sind duerfen 3 mal huepfen.",
         "38",
-        "Trinke und ziehe ein Kleidungsstueck aus!",
-        "Trinke so viel wie du gewuerfelt hast.",
+        "Stell dich auf einen Stuhl und bleibe da bis du wieder dran bist!",
+        ".",
         "Es trinkt die Person, die am wenigsten Muenzen bei sich traegt.",
         "Alle wuerfeln. Alle mit einer 1 duerfen trinken.",
         "Alle die eine Schwester haben trinken.",
@@ -100,7 +100,7 @@ public class KFSS_GameLogic extends GameLogic{
     
     
     
-    /* maximal und minimale Anzahl an Spielern die im Spiel mÃ¶glich sind**/
+    /* maximal und minimale Anzahl an Spielern die im Spiel moeglich sind**/
     private final int maximumPlayers = 8;
     private final int minimumPlayers = 1;
     
@@ -462,16 +462,6 @@ public class KFSS_GameLogic extends GameLogic{
         lastDice = random;
         return random;
     }
-    
-    @Override
-    public int getMaximumPlayers() {
-        return maximumPlayers;
-    }
-
-    @Override
-    public int getMinimumPlayers() {
-        return minimumPlayers;
-    }  
     
     public void setExpected(InteractionRequest quest){
         this.expected = quest;

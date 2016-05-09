@@ -26,7 +26,9 @@ public class KFSS_GameFactory implements GameFactory{
     
     private KFSS_Board board;
     
-   
+   /* maximal und minimale Anzahl an Spielern die im Spiel moeglich sind**/
+    private final int maximumPlayers = 8;
+    private final int minimumPlayers = 1;
 
     public Model createGame(ArrayList<User> users) throws TooMuchPlayers, TooFewPlayers {
         KFSS_GameLogic gl = new KFSS_GameLogic(null);
@@ -34,9 +36,9 @@ public class KFSS_GameFactory implements GameFactory{
         board = new KFSS_Board(gl.getFieldContent());
 
         
-        if(gl.getMaximumPlayers() < users.size()) {
+        if(getMaximumPlayers() < users.size()) {
             throw new TooMuchPlayers();
-        } else if(gl.getMinimumPlayers() > users.size()) {
+        } else if(getMinimumPlayers() > users.size()) {
             throw new TooFewPlayers();
         }
         ArrayList<Player> players = new ArrayList<>();
@@ -73,6 +75,16 @@ public class KFSS_GameFactory implements GameFactory{
     
     public KFSS_Board getBoard(){
         return board;
+    }
+
+    @Override
+    public int getMaximumPlayers() {
+        return maximumPlayers;
+    }
+
+    @Override
+    public int getMinimumPlayers() {
+        return minimumPlayers;
     }
     
 }
