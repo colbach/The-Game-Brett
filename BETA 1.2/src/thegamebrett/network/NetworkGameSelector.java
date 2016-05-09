@@ -31,14 +31,12 @@ public class NetworkGameSelector {
     public synchronized boolean tryToCancelGame(User canceler) {
         System.out.println(players.size());
         if((firstCanceler != canceler && System.currentTimeMillis()-cancelTime<10000) || players.size() <= 1) {
-            System.out.println("%%%%%+");
             endGame();
             Platform.runLater(() -> {
                 manager.getGui().showMenuScene();
             });
             return true;
         } else {
-            System.out.println("%%%%%-");
             firstCanceler = canceler;
             cancelTime = System.currentTimeMillis();
             return false;
@@ -76,11 +74,11 @@ public class NetworkGameSelector {
         
         User[] users = manager.getMobileManager().getUserManager().getSystemClients();
         
-        resetReadyList();
+        resetPlayers();
         
     }
 
-    private synchronized void resetReadyList() {
+    private synchronized void resetPlayers() {
         players.clear();
     }
 
@@ -133,7 +131,10 @@ public class NetworkGameSelector {
                     }
                 }
                 if(!plays) {
-                    systemClients[i] = null;
+                    if(systemClients[i] != null) {
+                        systemClients[i].removeUserCharacter();
+                        systemClients[i] = null;
+                    }
                 }
             }
             
@@ -171,11 +172,9 @@ public class NetworkGameSelector {
 
     public synchronized String getInfo() {
         if (!isGameSelected()) {
-            return "Es ist noch kein Spiel ausgewählt";
+            return Manager.rb.getString("NoGameChoosen");
         } else {
-            return selectedGame.getGameName() + " wurde angelegt.<br>"
-                    + "Es sind bereits " + players.size() + " Spieler eingetreten.<br>"
-                    + "(Minimum: " + selectedGame.getMinimumPlayers() + " Maximum: " + selectedGame.getMaximumPlayers() + ")";
+            return String.format(Manager.rb.getString("JoinedUserInfo"), players.size(), selectedGame.getMinimumPlayers(), selectedGame.getMaximumPlayers());
         }
     }
 

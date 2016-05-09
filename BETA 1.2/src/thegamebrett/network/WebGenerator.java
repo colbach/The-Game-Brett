@@ -22,6 +22,8 @@ import thegamebrett.usercharacter.UserCharacterDatabase;
  */
 public class WebGenerator {
     
+    public static final String ON = "ON", OFF = "OFF";
+    
     public static String generateHTMLContent(String titel, Object[] choices, long messageID) {
         StringBuilder sb = new StringBuilder();
         sb.append("<h1>" + titel + "</h1>");
@@ -56,9 +58,9 @@ public class WebGenerator {
             }
             
             if(!cs.get(i).isInUse()) {
-                sb.append("ON");
+                sb.append(ON);
             } else {
-                sb.append("OFF");
+                sb.append(OFF);
             }
         }
         return sb.toString();
@@ -146,11 +148,7 @@ public class WebGenerator {
                 isFirst = false;
             }
             
-            if(um.canSetSystemClient(i)) {
-                sb.append("ON");
-            } else {
-                sb.append("OFF");
-            }
+            sb.append(um.canSetSystemClient(i) ? ON : OFF);
         }
         
         return sb.toString();

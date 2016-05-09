@@ -96,7 +96,10 @@ public class User {
     }
 
     public boolean isAlife() {
-        return lastSignOfLife + TIMEOUT > System.currentTimeMillis();
+        if(inetAddress==null)
+            return false;
+        else
+            return lastSignOfLife + TIMEOUT > System.currentTimeMillis();
     }
 
     public void setInetAddress(InetAddress inetAddress) {
@@ -108,7 +111,10 @@ public class User {
     }
 
     public boolean matchInetAddress(InetAddress ia) {
-        return inetAddress.equals(ia);
+        if(ia == null || inetAddress == null)
+            return false;
+        else
+            return inetAddress.equals(ia);
     }
 
     public InteractionRequest getActualInteractionRequest() {
@@ -160,6 +166,7 @@ public class User {
     public int getWebPage() {
         
         if(getSittingPlace() < 0 || getSittingPlace() > UserManager.SYSTEM_CLIENT_IDS.length) {
+            System.out.println("getSittingPlace()->" + getSittingPlace());
             return WEB_PAGE_CHOOSE_POSITION;
         } else if(!hasUserCharacter()) {
             return WEB_PAGE_CHOOSE_CHARACTER;

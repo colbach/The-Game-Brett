@@ -34,12 +34,10 @@ public class D_GameFactory implements GameFactory {
             D_Player p = new D_Player(i, users.get(i));
             Layout l = new Layout();
             Image image;
-            try {
-                image = AssetsLoader.loadImage("images/test.png");
-                l.setBackgroundImage(image);
-            } catch (AssetNotExistsException ex) {
-                Logger.getLogger(D_GameFactory.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            image = users.get(i).getUserCharacter().getAvatar();  
+            l.setBorderColor(users.get(i).getUserCharacter().getFXColor());
+            l.setBorder(3);
+            l.setBackgroundImage(image);
             l.setFormFactor(Layout.FORM_FACTOR_OVAL);
             switch (i) {
                 case 0:

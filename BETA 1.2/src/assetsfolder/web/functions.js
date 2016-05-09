@@ -131,7 +131,7 @@ function tryToJoinGame() {
 }
 
 function tryToCreateGame(index, name) {
-    if (confirm("Willst du " + name + " erstellen? Weitere Spieler müssen dem Spiel beitreten damit das Spiel starten kann.")) {
+    if (confirm("##WantToOpenGame##: " + name)) {
         console.log("ja");
         
         var url = "tryToCreateGame?" + index;
@@ -215,6 +215,22 @@ function update() {
     };
 }
 
+function refreshFreePositionList() {
+    var url = "refreshFreePositionList";
+    var response = new XMLHttpRequest();
+    response.open("GET", url, true);
+    response.send();
+    response.onreadystatechange = function () {
+        if (response.readyState === 4 && response.status === 200) {
+            if (response.responseText === "direct") {
+                direct();
+            } else if (response.responseText !== "null") {
+                document.getElementById("refresh").innerHTML = response.responseText;
+            }
+        }
+    };
+}
+
 function tryToLogIn(position) {    
     var url = "tryToLogIn?" + position;
     var response = new XMLHttpRequest();
@@ -236,17 +252,19 @@ function tryToLogIn(position) {
 }
 
 function logOut() {
-    var url = "logOut";
-    var response = new XMLHttpRequest();
-    response.open("GET", url, true);
-    response.send();
-    response.onreadystatechange = function () {
-        if (response.readyState === 4 && response.status === 200) {
-            if (response.responseText === "OK") {
-                direct();
+    if (confirm("##WantToLogOut##")) {
+        var url = "logOut";
+        var response = new XMLHttpRequest();
+        response.open("GET", url, true);
+        response.send();
+        response.onreadystatechange = function () {
+            if (response.readyState === 4 && response.status === 200) {
+                if (response.responseText === "OK") {
+                    direct();
+                }
             }
-        }
-    };
+        };
+    }
 }
 
 function tryToCancelGame() {
