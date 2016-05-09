@@ -107,7 +107,6 @@ public class GUILoader {
                 Figure[] fs = p.getFigures();
 
                 for (Figure f : fs) {
-                    ////////
                     Canvas c = drawnElements.get(f);
                     if (c == null) {
                         c = createFigure(f);
@@ -122,7 +121,7 @@ public class GUILoader {
                         c.setLayoutY(lastT.getNewY());
                         children.add(c);
                     } else {
-                        Canvas tmp = createFigure(f); // aendern!!!!!
+                        Canvas tmp = createFigure(f);
                         Transition lastT = (Transition) c.getUserData();
                         c.setUserData(new Transition(lastT.getNewX(), lastT.getNewY(), tmp.getLayoutX(), tmp.getLayoutY()));
                     }
@@ -254,9 +253,8 @@ public class GUILoader {
                 }
                 gc.fillText(line, off, down);
                 line = "";
-            } else {
-                line += " " + word;
             }
+            line += " " + word;
         }
         if (line.length() != 0) {
             down += textHeight(line, gc);
@@ -269,9 +267,10 @@ public class GUILoader {
         }
 
         // --- Subtext ---
+        line = "";
         gc.setFill(layout.getTitleColor());
-        final double subtitelSize = 13 * (1 + layout.getTitleScaleFactor());
-        gc.setFont(Font.font("Arial", FontWeight.LIGHT, titelSize));
+        final double subtitelSize = 13 * (1 + layout.getSubtextScaleFactor());
+        gc.setFont(Font.font("Arial", FontWeight.LIGHT, subtitelSize));
 
         for (String word : layout.getSubtext().split(" ")) {
             if (textWidth(line + " " + word, gc) > w - 2 && line.length() != 0) {
@@ -282,9 +281,8 @@ public class GUILoader {
                 }
                 gc.fillText(line, off, 2 + down);
                 line = "";
-            } else {
-                line += " " + word;
             }
+            line += " " + word;
         }
         if (line.length() != 0) {
             down += textHeight(line, gc);

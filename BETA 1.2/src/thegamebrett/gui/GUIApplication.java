@@ -1,5 +1,6 @@
 package thegamebrett.gui;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -31,7 +32,7 @@ import static javafx.application.Application.launch;
 import thegamebrett.action.request.RemoveScreenMessageRequest;
 import thegamebrett.action.request.ScreenMessageRequest;
 import static javafx.application.Application.launch;
-import static javafx.application.Application.launch;
+import thegamebrett.assets.AssetsLoader;
 
 public class GUIApplication extends Application{
 
@@ -44,6 +45,7 @@ public class GUIApplication extends Application{
     private String title = "The Game Brett";
 
     public static void main(String[] args) {
+        AssetsLoader.assetsfolder = args[0];
         launch(new String[0]);
     }
     
