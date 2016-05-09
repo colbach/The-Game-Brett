@@ -13,7 +13,7 @@ import thegamebrett.model.elements.Field;
 import thegamebrett.model.elements.Figure;
 
 /**
- * @author KorÃ©
+ * @author Kore
  */
 public class MADN_GameLogic extends GameLogic {
 
@@ -156,11 +156,11 @@ public class MADN_GameLogic extends GameLogic {
     }
     
     public InteractionRequest nextDice(ActionResponse as, InteractionRequest previous){
-         /* wÃ¼rfelanfrage bearbeiten **/
+         /* wuerfelanfrage bearbeiten **/
         int dicedNr = dice();
         InteractionRequest nextRequest;
 
-        //MÃ¶gliche Figuren herausfinden
+        //Moegliche Figuren herausfinden
         MADN_Figure[] figures = movableFigures((MADN_Player)previous.getPlayer(), dicedNr);
         
         if(figures != null){
