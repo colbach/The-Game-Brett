@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package thegamebrett.game.PSS;
+package thegamebrett.game.KFSS;
 
 import java.util.ArrayList;
 import javafx.scene.canvas.Canvas;
@@ -22,14 +22,16 @@ import thegamebrett.network.User;
  *
  * @author Korè
  */
-public class PSS_GameFactory implements GameFactory{
+public class KFSS_GameFactory implements GameFactory{
     
-    private PSS_Board board;
+    private KFSS_Board board;
     
+   
+
     public Model createGame(ArrayList<User> users) throws TooMuchPlayers, TooFewPlayers {
-        PSS_GameLogic gl = new PSS_GameLogic(null);
+        KFSS_GameLogic gl = new KFSS_GameLogic(null);
         gl.setAnzPlayer(users.size());
-        board = new PSS_Board(gl.getFieldContent());
+        board = new KFSS_Board(gl.getFieldContent());
 
         
         if(getMaximumPlayers() < users.size()) {
@@ -39,7 +41,7 @@ public class PSS_GameFactory implements GameFactory{
         }
         ArrayList<Player> players = new ArrayList<>();
         for(int i=0; i<users.size(); i++) {
-            PSS_Player p = new PSS_Player(i, users.get(i), board);
+            KFSS_Player p = new KFSS_Player(i, users.get(i), board);
             players.add(p);
         }
         
@@ -69,7 +71,7 @@ public class PSS_GameFactory implements GameFactory{
         return "PSS";
     }
     
-    public PSS_Board getBoard(){
+    public KFSS_Board getBoard(){
         return board;
     }
 

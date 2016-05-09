@@ -10,9 +10,9 @@
         <script type="text/javascript" src="functions.js"></script>
         <script type="text/javascript">
             $(document).ready(function () {
-                $("#refresh").load("refreshFreePositionList");
+                refreshFreePositionList();
                 var refreshId = setInterval(function () {
-                    $("#refresh").load("refreshFreePositionList");
+                    refreshFreePositionList();
                 }, 2000);
             });
         </script>

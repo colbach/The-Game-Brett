@@ -14,6 +14,7 @@ import javafx.util.Duration;
 import thegamebrett.Manager;
 import thegamebrett.action.request.GameEndRequest;
 import thegamebrett.action.request.InteractionRequestFromGUI;
+import thegamebrett.model.Layout;
 import thegamebrett.model.Model;
 import thegamebrett.model.Player;
 import thegamebrett.network.PlayerNotRegisteredException;
@@ -34,7 +35,7 @@ public class GameView extends Group {
 
     private Model gameModel = null;
     private final Manager manager;
-    
+
     private RotatingTextField rotatingTextField;
 
     Group groupBack;
@@ -55,61 +56,61 @@ public class GameView extends Group {
         getChildren().add(groupUserImageCicles);
 
     }
-    
-    public void setRotatingTextField(String message,Player p) {
-        int width = ScreenResolution.getScreenWidth()*1/3;
-        int height = ScreenResolution.getScreenHeigth()*1/3;
-        
-        rotatingTextField = new RotatingTextField(width, height, message);
-        
-        rotatingTextField.setLayoutX(ScreenResolution.getScreenWidth()/2 - width/2);
-        rotatingTextField.setLayoutY(ScreenResolution.getScreenHeigth()/2 - height/2);
-        if(p != null) {
-            int playerPosition = p.getUser().getSittingPlace();
-       
-            switch(playerPosition) {
-                case(0):
-                   rotatingTextField.rotate(240);
-                  break;
-                case(1):
-                  rotatingTextField.rotate(270);
-                   break;
-                case(2):
-                  rotatingTextField.rotate(320);
-                  break;
-                case(3):
-                   rotatingTextField.rotate(0);
-                   break;
-                case(4):
-                   rotatingTextField.rotate(60);
-                   break;
-                case(5):
-                   rotatingTextField.rotate(90);
-                   break;
-                case(6):
-                   rotatingTextField.rotate(150);
-                   break;
-                case(7):
-                   rotatingTextField.rotate(180);
-                   break;    
-            }
-        } else {
-            rotatingTextField.rotate(0);
-        }
+
+    public void setRotatingTextField(String message, Player p) {
+        int width = ScreenResolution.getScreenWidth() * 1 / 3;
+        int height = ScreenResolution.getScreenHeigth() * 1 / 3;
+
         Platform.runLater(() -> {
+            rotatingTextField = new RotatingTextField(width, height, message);
+
+            rotatingTextField.setLayoutX(ScreenResolution.getScreenWidth() / 2 - width / 2);
+            rotatingTextField.setLayoutY(ScreenResolution.getScreenHeigth() / 2 - height / 2);
+            if (p != null) {
+                int playerPosition = p.getUser().getSittingPlace();
+
+                switch (playerPosition) {
+                    case (0):
+                        rotatingTextField.rotate(240);
+                        break;
+                    case (1):
+                        rotatingTextField.rotate(270);
+                        break;
+                    case (2):
+                        rotatingTextField.rotate(320);
+                        break;
+                    case (3):
+                        rotatingTextField.rotate(0);
+                        break;
+                    case (4):
+                        rotatingTextField.rotate(60);
+                        break;
+                    case (5):
+                        rotatingTextField.rotate(90);
+                        break;
+                    case (6):
+                        rotatingTextField.rotate(150);
+                        break;
+                    case (7):
+                        rotatingTextField.rotate(180);
+                        break;
+                }
+            } else {
+                rotatingTextField.rotate(0);
+            }
             groupUserImageCicles.getChildren().add(rotatingTextField);
         });
-        
+
     }
 
     public void removeRotatingTextField() {
-        if(rotatingTextField != null) {
+        if (rotatingTextField != null) {
             Platform.runLater(() -> {
-            groupUserImageCicles.getChildren().remove(rotatingTextField);
+                groupUserImageCicles.getChildren().remove(rotatingTextField);
             });
         }
     }
-    
+
     public void setGameModel(Model gameModel) {
         this.gameModel = gameModel;
         groupBack.getChildren().clear();
@@ -186,18 +187,22 @@ public class GameView extends Group {
         }
 
     }
-    
+
     private class GameEndTask extends TimerTask {
+
         private final GameView gv;
         private final GameEndRequest ger;
+
         public GameEndTask(GameView gv, GameEndRequest ger) {
             this.gv = gv;
             this.ger = ger;
         }
+
         public void run() {
             gv.gameEnd(ger);
         }
     }
+
     public void handleGameEndRequest(GameEndRequest ger) {
         Timer timer = new Timer();
         timer.schedule(new GameEndTask(this, ger), ger.getDelay());
@@ -205,7 +210,7 @@ public class GameView extends Group {
 
     private void gameEnd(GameEndRequest ger) {
         System.out.println("Game Over");
-        
+
         Platform.runLater(() -> {
             groupUserImageCicles.getChildren().add(0, GUILoader.createGameEndScreen(ger));
             Button b = new Button(Manager.rb.getString("Ok"));
@@ -235,8 +240,6 @@ public class GameView extends Group {
             });
         }
     }
-    
-    
 
     public void addUserImageCircles(Model model) {
         ArrayList<Player> us = model.getPlayers();

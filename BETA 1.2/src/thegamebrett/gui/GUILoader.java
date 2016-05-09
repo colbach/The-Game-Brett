@@ -313,11 +313,11 @@ public class GUILoader {
             Image bg = l.getBackgroundImage();
             ImagePattern imagePattern;
             if (l.getBackgroundImageFillFactor() == Layout.BACKGROUND_IMAGE_FILL_FACTOR_REPEAT) {
-                imagePattern = new ImagePattern(image, 0, 0, image.getWidth(), image.getHeight(), false);
+                imagePattern = new ImagePattern(image, l.getBorder() * 2, l.getBorder() * 2, image.getWidth(), image.getHeight(), false);
             } else if (l.getBackgroundImageFillFactor() == Layout.BACKGROUND_IMAGE_FILL_FACTOR_FILL) {
-                imagePattern = new ImagePattern(image, 0, 0, w, h, false);
+                imagePattern = new ImagePattern(image, l.getBorder() * 2, l.getBorder() * 2, w, h, false);
             } else { // default
-                imagePattern = new ImagePattern(image, 0, 0, w, h, false);
+                imagePattern = new ImagePattern(image, l.getBorder() * 2, l.getBorder() * 2, w, h, false);
             }
             gc.setFill(imagePattern);
         } else {
@@ -391,15 +391,7 @@ public class GUILoader {
 
         gc.strokeText(message, ScreenResolution.getScreenWidth() / 2 - messageWidth / 2, ScreenResolution.getScreenHeigth() / 4);
         gc.fillText(message, ScreenResolution.getScreenWidth() / 2 - messageWidth / 2, ScreenResolution.getScreenHeigth() / 4);
-
-        /*gc.setFill(ger.getFXColor());
-        gc.fillOval(0, 0, w, h);
-        gc.setFill(Color.WHITE);
-        gc.fillOval(b/4, b/4, w-b/2, h-b/2);
-        ImagePattern imagePattern;
-        imagePattern = new ImagePattern(uc.getAvatar(), b/2, b/2, wi, hi, false);
-        gc.setFill(imagePattern);
-        gc.fillOval(b/2, b/2, wi, hi);*/
+        
         return c;
     }
 
@@ -411,7 +403,7 @@ public class GUILoader {
         GraphicsContext gc = c.getGraphicsContext2D();
 
         double r = 0, g = 0, b = 0;
-        for (User u : ngs.getReadyList()) { // Gewinnerfarben mischen
+        for (User u : ngs.getPlayers()) { // Gewinnerfarben mischen
             if (u.getUserCharacter() != null) {
                 r += u.getUserCharacter().getFXColor().getRed();
                 g += u.getUserCharacter().getFXColor().getGreen();
@@ -420,9 +412,9 @@ public class GUILoader {
                 System.err.println("p.getUserCharacter() is null!");
             }
         }
-        r /= ngs.getReadyList().size();
-        g /= ngs.getReadyList().size();
-        b /= ngs.getReadyList().size();
+        r /= ngs.getPlayers().size();
+        g /= ngs.getPlayers().size();
+        b /= ngs.getPlayers().size();
         System.out.println(r + " " + g + " " + b);
         Color bg = new Color(r, g, b, 1);
         gc.setFill(bg);
@@ -431,9 +423,9 @@ public class GUILoader {
         final int winnerImageSize = 300;
         final int spacing = 150;
         int i = 0;
-        for (User p : ngs.getReadyList()) {
+        for (User p : ngs.getPlayers()) {
             if (p.getUserCharacter() != null) {
-                drawUserImageCircle(gc, p.getUserCharacter(), ScreenResolution.getScreenWidth() / 2 - winnerImageSize / 2 - (ngs.getReadyList().size() - 1) * spacing / 2 + spacing * i, ScreenResolution.getScreenHeigth() / 2 - winnerImageSize / 2, winnerImageSize, winnerImageSize);
+                drawUserImageCircle(gc, p.getUserCharacter(), ScreenResolution.getScreenWidth() / 2 - winnerImageSize / 2 - (ngs.getPlayers().size() - 1) * spacing / 2 + spacing * i, ScreenResolution.getScreenHeigth() / 2 - winnerImageSize / 2, winnerImageSize, winnerImageSize);
             } else {
                 System.err.println("p.getUserCharacter() is null!");
             }

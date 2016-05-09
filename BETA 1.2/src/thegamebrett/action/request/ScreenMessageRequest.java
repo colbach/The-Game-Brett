@@ -1,5 +1,6 @@
 package thegamebrett.action.request;
 
+import thegamebrett.model.Layout;
 import thegamebrett.model.Player;
 
 public class ScreenMessageRequest implements GUIRequest {

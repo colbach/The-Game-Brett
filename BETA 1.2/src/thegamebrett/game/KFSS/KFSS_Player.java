@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package thegamebrett.game.PSS;
+package thegamebrett.game.KFSS;
 
+import thegamebrett.game.PSS.*;
 import javafx.scene.paint.Color;
 import thegamebrett.model.Layout;
 import thegamebrett.model.Player;
@@ -14,17 +15,17 @@ import thegamebrett.network.User;
  *
  * @author Korè
  */
-public class PSS_Player extends Player{
+public class KFSS_Player extends Player{
     
     private User user;
     private int playerNr;
-    private PSS_Figure figure;
+    private KFSS_Figure figure;
     private Layout layout;
-    private PSS_Board board;
+    private KFSS_Board board;
     private boolean suspended;
     private String playerName;
 
-    public PSS_Player(int playerNr, User user, PSS_Board board){
+    public KFSS_Player(int playerNr, User user, KFSS_Board board){
         super(user);
         this.playerNr = playerNr;
         this.board = board;
@@ -47,7 +48,7 @@ public class PSS_Player extends Player{
         Layout fl = new Layout(playerName,"");
         fl.setBackgroundColor(Color.DARKGOLDENROD);
         fl.setFormFactor(Layout.FORM_FACTOR_OVAL);
-        figure = new PSS_Figure(this, board, fl);
+        figure = new KFSS_Figure(this, board, fl);
         figure.setField(board.getField(0));
         
     }
@@ -70,11 +71,11 @@ public class PSS_Player extends Player{
         this.playerNr = playerNr;
     }
     
-    public PSS_Figure getFigure() {
+    public KFSS_Figure getFigure() {
         return figure;
     }
 
-    public void setFigure(PSS_Figure figure) {
+    public void setFigure(KFSS_Figure figure) {
         this.figure = figure;
     }
     
