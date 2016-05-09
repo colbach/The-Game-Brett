@@ -1,12 +1,10 @@
 package thegamebrett.network;
 
-import com.sun.security.ntlm.Client;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
 import thegamebrett.Manager;
-import thegamebrett.game.dummy.D_GameLogic;
 import thegamebrett.gui.MenueView;
 import thegamebrett.gui.ScreenResolution;
 import thegamebrett.model.GameFactory;

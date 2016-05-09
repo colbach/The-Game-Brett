@@ -32,17 +32,8 @@ public class ScreenResolution {
     
     public static void setBoardRatios(float ratioX, float ratioY) {
         vhFactior = ratioY / ratioX;
-        if(vhFactior >= 1) {
-            contentWidth = screenHeigth / vhFactior;
-            
-            //System.out.println(contentWidth +"="+ screenWidth +"/"+ vhFactior);
-            contentHeigth = screenHeigth;
-        } else {
-            contentHeigth = screenWidth * vhFactior;
-            
-            //System.out.println(contentHeigth +"="+ screenHeigth +"*"+ vhFactior);
-            contentWidth = screenWidth;
-        }
+        contentHeigth = screenHeigth;
+        contentWidth = screenHeigth / vhFactior;
         contentXOff = (int)((screenWidth - contentWidth) / 2);
         contentYOff = (int)((screenHeigth - contentHeigth) / 2);
     }

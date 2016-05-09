@@ -6,6 +6,7 @@ import thegamebrett.network.httpserver.Director;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import thegamebrett.Manager;
 import thegamebrett.action.request.InteractionRequest;
 import thegamebrett.assets.AssetNotExistsException;
 import thegamebrett.assets.AssetsLoader;
@@ -223,7 +224,7 @@ public class ControlDirector implements Director {
 
                 // ausgabe
                 if(ir == null) {
-                    return NO_MESSAGE_ID + "connected";
+                    return NO_MESSAGE_ID + Manager.rb.getString("PleaseWait");
                 } else {
                     // Kontrolle nach Updates
                     if(ir.matchMessageId(request.substring("/refreshGame?".length()))) {

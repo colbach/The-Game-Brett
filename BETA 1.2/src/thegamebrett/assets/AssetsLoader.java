@@ -28,13 +28,13 @@ import thegamebrett.Manager;
  */
 public class AssetsLoader {
     
-    public static String assetsfolder = null;
+    public static String assetsfolder = ".assetsfolder/";
 
-    static {
+    /*static {
         //assetsfolder = "/Users/Korè/Documents/Studium/5. Semester(WS)/Interdisziplinäres Teamprojekt/The-Game-Brett/BETA 1.1/src/assetsfolder/";
         assetsfolder = System.getProperty("user.home") + "/GitHub/The-Game-Brett/BETA 1.2/src/assetsfolder/";
         System.out.println("assetsfolder = " + assetsfolder);
-    }
+    }*/
 
     /**
      * Parameter: Datei ausgehend von assetsfolder

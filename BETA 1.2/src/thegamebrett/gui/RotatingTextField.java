@@ -46,17 +46,14 @@ public class RotatingTextField extends Canvas {
             if (textWidth(line + " " + word, gc) > width - 2 && line.length() != 0) {
                 down += textHeight(line, gc);
                 double off = 30;
-                //off = (width - textWidth(line, gc)) / 2d;
                 gc.fillText(line, off, down);
                 line = "";
-            } else {
-                line += " " + word;
             }
+            line += " " + word;
         }
         if (line.length() != 0) {
             down += textHeight(line, gc);
             double off = 30;
-            //off = (width - textWidth(line, gc)) / 2d;
             gc.fillText(line, off, 2 + down);
             line = "";
         }
