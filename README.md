@@ -10,7 +10,7 @@ Die Hauptklasse der Anwendung ist die Klasse <em>thegamebrett.gui.GUIApplication
 </p>
 ##### Beispiel wie die Anwendung gestartet werden kann:
 <pre>
-$ java thegamebrett.gui.GUIApplication /Users/christiancolbach/Documents/gamebrett/classes/assetsfolder/
+$ java thegamebrett.gui.GUIApplication /Users/grompa/Documents/gamebrett/classes/assetsfolder/
 </pre>
 
 ## Aufbau des Frameworks
@@ -22,7 +22,7 @@ Mit einer Trennung zwischen Spielelogik und IO versuchen wir in unser Framework 
 
 #### Der Manager (Controller)
 <p>
-    Der Manager stellt sozusagen den "Dreh und Angelpunkt" der Anwendung dar. Über ihn laufen alle Komunikationen und er verbindet alles mit allem (direkt oder indirekt).
+    Der Manager stellt sozusagen den "Dreh und Angelpunkt" der Anwendung dar. Über ihn laufen alle Kommunikationen und er verbindet alles mit allem (direkt oder indirekt).
 </p>
 
 #### Grafik (View #1)
@@ -38,7 +38,7 @@ Mit einer Trennung zwischen Spielelogik und IO versuchen wir in unser Framework 
 
 #### Webinterface (View #2)
 <p>
-    Das <em>Webinterface</em> stellt in unserem Aufbau die Grundlage aller Komunikationen mit dem Spieler. Jeder Spieler muss sich über sein Handy (/anderes internetfähiges Gerät) an unserem Server anmelden. Von diesem bleibt er dann mit dem System verbunden und interagiert mit dem System und den Spielen.
+    Das <em>Webinterface</em> stellt in unserem Aufbau die Grundlage aller Kommunikationen mit dem Spieler. Jeder Spieler muss sich über sein Handy (/anderes internetfähiges Gerät) an unserem Server anmelden. Von diesem bleibt er dann mit dem System verbunden und interagiert mit dem System und den Spielen.
 </p>
 
 #### Spielelogik (Model #1)
@@ -53,7 +53,7 @@ Mit einer Trennung zwischen Spielelogik und IO versuchen wir in unser Framework 
 
 #### Kommunikation zwischen einzelnen Modulen
 <p>
-    Die Komunikation zwischen den einzelnen Modulen (Model, Grafik, Webinterface, Spielelogik) findet über einen selbst implementiertes System aus <em>Actions</em> stadt. Grundlage hierfür stellen die Interfaces <code>ActionRequest</code> und <code>ActionResponse</code> von welchen es eine Reihe von Ableitungen gibt und welche durch das gesammte System durchgereicht werden. Hierbei läuft das immer so ab dass der Manager <em>Requests</em> bei der Spielelogik abholt und diese dann an das gewünschte System weitergeibt (z.B. Netzwerk oder UI). Diese Systeme generieren dann zu diesen passende <em>Responses</em> welche dann wieder an den Manager abgegeben werden. Hierzu zu beachten ist dass die Spielelogik immer nur beim Anstoss durch den Manager aktiv wird und ihre nächste <em>Requests</em> generieren. Ein solcher Anstoss geschieht nur wenn eine <em>Resonse</em> an die Spielelogik zurück geht. Um diesen Aufbau zu verstehen sind folgende Methoden relevant:
+    Die Komunikation zwischen den einzelnen Modulen (Model, Grafik, Webinterface, Spielelogik) findet über einen selbst implementiertes System aus <em>Actions</em> statt. Grundlage hierfür stellen die Interfaces <code>ActionRequest</code> und <code>ActionResponse</code> von welchen es eine Reihe von Ableitungen gibt und welche durch das gesamte System durchgereicht werden. Hierbei läuft das immer so ab dass der Manager <em>Requests</em> bei der Spielelogik abholt und diese dann an das gewünschte System weitergibt (z.B. Netzwerk oder UI). Diese Systeme generieren dann zu diesen passende <em>Responses</em> welche dann wieder an den Manager abgegeben werden. Hierzu zu beachten ist dass die Spielelogik immer nur beim Anstoss durch den Manager aktiv wird und ihre nächste <em>Requests</em> generieren. Ein solcher Anstoss geschieht nur wenn eine <em>Response</em> an die Spielelogik zurück geht. Um diesen Aufbau zu verstehen sind folgende Methoden relevant:
 </p>
 In der Spielelogik (<code>Gamelogik</code>):
 ```java
@@ -66,7 +66,7 @@ public void react(ActionResponse response);
 
 ### Steuerungskonzept
 <p>
-    Unsere Brett ist so konzipiert dass eine Steuerung mittels Maus oder Touchscreen nicht nötig ist. Es reicht wenn das Gamebrett mit dem WLAN verbunden ist beziehungsweise einen eingebauten Access Point besitzt. Das Menue und die Spiele werden über die Handhelds welche mit dem Brett verbunden sind gesteuert.
+    Unsere Brett ist so konzipiert dass eine Steuerung mittels Maus oder Touchscreen nicht nötig ist. Es reicht wenn das Gamebrett mit dem WLAN verbunden ist beziehungsweise einen eingebauten Access Point besitzt. Das Menü und die Spiele werden über die Handhelds welche mit dem Brett verbunden sind gesteuert.
 </p>
 
 ### Assets
@@ -91,7 +91,7 @@ public void react(ActionResponse response);
 
 ##### Java
 <p>
-    In Java können Strings durch die direkte Verwendung des <code>ResourceBundle</code>-Ojektes lokalisiert werden. Dieses ist statisch und befindet sich im Manager und kann durch <code>Manager.rb</code> angesprochen werden. <code>ResourceBundle</code> besitzt eine Funktion <code>getString(String)</code>, diese Methode gibt bei Angabe eines Keys einen entsprechend lokalisierten String zurück.
+    In Java können Strings durch die direkte Verwendung des <code>ResourceBundle</code>-Objektes lokalisiert werden. Dieses ist statisch und befindet sich im Manager und kann durch <code>Manager.rb</code> angesprochen werden. <code>ResourceBundle</code> besitzt eine Funktion <code>getString(String)</code>, diese Methode gibt bei Angabe eines Keys einen entsprechend lokalisierten String zurück.
 </p>
 <em>Beispiel:</em> <br>
 ```java
@@ -128,31 +128,31 @@ Wird beim laden automatisch ersetzt durch: <code>Spiel beitreten</code> wenn die
 #### Model
 Klasse: <code>thegamebrett.model.Model</code>
 <p>
-    Die Klasse Model ist die Klasse über die der <em>Manager</em> auf das Spiel zugreift und unter welcher die weiteren Klassen des Spieles organisiert sind. Es ist nicht nötig (aber erlaubt) von ihr abzuleiten. Objeckte dieser Klasse werden innerhalb der <code>GameFactory</code>-Klasse erzeugt.
+    Die Klasse Model ist die Klasse über die der <em>Manager</em> auf das Spiel zugreift und unter welcher die weiteren Klassen des Spieles organisiert sind. Es ist nicht nötig (aber erlaubt) von ihr abzuleiten. Objekte dieser Klasse werden innerhalb der <code>GameFactory</code>-Klasse erzeugt.
 </p>
 
 #### Player
 Abstrakte Klasse: <code>thegamebrett.model.Player</code>
 <p>
-    Die Klasse Player ist die Klasse welche einen Spieler im Spiel representiert. Die Klasse ist abstrakt obwohl sie keine abstrakten Methoden enthällt und muss somit vererbt werden. Der Grund hierfür ist dass die Logik welche dem Spieler die Figuren zuordnet in dieser Klasse bestimmt werden soll. Die Zuordnung von Figuren kann entweder berechnet werden indem die Methode <code>public Figure[] getFigures();</code> überschrieben wird oder indem die ArrayList <code>ArrayList<Figure> figures</code> befüllt wird.
+    Die Klasse Player ist die Klasse welche einen Spieler im Spiel repräsentiert. Die Klasse ist abstrakt obwohl sie keine abstrakten Methoden enthält und muss somit vererbt werden. Der Grund hierfür ist dass die Logik welche dem Spieler die Figuren zuordnet in dieser Klasse bestimmt werden soll. Die Zuordnung von Figuren kann entweder berechnet werden indem die Methode <code>public Figure[] getFigures();</code> überschrieben wird oder indem die ArrayList <code>ArrayList<Figure> figures</code> befüllt wird.
 </p>
 
 #### Elemente
 ##### Element
 Abstrakte Klasse: <code>thegamebrett.model.elements.Element</code>
 <p>
-    Diese Klasse dient als Vater aller Komponenten welche die UI zeichnen kann. <code>Element</code> erweitert alle Klassen um eine Funktion <code>public void registerChange()</code> diese Funktion muss zwingend aufgerufen werden wenn eine Eigentschaft der Klasse verändert wird welche für die UI interessant sein könnte. Wird diese Funktion __nicht__ aufgerufen werden die vom Model abhänigen UI-Komponenten auch __nicht__ aktualisiert.
+    Diese Klasse dient als Vater aller Komponenten welche die UI zeichnen kann. <code>Element</code> erweitert alle Klassen um eine Funktion <code>public void registerChange()</code> diese Funktion muss zwingend aufgerufen werden wenn eine Eigenschaft der Klasse verändert wird welche für die UI interessant sein könnte. Wird diese Funktion __nicht__ aufgerufen werden die vom Model abhängigen UI-Komponenten auch __nicht__ aktualisiert.
 </p>
 
 ##### Koordinatensystem
 <p>
-    Bevor wir auf den Aufbau der einzelnen <em>Elemente</em> eingehen gibt es noch ein paar Dinge zu beachten welches das ihn ihnen verwendete Koorinatensystem angeht. Der Bereich der Koorinaten geht von 0 bis 1. Der Punkt der sich unten rechts befindet ist also <em>(1, 1)</em> und der Punkt welcher sich oben links befindet ist also <em>(0, 0)</em>. Hierbei ist zu beachten ist dass dies nicht dem Punkt <em>(0, 0)</em> des Displays entsprechen muss. Mehr dazu im folgendem Abschnitt über die Klasse <code>Board</code>.
+    Bevor wir auf den Aufbau der einzelnen <em>Elemente</em> eingehen gibt es noch ein paar Dinge zu beachten welches das ihn ihnen verwendete Koordinatensystem angeht. Der Bereich der Koordinaten geht von 0 bis 1. Der Punkt der sich unten rechts befindet ist also <em>(1, 1)</em> und der Punkt welcher sich oben links befindet ist also <em>(0, 0)</em>. Hierbei ist zu beachten ist dass dies nicht dem Punkt <em>(0, 0)</em> des Displays entsprechen muss. Mehr dazu im folgendem Abschnitt über die Klasse <code>Board</code>.
 </p>
 
 ##### Board
 Abstrakte Klasse: <code>thegamebrett.model.elements.Board</code>
 <p>
-    Diese Klasse representiert im Model das Spielbrett im eigentlichen Sinne, also die Unterlage auf der sich die Felder und die Figuren befinden. Die Klasse ist abstrakt und muss somit zwingent vererbt werden. Zusetzlich müssen volgende Methoden implementiert werden:
+    Diese Klasse repräsentiert im Model das Spielbrett im eigentlichen Sinne, also die Unterlage auf der sich die Felder und die Figuren befinden. Die Klasse ist abstrakt und muss somit zwingend vererbt werden. Zusätzlich müssen folgende Methoden implementiert werden:
 </p>
 
 Soll die Anzahl der Felder zurück welche sich auf dem Brett befinden:
@@ -170,7 +170,7 @@ Soll das Layout des Bretts zurückgeben (später mehr dazu):
 public abstract Layout getLayout();
 ```
 
-Soll Ratio des Brettes zurückgeben. das Verhältniss zwischen X und Y gibt das Verhälltnis zwischen Breite und Höhe an. Ein Ratio 1 zu 1 entspricht einem Quadratischen Spielfeldes. Das Koordinatensystem ist von dieser Angabe abhängig:
+Soll Ratio des Brettes zurückgeben. das Verhältnis zwischen X und Y gibt das Verhältnis zwischen Breite und Höhe an. Ein Ratio 1 zu 1 entspricht einem Quadratischen Spielfeldes. Das Koordinatensystem ist von dieser Angabe abhängig:
 ```java
 public abstract float getRatioX();
 public abstract float getRatioY();
@@ -179,7 +179,7 @@ public abstract float getRatioY();
 ##### Field
 Abstrakte Klasse: <code>thegamebrett.model.elements.Field</code>
 <p>
-    Diese Klasse representiert im Model ein Spielfeld. Die Klasse ist abstrakt und muss somit zwingent vererbt werden. Zusetzlich müssen volgende Methoden implementiert werden:
+    Diese Klasse repräsentiert im Model ein Spielfeld. Die Klasse ist abstrakt und muss somit zwingend vererbt werden. Zusätzlich müssen folgende Methoden implementiert werden:
 </p>
 
 Soll relative horizontale und vertikale Position zurück liefern:
@@ -192,7 +192,7 @@ Soll relative Breite zurückgeben (Wert ∈ [0d, 1d]):
 public abstract double getWidthRelative();
 ```
 
-Soll relative Hoehe zurückgeben (Wert ∈ [0d, 1d]):
+Soll relative Höhe zurückgeben (Wert ∈ [0d, 1d]):
 ```java
 public abstract double getHeightRelative();
 ```
@@ -215,7 +215,7 @@ public abstract Layout getLayout();
 ##### Figure
 Klasse Figure: <code>thegamebrett.model.elements.Figure</code>
 <p>
-    Die Klasse <code>Figure</code> ist die Klasse welche im Model eine Spielfigur darstellt. Sie hat einen Besitzer (<code>Player</code>), ein <em>Layout</em> sowie eine relative Breite und Höhe (∈ [0d, 1d]). Die Klasse ist nicht abstrakt und somit muss man sie nicht vererben. Jedoch ist dies für viele Spiele anzuraten, da dies der <em>Spielelogik</em> helfen kann diesen zusetzliche Informationen zu geben.
+    Die Klasse <code>Figure</code> ist die Klasse welche im Model eine Spielfigur darstellt. Sie hat einen Besitzer (<code>Player</code>), ein <em>Layout</em> sowie eine relative Breite und Höhe (∈ [0d, 1d]). Die Klasse ist nicht abstrakt und somit muss man sie nicht vererben. Jedoch ist dies für viele Spiele anzuraten, da dies der <em>Spielelogik</em> helfen kann diesen zusätzliche Informationen zu geben.
 </p>
 
 #### Layout
@@ -267,7 +267,7 @@ public abstract ActionRequest[] next(ActionResponse as);
 
 #### Requests und Responses
 <p>
-    Requests und Resonses sind das was das Spiel am laufen behällt. Es geht nie eine Interakton vom Spiel aus. Die Komunikation erfolgt immer nach dem Ping-Pong-Model. Das Model ist nur aktiv wenn es angestossen wird.
+    Requests und Responses sind das was das Spiel am laufen behält. Es geht nie eine Interaktion vom Spiel aus. Die Kommunikation erfolgt immer nach dem Ping-Pong-Model. Das Model ist nur aktiv wenn es angestossen wird.
 </p>
 ##### GUI
 Stösst die UI an sich zu aktualisieren:
@@ -287,11 +287,11 @@ thegamebrett.action.request.InteractionRequest(String titel, Object[] choices, P
 Wenn dieser Antwortet kommt ein Objekt vom Typ <code>InteractionResponse</code> zurück
 
 ##### Messages
-Zeigt Nachicht für alle sichtbar auf dem Spielbrett an. Nachicht ist in Richtung des angegebenen Spielers gedreht:
+Zeigt Nachricht für alle sichtbar auf dem Spielbrett an. Nachricht ist in Richtung des angegebenen Spielers gedreht:
 ```java
 thegamebrett.action.request.ScreenMessageRequest(String label, Player player)
 ```
-Nachicht verschwindet erst wenn eine neue Nachicht geschickt wird oder wenn eine <code>RemoveScreenMessageRequest</code> zurück gegeben wird.
+Nachricht verschwindet erst wenn eine neue Nachricht geschickt wird oder wenn eine <code>RemoveScreenMessageRequest</code> zurück gegeben wird.
 
 ##### Sound
 Spielt Sound ab. Sound muss im <code>wav</code>-Format vorliegen. Als Parameter muss ein Objekt vom Typ thegamebrett.model.mediaeffect.SoundEffect übergeben werden:
@@ -301,7 +301,7 @@ thegamebrett.action.request.PlaySoundRequest(SoundEffect sound)
 Sound stoppt erst wenn Sound zu Ende oder wenn <code>StopSoundsRequest</code> zurück gegeben wird. Falls im SoundEffect angegeben ist dass sich dieser für immer wiederholt stoppt dieser erst bei <code>StopSoundsRequest</code> oder wenn Spiel beendet wird.
 
 ##### Timer
-Da das gesammte Framework darauf aufgebaut ist dass die Spielelogik immer erst anläuft wenn eine Response für diese vorliegt ist es in manchen Situationen sinnvoll einen Timer zu starten:
+Da das gesamte Framework darauf aufgebaut ist dass die Spielelogik immer erst anläuft wenn eine Response für diese vorliegt ist es in manchen Situationen sinnvoll einen Timer zu starten:
 ```java
 thegamebrett.action.request.TimerRequest(int millis)
 ```
@@ -309,7 +309,7 @@ Dieser Timer hat die Eigenschaft nach einer bestimmten Anzahl von Sekunden eine 
 
 ##### Spielstart und Spielende 
 <p>
-    Spielstart und Spielende  werden auch über <em>Requests</em> und <em>Responses</em> geregelt. Beim starten des Spieles erhällt die <em>GameLogik</em> eine StartPseudoResponse. Diese enthällt keine Daten und dient nur dazu das Spiel anzustossen.
+    Spielstart und Spielende  werden auch über <em>Requests</em> und <em>Responses</em> geregelt. Beim Starten des Spieles erhält die <em>GameLogik</em> eine StartPseudoResponse. Diese enthält keine Daten und dient nur dazu das Spiel anzustossen.
 </p>
 <p>
     Das Spiel ist dann beendet wenn die <em>GameLogik</em> eine <code>GameEndRequest</code> zurückgibt.
@@ -329,7 +329,8 @@ public static GameFactory[] gameFactorys = {
 ```
 
 ### Beispiele
-Als Beispielimplementierung haben wir 4 Spiele realisiert.
+Als Beispiel-Implementierung haben wir 4 Spiele realisiert.
+“Mensch Ärgre dich nicht!"
 
 ## Anlegen eigener Character
 <p>
