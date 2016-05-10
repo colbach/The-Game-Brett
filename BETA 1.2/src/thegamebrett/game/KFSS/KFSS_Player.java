@@ -5,7 +5,6 @@
  */
 package thegamebrett.game.KFSS;
 
-import javafx.scene.paint.Color;
 import thegamebrett.model.Layout;
 import thegamebrett.model.Player;
 import thegamebrett.network.User;
