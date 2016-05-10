@@ -16,6 +16,7 @@ $ java thegamebrett.gui.GUIApplication /Users/christiancolbach/Documents/gamebre
 
 ## Aufbau des Frameworks
 ### Model View Controller
+#### Der Manager
 ### Grafik
 ### Webinterface
 #### Serverseitig
@@ -23,21 +24,32 @@ $ java thegamebrett.gui.GUIApplication /Users/christiancolbach/Documents/gamebre
 ### Assets
 ### Lokalisierung
 Für die Lokalisierung unserer Anwendung verwenden wir das Java-eigene Lokalisierungsframework <code>java.util.ResourceBundle</code>. Dieses erlaubt es Sprachunabhängige Strings zu definieren und diese dann in verschiedene Sprachen zu übersetzen.
-#### Verwendung
-Bei der Verwendung unterscheidet unterscheiden wir im volgenden zwischen der Lokalisierung des Java-codes und der Lokalisierung der HTML-Seiten. 
-Die Einstellung der Sprache kann in der UI im Menu vorgenommen werden. Hierzu klickt man auf den Button [Optionen]
+#### Verwendung durch den Endbenutzer
+Die Einstellung der Sprache kann in der UI im Menu vorgenommen werden. Hierzu klickt man auf den Button [Optionen] uns stell diese dann unter den Spracheinstellungen ein.
+#### Verwendung durch den Programmierer
+Bei der Verwendung unterscheidet unterscheiden wir im folgenden zwischen der Lokalisierung des Java-codes und der Lokalisierung der HTML-Seiten. Hierzu zu erwähnen ist ausserdem dass alle Strings welche verwendet werden sollen in der entsprechenden <code>properties</code>-Datei angegeben sein müssen. Für English in der Datei <code>languages_en.properties</code> und für Deutsch <code>languages_de.properties</code>.
 ##### Java
-
+<p>
+    In Java können Strings durch die direkte Verwendung des <code>ResourceBundle</code>-Ojektes lokalisiert werden. Dieses ist statisch und befindet sich im Manager und kann durch <code>Manager.rb</code> angesprochen werden. <code>ResourceBundle</code> besitzt eine Funktion <code>getString(String)</code>, diese Methode gibt bei Angabe eines Keys einen entsprechend lokalisierten String zurück.
+</p>
+<em>Beispiel:</em> <br>
+```java
+    System.out.println(Manager.rb.getString("StartGame"));
+```
+Gibt als Ausgabe <code>Spiel beitreten</code> wenn die Sprache auf Deutsch gestellt ist und <code>Join game</code> wenn die Sprache auf English gestellt ist.
 ##### HTML
 <p>
     Zur Lokalisierung der HTML-Seiten verwenden wir ein eigenes System welches durch unseren AssetsLoader realisiert wird. Dieser durchsucht die Dateien On-the-fly nach dem Vorkommen dieser Symbole <code>##</code> und ersetzt dann den zwischen diesen Symbolen vorkommenden Text durch den passenden Eintrag im <code>ResourceBundle</code>.
 </p>
-<p>
-    Ein Beispiel wie dies aussehen könnte:
+<em>Beispiel:</em>
 
-</p>
+```html
+##JoinGame## 
+```
+Wird beim laden automatisch ersetzt durch: <code>Spiel beitreten</code> wenn die Sprache auf Deutsch gestellt ist und durch <code>Join game</code> wenn die Sprache auf English gestellt ist.
+
 <p>
-Bei der Verwendung dieser Art der Lokalisierung ist darauf zu achten dass auf diese Weise __nur__ die HTML-Seiten welche durch unseren AssetsLoader geladen werden (also als Datei von der Festplatte geladen werden) lokalisiert werden! Sämtliche andere Strings welche dem Server per Java-code übergeben werden __müssen__ wie im vorherigen Punkt beschrieben lokalisiert werden.
+    Bei der Verwendung dieser Art der Lokalisierung ist darauf zu achten dass auf diese Weise __nur__ die HTML-Seiten welche durch unseren AssetsLoader geladen werden (also als Datei von der Festplatte geladen werden) lokalisiert werden! Sämtliche andere Strings welche dem Server per Java-code übergeben werden __müssen__ wie im vorherigen Punkt beschrieben lokalisiert werden.
 </p>
 ##### Einbinden neuer Sprachen
 
