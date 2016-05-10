@@ -225,14 +225,82 @@ Klasse Layout: <code>thegamebrett.model.elements.Figure</code>
 </p>
 
 #### GameFactory
+Interface: <code>thegamebrett.model.GameFactory</code>
+<p>
+    Die Klasse die <code>Gamefactory</code> implementiert ist die Klasse welche Spiele erstellen kann. Hierfür muss diese Klasse eine Reihe von Funktionen bereit stellen welche von aussen Informationen über das Spiel bereit stellen und die Möglichkeit bieten ein Model des Spieles zu erzeugen. Folgende Methoden müssen implementiert werden:
+</p>
 
+Soll das Icon des Spieles zurückgeben:
+```java
+public Image getGameIcon();
+```
+
+Soll den Namen des Spieles zurückgeben:
+```java
+public String getGameName();
+```
+
+Soll die maximale bzw. minimale Anzahl an Spielern zurück geben:
+```java
+public int getMaximumPlayers();
+public int getMinimumPlayers();
+```
+
+Soll eine Instanz des Spieles erzeugen (<code>Model</code>-Objekt):
+```java
+public Model createGame(ArrayList<User> users) throws TooMuchPlayers, TooFewPlayers;
+```
 
 #### GameLogic
-#### Requests und Resposes
+Abstrakte Klasse: <code>thegamebrett.model.GameLogic</code>
+<p>
+    Diese Klasse ist die Klasse welche für die Logik im Spiel zuständig ist. In ihr wird der Ablauf des Spieles gesteuert. Sie ist abstrakt und muss somit zwingend vererbt werden. Ausserdem müssen zwei Methoden implementiert werden:
+</p>
+Diese Methode soll die Startpositionen der Spieler bestimmen
+```java
+public abstract Field getNextStartPositionForPlayer(Player player);
+```
+Diese Methode ist die wichtigste Methode im Model. Sie entscheidet den Verlauf des Spieles. Sie bekommt als Eingabe immer eine <em>Response</em> und gibt als Rückgabewert eine Liste von <em>Requests</em> zurück:
+```java
+public abstract ActionRequest[] next(ActionResponse as);
+```
+
+#### Requests und Responses
+<p>
+    Requests und Resonses sind das was das Spiel am laufen behällt. Es geht nie eine Interakton vom Spiel aus. Die Komunikation erfolgt immer nach dem Ping-Pong-Model. Das Model ist nur aktiv wenn es angestossen wird.
+</p>
 ##### GUI
+Stösst die UI an sich zu aktualisieren:
+```java
+thegamebrett.action.request.GUIUpdateRequest(int value, boolean animated, int delay)
+```
+Eine Aufruf kann so aussehen:
+```java
+new GUIUpdateRequest(GUIUpdateRequest.GUIUPDATE_FIELDS+GUIUpdateRequest.GUIUPDATE_FIGURES, true, 0)
+```
+
 ##### Interaction
+Verlangt eine Interaction von einem bestimmten Spieler:
+```java
+thegamebrett.action.request.InteractionRequest(String titel, Object[] choices, Player player, boolean hidden, String acknowledgment, int delay, Object userData)
+```
+Wenn dieser Antwortet kommt ein Objekt vom Typ <code>InteractionResponse</code> zurück
+
 ##### Messages
+Zeigt Nachicht für alle sichtbar auf dem Spielbrett an. Nachicht ist in Richtung des angegebenen Spielers gedreht.
+```java
+thegamebrett.action.request.ScreenMessageRequest(String label, Player player)
+```
+Nachicht verschwindet erst wenn eine neue Nachicht geschickt wird oder wenn eine <code>RemoveScreenMessageRequest</code> zurück gegeben wird.
+
 ##### Sound
+Spielt Sound ab. Sound muss im <code>wav</code>-Format vorliegen.
+```java
+thegamebrett.action.request.PlaySoundRequest(SoundEffect sound)
+```
+Nachicht verschwindet erst wenn eine neue Nachicht geschickt wird oder wenn eine <code>RemoveScreenMessageRequest</code> zurück gegeben wird.
+
+
 ##### Timer
 ##### Spielende und Spielstart
 ### Gamecollection
