@@ -213,8 +213,20 @@ public abstract Layout getLayout();
 ```
 
 ##### Figure
+Klasse Figure: <code>thegamebrett.model.elements.Figure</code>
+<p>
+    Die Klasse <code>Figure</code> ist die Klasse welche im Model eine Spielfigur darstellt. Sie hat einen Besitzer (<code>Player</code>), ein <em>Layout</em> sowie eine relative Breite und Höhe (∈ [0d, 1d]). Die Klasse ist nicht abstrakt und somit muss man sie nicht vererben. Jedoch ist dies für viele Spiele anzuraten, da dies der <em>Spielelogik</em> helfen kann diesen zusetzliche Informationen zu geben.
+</p>
+
 #### Layout
+Klasse Layout: <code>thegamebrett.model.elements.Figure</code>
+<p>
+    Diese Klasse definiert das Aussehen von Elementen. Sie hat viele optionale Werte die gesetzt werden können um einem Element ein bestimmtes Aussehen zu verpassen. Hierfür kann Form, Bild, Text, Schriftgrösse, Textur, Hintergrundfarbe, Rand, Randgrösse dieser festgelegt werden. Die Grafikmodul (<code>GUILoader</code>) arbeitet generisch und kann somit diese Attribute allen Elementen gleichermassen verleihen.
+</p>
+
 #### GameFactory
+
+
 #### GameLogic
 #### Requests und Resposes
 ##### GUI
