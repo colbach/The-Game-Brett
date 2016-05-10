@@ -45,7 +45,7 @@ public class GUIApplication extends Application{
     private String title = "The Game Brett";
 
     public static void main(String[] args) {
-        AssetsLoader.assetsfolder = args[0];
+        //AssetsLoader.assetsfolder = args[0];
         launch(new String[0]);
     }
     
