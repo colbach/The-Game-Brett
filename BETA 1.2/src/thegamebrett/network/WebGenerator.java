@@ -109,7 +109,7 @@ public class WebGenerator {
         
         StringBuilder sb = new StringBuilder();
         for(int i=0; i<cs.size(); i++) {
-            sb.append("\n<button class=\"characterButton\" id=\"chooseCharacterButton" + i + "\" onClick=\"tryToGetCharacter(" + i + ")\"><img src=\"avatars/" + cs.get(i).getAvatarName() + "\" alt=\"Character\" class=\"charImage\">" + cs.get(i).getName() + "</button>");
+            sb.append("\n<button class=\"characterButton\" style=\"background-color:" + cs.get(i).getColor() + "\" id=\"chooseCharacterButton" + i + "\" onClick=\"tryToGetCharacter(" + i + ")\"><img src=\"avatars/" + cs.get(i).getAvatarName() + "\" alt=\"Character\" class=\"charImage\">" + cs.get(i).getName() + "</button>");
         }
         return sb.toString();
     }
