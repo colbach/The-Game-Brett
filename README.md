@@ -23,7 +23,7 @@ Mit einer Trennung zwischen Spielelogik und IO versuchen wir in unser Framework 
 #### Der Manager (Controller)
 <p>
     Der Manager stellt sozusagen den "Dreh und Angelpunkt" der Anwendung dar. Über ihn laufen alle Komunikationen und er verbindet alles mit allem (direkt oder indirekt).
-<p>
+</p>
 
 #### Grafik (View #1)
 <p>
