@@ -76,7 +76,7 @@ public class MADN_GameFactory implements GameFactory{
 
     @Override
     public String getGameName() {
-        return "MADN";
+        return "Mensch Aergre dich nicht!";
     }
     
     public MADN_Board getBoard(){

@@ -56,7 +56,7 @@ public class PSS_GameFactory implements GameFactory{
     }
     @Override
     public String getGameName() {
-        return "PSS";
+        return "Das polnische Saufspiel";
     }
     
     public PSS_Board getBoard(){
