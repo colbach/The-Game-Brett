@@ -15,7 +15,7 @@ $ java thegamebrett.gui.GUIApplication /Users/christiancolbach/Documents/gamebre
 
 ## Aufbau des Frameworks
 ![Grundsätzlicher Aufbau](images/Grundsaetzlicher Aufbau Projekt.png)
-<em>Grundsätzlicher Aufbau des Projektes</em>
+<em>Prinzipieller Aufbau des Projektes</em>
 
 ### Model View Controller
 Mit einer Trennung zwischen Spielelogik und IO versuchen wir in unser Framework stark MVC-orientiert umzusetzen. Dies hat den Vorteil dass die Spiele komplett austauschbar sind ohne dass dafür eine Zeile Code im Rest des Systems geändert werden muss.
@@ -120,8 +120,17 @@ Wird beim laden automatisch ersetzt durch: <code>Spiel beitreten</code> wenn die
 </p>
 ### Aufbau
 ![Aufbau Model](images/Model.png)
+<em>Prinzipieller Aufbau des Models</em>
+<p>
+    Im Paket <code>thegamebrett.model</code> sind die die Klassen zusammengefasst auf welchen die Spiele basieren müssen damit das Framework mit ihnen arbeiten kann.
+</p>
 
 #### Model
+(<code>thegamebrett.model.Model</code>)
+<p>
+    Die Klasse Model
+</p>
+
 #### Player
 #### Elemente
 ##### Koordinatensystem
