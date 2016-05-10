@@ -14,6 +14,7 @@ $ java thegamebrett.gui.GUIApplication /Users/christiancolbach/Documents/gamebre
 </pre>
 
 ## Aufbau des Frameworks
+![Grundsätzlicher Aufbau](/Grundsaetzlicher Aufbau Projekt.png)
 
 ### Model View Controller
 #### Der Manager
