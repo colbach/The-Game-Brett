@@ -73,7 +73,8 @@ public class MenueView extends Group {
     private Button startGameButton = null;
 
     public MenueView(Manager manager) {
-
+        getChildren().add(GUILoader.createBackgroundCanvas(ScreenResolution.getScreenWidth(), ScreenResolution.getScreenHeigth()));
+                
         this.manager = manager;
         double d = Math.min(ScreenResolution.getScreenWidth(), ScreenResolution.getScreenHeigth());
         double iconWH = d / 5.3;

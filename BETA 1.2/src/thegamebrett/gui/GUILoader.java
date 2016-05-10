@@ -3,6 +3,8 @@ package thegamebrett.gui;
 import com.sun.javafx.tk.Toolkit;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
@@ -18,6 +20,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import thegamebrett.Manager;
 import thegamebrett.action.request.GameEndRequest;
+import thegamebrett.assets.AssetNotExistsException;
+import thegamebrett.assets.AssetsLoader;
 import thegamebrett.model.Layout;
 import thegamebrett.model.Model;
 import thegamebrett.model.Player;
@@ -389,6 +393,24 @@ public class GUILoader {
 
         gc.strokeText(message, ScreenResolution.getScreenWidth() / 2 - messageWidth / 2, ScreenResolution.getScreenHeigth() / 4);
         gc.fillText(message, ScreenResolution.getScreenWidth() / 2 - messageWidth / 2, ScreenResolution.getScreenHeigth() / 4);
+        
+        return c;
+    }
+    
+    public static Canvas createBackgroundCanvas(int w, int h) {
+        
+        Canvas c = new Canvas(w, h);
+        GraphicsContext gc = c.getGraphicsContext2D();
+        Image image;
+        try {
+            image = AssetsLoader.loadImage("background.jpg");
+            ImagePattern imagePattern = new ImagePattern(image, 0, 0, w, h, false);
+            gc.setFill(imagePattern);
+            gc.fillRect(0, 0, w, h);
+            
+        } catch (AssetNotExistsException ex) {
+            Logger.getLogger(GUILoader.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         return c;
     }
