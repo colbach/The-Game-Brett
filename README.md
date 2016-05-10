@@ -307,7 +307,26 @@ thegamebrett.action.request.TimerRequest(int millis)
 ```
 Dieser Timer hat die Eigenschaft nach einer bestimmten Anzahl von Sekunden eine <code>TimerResponse</code> zurück zu geben. Auf diese Art kann das Framework sich nach Ablauf einer bestimmten Zeit wieder selbst anstossen. (Auf diese Art und Weise sind somit auch Schleifen möglich wenn man immer ein <code>TimerRequest</code> zurück gibt)
 
-##### Spielende und Spielstart
+##### Spielstart und Spielende 
+<p>
+    Spielstart und Spielende  werden auch über <em>Requests</em> und <em>Responses</em> geregelt. Beim starten des Spieles erhällt die <em>GameLogik</em> eine StartPseudoResponse. Diese enthällt keine Daten und dient nur dazu das Spiel anzustossen.
+</p>
+<p>
+    Das Spiel ist dann beendet wenn die <em>GameLogik</em> eine <code>GameEndRequest</code> zurückgibt.
+</p>
+```java
+thegamebrett.action.request.GameEndRequest(Player[] winner, String acknowledgment, int delay, Image backgroundImage)
+```
+
 ### Gamecollection
+<p>
+    Die GameCollection ist die Klasse in der alle Spiele eingetragen werden müssen damit sie vom Framework erkannt werden. Von jedem existierenden Spiel muss sich eine Instanz der entsprechenden GameLogik befinden.
+</p>
+```java
+public static GameFactory[] gameFactorys = {
+        new D_GameFactory(), new PSS_GameFactory()
+    };
+```
+
 ### Beispiele
 ## Anlegen eigener Character
