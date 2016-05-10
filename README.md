@@ -182,32 +182,32 @@ Abstrakte Klasse: <code>thegamebrett.model.elements.Field</code>
     Diese Klasse repräsentiert im Model ein Spielfeld. Die Klasse ist abstrakt und muss somit zwingend vererbt werden. Zusätzlich müssen folgende Methoden implementiert werden:
 </p>
 
-Soll relative horizontale und vertikale Position zurück liefern:
+Soll die relative horizontale und vertikale Position zurück geliefert werden:
 ```java
 public abstract RelativePoint getRelativePosition();
 ```
 
-Soll relative Breite zurückgeben (Wert ∈ [0d, 1d]):
+Soll die relative Breite zurückgeben werden (Wert ∈ [0d, 1d]):
 ```java
 public abstract double getWidthRelative();
 ```
 
-Soll relative Höhe zurückgeben (Wert ∈ [0d, 1d]):
+Soll die relative Höhe zurückgeben werden (Wert ∈ [0d, 1d]):
 ```java
 public abstract double getHeightRelative();
 ```
 
-Soll nächstes Feld zurückgeben:
+Soll das nächste Feld zurückgeben werden:
 ```java
 public abstract Field[] getNext();
 ```
 
-Soll vorhergehendes Feld zurückgeben:
+Soll das vorhergehendes Feld zurückgeben werden:
 ```java
 public abstract Field[] getPrevious();
 ```
 
-Soll das Layout des Feldes zurückgeben (später mehr dazu):
+Soll das Layout des Feldes zurückgeben werden (später mehr dazu):
 ```java
 public abstract Layout getLayout();
 ```
@@ -215,38 +215,38 @@ public abstract Layout getLayout();
 ##### Figure
 Klasse Figure: <code>thegamebrett.model.elements.Figure</code>
 <p>
-    Die Klasse <code>Figure</code> ist die Klasse welche im Model eine Spielfigur darstellt. Sie hat einen Besitzer (<code>Player</code>), ein <em>Layout</em> sowie eine relative Breite und Höhe (∈ [0d, 1d]). Die Klasse ist nicht abstrakt und somit muss man sie nicht vererben. Jedoch ist dies für viele Spiele anzuraten, da dies der <em>Spielelogik</em> helfen kann diesen zusätzliche Informationen zu geben.
+    Die Klasse <code>Figure</code> ist die Klasse welche im Model eine Spielfigur darstellt. Sie hat einen Besitzer (<code>Player</code>), ein <em>Layout</em> sowie eine relative Breite und Höhe (∈ [0d, 1d]). Die Klasse ist nicht abstrakt und muss somit nicht vererbt werden. Jedoch ist dies für viele Spiele anzuraten, da dies der <em>Spielelogik</em> helfen kann diesen zusätzliche Informationen zu übergeben.
 </p>
 
 #### Layout
 Klasse Layout: <code>thegamebrett.model.elements.Figure</code>
 <p>
-    Diese Klasse definiert das Aussehen von Elementen. Sie hat viele optionale Werte die gesetzt werden können um einem Element ein bestimmtes Aussehen zu verpassen. Hierfür kann Form, Bild, Text, Schriftgrösse, Textur, Hintergrundfarbe, Rand, Randgrösse dieser festgelegt werden. Die Grafikmodul (<code>GUILoader</code>) arbeitet generisch und kann somit diese Attribute allen Elementen gleichermassen verleihen.
+    Diese Klasse definiert das Aussehen von Elementen. Sie hat viele optionale Werte die gesetzt werden können um einem Element ein bestimmtes Aussehen zu verpassen. Hierfür kann Form, Bild, Text, Schriftgrösse, Textur, Hintergrundfarbe, Rand, Randgrösse dieser festgelegt werden. Das Grafikmodul (<code>GUILoader</code>) arbeitet generisch und kann somit diese Attribute allen Elementen gleichermassen verleihen.
 </p>
 
 #### GameFactory
 Interface: <code>thegamebrett.model.GameFactory</code>
 <p>
-    Die Klasse die <code>Gamefactory</code> implementiert ist die Klasse welche Spiele erstellen kann. Hierfür muss diese Klasse eine Reihe von Funktionen bereit stellen welche von aussen Informationen über das Spiel bereit stellen und die Möglichkeit bieten ein Model des Spieles zu erzeugen. Folgende Methoden müssen implementiert werden:
+    Die Klasse welche <code>Gamefactory</code> implementiert ist die Klasse welche Spiele erstellen kann. Hierfür muss diese Klasse eine Reihe von Funktionen liefern welche von aussen Informationen über das Spiel bereitstellen und die Möglichkeit bieten ein Model des Spieles zu erzeugen. Folgende Methoden müssen implementiert werden:
 </p>
 
-Soll das Icon des Spieles zurückgeben:
+Soll das Icon des Spieles zurückgeben werden:
 ```java
 public Image getGameIcon();
 ```
 
-Soll den Namen des Spieles zurückgeben:
+Soll der Namen des Spieles zurückgeben werden:
 ```java
 public String getGameName();
 ```
 
-Soll die maximale bzw. minimale Anzahl an Spielern zurück geben:
+Soll die maximale bzw. minimale Anzahl an Spielern zurück geben werden:
 ```java
 public int getMaximumPlayers();
 public int getMinimumPlayers();
 ```
 
-Soll eine Instanz des Spieles erzeugen (<code>Model</code>-Objekt):
+Soll eine Instanz des Spieles erzeuget werden (<code>Model</code>-Objekt):
 ```java
 public Model createGame(ArrayList<User> users) throws TooMuchPlayers, TooFewPlayers;
 ```
@@ -267,14 +267,14 @@ public abstract ActionRequest[] next(ActionResponse as);
 
 #### Requests und Responses
 <p>
-    Requests und Responses sind das was das Spiel am laufen behält. Es geht nie eine Interaktion vom Spiel aus. Die Kommunikation erfolgt immer nach dem Ping-Pong-Model. Das Model ist nur aktiv wenn es angestossen wird.
+    Requests und Responses sind für den aktiven verlauf des Spieles verantwortlich. Es geht nie eine Interaktion vom Spiel selbst aus, die Kommunikation erfolgt immer nach dem Ping-Pong-Model. Das Model ist somit nur aktiv wenn es angestossen wird.
 </p>
 ##### GUI
 Stösst die UI an sich zu aktualisieren:
 ```java
 thegamebrett.action.request.GUIUpdateRequest(int value, boolean animated, int delay)
 ```
-Eine Aufruf kann so aussehen:
+Beispiel Aufruf:
 ```java
 new GUIUpdateRequest(GUIUpdateRequest.GUIUPDATE_FIELDS+GUIUpdateRequest.GUIUPDATE_FIGURES, true, 0)
 ```
@@ -284,24 +284,24 @@ Verlangt eine Interaction von einem bestimmten Spieler:
 ```java
 thegamebrett.action.request.InteractionRequest(String titel, Object[] choices, Player player, boolean hidden, String acknowledgment, int delay, Object userData)
 ```
-Wenn dieser Antwortet kommt ein Objekt vom Typ <code>InteractionResponse</code> zurück
+Bei dieser Antwortet wird ein Objekt vom Typ <code>InteractionResponse</code> zurück gegeben.
 
 ##### Messages
-Zeigt Nachricht für alle sichtbar auf dem Spielbrett an. Nachricht ist in Richtung des angegebenen Spielers gedreht:
+Zeigt eine Nachricht für alle sichtbar auf dem Spielbrett an. Die Nachricht ist in Richtung des angegebenen Spielers gedreht:
 ```java
 thegamebrett.action.request.ScreenMessageRequest(String label, Player player)
 ```
-Nachricht verschwindet erst wenn eine neue Nachricht geschickt wird oder wenn eine <code>RemoveScreenMessageRequest</code> zurück gegeben wird.
+Die Nachricht verschwindet erst wieder, wenn eine neue Nachricht geschickt oder falls eine <code>RemoveScreenMessageRequest</code> zurück gegeben wird.
 
 ##### Sound
-Spielt Sound ab. Sound muss im <code>wav</code>-Format vorliegen. Als Parameter muss ein Objekt vom Typ thegamebrett.model.mediaeffect.SoundEffect übergeben werden:
+Spielt einen Sound ab. Ein Soundobjekt muss im <code>wav</code>-Format vorliegen. Als Parameter muss ein Objekt vom Typ thegamebrett.model.mediaeffect.SoundEffect übergeben werden:
 ```java
 thegamebrett.action.request.PlaySoundRequest(SoundEffect sound)
 ```
-Sound stoppt erst wenn Sound zu Ende oder wenn <code>StopSoundsRequest</code> zurück gegeben wird. Falls im SoundEffect angegeben ist dass sich dieser für immer wiederholt stoppt dieser erst bei <code>StopSoundsRequest</code> oder wenn Spiel beendet wird.
+Sound stoppt erst wenn das Soundobjekt zu Ende geht oder falls <code>StopSoundsRequest</code> zurück gegeben wird. Falls im SoundEffect angegeben wird dass sich dieser für immer wiederholt stoppt dieser erst bei <code>StopSoundsRequest</code> oder wenn das Spiel beendet wird.
 
 ##### Timer
-Da das gesamte Framework darauf aufgebaut ist dass die Spielelogik immer erst anläuft wenn eine Response für diese vorliegt ist es in manchen Situationen sinnvoll einen Timer zu starten:
+Da das gesamte Framework darauf aufgebaut ist dass die Spielelogik immer erst anläuft wenn eine Response für diese vorliegt, ist es in manchen Situationen sinnvoll einen Timer zu starten:
 ```java
 thegamebrett.action.request.TimerRequest(int millis)
 ```
@@ -312,7 +312,7 @@ Dieser Timer hat die Eigenschaft nach einer bestimmten Anzahl von Sekunden eine 
     Spielstart und Spielende  werden auch über <em>Requests</em> und <em>Responses</em> geregelt. Beim Starten des Spieles erhält die <em>GameLogik</em> eine StartPseudoResponse. Diese enthält keine Daten und dient nur dazu das Spiel anzustossen.
 </p>
 <p>
-    Das Spiel ist dann beendet wenn die <em>GameLogik</em> eine <code>GameEndRequest</code> zurückgibt.
+    Das Spiel ist erst dann beendet wenn die <em>GameLogik</em> eine <code>GameEndRequest</code> zurückgibt.
 </p>
 ```java
 thegamebrett.action.request.GameEndRequest(Player[] winner, String acknowledgment, int delay, Image backgroundImage)
@@ -320,7 +320,7 @@ thegamebrett.action.request.GameEndRequest(Player[] winner, String acknowledgmen
 
 ### Gamecollection
 <p>
-    Die GameCollection ist die Klasse in der alle Spiele eingetragen werden müssen damit sie vom Framework erkannt werden. Von jedem existierenden Spiel muss sich eine Instanz der entsprechenden GameLogik befinden.
+    Die GameCollection ist die Klasse in der alle Spiele eingetragen werden müssen damit sie vom Framework erkannt werden. Von jedem existierenden Spiel muss sich eine Instanz der entsprechenden GameLogik innerhalb der GameCollection befinden.
 </p>
 ```java
 public static GameFactory[] gameFactorys = {
@@ -329,7 +329,7 @@ public static GameFactory[] gameFactorys = {
 ```
 
 ### Beispiele
-Als Beispiel-Implementierung haben wir 3 Spiele realisiert. Diese sind unter <code>thegamebrett.game.MADN.*</code>, <code>thegamebrett.game.KFSS.*</code>, <code>thegamebrett.game.PSS.*</code> sowie <code>thegamebrett.game.dummy.*</code> zu finden. Der <em>Dummy</em> dient hierbei einfach als Beispiel einer minimalen Version eines Spieles und lässt sich gut als Grundlage für neue Spiele verwenden.
+Als Beispiel-Implementierung haben wir 3 Spiele realisiert. Diese sind unter <code>thegamebrett.game.MADN.*</code>, <code>thegamebrett.game.KFSS.*</code>, <code>thegamebrett.game.PSS.*</code> sowie <code>thegamebrett.game.dummy.*</code> zu finden. Der <em>Dummy</em> dient hierbei als einfaches Beispiel einer minimalen Version eines Spieles und lässt sich gut als Grundlage für neue Spiele verwenden.
 
 ## Anlegen eigener Character
 <p>
