@@ -13,15 +13,15 @@ import thegamebrett.model.elements.Field;
 import thegamebrett.model.elements.Figure;
 
 /**
- * @author KorÃ©
+ * @author Kore
  */
 public class MADN_GameLogic extends GameLogic {
 
-    /* maximal und minimale Anzahl an Spielern die im Spiel mÃ¶glich sind**/
+    /* maximal und minimale Anzahl an Spielern die im Spiel moeglich sind**/
     private final int maximumPlayers = 4;
     private final int minimumPlayers = 2;
     
-    /*Fall unterscheidung die angibt ob response wÃ¼rfeln oder bewegen ist**/
+    /*Fall unterscheidung die angibt ob response wuerfeln oder bewegen ist**/
     public final static Integer INTERACTIONRESPONSE_CHOICES_DICE = new Integer(0);
     public final static Integer INTERACTIONRESPONSE_CHOICES_CHOOSE_FIGURE = new Integer(1);
     public final static Integer INTERACTIONRESPONSE_NO_RESPONSE = new Integer(2);
@@ -74,11 +74,8 @@ public class MADN_GameLogic extends GameLogic {
                     throw new IllegalArgumentException("Illegal InteractionResponse Type");
                 }
             }
-            
-        } else if(as instanceof TimerResponse){
-            //nicht implementiert
-        } else{
-            //schmeiÃŸe exception
+        }else{
+            throw new IllegalArgumentException("Illegal Response Type");
         } 
         
         requests.add(new GUIUpdateRequest(GUIUpdateRequest.GUIUPDATE_ALL));
@@ -128,23 +125,21 @@ public class MADN_GameLogic extends GameLogic {
         //request zum beenden senden
         if(someoneWon){
             InteractionRequest req;
-            
-            for(int i = 0; i<anzPlayer-1;i++){
-                req = new InteractionRequest("Spieler "+((MADN_Player)previous.getPlayer()).getPlayerNr()+" hat gewonnen! Das Spiel ist vorbei!",
-                    new String[]{"Spielende"}, (MADN_Player)getDependingModel().getPlayers().get(i), false,INTERACTIONRESPONSE_SOMEONE_WON);
-                requests.add(req);
-            }
-            nextRequest = new InteractionRequest("Spieler "+((MADN_Player)previous.getPlayer()).getPlayerNr()+" hat gewonnen! Das Spiel ist vorbei!",
-                    new String[]{"Spielende"}, (MADN_Player)getDependingModel().getPlayers().get(anzPlayer), false,INTERACTIONRESPONSE_SOMEONE_WON);
-                
+            for(Player p : getDependingModel().getPlayers()){
+                if(p != previous.getPlayer()){
+                    requests.add(new InteractionRequest(previous.getPlayer().getUser().getUserCharacter().getName()+" hat gewonnen! Das Spiel ist vorbei!",
+                        new String[]{"Spielende"}, p, false,INTERACTIONRESPONSE_NO_RESPONSE));
+                } else {
+                    nextRequest = new InteractionRequest("Du hast gewonnen! Das Spiel ist vorbei!",
+                        new String[]{"Spielende"}, p, false,INTERACTIONRESPONSE_SOMEONE_WON);
+                }
+            } 
         
         } else {
             //neue wuerfelrequest senden 
             if(lastDice==6){
                 nextRequest = new InteractionRequest("Du bist nocheinmal dran. Bitte wuerfeln!",
-                    new String[]{"Wuerfeln"}, (MADN_Player)previous.getPlayer(), false,INTERACTIONRESPONSE_CHOICES_DICE);                    
-                
-            
+                    new String[]{"Wuerfeln"}, (MADN_Player)previous.getPlayer(), false,INTERACTIONRESPONSE_CHOICES_DICE);                                
             } else {
                 nextRequest = new InteractionRequest("Du bist dran. Bitte wuerfeln!",
                     new String[]{"Wuerfeln"}, getNextPlayer((MADN_Player)previous.getPlayer()), false,INTERACTIONRESPONSE_CHOICES_DICE);                    
@@ -156,11 +151,11 @@ public class MADN_GameLogic extends GameLogic {
     }
     
     public InteractionRequest nextDice(ActionResponse as, InteractionRequest previous){
-         /* wÃ¼rfelanfrage bearbeiten **/
+         /* wuerfelanfrage bearbeiten **/
         int dicedNr = dice();
         InteractionRequest nextRequest;
 
-        //MÃ¶gliche Figuren herausfinden
+        //Moegliche Figuren herausfinden
         MADN_Figure[] figures = movableFigures((MADN_Player)previous.getPlayer(), dicedNr);
         
         if(figures != null){
@@ -199,7 +194,7 @@ public class MADN_GameLogic extends GameLogic {
         
         
         //Steht eine Figur auf dem Startfeld und ist es die eigene?
-        //Wenn ja, muss diese Figur wenn mÃ¶glich bewegt werden
+        //Wenn ja, muss diese Figur wenn moeglich bewegt werden
         if(occupiedWith(player.getStartField())!=null){
             if(occupiedWith(player.getStartField()).getStartField() == player.getStartField()){
                 destField = player.getStartField();
@@ -213,8 +208,8 @@ public class MADN_GameLogic extends GameLogic {
             }
         }
         
-        //Wenn keine eigene Figur auf dem Startfeld steht: Wurde eine 6 gewÃ¼rfelt?
-        //Wenn ja und figuren auf dem initfeld stehen sind nur die als auswahl mÃ¶glich
+        //Wenn keine eigene Figur auf dem Startfeld steht: Wurde eine 6 gewuerfelt?
+        //Wenn ja und figuren auf dem initfeld stehen sind nur die als auswahl moeglich
         else if((dicedNr == 6)&&(occupiedWith(player.getStartField())==null)){
             for(MADN_Figure figure : player.getFigures()){
                 if(((MADN_Field)figure.getField()).getFieldType() == MADN_Field.FIELD_TYPE_INIT){
@@ -226,7 +221,7 @@ public class MADN_GameLogic extends GameLogic {
             }
         }
         
-        //Sonst werden alle Figuren fÃ¼r die ein bewegen mÃ¶glich ist in das array gelegt
+        //Sonst werden alle Figuren fuer die ein bewegen moeglich ist in das array gelegt
 
         for (MADN_Figure figure : player.getFigures()) {
             destField = (MADN_Field)figure.getField();
@@ -237,10 +232,7 @@ public class MADN_GameLogic extends GameLogic {
                     figures.add(figure);
                 }
             }
-
-        }
-        
-        
+        }        
         
         if(figures.size()>0){
             return figures.toArray(new MADN_Figure[0]);
@@ -248,7 +240,7 @@ public class MADN_GameLogic extends GameLogic {
         return null;
     }
     
-    //schaut ob es mÃ¶glich fÃ¼r die figur ist das feld zu betreten
+    //schaut ob es moeglich fuer die Figur ist das Feld zu betreten
     public boolean checkField(int dicedNr, MADN_Figure figure){
         MADN_Field ldestField;
         if((MADN_Field)figure.getField().getNext()[0]==figure.getStartField()){
@@ -306,7 +298,6 @@ public class MADN_GameLogic extends GameLogic {
     
     @Override
     public Field getNextStartPositionForPlayer(Player player) {
-        //was ist der sinn hiervon? Wenn ihr die Figuren meint muss das ein array sein, da es davon 4 gibt
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

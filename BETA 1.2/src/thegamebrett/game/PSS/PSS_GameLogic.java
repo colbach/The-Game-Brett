@@ -152,6 +152,7 @@ public class PSS_GameLogic extends GameLogic{
                 alreadyDiced++;
                 if(alreadyDiced>=anzPlayer){
                     for(PSS_Player p : dicedRight){
+                        requests.add(new RemoveScreenMessageRequest());
                         if(previous.getPlayer() == p){
                             prevP = true;
                             InteractionRequest nR = new InteractionRequest("Du darfst trinken!", new String[]{"WUHU!"}, 

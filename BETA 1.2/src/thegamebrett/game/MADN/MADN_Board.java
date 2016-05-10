@@ -14,7 +14,7 @@ import thegamebrett.model.elements.Field;
 
 /**
  *
- * @author Koré
+ * @author Kore
  */
 public class MADN_Board extends Board {
 
@@ -23,7 +23,7 @@ public class MADN_Board extends Board {
     private double r;
     private RelativePoint pos;
     
-    private final float ratioX = 1.2f;
+    private final float ratioX = 1;
     private final float ratioY = 1;
     
     

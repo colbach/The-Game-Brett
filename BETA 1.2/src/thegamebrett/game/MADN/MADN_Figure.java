@@ -16,7 +16,7 @@ public class MADN_Figure extends Figure{
     private MADN_Field initField;
 
     public MADN_Figure(Player owner, MADN_Board board, MADN_Field startField, MADN_Field initField, Layout layout, String description) {
-        super(owner, layout,0.04,0.04);
+        super(owner, layout,0.04/board.getRatioX(),0.04);
         this.board = board;
         this.startField = startField;
         this.initField = initField;

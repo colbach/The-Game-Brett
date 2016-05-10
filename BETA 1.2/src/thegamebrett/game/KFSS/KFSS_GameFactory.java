@@ -59,7 +59,7 @@ public class KFSS_GameFactory implements GameFactory{
     }
     @Override
     public String getGameName() {
-        return "KFSS";
+        return "Sweets";
     }
     
     public KFSS_Board getBoard(){
