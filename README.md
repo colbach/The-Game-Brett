@@ -15,13 +15,25 @@ $ java thegamebrett.gui.GUIApplication /Users/christiancolbach/Documents/gamebre
 
 ## Aufbau des Frameworks
 ![Grundsätzlicher Aufbau](/Grundsaetzlicher Aufbau Projekt.png)
+<em>Grundsätzlicher Aufbau des Projektes</em>
 
 ### Model View Controller
-#### Der Manager
-### Grafik
-### Webinterface
-#### Serverseitig
-#### Clientseitig
+
+#### Der Manager (Controller)
+
+#### Grafik (View #1)
+
+#### Webinterface (View #2)
+
+#### Spielelogik (Model)
+
+#### Kommunikation
+Die Komunikation zwischen den einzelnen Modulen (Model, Grafik, Webinterface, Spielelogik) findet über einen selbst implementiertes System aus <em>Actions</em>. Grundlage hierfür stellen die Interfaces <code>ActionRequest</code> und <code>ActionResponse</code> von welchen es eine Reihe von ableitungen gibt und welche durch das gesammte System durchgereicht werden. Hierbei läuft das immer so ab dass der Manager <code>Requests</code>   <code>Responses</code>
+
+#### Ausreisser
+
+##### Serverseitig
+##### Clientseitig
 ### Assets
 
 ### Lokalisierung
