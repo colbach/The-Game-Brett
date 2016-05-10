@@ -14,7 +14,7 @@ $ java thegamebrett.gui.GUIApplication /Users/christiancolbach/Documents/gamebre
 </pre>
 
 ## Aufbau des Frameworks
-![Grundsätzlicher Aufbau](/Grundsaetzlicher Aufbau Projekt.png)
+![Grundsätzlicher Aufbau](images/Grundsaetzlicher Aufbau Projekt.png)
 <em>Grundsätzlicher Aufbau des Projektes</em>
 
 ### Model View Controller
@@ -113,11 +113,14 @@ Wird beim laden automatisch ersetzt durch: <code>Spiel beitreten</code> wenn die
 <p>
     Bei der Verwendung dieser Art der Lokalisierung ist darauf zu achten dass auf diese Weise __nur__ die HTML-Seiten welche durch unseren AssetsLoader geladen werden (also als Datei von der Festplatte geladen werden) lokalisiert werden! Sämtliche andere Strings welche dem Server per Java-code übergeben werden __müssen__ wie im vorherigen Punkt beschrieben lokalisiert werden.
 </p>
-##### Einbinden neuer Sprachen
 
 ## Erstellung eigener Spiele
-
+<p>
+    Da unser Framework sehr generisch gehalten ist können neue Spiele mit wenig 
+</p>
 ### Aufbau
+![Aufbau Model](images/Model.png)
+
 #### Model
 #### Player
 #### Elemente
@@ -136,5 +139,6 @@ Wird beim laden automatisch ersetzt durch: <code>Spiel beitreten</code> wenn die
 ##### Sound
 ##### Timer
 ##### Spielende und Spielstart
+### Gamecollection
 ### Beispiele
 ## Anlegen eigener Character
