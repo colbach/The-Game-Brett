@@ -18,7 +18,7 @@ $ java thegamebrett.gui.GUIApplication /Users/christiancolbach/Documents/gamebre
 <em>Grundsätzlicher Aufbau des Projektes</em>
 
 ### Model View Controller
-Mit einer Trennung zwischen Spielelogik und IO versuchen wir in unser Framework stark MVC-orientiert umzusetzen.
+Mit einer Trennung zwischen Spielelogik und IO versuchen wir in unser Framework stark MVC-orientiert umzusetzen. Dies hat den Vorteil dass die Spiele komplett austauschbar sind ohne dass dafür eine Zeile Code im Rest des Systems geändert werden muss.
 
 #### Der Manager (Controller)
 <p>
@@ -38,12 +38,18 @@ Mit einer Trennung zwischen Spielelogik und IO versuchen wir in unser Framework 
 
 #### Webinterface (View #2)
 <p>
-    Das Webinterface stellt in unserem Aufbau die Grundlage aller Komunikationen mit dem Spieler. Jeder Spieler muss sich über sein Handy (/anderes internetfähiges Gerät) an unserem Server anmelden. Von diesem bleibt er dann mit dem System verbunden und interagiert mit dem System und den Spielen.
+    Das <em>Webinterface</em> stellt in unserem Aufbau die Grundlage aller Komunikationen mit dem Spieler. Jeder Spieler muss sich über sein Handy (/anderes internetfähiges Gerät) an unserem Server anmelden. Von diesem bleibt er dann mit dem System verbunden und interagiert mit dem System und den Spielen.
 </p>
 
 #### Spielelogik (Model #1)
+<p>
+    Die <em>Spielelogik</em> und die dazugehörigen Klassen des <em>Models</em> stellt das Spiel im eigentlichen dar. Sie ist komplett austauschbar und kann auch zur Laufzeit beliebig oft ausgetauscht werden. Dies ermöglicht es sich gemeinsam für ein Spiel zu entscheiden und dieses dann zu spielen.
+</p>
 
 #### Userstate (Model #2)
+<p>
+    Die am System angemeldeten User werden vom Usermanager organisiert. Jeder Spieler hat einen Sitzplatz und einen dazugehörigen Character.
+</p>
 
 #### Kommunikation zwischen einzelnen Modulen
 <p>
@@ -57,7 +63,9 @@ In dem Manager (<code>Manager</code>, <code>MobileManager</code>, <code>TimeMana
 ```java
 public void react(ActionResponse response);
 ````
-#### Ausreisser
+#### Querverweise (Ausreisser MVC)
+
+
 
 ##### Serverseitig
 ##### Clientseitig
