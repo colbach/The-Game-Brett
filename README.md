@@ -1,6 +1,6 @@
 # The-Game-Brett
 Teamprojekt Hochschule Trier 2015-2016
-Entwicklung und Umsetzung eines digitalen Spielbretts für Gemeinschaftsspiele
+Entwicklung und Umsetzung eines digitalen Spielbrettframeworks für Gemeinschaftsspiele
 von Kore Kaluzynski, Cenk Saatci, Christian Colbach
 
 ## Installation und Ausführung der Anwendung
@@ -18,18 +18,34 @@ $ java thegamebrett.gui.GUIApplication /Users/christiancolbach/Documents/gamebre
 <em>Grundsätzlicher Aufbau des Projektes</em>
 
 ### Model View Controller
+Mit einer Trennung zwischen Spielelogik und IO versuchen wir in unser Framework stark MVC-orientiert umzusetzen.
 
 #### Der Manager (Controller)
+<p>
+    Der Manager stellt sozusagen den "Dreh und Angelpunkt" der Anwendung dar. Über ihn laufen alle Komunikationen und er verbindet alles mit allem (direkt oder indirekt).
+<p>
 
 #### Grafik (View #1)
+<p>
+    Die Grafik welche auf dem Gerät selbst angezeigt wird setzt auf JavaFX. In unserem Aufbau wechselt man immer nur zwischen zwei <em>Scenes</em>. Der <code>MenueView</code> und der <code>GameView</code>.
+</p>
+<p>
+    Die <code>MenueView</code> stellt die erste <em>Scene</em>. Diese wird beim Start der Anwendung sofort angezeigt und zeigt die Möglichkeiten an welche bestehen. Zur Funktion wird sie jedoch nicht benötigt (auch wenn sie diese ergänzen kann) da die Funktion nicht auf die Eingabe direkt am Gerät angewiesen ist (Mehr dazu unter <em>Steuerungskonzept</em>).
+</p>
+<p>
+    Die <code>GameView</code> stellt die zweite <em>Scene</em>. Diese ist generisch und stellt immer das aktuelle Spiel dar. Spiele werden in ihr geladen und auch hier animiert (Bewegung von Figuren und Feldern).
+</p>
 
 #### Webinterface (View #2)
+<p>
+    Das Webinterface stellt in unserem Aufbau die Grundlage aller Komunikationen mit dem Spieler. Jeder Spieler muss sich über sein Handy (/anderes internetfähiges Gerät) an unserem Server anmelden. Von diesem bleibt er dann mit dem System verbunden und interagiert mit dem System und den Spielen.
+</p>
 
 #### Spielelogik (Model #1)
 
 #### Userstate (Model #2)
 
-#### Kommunikation
+#### Kommunikation zwischen einzelnen Modulen
 <p>
 Die Komunikation zwischen den einzelnen Modulen (Model, Grafik, Webinterface, Spielelogik) findet über einen selbst implementiertes System aus <em>Actions</em> stadt. Grundlage hierfür stellen die Interfaces <code>ActionRequest</code> und <code>ActionResponse</code> von welchen es eine Reihe von Ableitungen gibt und welche durch das gesammte System durchgereicht werden. Hierbei läuft das immer so ab dass der Manager <em>Requests</em> bei der Spielelogik abholt und diese dann an das gewünschte System weitergeibt (z.B. Netzwerk oder UI). Diese Systeme generieren dann zu diesen passende <em>Responses</em> welche dann wieder an den Manager abgegeben werden. Hierzu zu beachten ist dass die Spielelogik immer nur beim Anstoss durch den Manager aktiv wird und ihre nächste <em>Requests</em> generieren. Ein solcher Anstoss geschieht nur wenn eine <em>Resonse</em> an die Spielelogik zurück geht. Um diesen Aufbau zu verstehen sind folgende Methoden relevant:
 </p>
@@ -45,7 +61,11 @@ public void react(ActionResponse response);
 
 ##### Serverseitig
 ##### Clientseitig
+
+### Steuerungskonzept
+
 ### Assets
+
 
 ### Lokalisierung
 Für die Lokalisierung unserer Anwendung verwenden wir das Java-eigene Lokalisierungsframework <code>java.util.ResourceBundle</code>. Dieses erlaubt es Sprachunabhängige Strings zu definieren und diese dann in verschiedene Sprachen zu übersetzen.
@@ -88,6 +108,7 @@ Wird beim laden automatisch ersetzt durch: <code>Spiel beitreten</code> wenn die
 #### Model
 #### Player
 #### Elemente
+##### Koordinatensystem
 ##### Interface Element
 ##### Board
 ##### Field
