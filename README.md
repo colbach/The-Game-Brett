@@ -24,13 +24,21 @@ $ java thegamebrett.gui.GUIApplication /Users/christiancolbach/Documents/gamebre
 ### Lokalisierung
 Für die Lokalisierung unserer Anwendung verwenden wir das Java-eigene Lokalisierungsframework <code>java.util.ResourceBundle</code>. Dieses erlaubt es Sprachunabhängige Strings zu definieren und diese dann in verschiedene Sprachen zu übersetzen.
 #### Verwendung
-Bei der Verwendung unterscheidet unterscheide ich im volgenden zwischen der Lokalisierung des Java-codes und der Lokalisierung der HTML-Seiten. 
+Bei der Verwendung unterscheidet unterscheiden wir im volgenden zwischen der Lokalisierung des Java-codes und der Lokalisierung der HTML-Seiten. 
+Die Einstellung der Sprache kann in der UI im Menu vorgenommen werden. Hierzu klickt man auf den Button [Optionen]
 ##### Java
 
 ##### HTML
+<p>
+    Zur Lokalisierung der HTML-Seiten verwenden wir ein eigenes System welches durch unseren AssetsLoader realisiert wird. Dieser durchsucht die Dateien On-the-fly nach dem Vorkommen dieser Symbole <code>##</code> und ersetzt dann den zwischen diesen Symbolen vorkommenden Text durch den passenden Eintrag im <code>ResourceBundle</code>.
+</p>
+<p>
+    Ein Beispiel wie dies aussehen könnte:
 
-
-Bei der Verwendung dieser Art der Lokalisierung ist darauf zu achten dass auf diese Weise __nur__ die HTML-Seiten welche durch unseren AssetsLoader geladen werden (also als Datei von der Festplatte geladen werden) lokalisiert werden! Sämtliche andere Strings welche dem Server per Javacode übergeben werden __müssen__ wie im vorherigen Punkt beschrieben lokalisiert werden.
+</p>
+<p>
+Bei der Verwendung dieser Art der Lokalisierung ist darauf zu achten dass auf diese Weise __nur__ die HTML-Seiten welche durch unseren AssetsLoader geladen werden (also als Datei von der Festplatte geladen werden) lokalisiert werden! Sämtliche andere Strings welche dem Server per Java-code übergeben werden __müssen__ wie im vorherigen Punkt beschrieben lokalisiert werden.
+</p>
 ##### Einbinden neuer Sprachen
 
 ## Erstellung eigener Spiele
