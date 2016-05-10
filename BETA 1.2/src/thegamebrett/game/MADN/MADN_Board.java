@@ -14,7 +14,7 @@ import thegamebrett.model.elements.Field;
 
 /**
  *
- * @author Koré
+ * @author Kore
  */
 public class MADN_Board extends Board {
 

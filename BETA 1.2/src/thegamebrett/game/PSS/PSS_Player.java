@@ -7,7 +7,6 @@ package thegamebrett.game.PSS;
 
 import thegamebrett.model.Layout;
 import thegamebrett.model.Player;
-import thegamebrett.model.elements.Figure;
 import thegamebrett.network.User;
 
 /**
@@ -36,7 +35,7 @@ public class PSS_Player extends Player{
         layout.setBackgroundImage(user.getUserCharacter().getAvatar());
         
         figure = new PSS_Figure(this, board, layout);
-        figure.setField(board.getField(41));   
+        figure.setField(board.getField(0));   
         
     }
     

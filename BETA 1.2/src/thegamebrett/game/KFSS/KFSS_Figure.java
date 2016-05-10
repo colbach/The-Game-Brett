@@ -27,7 +27,7 @@ public class KFSS_Figure extends Figure {
     }
     
     public KFSS_Figure(Player owner, KFSS_Board board, Layout layout) {
-        super(owner, layout,0.08,0.08);
+        super(owner, layout,0.08/board.getRatioX(),0.08);
         this.board = board;
     }
     
