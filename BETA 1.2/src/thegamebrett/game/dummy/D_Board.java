@@ -88,7 +88,7 @@ public class D_Board extends Board{
         return fields;
     }
 
-    public static float RATIO_X = 1.2f;
+    public static float RATIO_X = 1.0f;
     @Override
     public float getRatioX() {
         return RATIO_X;

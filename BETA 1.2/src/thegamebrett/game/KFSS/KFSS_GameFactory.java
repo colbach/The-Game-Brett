@@ -54,18 +54,8 @@ public class KFSS_GameFactory implements GameFactory{
     }
 
     @Override
-    public Image getGameIcon() {
-        Canvas c = new Canvas(500,500);
-        WritableImage wi = new WritableImage(500, 500);
-        GraphicsContext g = c.getGraphicsContext2D();
-        g.setFill(Color.ALICEBLUE);
-        g.fillRect(0, 0, 500, 500);
-        g.setFill(Color.ANTIQUEWHITE);
-        g.fillOval(0, 0, 350, 350);
-        g.setFill(Color.AQUA);
-        g.fillOval(150, 150, 350, 350);
-        c.snapshot(null, wi);
-        return wi;
+    public String getGameIcon() {
+        return "gameicons/gameIconKFSS.jpg";
     }
     @Override
     public String getGameName() {

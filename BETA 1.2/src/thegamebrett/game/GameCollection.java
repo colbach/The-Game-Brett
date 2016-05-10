@@ -15,14 +15,4 @@ public class GameCollection {
         new D_GameFactory(), new PSS_GameFactory(), new KFSS_GameFactory(), new MADN_GameFactory(), new D_GameFactory(), new D_GameFactory(), new D_GameFactory()
     };
     
-    public static Image[] imageCache = new Image[gameFactorys.length];
-    static {
-        Platform.runLater(() -> {
-            for(int i=0; i<imageCache.length; i++) {
-                imageCache[i] = gameFactorys[i].getGameIcon();
-            }
-        });
-    }
-    
-    
 }

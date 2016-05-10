@@ -52,13 +52,14 @@ input[type="radio"]:checked + img{
 .characterButton{
 	width: 20%;
 	height:auto;
-	background-color:#36F;
 	padding:5px;
 }
 
 .gameButton{
 	width: 25%;
 	height:auto;
+	padding:5px;
+	background-color:white;
 }
 
 .posImage{
@@ -67,6 +68,11 @@ input[type="radio"]:checked + img{
 
 }
 .charImage{
+	width:100%;
+	height:100%;
+}
+
+.gameImage{
 	width:100%;
 	height:100%;
 }
