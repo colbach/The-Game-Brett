@@ -329,7 +329,7 @@ public static GameFactory[] gameFactorys = {
 ```
 
 ### Beispiele
-Als Beispiel-Implementierung haben wir 3 Spiele realisiert. Diese sind unter <code>thegamebrett.game.MADN.*</code>, <code>thegamebrett.game.KFSS.*</code>, <code>thegamebrett.game.PSS.*</code> sowie <code>thegamebrett.game.dummy.*</code> zu finden. Der <em>Dummy</em> Dient hierbei einfach als Beispiel einer minimalen Version eines Spieles und lässt sich gut als Grundlage für neue Spiele verwenden.
+Als Beispiel-Implementierung haben wir 3 Spiele realisiert. Diese sind unter <code>thegamebrett.game.MADN.*</code>, <code>thegamebrett.game.KFSS.*</code>, <code>thegamebrett.game.PSS.*</code> sowie <code>thegamebrett.game.dummy.*</code> zu finden. Der <em>Dummy</em> dient hierbei einfach als Beispiel einer minimalen Version eines Spieles und lässt sich gut als Grundlage für neue Spiele verwenden.
 
 ## Anlegen eigener Character
 <p>
