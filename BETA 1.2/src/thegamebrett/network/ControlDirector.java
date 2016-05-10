@@ -32,7 +32,7 @@ public class ControlDirector implements Director {
     public static final String NO_MESSAGE_ID = "#########";
     
     /**  diese Id wird uebergeben um anzugeben dass keine Farbe verfuegbar ist */
-    public static final String NONE = "#F5F5F5";
+    public static final String NONE = "#ECDACE";
     
     public static final String YES = "YES";
     public static final String NO = "NO";
