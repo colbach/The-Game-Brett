@@ -138,6 +138,7 @@ Abstrakte Klasse: <code>thegamebrett.model.Player</code>
 </p>
 
 #### Elemente
+##### Element
 Abstrakte Klasse: <code>thegamebrett.model.elements.Element</code>
 <p>
     Diese Klasse dient als Vater aller Komponenten welche die UI zeichnen kann. <code>Element</code> erweitert alle Klassen um eine Funktion <code>public void registerChange()</code> diese Funktion muss zwingend aufgerufen werden wenn eine Eigentschaft der Klasse verändert wird welche für die UI interessant sein könnte. Wird diese Funktion __nicht__ aufgerufen werden die vom Model abhänigen UI-Komponenten auch __nicht__ aktualisiert.
@@ -145,11 +146,72 @@ Abstrakte Klasse: <code>thegamebrett.model.elements.Element</code>
 
 ##### Koordinatensystem
 <p>
-    Bevor wir auf den Aufbau der einzelnen <em>Elemente</em> eingehen gibt es noch ein paar Dinge zu beachten welches das ihn ihnen verwendete Koorinatensystem angeht. Der Bereich der Koorinaten geht von 0 bis 1. Der Punkt der sich unten rechts befindet ist also <em>(1, 1)</em> und der Punkt welcher sich oben links befindet ist also <em>(0, 0)</em>. Hierbei ist zu beachten ist dass dies nicht dem Punkt <em>(0, 0)</em> des Displays entsprechen muss. Mehr dazu im Abschnitt über die Klasse <code>Board</code>.
+    Bevor wir auf den Aufbau der einzelnen <em>Elemente</em> eingehen gibt es noch ein paar Dinge zu beachten welches das ihn ihnen verwendete Koorinatensystem angeht. Der Bereich der Koorinaten geht von 0 bis 1. Der Punkt der sich unten rechts befindet ist also <em>(1, 1)</em> und der Punkt welcher sich oben links befindet ist also <em>(0, 0)</em>. Hierbei ist zu beachten ist dass dies nicht dem Punkt <em>(0, 0)</em> des Displays entsprechen muss. Mehr dazu im folgendem Abschnitt über die Klasse <code>Board</code>.
 </p>
-##### Interface Element
+
 ##### Board
+Abstrakte Klasse: <code>thegamebrett.model.elements.Board</code>
+<p>
+    Diese Klasse representiert im Model das Spielbrett im eigentlichen Sinne, also die Unterlage auf der sich die Felder und die Figuren befinden. Die Klasse ist abstrakt und muss somit zwingent vererbt werden. Zusetzlich müssen volgende Methoden implementiert werden:
+</p>
+
+Soll die Anzahl der Felder zurück welche sich auf dem Brett befinden:
+```java
+public abstract int getFieldLength();
+```
+
+Soll das Feld mit dem index i zurückgeben
+```java
+public abstract Field getField(int i);
+```
+
+Soll das Layout des Bretts zurückgeben (später mehr dazu):
+```java
+public abstract Layout getLayout();
+```
+
+Soll Ratio des Brettes zurückgeben. das Verhältniss zwischen X und Y gibt das Verhälltnis zwischen Breite und Höhe an. Ein Ratio 1 zu 1 entspricht einem Quadratischen Spielfeldes. Das Koordinatensystem ist von dieser Angabe abhängig:
+```java
+public abstract float getRatioX();
+public abstract float getRatioY();
+```
+
 ##### Field
+Abstrakte Klasse: <code>thegamebrett.model.elements.Field</code>
+<p>
+    Diese Klasse representiert im Model ein Spielfeld. Die Klasse ist abstrakt und muss somit zwingent vererbt werden. Zusetzlich müssen volgende Methoden implementiert werden:
+</p>
+
+Soll relative horizontale und vertikale Position zurück liefern:
+```java
+public abstract RelativePoint getRelativePosition();
+```
+
+Soll relative Breite zurückgeben (Wert ∈ [0d, 1d]):
+```java
+public abstract double getWidthRelative();
+```
+
+Soll relative Hoehe zurückgeben (Wert ∈ [0d, 1d]):
+```java
+public abstract double getHeightRelative();
+```
+
+Soll nächstes Feld zurückgeben:
+```java
+public abstract Field[] getNext();
+```
+
+Soll vorhergehendes Feld zurückgeben:
+```java
+public abstract Field[] getPrevious();
+```
+
+Soll das Layout des Feldes zurückgeben (später mehr dazu):
+```java
+public abstract Layout getLayout();
+```
+
 ##### Figure
 #### Layout
 #### GameFactory
