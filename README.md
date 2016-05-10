@@ -126,9 +126,9 @@ Wird beim laden automatisch ersetzt durch: <code>Spiel beitreten</code> wenn die
 </p>
 
 #### Model
-(Klasse: <code>thegamebrett.model.Model</code>)
+Klasse: <code>thegamebrett.model.Model</code>
 <p>
-    Die Klasse Model ist die 
+    Die Klasse Model ist die Klasse über die der <em>Manager</em> auf das Spiel zugreift und unter welcher die weiteren Klassen des Spieles organisiert sind. Es ist nicht nötig (aber erlaubt) von ihr abzuleiten. Objeckte dieser Klasse werden innerhalb der <code>GameFactory</code>-Klasse erzeugt.
 </p>
 
 #### Player
