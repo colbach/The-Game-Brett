@@ -90,17 +90,6 @@ public class WebGenerator {
     }
     
     
-    private static String generateUserCharacterChooserHTML() {
-        //<label><input type="radio" name="Avatar" value="Mode"> <img src="avatar1.png" alt="Mode" width="100px" height="100px"></label>
-        ArrayList<UserCharacter> cs = UserCharacterDatabase.getUserCharacters();
-        
-        StringBuilder sb = new StringBuilder();
-        for(int i=0; i<cs.size(); i++) {
-            sb.append("\n<button class=\"characterButton\" id=\"chooseCharacterButton" + i + "\" onClick=\"tryToGetCharacter(" + i + ")\"><img src=\"avatars/" + cs.get(i).getAvatarName() + "\" alt=\"Character\" class=\"charImage\">" + cs.get(i).getName() + "</button>");
-        }
-        return sb.toString();
-    }
-    
     private static String generateChooseGameWebPage() {
         String template = AssetsLoader.loadText_localized_SuppressExceptions("web/chooseGame.html");
         return template.replaceFirst("<!--replace-->", generateGameChooserHTML());
@@ -114,8 +103,18 @@ public class WebGenerator {
         return chooseChooseGameWebPage;
     }
     
-    private static String generateGameChooserHTML() {
+    private static String generateUserCharacterChooserHTML() {
         //<label><input type="radio" name="Avatar" value="Mode"> <img src="avatar1.png" alt="Mode" width="100px" height="100px"></label>
+        ArrayList<UserCharacter> cs = UserCharacterDatabase.getUserCharacters();
+        
+        StringBuilder sb = new StringBuilder();
+        for(int i=0; i<cs.size(); i++) {
+            sb.append("\n<button class=\"characterButton\" id=\"chooseCharacterButton" + i + "\" onClick=\"tryToGetCharacter(" + i + ")\"><img src=\"avatars/" + cs.get(i).getAvatarName() + "\" alt=\"Character\" class=\"charImage\">" + cs.get(i).getName() + "</button>");
+        }
+        return sb.toString();
+    }
+    
+    private static String generateGameChooserHTML() {
         GameFactory[] gfs = GameCollection.gameFactorys;
         
         StringBuilder sb = new StringBuilder();
@@ -126,16 +125,6 @@ public class WebGenerator {
     }
     
     public static String generateSystemClientChooserAvailabilityInfoForAPI(UserManager um) {
-        /*StringBuilder sb = new StringBuilder();
-        sb.append("<h1> Melden sie sich an System an </h1>");
-        for (int i = 0; i < UserManager.SYSTEM_CLIENT_IDS.length; i++) {
-            if (um.getSystemClients()[i] == null || !um.getSystemClients()[i].isAlife()) {
-                sb.append("<div align=\"center\"><button class=\"choices\" onclick=\"tryToLogIn('" + systemClientIDs[i] + "')\">" + systemClientNames[i] + "</button></div>");
-            } else {
-                sb.append("<div align=\"center\"><button class=\"choices\" disabled>" + systemClientNames[i] + "</button></div>");
-            }
-        }
-        return sb.toString();*/
         
         boolean[] bs = um.canSetSystemClientArray();
         StringBuilder sb = new StringBuilder();
@@ -152,24 +141,6 @@ public class WebGenerator {
         }
         
         return sb.toString();
-            
-        /*boolean[] bs = um.canSetSystemClientArray();
-        return
-          "<div>\n"
-            + "<button class=\"position\" "  + (bs[6] ? "onClick=\"tryToLogIn('" + UserManager.SYSTEM_CLIENT_IDS[6] + "')\"" : "disabled") + "><img src=\"position-" + (bs[6] ? "enabled" : "disabled") + ".png\" alt=\"" + UserManager.SYSTEM_CLIENT_NAMES[6] + "\" class=\"posImage\"></button>\n"
-            + "<button class=\"position\" "  + (bs[7] ? "onClick=\"tryToLogIn('" + UserManager.SYSTEM_CLIENT_IDS[7] + "')\"" : "disabled") + "><img src=\"position-" + (bs[7] ? "enabled" : "disabled") + ".png\" alt=\"" + UserManager.SYSTEM_CLIENT_NAMES[7] + "\" class=\"posImage\"></button>\n"
-            + "<button class=\"position\" "  + (bs[0] ? "onClick=\"tryToLogIn('" + UserManager.SYSTEM_CLIENT_IDS[0] + "')\"" : "disabled") + "><img src=\"position-" + (bs[2] ? "enabled" : "disabled") + ".png\" alt=\"" + UserManager.SYSTEM_CLIENT_NAMES[2] + "\" class=\"posImage\"></button>\n"
-        + "</div>\n"
-        + "<div>\n"
-            + "<button class=\"position\" "  + (bs[5] ? "onClick=\"tryToLogIn('" + UserManager.SYSTEM_CLIENT_IDS[5] + "')\"" : "disabled") + "><img src=\"position-" + (bs[5] ? "enabled" : "disabled") + ".png\" alt=\"" + UserManager.SYSTEM_CLIENT_NAMES[5] + "\" class=\"posImage\"></button>\n"
-            + "<button class=\"position\" disabled=\"true\"><img src=\"desk_icon.png\" alt=\"Desk\" class=\"posImage\"></button>\n"
-            + "<button class=\"position\" "  + (bs[1] ? "onClick=\"tryToLogIn('" + UserManager.SYSTEM_CLIENT_IDS[1] + "')\"" : "disabled") + "><img src=\"position-" + (bs[1] ? "enabled" : "disabled") + ".png\" alt=\"" + UserManager.SYSTEM_CLIENT_NAMES[1] + "\" class=\"posImage\"></button>\n"
-        + "</div>\n"
-        + "<div>\n"
-            + "<button class=\"position\" "  + (bs[4] ? "onClick=\"tryToLogIn('" + UserManager.SYSTEM_CLIENT_IDS[4] + "')\"" : " disabled") + "><img src=\"position-" + (bs[4] ? "enabled" : "disabled") + ".png\" alt=\"" + UserManager.SYSTEM_CLIENT_NAMES[4] + "\" class=\"posImage\"></button>\n"
-            + "<button class=\"position\" "  + (bs[3] ? "onClick=\"tryToLogIn('" + UserManager.SYSTEM_CLIENT_IDS[3] + "')\"" : " disabled") + "><img src=\"position-" + (bs[3] ? "enabled" : "disabled") + ".png\" alt=\"" + UserManager.SYSTEM_CLIENT_NAMES[3] + "\" class=\"posImage\"></button>\n"
-            + "<button class=\"position\" "  + (bs[2] ? "onClick=\"tryToLogIn('" + UserManager.SYSTEM_CLIENT_IDS[2] + "')\"" : " disabled") + "><img src=\"position-" + (bs[2] ? "enabled" : "disabled") + ".png\" alt=\"" + UserManager.SYSTEM_CLIENT_NAMES[2] + "\" class=\"posImage\"></button>\n"
-        + "</div>\n";*/
     }
 
     static String generateFreePositionHTML(UserManager um) {
