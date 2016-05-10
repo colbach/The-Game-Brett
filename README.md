@@ -7,7 +7,6 @@ von Kore Kaluzynski, Cenk Saatci, Christian Colbach
 <p>
 Zur Erstellung einer ausführbaren Datei muss das <em>src</em> Verzeichnis kompiliert werden.
 Die Hauptklasse der Anwendung ist die Klasse <em>thegamebrett.gui.GUIApplication</em>. Dieser muss zur Ausführung ein Parameter mitgegeben werden welcher den absoluten Pfad auf den Assetsordner angibt mit folgendem <code>/</code>. Dieser Ordner ist in <em>scr/assetsfolder</em> zu finden und kann auf einen beliebigen Ort im Dateisystem gelegt werden:
-
 </p>
 ##### Beispiel wie die Anwendung gestartet werden kann:
 <pre>
@@ -15,6 +14,7 @@ $ java thegamebrett.gui.GUIApplication /Users/christiancolbach/Documents/gamebre
 </pre>
 
 ## Aufbau des Frameworks
+
 ### Model View Controller
 #### Der Manager
 ### Grafik
@@ -22,21 +22,26 @@ $ java thegamebrett.gui.GUIApplication /Users/christiancolbach/Documents/gamebre
 #### Serverseitig
 #### Clientseitig
 ### Assets
+
 ### Lokalisierung
 Für die Lokalisierung unserer Anwendung verwenden wir das Java-eigene Lokalisierungsframework <code>java.util.ResourceBundle</code>. Dieses erlaubt es Sprachunabhängige Strings zu definieren und diese dann in verschiedene Sprachen zu übersetzen.
+
 #### Verwendung durch den Endbenutzer
 Die Einstellung der Sprache kann in der UI im Menu vorgenommen werden. Hierzu klickt man auf den Button [Optionen] uns stell diese dann unter den Spracheinstellungen ein.
+
 #### Verwendung durch den Programmierer
 Bei der Verwendung unterscheidet unterscheiden wir im folgenden zwischen der Lokalisierung des Java-codes und der Lokalisierung der HTML-Seiten. Hierzu zu erwähnen ist ausserdem dass alle Strings welche verwendet werden sollen in der entsprechenden <code>properties</code>-Datei angegeben sein müssen. Für English in der Datei <code>languages_en.properties</code> und für Deutsch <code>languages_de.properties</code>.
+
 ##### Java
 <p>
     In Java können Strings durch die direkte Verwendung des <code>ResourceBundle</code>-Ojektes lokalisiert werden. Dieses ist statisch und befindet sich im Manager und kann durch <code>Manager.rb</code> angesprochen werden. <code>ResourceBundle</code> besitzt eine Funktion <code>getString(String)</code>, diese Methode gibt bei Angabe eines Keys einen entsprechend lokalisierten String zurück.
 </p>
 <em>Beispiel:</em> <br>
 ```java
-    System.out.println(Manager.rb.getString("StartGame"));
+System.out.println(Manager.rb.getString("StartGame"));
 ```
 Gibt als Ausgabe <code>Spiel beitreten</code> wenn die Sprache auf Deutsch gestellt ist und <code>Join game</code> wenn die Sprache auf English gestellt ist.
+
 ##### HTML
 <p>
     Zur Lokalisierung der HTML-Seiten verwenden wir ein eigenes System welches durch unseren AssetsLoader realisiert wird. Dieser durchsucht die Dateien On-the-fly nach dem Vorkommen dieser Symbole <code>##</code> und ersetzt dann den zwischen diesen Symbolen vorkommenden Text durch den passenden Eintrag im <code>ResourceBundle</code>.
@@ -54,6 +59,7 @@ Wird beim laden automatisch ersetzt durch: <code>Spiel beitreten</code> wenn die
 ##### Einbinden neuer Sprachen
 
 ## Erstellung eigener Spiele
+
 ### Aufbau
 #### Model
 #### Player
