@@ -11,6 +11,7 @@ import thegamebrett.action.ActionResponse;
 import thegamebrett.action.request.GUIUpdateRequest;
 import thegamebrett.action.request.GameEndRequest;
 import thegamebrett.action.request.InteractionRequest;
+import thegamebrett.action.request.RemoveScreenMessageRequest;
 import thegamebrett.action.request.ScreenMessageRequest;
 import thegamebrett.action.response.*;
 import thegamebrett.model.GameLogic;
@@ -140,7 +141,7 @@ public class KFSS_GameLogic extends GameLogic{
         
         if(as instanceof StartPseudoResponse){
             requests.add(new GUIUpdateRequest(GUIUpdateRequest.GUIUPDATE_ALL));
-            requests.add(gameStart(as));
+            requests.add(gameStart());
         }
         
         else if(as instanceof InteractionResponse){
@@ -185,10 +186,12 @@ public class KFSS_GameLogic extends GameLogic{
             }
             
             else if(previous.equals(expected)){
+                requests.add(new RemoveScreenMessageRequest());
                 /* abfragen ob anfrage zum wuerfeln **/
                 if(previous.getUserData().equals(INTERACTIONRESPONSE_CHOICES_DICE)){
-                   requests.add(nextDice(as, previous));
-                /* abfragen ob anfrage auswÃ¤hlen einer bestimmten figur **/
+                    requests.add(nextDice(as, previous));
+                   
+                /* abfragen ob anfrage auswaehlen einer bestimmten figur **/
                 } else if(previous.getUserData().equals(INTERACTIONRESPONSE_CHOICES_OK)){
                     requests.add(nextOK(as,previous));
                     
@@ -200,9 +203,7 @@ public class KFSS_GameLogic extends GameLogic{
                 }
             }
             
-        } else if(as instanceof TimerResponse){
-            //nicht implementiert
-        } else{
+        }else{
             throw new IllegalArgumentException("Illegal Response Type");
         } 
         
@@ -211,7 +212,7 @@ public class KFSS_GameLogic extends GameLogic{
         return requests.toArray(new ActionRequest[0]);
     }
 
-    private ActionRequest gameStart(ActionResponse as) {
+    private ActionRequest gameStart() {
 
         InteractionRequest nextRequest = new InteractionRequest("Und los gehts! Du bist dran mit wuerfeln!",
                 new String[]{"WUHU!"}, getNextPlayer(null), false,INTERACTIONRESPONSE_CHOICES_DICE);
@@ -396,18 +397,27 @@ public class KFSS_GameLogic extends GameLogic{
             case 55:
                 field55 = true;
                 requests.add(new ScreenMessageRequest(board.getField(55).getLayout().getSubtext(), previous.getPlayer()));
-                for(Player p : getDependingModel().getPlayers()){
-                    if(p == previous.getPlayer()){
-                        nextRequest = new InteractionRequest("Wuerfle eine 6!",
-                        new String[]{"Wuerfeln!"}, (KFSS_Player)p, 
-                            false,INTERACTIONRESPONSE_EVERYONE_DICES);
-                    } else {
-                    requests.add(new InteractionRequest("Wuerfle eine 6!",
-                        new String[]{"Wuerfeln!"}, (KFSS_Player)p, 
-                            false,INTERACTIONRESPONSE_EVERYONE_DICES));  
+                if(alreadyDiced==0){
+                    for(Player p : getDependingModel().getPlayers()){
+                        if(p == previous.getPlayer()){
+                            nextRequest = new InteractionRequest("Wuerfle eine 6!",
+                            new String[]{"Wuerfeln!"}, (KFSS_Player)p, 
+                                false,INTERACTIONRESPONSE_EVERYONE_DICES);
+                        } else {
+                        requests.add(new InteractionRequest("Wuerfle eine 6!",
+                            new String[]{"Wuerfeln!"}, (KFSS_Player)p, 
+                                false,INTERACTIONRESPONSE_EVERYONE_DICES));  
+                        }
                     }
+                    break;
+                } else {
+                    alreadyDiced = 0;
+                    dicedRight.clear();
+                    nextRequest = new InteractionRequest("Du bist dran mit wuerfeln!",
+                        new String[]{"Wuerfeln!"}, getNextPlayer((KFSS_Player)previous.getPlayer()), 
+                        false,INTERACTIONRESPONSE_CHOICES_DICE);
+                    break;
                 }
-                break;
                 
             case 59: case 42:
                 field55 = false;
