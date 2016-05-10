@@ -53,7 +53,7 @@ Mit einer Trennung zwischen Spielelogik und IO versuchen wir in unser Framework 
 
 #### Kommunikation zwischen einzelnen Modulen
 <p>
-Die Komunikation zwischen den einzelnen Modulen (Model, Grafik, Webinterface, Spielelogik) findet über einen selbst implementiertes System aus <em>Actions</em> stadt. Grundlage hierfür stellen die Interfaces <code>ActionRequest</code> und <code>ActionResponse</code> von welchen es eine Reihe von Ableitungen gibt und welche durch das gesammte System durchgereicht werden. Hierbei läuft das immer so ab dass der Manager <em>Requests</em> bei der Spielelogik abholt und diese dann an das gewünschte System weitergeibt (z.B. Netzwerk oder UI). Diese Systeme generieren dann zu diesen passende <em>Responses</em> welche dann wieder an den Manager abgegeben werden. Hierzu zu beachten ist dass die Spielelogik immer nur beim Anstoss durch den Manager aktiv wird und ihre nächste <em>Requests</em> generieren. Ein solcher Anstoss geschieht nur wenn eine <em>Resonse</em> an die Spielelogik zurück geht. Um diesen Aufbau zu verstehen sind folgende Methoden relevant:
+    Die Komunikation zwischen den einzelnen Modulen (Model, Grafik, Webinterface, Spielelogik) findet über einen selbst implementiertes System aus <em>Actions</em> stadt. Grundlage hierfür stellen die Interfaces <code>ActionRequest</code> und <code>ActionResponse</code> von welchen es eine Reihe von Ableitungen gibt und welche durch das gesammte System durchgereicht werden. Hierbei läuft das immer so ab dass der Manager <em>Requests</em> bei der Spielelogik abholt und diese dann an das gewünschte System weitergeibt (z.B. Netzwerk oder UI). Diese Systeme generieren dann zu diesen passende <em>Responses</em> welche dann wieder an den Manager abgegeben werden. Hierzu zu beachten ist dass die Spielelogik immer nur beim Anstoss durch den Manager aktiv wird und ihre nächste <em>Requests</em> generieren. Ein solcher Anstoss geschieht nur wenn eine <em>Resonse</em> an die Spielelogik zurück geht. Um diesen Aufbau zu verstehen sind folgende Methoden relevant:
 </p>
 In der Spielelogik (<code>Gamelogik</code>):
 ```java
@@ -63,26 +63,31 @@ In dem Manager (<code>Manager</code>, <code>MobileManager</code>, <code>TimeMana
 ```java
 public void react(ActionResponse response);
 ````
-#### Querverweise (Ausreisser MVC)
-
-
-
-##### Serverseitig
-##### Clientseitig
 
 ### Steuerungskonzept
+<p>
+    Unsere Brett ist so konzipiert dass eine Steuerung mittels Maus oder Touchscreen nicht nötig ist. Es reicht wenn das Gamebrett mit dem WLAN verbunden ist beziehungsweise einen eingebauten Access Point besitzt. Das Menue und die Spiele werden über die Handhelds welche mit dem Brett verbunden sind gesteuert.
+</p>
 
 ### Assets
-
+<p>
+    Zum laden von Assets wird die Klasse <code>AssetLoader</code> verwendet. Diese vereinfacht im System das laden von Inhalten und lokalisiert Textdokumente On-the-fly (Mehr dazu im nächsten Abschnitt Lokalisierung)
+</p>
 
 ### Lokalisierung
-Für die Lokalisierung unserer Anwendung verwenden wir das Java-eigene Lokalisierungsframework <code>java.util.ResourceBundle</code>. Dieses erlaubt es Sprachunabhängige Strings zu definieren und diese dann in verschiedene Sprachen zu übersetzen.
+<p>
+    Für die Lokalisierung unserer Anwendung verwenden wir das Java-eigene Lokalisierungsframework <code>java.util.ResourceBundle</code>. Dieses erlaubt es Sprachunabhängige Strings zu definieren und diese dann in verschiedene Sprachen zu übersetzen.
+</p>
 
 #### Verwendung durch den Endbenutzer
-Die Einstellung der Sprache kann in der UI im Menu vorgenommen werden. Hierzu klickt man auf den Button [Optionen] uns stell diese dann unter den Spracheinstellungen ein.
+<p>
+    Die Einstellung der Sprache kann in der UI im Menu vorgenommen werden. Hierzu klickt man auf den Button [Optionen] uns stell diese dann unter den Spracheinstellungen ein.
+</p>
 
 #### Verwendung durch den Programmierer
-Bei der Verwendung unterscheidet unterscheiden wir im folgenden zwischen der Lokalisierung des Java-codes und der Lokalisierung der HTML-Seiten. Hierzu zu erwähnen ist ausserdem dass alle Strings welche verwendet werden sollen in der entsprechenden <code>properties</code>-Datei angegeben sein müssen. Für English in der Datei <code>languages_en.properties</code> und für Deutsch <code>languages_de.properties</code>.
+<p>
+    Bei der Verwendung unterscheidet unterscheiden wir im folgenden zwischen der Lokalisierung des Java-codes und der Lokalisierung der HTML-Seiten. Hierzu zu erwähnen ist ausserdem dass alle Strings welche verwendet werden sollen in der entsprechenden <code>properties</code>-Datei angegeben sein müssen. Für English in der Datei <code>languages_en.properties</code> und für Deutsch <code>languages_de.properties</code>.
+</p>
 
 ##### Java
 <p>
