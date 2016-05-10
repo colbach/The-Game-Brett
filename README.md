@@ -126,9 +126,9 @@ Wird beim laden automatisch ersetzt durch: <code>Spiel beitreten</code> wenn die
 </p>
 
 #### Model
-(<code>thegamebrett.model.Model</code>)
+(Klasse: <code>thegamebrett.model.Model</code>)
 <p>
-    Die Klasse Model
+    Die Klasse Model ist die 
 </p>
 
 #### Player
