@@ -25,11 +25,22 @@ $ java thegamebrett.gui.GUIApplication /Users/christiancolbach/Documents/gamebre
 
 #### Webinterface (View #2)
 
-#### Spielelogik (Model)
+#### Spielelogik (Model #1)
+
+#### Userstate (Model #2)
 
 #### Kommunikation
-Die Komunikation zwischen den einzelnen Modulen (Model, Grafik, Webinterface, Spielelogik) findet über einen selbst implementiertes System aus <em>Actions</em>. Grundlage hierfür stellen die Interfaces <code>ActionRequest</code> und <code>ActionResponse</code> von welchen es eine Reihe von ableitungen gibt und welche durch das gesammte System durchgereicht werden. Hierbei läuft das immer so ab dass der Manager <code>Requests</code>   <code>Responses</code>
-
+<p>
+Die Komunikation zwischen den einzelnen Modulen (Model, Grafik, Webinterface, Spielelogik) findet über einen selbst implementiertes System aus <em>Actions</em> stadt. Grundlage hierfür stellen die Interfaces <code>ActionRequest</code> und <code>ActionResponse</code> von welchen es eine Reihe von Ableitungen gibt und welche durch das gesammte System durchgereicht werden. Hierbei läuft das immer so ab dass der Manager <em>Requests</em> bei der Spielelogik abholt und diese dann an das gewünschte System weitergeibt (z.B. Netzwerk oder UI). Diese Systeme generieren dann zu diesen passende <em>Responses</em> welche dann wieder an den Manager abgegeben werden. Hierzu zu beachten ist dass die Spielelogik immer nur beim Anstoss durch den Manager aktiv wird und ihre nächste <em>Requests</em> generieren. Ein solcher Anstoss geschieht nur wenn eine <em>Resonse</em> an die Spielelogik zurück geht. Um diesen Aufbau zu verstehen sind folgende Methoden relevant:
+</p>
+In der Spielelogik (<code>Gamelogik</code>):
+```java
+public ActionRequest[] next(ActionResponse as);
+````
+In dem Manager (<code>Manager</code>, <code>MobileManager</code>, <code>TimeManager</code>, <code>NetworkManager</code>):
+```java
+public void react(ActionResponse response);
+````
 #### Ausreisser
 
 ##### Serverseitig
