@@ -329,4 +329,15 @@ public static GameFactory[] gameFactorys = {
 ```
 
 ### Beispiele
+Als Beispielimplementierung haben wir 4 Spiele realisiert.
+
 ## Anlegen eigener Character
+<p>
+    Eigene Character können ganz leicht angelegt werden. Hierzu muss die Datei <code>assetsfolder/characters.csv</code> um eine weitere Zeile erweitert werden.
+</p>
+<em>Beispiel:</em>
+<pre>
+Rot;#FF3333;tod-red.png
+Blau;#0080FF;tod-blue.png
+Green;#00CC00;tod-green.png
+</pre>
