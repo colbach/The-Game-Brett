@@ -287,21 +287,26 @@ thegamebrett.action.request.InteractionRequest(String titel, Object[] choices, P
 Wenn dieser Antwortet kommt ein Objekt vom Typ <code>InteractionResponse</code> zurück
 
 ##### Messages
-Zeigt Nachicht für alle sichtbar auf dem Spielbrett an. Nachicht ist in Richtung des angegebenen Spielers gedreht.
+Zeigt Nachicht für alle sichtbar auf dem Spielbrett an. Nachicht ist in Richtung des angegebenen Spielers gedreht:
 ```java
 thegamebrett.action.request.ScreenMessageRequest(String label, Player player)
 ```
 Nachicht verschwindet erst wenn eine neue Nachicht geschickt wird oder wenn eine <code>RemoveScreenMessageRequest</code> zurück gegeben wird.
 
 ##### Sound
-Spielt Sound ab. Sound muss im <code>wav</code>-Format vorliegen.
+Spielt Sound ab. Sound muss im <code>wav</code>-Format vorliegen. Als Parameter muss ein Objekt vom Typ thegamebrett.model.mediaeffect.SoundEffect übergeben werden:
 ```java
 thegamebrett.action.request.PlaySoundRequest(SoundEffect sound)
 ```
-Nachicht verschwindet erst wenn eine neue Nachicht geschickt wird oder wenn eine <code>RemoveScreenMessageRequest</code> zurück gegeben wird.
-
+Sound stoppt erst wenn Sound zu Ende oder wenn <code>StopSoundsRequest</code> zurück gegeben wird. Falls im SoundEffect angegeben ist dass sich dieser für immer wiederholt stoppt dieser erst bei <code>StopSoundsRequest</code> oder wenn Spiel beendet wird.
 
 ##### Timer
+Da das gesammte Framework darauf aufgebaut ist dass die Spielelogik immer erst anläuft wenn eine Response für diese vorliegt ist es in manchen Situationen sinnvoll einen Timer zu starten:
+```java
+thegamebrett.action.request.TimerRequest(int millis)
+```
+Dieser Timer hat die Eigenschaft nach einer bestimmten Anzahl von Sekunden eine <code>TimerResponse</code> zurück zu geben. Auf diese Art kann das Framework sich nach Ablauf einer bestimmten Zeit wieder selbst anstossen. (Auf diese Art und Weise sind somit auch Schleifen möglich wenn man immer ein <code>TimerRequest</code> zurück gibt)
+
 ##### Spielende und Spielstart
 ### Gamecollection
 ### Beispiele
