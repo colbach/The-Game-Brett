@@ -31,6 +31,8 @@ import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.util.Duration;
 import thegamebrett.Manager;
+import thegamebrett.assets.AssetNotExistsException;
+import thegamebrett.assets.AssetsLoader;
 import thegamebrett.game.GameCollection;
 import thegamebrett.game.dummy.D_GameLogic;
 import thegamebrett.model.GameFactory;
@@ -84,7 +86,22 @@ public class MenueView extends Group {
         int rowCount = 0;
         for (GameFactory game : GameCollection.gameFactorys) {
 
-            ImageView icon = new ImageView(game.getGameIcon());
+            ImageView icon;
+            try {
+                icon = new ImageView(AssetsLoader.loadImage(game.getGameIcon()));
+                icon.setLayoutX(rowStart + (1.5 * count * iconWH));
+                icon.setLayoutY(rowStart + (1.7 * rowCount * iconWH));
+
+                icon.setFitHeight(iconWH);
+                icon.setFitWidth(iconWH);
+                icon.addEventHandler(MouseEvent.MOUSE_PRESSED, (MouseEvent event) -> {
+                    refreshGameSelectedScreen();
+                    selectGame(game);
+                });
+                getChildren().add(icon);
+            } catch (AssetNotExistsException ex) {
+                Logger.getLogger(MenueView.class.getName()).log(Level.SEVERE, null, ex);
+            }
             Label label = new Label(game.getGameName());
             label.setAlignment(Pos.CENTER);
             label.setLayoutX(rowStart + (1.5 * count * iconWH));
@@ -92,17 +109,9 @@ public class MenueView extends Group {
             label.setFont(Font.font(15));
             label.setLayoutY(rowStart + (1.7 * rowCount * iconWH) + iconWH + 5);
             
-            icon.setLayoutX(rowStart + (1.5 * count * iconWH));
-            icon.setLayoutY(rowStart + (1.7 * rowCount * iconWH));
+            
 
-            icon.setFitHeight(iconWH);
-            icon.setFitWidth(iconWH);
-            icon.addEventHandler(MouseEvent.MOUSE_PRESSED, (MouseEvent event) -> {
-                refreshGameSelectedScreen();
-                selectGame(game);
-            });
-
-            getChildren().addAll(icon, label);
+            getChildren().addAll(label);
 
             count++;
             if (count == iconsInARow) {

@@ -1,18 +1,10 @@
-/*$(document).ready(function () {
-    //$("#refresh").load("refresh?start");
-    update();
-    var refreshId = setInterval(function () {
-        update();
-        //$("#refresh").load('refresh?' + 1 * new Date());
-    }, 2000);
-});*/
-
-var backgroundColor = '#B70E79'; // Angegebene Farbe ist Default
+$(document).ready(function () {
+    updateBackgroundColor();
+});
 
 var lastContentID = "000000000"; // 000000000 bedeutet dass es keine aktuelle gibt
 
 function reply(answer) {
-    //$("#refresh").load("reply?" + answer);
     var url = "reply?" + answer;
     var response = new XMLHttpRequest();
     response.open("GET", url, true);
@@ -294,9 +286,20 @@ function returnToCharacter() {
     //window.location = "back";
     logOut();
 }
+function updateBackgroundColor() {
+    var url = "getUserColor";
+    var response = new XMLHttpRequest();
+    response.open("GET", url, true);
+    response.send();
+    response.onreadystatechange = function () {
+        if (response.readyState === 4 && response.status === 200) {
+            setBackgroundColor(response.responseText);
+        }
+    };
+}
 function setBackgroundColor(backgroundcolor) {
     /*hier die farbe für jeden spieler anpassen. gibt es bei google was zu :D*/
-    document.getElementsByTagName("body")[0].style.backgroundColor = backgroundColor;
+    document.getElementsByTagName("body")[0].style.backgroundColor = backgroundcolor;
 }
 function createCharacter() {
     window.location = "createCharacter.html";

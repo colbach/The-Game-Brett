@@ -68,18 +68,8 @@ public class D_GameFactory implements GameFactory {
     }
 
     @Override
-    public Image getGameIcon() {
-        Canvas c = new Canvas(200,200);
-        WritableImage wi = new WritableImage(200, 200);
-        GraphicsContext g = c.getGraphicsContext2D();
-        g.setFill(Color.YELLOWGREEN);
-        g.fillRect(0, 0, 200, 200);
-        g.setFill(Color.BLUE);
-        g.fillOval(0, 0, 100, 100);
-        g.setFill(Color.RED);
-        g.fillOval(50, 50, 300, 300);
-        c.snapshot(null, wi);
-        return wi;
+    public String getGameIcon() {
+        return "gameicons/gameIconDummy.jpg";
     }
 
     @Override

@@ -1,7 +1,11 @@
 package thegamebrett.network.httpserver;
 
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Date;
+import java.util.StringTokenizer;
 
 /**
  * @author Christian Colbach
@@ -60,13 +64,20 @@ public class HttpServer {
 
             String localHost = "Unknown";
             try {
-                localHost = java.net.InetAddress.getLocalHost().getHostAddress();
+                localHost = InetAddress.getLocalHost().getHostAddress();
+                for ( InetAddress ia : InetAddress.getAllByName(localHost) ) { // Fehlervermeidung Linux
+                    System.out.println("Adresse gefunden: " + ia.getHostAddress());
+                    if(!ia.getHostAddress().startsWith("127")) {
+                        localHost = ia.getHostAddress();
+                    }
+                }
             } catch (UnknownHostException uhe) {
                 System.out.println("Networkcard not active or not found!");
                 uhe.printStackTrace();
             }
 
             addressText = localHost + ":" + port;
+            
             System.out.println("webserver local available under: " + addressText);
 			//Logger.log(Logger.LOGTYPE_NOTE, "webserver local available under: " + SystemInformation.getLocalHost() + ":" + port);
             // ]
