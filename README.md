@@ -13,8 +13,25 @@ Beispiel wie die Anwendung gestartet werden kann:
 <pre>
 $ java thegamebrett.gui.GUIApplication /Users/christiancolbach/Documents/gamebrett/classes/assetsfolder/
 </pre>
-<p>
 
-
-</p>
-
+## Aufbau des Frameworks
+### Model View Controller
+### Webinterface
+#### Serverseitig
+#### Clientseitig
+### Assets
+## Erstellung eigener Spiele
+### Aufbau
+#### GameFactory
+#### GameLogic
+#### Layout
+#### Model
+#### Player
+#### Elemente
+##### Interface Element
+##### Board
+##### Field
+##### Figure
+### Beispiel
+### Lokalisierung
+## Anlegen eigener Character
