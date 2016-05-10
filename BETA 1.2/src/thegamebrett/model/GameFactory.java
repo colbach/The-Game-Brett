@@ -17,7 +17,7 @@ public interface GameFactory {
     public Model createGame(ArrayList<User> users) throws TooMuchPlayers, TooFewPlayers;
     
     /* gibt Bild zuruck dieses soll 200x200 sein */
-    public Image getGameIcon();
+    public String getGameIcon();
     
     public String getGameName();
     

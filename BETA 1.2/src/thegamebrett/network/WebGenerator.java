@@ -79,17 +79,6 @@ public class WebGenerator {
         return chooseCharacterWebPageCache;
     }
     
-    private static HashMap<Integer, File> gameImagesCache = new HashMap<>();
-    public static File getGameImage(int i) {
-        File f = gameImagesCache.get(i);
-        if(f == null) {
-            f = AssetsLoader.saveImage("web/temp/gameIcon" + i, GameCollection.imageCache[i]);
-            gameImagesCache.put(i, f);
-        }
-        return f;
-    }
-    
-    
     private static String generateChooseGameWebPage() {
         String template = AssetsLoader.loadText_localized_SuppressExceptions("web/chooseGame.html");
         return template.replaceFirst("<!--replace-->", generateGameChooserHTML());
@@ -119,7 +108,7 @@ public class WebGenerator {
         
         StringBuilder sb = new StringBuilder();
         for(int i=0; i<gfs.length; i++) {
-            sb.append("\n<button class=\"gameButton\" id=\"gameButton" + i + "\" onClick=\"tryToCreateGame(" + i + ", '" + gfs[i].getGameName() +"')\"><img src=\"getGameIcon?" + i + "\" alt=\"Game\" class=\"gameImage\">" + gfs[i].getGameName() + "</button>");
+            sb.append("\n<button class=\"gameButton\" id=\"gameButton" + i + "\" onClick=\"tryToCreateGame(" + i + ", '" + gfs[i].getGameName() +"')\"><img src=\"" + gfs[i].getGameIcon() + "\" alt=\"Game\" class=\"gameImage\">" + gfs[i].getGameName() + "</button>");
         }
         return sb.toString();
     }

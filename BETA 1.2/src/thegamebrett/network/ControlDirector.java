@@ -32,7 +32,7 @@ public class ControlDirector implements Director {
     public static final String NO_MESSAGE_ID = "#########";
     
     /**  diese Id wird uebergeben um anzugeben dass keine Farbe verfuegbar ist */
-    public static final String NONE = "NONE";
+    public static final String NONE = "#F5F5F5";
     
     public static final String YES = "YES";
     public static final String NO = "NO";
@@ -188,10 +188,6 @@ public class ControlDirector implements Director {
                 System.err.println("Fehler (tryToCreateGame)");
                 return "Fehler (tryToCreateGame)";
                 
-            } else if (request.startsWith("/getGameIcon")) {
-                int i = Integer.valueOf(request.substring("/getGameIcon?".length()));
-                return WebGenerator.getGameImage(i);
-                
             } else if (request.startsWith("/tryToGetCharacter")) {
                 try {
                     int i = Integer.valueOf(request.substring("/tryToGetCharacter?".length()));
@@ -245,12 +241,16 @@ public class ControlDirector implements Director {
         // --- Generelle Abfragen ---
         if(request.startsWith("/avatars/")){
             return AssetsLoader.loadFile_SuppressExceptions(request.substring(1));
+        } else if(request.startsWith("/gameicons/")){
+            return AssetsLoader.loadFile_SuppressExceptions(request.substring(1));
         } else if(request.equals("/functions.js")){
             return AssetsLoader.loadText_localized_SuppressExceptions("web/functions.js");
         } else if(AssetsLoader.fileExists("web/" + request.substring(1))){
             return AssetsLoader.loadFile_SuppressExceptions("web/" + request.substring(1));
         } else if(request.startsWith("/refreshFreePositionList")) {
             return DIRECT;
+        } else if (request.startsWith("/getUserColor")) {
+            return NONE;
         }
         System.err.println("Unbekannte Eingabe: " + request);
         return "Fehler :(";
