@@ -132,8 +132,21 @@ Klasse: <code>thegamebrett.model.Model</code>
 </p>
 
 #### Player
+Abstrakte Klasse: <code>thegamebrett.model.Player</code>
+<p>
+    Die Klasse Player ist die Klasse welche einen Spieler im Spiel representiert. Die Klasse ist abstrakt obwohl sie keine abstrakten Methoden enthällt und muss somit vererbt werden. Der Grund hierfür ist dass die Logik welche dem Spieler die Figuren zuordnet in dieser Klasse bestimmt werden soll. Die Zuordnung von Figuren kann entweder berechnet werden indem die Methode <code>public Figure[] getFigures();</code> überschrieben wird oder indem die ArrayList <code>ArrayList<Figure> figures</code> befüllt wird.
+</p>
+
 #### Elemente
+Abstrakte Klasse: <code>thegamebrett.model.elements.Element</code>
+<p>
+    Diese Klasse dient als Vater aller Komponenten welche die UI zeichnen kann. <code>Element</code> erweitert alle Klassen um eine Funktion <code>public void registerChange()</code> diese Funktion muss zwingend aufgerufen werden wenn eine Eigentschaft der Klasse verändert wird welche für die UI interessant sein könnte. Wird diese Funktion __nicht__ aufgerufen werden die vom Model abhänigen UI-Komponenten auch __nicht__ aktualisiert.
+</p>
+
 ##### Koordinatensystem
+<p>
+    Bevor wir auf den Aufbau der einzelnen <em>Elemente</em> eingehen gibt es noch ein paar Dinge zu beachten welches das ihn ihnen verwendete Koorinatensystem angeht. Der Bereich der Koorinaten geht von 0 bis 1. Der Punkt der sich unten rechts befindet ist also <em>(1, 1)</em> und der Punkt welcher sich oben links befindet ist also <em>(0, 0)</em>. Hierbei ist zu beachten ist dass dies nicht dem Punkt <em>(0, 0)</em> des Displays entsprechen muss. Mehr dazu im Abschnitt über die Klasse <code>Board</code>.
+</p>
 ##### Interface Element
 ##### Board
 ##### Field
