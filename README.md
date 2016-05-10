@@ -16,15 +16,13 @@ $ java thegamebrett.gui.GUIApplication /Users/christiancolbach/Documents/gamebre
 
 ## Aufbau des Frameworks
 ### Model View Controller
+### Grafik
 ### Webinterface
 #### Serverseitig
 #### Clientseitig
 ### Assets
 ## Erstellung eigener Spiele
 ### Aufbau
-#### GameFactory
-#### GameLogic
-#### Layout
 #### Model
 #### Player
 #### Elemente
@@ -32,6 +30,16 @@ $ java thegamebrett.gui.GUIApplication /Users/christiancolbach/Documents/gamebre
 ##### Board
 ##### Field
 ##### Figure
-### Beispiel
+#### Layout
+#### GameFactory
+#### GameLogic
+#### Requests und Resposes
+##### GUI
+##### Interaction
+##### Messages
+##### Sound
+##### Timer
+##### Spielende und Spielstart
 ### Lokalisierung
+### Beispiele
 ## Anlegen eigener Character
