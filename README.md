@@ -5,11 +5,11 @@ von Kore Kaluzynski, Cenk Saatci, Christian Colbach
 
 ## Installation und Ausführung der Anwendung
 <p>
-Zur Erstellung einer ausführbaren Datei muss das <em> src </em> Verzeichnis kompiliert werden.
-Die Hauptklasse der Anwendung ist die Klasse <em> thegamebrett.gui.GUIApplication </em>. Dieser muss zur Ausführung ein Parameter mitgegeben werden welcher den absoluten Pfad auf den Assetsordner angibt. Dieser Ordner ist in <em>scr/assetsfolder</em> zu finden und kann auf einen beliebigen Ort im Dateisystem gelegt werden
+Zur Erstellung einer ausführbaren Datei muss das <em>src</em> Verzeichnis kompiliert werden.
+Die Hauptklasse der Anwendung ist die Klasse <em>thegamebrett.gui.GUIApplication</em>. Dieser muss zur Ausführung ein Parameter mitgegeben werden welcher den absoluten Pfad auf den Assetsordner angibt mit folgendem <code>/</code>. Dieser Ordner ist in <em>scr/assetsfolder</em> zu finden und kann auf einen beliebigen Ort im Dateisystem gelegt werden:
 
 </p>
-Beispiel wie die Anwendung gestartet werden kann:
+##### Beispiel wie die Anwendung gestartet werden kann:
 <pre>
 $ java thegamebrett.gui.GUIApplication /Users/christiancolbach/Documents/gamebrett/classes/assetsfolder/
 </pre>
@@ -22,10 +22,17 @@ $ java thegamebrett.gui.GUIApplication /Users/christiancolbach/Documents/gamebre
 #### Clientseitig
 ### Assets
 ### Lokalisierung
-Für die Lokalisierung unserer Anwendung verwenden wir das Java-eigene Lokalisierungsframework <code> java.util.ResourceBundle </code>
+Für die Lokalisierung unserer Anwendung verwenden wir das Java-eigene Lokalisierungsframework <code>java.util.ResourceBundle</code>. Dieses erlaubt es Sprachunabhängige Strings zu definieren und diese dann in verschiedene Sprachen zu übersetzen.
+#### Verwendung
+Bei der Verwendung unterscheidet unterscheide ich im volgenden zwischen der Lokalisierung des Java-codes und der Lokalisierung der HTML-Seiten. 
+##### Java
 
-#### Java
-#### HTML
+##### HTML
+
+
+Bei der Verwendung dieser Art der Lokalisierung ist darauf zu achten dass auf diese Weise __nur__ die HTML-Seiten welche durch unseren AssetsLoader geladen werden (also als Datei von der Festplatte geladen werden) lokalisiert werden! Sämtliche andere Strings welche dem Server per Javacode übergeben werden __müssen__ wie im vorherigen Punkt beschrieben lokalisiert werden.
+##### Einbinden neuer Sprachen
+
 ## Erstellung eigener Spiele
 ### Aufbau
 #### Model
