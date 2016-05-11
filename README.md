@@ -91,13 +91,13 @@ public void react(ActionResponse response);
 
 ##### Java
 <p>
-    In Java können Strings durch die direkte Verwendung des <code>ResourceBundle</code>-Objektes lokalisiert werden. Dieses ist statisch und befindet sich im Manager und kann durch <code>Manager.rb</code> angesprochen werden. <code>ResourceBundle</code> besitzt eine Funktion <code>getString(String)</code>, diese Methode gibt bei Angabe eines Keys einen entsprechend lokalisierten String zurück.
+    In Java können Strings durch die direkte Verwendung des <code>ResourceBundle</code>-Objektes lokalisiert werden. Dieses ist statisch und befindet sich im Manager. Es kann durch <code>Manager.rb</code> angesprochen werden. <code>ResourceBundle</code> besitzt eine Funktion <code>getString(String)</code>, diese Methode gibt bei Angabe eines Keys einen entsprechend lokalisierten String zurück.
 </p>
 <em>Beispiel:</em> <br>
 ```java
 System.out.println(Manager.rb.getString("StartGame"));
 ```
-Gibt als Ausgabe <code>Spiel beitreten</code> zurück wenn die Sprache auf Deutsch gestellt ist und <code>Join game</code> wenn die Sprache auf English gestellt ist.
+Gibt als Ausgabe <code>Spiel beitreten</code> zurück wenn die Sprache auf Deutsch gestellt ist und <code>Join game</code> wenn die Sprache auf Englisch gestellt ist.
 
 ##### HTML
 <p>
@@ -108,10 +108,10 @@ Gibt als Ausgabe <code>Spiel beitreten</code> zurück wenn die Sprache auf Deuts
 ```html
 ##JoinGame## 
 ```
-Wird beim laden automatisch ersetzt durch: <code>Spiel beitreten</code> wenn die Sprache auf Deutsch gestellt ist und durch <code>Join game</code> wenn die Sprache auf English gestellt ist.
+Wird beim Laden automatisch ersetzt durch: <code>Spiel beitreten</code> wenn die Sprache auf Deutsch gestellt ist und durch <code>Join game</code> wenn die Sprache auf Englisch gestellt ist.
 
 <p>
-    Bei der Verwendung dieser Art der Lokalisierung ist darauf zu achten dass auf diese Weise __nur__ die HTML-Seiten welche durch unseren AssetsLoader geladen werden (also als Datei von der Festplatte) lokalisiert werden! Sämtliche andere Strings welche dem Server per Java-code übergeben werden __müssen__ wie im vorherigen Punkt beschrieben lokalisiert werden.
+    Bei der Verwendung dieser Art der Lokalisierung ist darauf zu achten, dass auf diese Weise __nur__ die HTML-Seiten welche durch unseren AssetsLoader geladen werden (also als Datei von der Festplatte) lokalisiert werden! Sämtliche anderen Strings welche dem Server per Java-Code übergeben werden __müssen__ wie im vorherigen Punkt beschrieben lokalisiert werden.
 </p>
 
 ## Erstellung eigener Spiele
@@ -122,7 +122,7 @@ Wird beim laden automatisch ersetzt durch: <code>Spiel beitreten</code> wenn die
 ![Aufbau Model](images/Model.png)
 <em>Prinzipieller Aufbau des Models</em>
 <p>
-    Im Paket <code>thegamebrett.model</code> sind die Klassen zusammengefasst auf welchen die Spiele basieren müssen damit das Framework mit ihnen arbeiten kann.
+    Im Paket <code>thegamebrett.model</code> sind die Klassen zusammengefasst, auf welchen die Spiele basieren müssen damit das Framework mit ihnen arbeiten kann.
 </p>
 
 #### Model
@@ -146,7 +146,7 @@ Abstrakte Klasse: <code>thegamebrett.model.elements.Element</code>
 
 ##### Koordinatensystem
 <p>
-    Bevor wir auf den Aufbau der einzelnen <em>Elemente</em> eingehen gibt es noch ein paar Dinge zu beachten, welche sich auf das verwendete Koordinatensystem beziehen. Der Bereich der Koordinaten bezieht sich von 0 bis 1. Der Punkt der sich unten rechts befindet ist also <em>(1, 1)</em> und der Punkt welcher sich oben links befindet ist <em>(0, 0)</em>. Hierbei zu beachten ist dass dies nicht dem Punkt <em>(0, 0)</em> des Displays entsprechen muss. Mehr dazu im folgendem Abschnitt über die Klasse <code>Board</code>.
+    Bevor wir auf den Aufbau der einzelnen <em>Elemente</em> eingehen gibt es noch ein paar Dinge zu beachten, welche sich auf das verwendete Koordinatensystem beziehen. Der Bereich der Koordinaten reicht von 0 bis 1. Der Punkt der sich unten rechts befindet ist also <em>(1, 1)</em> und der Punkt welcher sich oben links befindet ist <em>(0, 0)</em>. Hierbei zu beachten ist, dass dies nicht dem Punkt <em>(0, 0)</em> des Displays entsprechen muss. Mehr dazu im folgendem Abschnitt über die Klasse <code>Board</code>.
 </p>
 
 ##### Board
@@ -221,7 +221,7 @@ Klasse Figure: <code>thegamebrett.model.elements.Figure</code>
 #### Layout
 Klasse Layout: <code>thegamebrett.model.elements.Figure</code>
 <p>
-    Diese Klasse definiert das Aussehen von Elementen. Sie hat viele optionale Werte die gesetzt werden können um einem Element ein bestimmtes Aussehen zu verpassen. Hierfür kann Form, Bild, Text, Schriftgrösse, Textur, Hintergrundfarbe, Rand, Randgrösse dieser festgelegt werden. Das Grafikmodul (<code>GUILoader</code>) arbeitet generisch und kann somit diese Attribute allen Elementen gleichermassen verleihen.
+    Diese Klasse definiert das Aussehen von Elementen. Sie hat viele optionale Werte die gesetzt werden können um einem Element ein bestimmtes Aussehen zu verpassen. Hierfür kann Form, Bild, Text, Schriftgrösse, Textur, Hintergrundfarbe, Rand und Randgröße festgelegt werden. Das Grafikmodul (<code>GUILoader</code>) arbeitet generisch und kann somit diese Attribute allen Elementen gleichermaßen verleihen.
 </p>
 
 #### GameFactory
@@ -254,9 +254,9 @@ public Model createGame(ArrayList<User> users) throws TooMuchPlayers, TooFewPlay
 #### GameLogic
 Abstrakte Klasse: <code>thegamebrett.model.GameLogic</code>
 <p>
-    Diese Klasse ist die Klasse welche für die Logik im Spiel zuständig ist. In ihr wird der Ablauf des Spieles gesteuert. Sie ist abstrakt und muss somit zwingend vererbt werden. Ausserdem müssen zwei Methoden implementiert werden:
+    Diese Klasse ist die Klasse welche für die Logik im Spiel zuständig ist. In ihr wird der Ablauf des Spieles gesteuert. Sie ist abstrakt und muss somit zwingend vererbt werden. Außerdem müssen zwei Methoden implementiert werden:
 </p>
-Diese Methode soll die Startpositionen der Spieler bestimmen
+Diese Methode soll die Startpositionen der Spieler bestimmen:
 ```java
 public abstract Field getNextStartPositionForPlayer(Player player);
 ```
@@ -270,7 +270,7 @@ public abstract ActionRequest[] next(ActionResponse as);
     Requests und Responses sind für den aktiven verlauf des Spieles verantwortlich. Es geht nie eine Interaktion vom Spiel selbst aus, die Kommunikation erfolgt immer nach dem Ping-Pong-Model. Das Model ist somit nur aktiv wenn es angestossen wird.
 </p>
 ##### GUI
-Stösst die UI an sich zu aktualisieren:
+Stößt die UI dazu an, sich zu aktualisieren:
 ```java
 thegamebrett.action.request.GUIUpdateRequest(int value, boolean animated, int delay)
 ```
@@ -284,7 +284,7 @@ Verlangt eine Interaction von einem bestimmten Spieler:
 ```java
 thegamebrett.action.request.InteractionRequest(String titel, Object[] choices, Player player, boolean hidden, String acknowledgment, int delay, Object userData)
 ```
-Bei dieser Antwortet wird ein Objekt vom Typ <code>InteractionResponse</code> zurück gegeben.
+Bei dieser Anfrage wird ein Objekt vom Typ <code>InteractionResponse</code> zurück gegeben.
 
 ##### Messages
 Zeigt eine Nachricht für alle sichtbar auf dem Spielbrett an. Die Nachricht ist in Richtung des angegebenen Spielers gedreht:
