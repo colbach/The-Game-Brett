@@ -1,18 +1,19 @@
 package thegamebrett.model;
 
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 
 /**
- * @author Christian Colbach
+ * THE GAMEBRETT - Teamprojekt 2015-2016 - Hochschule Trier
+ *
+ * @author Kore Kaluzynski, Cenk Saatci, Christian Colbach
  */
 public class Layout {
-    
+
     private volatile Boolean changeRegistrar = true;
-    
+
     /**
      * Diese Methode muss bei JEDER AENDERUNG aufgerufen werden damit UI diese
      * Aktualisiert.
@@ -31,61 +32,100 @@ public class Layout {
             }
         }
     }
-    
-    /**  Hintergrungbild füllt ganzes Feld (Bild wird abgeschnitten damit es passt)*/
+
+    /**
+     * Hintergrungbild füllt ganzes Feld (Bild wird abgeschnitten damit es
+     * passt)
+     */
     public static final int BACKGROUND_IMAGE_FILL_FACTOR_FILL = 0;
-    /** Hintergrungbild wird ganz angezeigt (Bild ist auf jeden Fall ganz im Feld)*/
+    /**
+     * Hintergrungbild wird ganz angezeigt (Bild ist auf jeden Fall ganz im
+     * Feld)
+     */
     public static final int BACKGROUND_IMAGE_FILL_FACTOR_REPEAT = 1;
-    
-    /**  Formfaktor quadratisch */
+
+    /**
+     * Formfaktor quadratisch
+     */
     public static final int FORM_FACTOR_SQUARE = 3;
-    /**  Formfaktor rund */
+    /**
+     * Formfaktor rund
+     */
     public static final int FORM_FACTOR_OVAL = 4;
-    
-    /** gibt an ob Feld sichtbar ist */
+
+    /**
+     * gibt an ob Feld sichtbar ist
+     */
     private boolean visible = true;
-    
-    /** Hintergrundbild */
+
+    /**
+     * Hintergrundbild
+     */
     private Image backgroundImage = null;
-    
-    /** Hintergrundbild Fuelfaktor. BACKGROUND_IMAGE_FILL_FACTOR_FILL oder BACKGROUND_IMAGE_FILL_FACTOR_ASPECT*/
+
+    /**
+     * Hintergrundbild Fuelfaktor. BACKGROUND_IMAGE_FILL_FACTOR_FILL oder
+     * BACKGROUND_IMAGE_FILL_FACTOR_ASPECT
+     */
     private int backgroundImageFillFactor = BACKGROUND_IMAGE_FILL_FACTOR_FILL;
-    
-    /** Icon */
+
+    /**
+     * Icon
+     */
     private Image iconImage = null;
-    
-    /** Hintergrundfarbe falls kein Hintergrundbild gesetzt ist */
+
+    /**
+     * Hintergrundfarbe falls kein Hintergrundbild gesetzt ist
+     */
     private Color backgroundColor = Color.WHITE;
-    
-    /** Farbe fuer Titel */
+
+    /**
+     * Farbe fuer Titel
+     */
     private Color titleColor = Color.BLACK;
-    
-    /** Vergroesserungs / Verkleinerungsfaktor fuer Titel. Wert [-1, 1]*/
+
+    /**
+     * Vergroesserungs / Verkleinerungsfaktor fuer Titel. Wert [-1, 1]
+     */
     private float titleScaleFactor = 0;
-    
+
     private boolean centerTitle = true;
-    
-    /** Titel */
+
+    /**
+     * Titel
+     */
     private String title;
 
-    /** Farbe fuer Subtext */
+    /**
+     * Farbe fuer Subtext
+     */
     private Color subtextColor = Color.BLACK;
-    
-    /** Vergroesserungs / Verkleinerungsfaktor fuer Subtext. Wert [-1, 1]*/
+
+    /**
+     * Vergroesserungs / Verkleinerungsfaktor fuer Subtext. Wert [-1, 1]
+     */
     private float subtextScaleFactor = 0;
-    
+
     private boolean centerSubtext = true;
-    
-    /** Rand IN PIXEL! */
+
+    /**
+     * Rand IN PIXEL!
+     */
     private float border = 1;
-    
-    /** Randfarbe */
+
+    /**
+     * Randfarbe
+     */
     private Color borderColor = Color.BLACK;
-    
-    /** Subtext */
+
+    /**
+     * Subtext
+     */
     private String subtext;
-    
-    /** Form des Feldes. FORM_FACTOR_SQUARE oder FORM_FACTOR_OVAL */
+
+    /**
+     * Form des Feldes. FORM_FACTOR_SQUARE oder FORM_FACTOR_OVAL
+     */
     private int formFactor = FORM_FACTOR_SQUARE;
 
     public Image getBackgroundImage() {
@@ -96,9 +136,9 @@ public class Layout {
         registerChange();
         this.backgroundImage = backgroundImage;
     }
-    
+
     public void setBackgroundImage(Canvas backgroundImage) {
-        WritableImage wi = new WritableImage((int)iconImage.getWidth(), (int)iconImage.getHeight());
+        WritableImage wi = new WritableImage((int) iconImage.getWidth(), (int) iconImage.getHeight());
         backgroundImage.snapshot(null, wi);
         setBackgroundImage(wi);
     }
@@ -120,9 +160,9 @@ public class Layout {
         registerChange();
         this.iconImage = iconImage;
     }
-    
+
     public void setIconImage(Canvas iconImage) {
-        WritableImage wi = new WritableImage((int)iconImage.getWidth(), (int)iconImage.getHeight());
+        WritableImage wi = new WritableImage((int) iconImage.getWidth(), (int) iconImage.getHeight());
         iconImage.snapshot(null, wi);
         setIconImage(wi);
     }
@@ -208,7 +248,7 @@ public class Layout {
         this.title = "";
         this.subtext = "";
     }
-    
+
     public boolean isVisible() {
         return visible;
     }

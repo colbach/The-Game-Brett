@@ -9,20 +9,22 @@ import thegamebrett.network.PlayerNotRegisteredException;
 import thegamebrett.network.UserManager;
 
 /**
- * @author Christian Colbach
+ * THE GAMEBRETT - Teamprojekt 2015-2016 - Hochschule Trier
+ *
+ * @author Kore Kaluzynski, Cenk Saatci, Christian Colbach
  */
 public class MobileManager {
-    
-    private Manager manager;
-    private NetworkManager networkManager;
-    private UserManager userManager;
-    
+
+    private final Manager manager;
+    private final NetworkManager networkManager;
+    private final UserManager userManager;
+
     private static final boolean USE_DUMMY_NETWORK_MANAGER = false; // fuer Debuging
-    
+
     public MobileManager(Manager manager) {
         this.manager = manager;
         userManager = new UserManager(manager);
-        if(USE_DUMMY_NETWORK_MANAGER) {
+        if (USE_DUMMY_NETWORK_MANAGER) {
             this.networkManager = new NetworkManagerDummy(userManager, manager);
         } else {
             this.networkManager = new NetworkManager(userManager, manager);
@@ -30,10 +32,11 @@ public class MobileManager {
     }
 
     public void react(MobileRequest mobileRequest) throws PlayerNotRegisteredException {
-        if(mobileRequest instanceof InteractionRequest)
+        if (mobileRequest instanceof InteractionRequest) {
             networkManager.deliverMessage((InteractionRequest) mobileRequest);
-        else
-            System.err.println("Not supported yet."); 
+        } else {
+            System.err.println("Not supported yet.");
+        }
     }
 
     public NetworkManager getNetworkManager() {

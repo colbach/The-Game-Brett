@@ -6,7 +6,6 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import thegamebrett.assets.AssetNotExistsException;
 import thegamebrett.assets.AssetsLoader;
-import thegamebrett.gui.UserImageCircle;
 import thegamebrett.model.Layout;
 
 /**
@@ -41,15 +40,6 @@ public class UserCharacter {
             layout.setBorderColor(getFXColor());
         }
         return layout;
-    }
-
-    private UserImageCircle userImageCircleCache;
-
-    public UserImageCircle getUserImageCircle() {
-        if (userImageCircleCache == null) {
-            userImageCircleCache = new UserImageCircle(getAvatar(), getFXColor());
-        }
-        return userImageCircleCache;
     }
 
     public String getName() {

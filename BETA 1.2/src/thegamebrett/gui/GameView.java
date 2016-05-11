@@ -14,15 +14,15 @@ import javafx.util.Duration;
 import thegamebrett.Manager;
 import thegamebrett.action.request.GameEndRequest;
 import thegamebrett.action.request.InteractionRequestFromGUI;
-import thegamebrett.model.Layout;
 import thegamebrett.model.Model;
 import thegamebrett.model.Player;
 import thegamebrett.network.PlayerNotRegisteredException;
 import thegamebrett.usercharacter.UserCharacter;
 
 /**
+ * THE GAMEBRETT - Teamprojekt 2015-2016 - Hochschule Trier
  *
- * @author christiancolbach
+ * @author Kore Kaluzynski, Cenk Saatci, Christian Colbach
  */
 public class GameView extends Group {
 
@@ -162,13 +162,8 @@ public class GameView extends Group {
                 groupBack.getChildren().add(updatedBoardBackground);
             }
 
-            /*try {
-                    Thread.sleep(1000);
-            } catch (InterruptedException ex) { }*/
             if (updateFigures) {
-                /*Canvas[] updatedFigures =*/ GUILoader.createFigures(gameModel, groupTop.getChildren());
-                //groupTop.getChildren().clear();
-                //groupTop.getChildren().addAll(updatedFigures);
+                GUILoader.createFigures(gameModel, groupTop.getChildren());
 
                 for (Node c : groupTop.getChildren()) {
                     Transition t = (Transition) c.getUserData();
@@ -177,8 +172,6 @@ public class GameView extends Group {
 
                         tt.setByX(t.getNewX() - t.getOldX());
                         tt.setByY(t.getNewY() - t.getOldY());
-                        //System.out.println(t.getNewX() + " " + t.getOldX() + " " + t.getNewY() + " " + t.getOldY());
-                        //System.out.println("t.newX-t.oldX="+(t.getNewX()-t.getOldX()) + " t.newY-t.oldY=" + (t.getNewY()-t.getOldY()));
                         tt.play();
                     }
 
@@ -286,25 +279,11 @@ public class GameView extends Group {
                             c.setLayoutY(0 - (size / 2) + placing);
                             break;
                     }
-                    /*System.out.println("uic.getImage().getWidth() " + uic.getImage().getWidth());
-                    System.out.println("uic.getImage().getHeight() " + uic.getImage().getHeight());
-                    System.out.println("uic.getLayoutX() " + uic.getLayoutX());
-                    System.out.println("uic.getLayoutY() " + uic.getLayoutY());
-                    System.out.println("ScreenResolution.getScreenWidth() " + ScreenResolution.getScreenWidth());
-                    System.out.println("ScreenResolution.getScreenHeigth() " + ScreenResolution.getScreenHeigth());
-                    System.out.println("uic.getWidth() " + uic.getImage().getWidth());
-                    System.out.println("uic.getHeight() " + uic.getImage().getHeight());*/
                     uics.add(c);
                 }
             }
             System.out.println("uics.size() " + uics.size());
             groupUserImageCicles.getChildren().addAll(uics);
-
-            /*for(int i=0; i<us.size(); i++) {
-                Layout l = us.get(i).getUser().getUserCharacter().getLayout();
-                Canvas c = GUILoader.createCanvas(l, 300, 300, 0.1, 0.1);
-                groupUserImageCicles.getChildren().add(c);
-            }*/
         });
 
     }

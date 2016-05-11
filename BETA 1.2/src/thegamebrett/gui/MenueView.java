@@ -1,10 +1,8 @@
 package thegamebrett.gui;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Locale;
 import java.util.PropertyResourceBundle;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.TranslateTransition;
@@ -14,10 +12,8 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
@@ -28,23 +24,18 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
-import javafx.stage.Screen;
 import javafx.util.Duration;
 import thegamebrett.Manager;
 import thegamebrett.assets.AssetNotExistsException;
 import thegamebrett.assets.AssetsLoader;
 import thegamebrett.game.GameCollection;
-import thegamebrett.game.dummy.D_GameLogic;
 import thegamebrett.model.GameFactory;
-import thegamebrett.model.Model;
-import thegamebrett.model.exceptions.TooFewPlayers;
-import thegamebrett.model.exceptions.TooMuchPlayers;
 import thegamebrett.network.NetworkGameSelector;
-import thegamebrett.network.User;
 
 /**
+ * THE GAMEBRETT - Teamprojekt 2015-2016 - Hochschule Trier
  *
- * @author christiancolbach
+ * @author Kore Kaluzynski, Cenk Saatci, Christian Colbach
  */
 public class MenueView extends Group {
 
@@ -74,7 +65,7 @@ public class MenueView extends Group {
 
     public MenueView(Manager manager) {
         getChildren().add(GUILoader.createBackgroundCanvas(ScreenResolution.getScreenWidth(), ScreenResolution.getScreenHeigth()));
-                
+
         this.manager = manager;
         double d = Math.min(ScreenResolution.getScreenWidth(), ScreenResolution.getScreenHeigth());
         double iconWH = d / 5.3;
@@ -109,8 +100,6 @@ public class MenueView extends Group {
             label.setPrefWidth(iconWH);
             label.setFont(Font.font(15));
             label.setLayoutY(rowStart + (1.7 * rowCount * iconWH) + iconWH + 5);
-            
-            
 
             getChildren().addAll(label);
 
@@ -148,13 +137,13 @@ public class MenueView extends Group {
 
         Pane soundPane = new Pane();
         soundPane.setPrefSize(160, 100);
-        soundPane.setLayoutX(ScreenResolution.getScreenWidth()/2 - 150 - 80);
+        soundPane.setLayoutX(ScreenResolution.getScreenWidth() / 2 - 150 - 80);
         soundPane.setLayoutY(ScreenResolution.getScreenHeigth());
         createVolumeOption(soundPane);
 
         Pane languagePane = new Pane();
         languagePane.setPrefSize(160, 100);
-        languagePane.setLayoutX(ScreenResolution.getScreenWidth()/2 + 150 - 80);
+        languagePane.setLayoutX(ScreenResolution.getScreenWidth() / 2 + 150 - 80);
         languagePane.setLayoutY(ScreenResolution.getScreenHeigth());
         createLanguageOption(languagePane);
 
@@ -183,18 +172,18 @@ public class MenueView extends Group {
                 getChildren().remove(startGameButton);
             }
             NetworkGameSelector ngs = manager.getMobileManager().getNetworkManager().getNetworkGameSelector();
-            
+
             if (ngs.isGameSelected()) {
                 waitScreen = GUILoader.createGameSelectedScreen(ngs);
                 getChildren().add(waitScreen);
-                if(ngs.canStart()) {
+                if (ngs.canStart()) {
                     startGameButton = new Button(Manager.rb.getString("StartGame"));
                     startGameButton.setPrefWidth(120d);
                     startGameButton.setLayoutX(ScreenResolution.getScreenWidth() / 2 - 60d);
                     startGameButton.setLayoutY(ScreenResolution.getScreenHeigth() / 3 * 2 + 60);
                     startGameButton.setOnAction((e) -> {
                         boolean b = ngs.tryToStart();
-                        if(!b) {
+                        if (!b) {
                             refreshGameSelectedScreen();
                         }
                     });
@@ -255,7 +244,7 @@ public class MenueView extends Group {
                 sound = 0;
                 muted = true;
             }
-            //System.out.println(muted);
+            
             try {
                 Process p1 = Runtime.getRuntime().exec("amixer -D pulse sset Master " + sound + "%+");
             } catch (IOException ex) {
@@ -264,7 +253,7 @@ public class MenueView extends Group {
         });
         p.getChildren().addAll(soundLbl, soundSlider, muteBtn);
     }
-    
+
     final public void createLanguageOption(Pane m) {
         Pane p = m;
 

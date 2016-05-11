@@ -6,8 +6,6 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.ObservableList;
-import javafx.geometry.Point2D;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -15,7 +13,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import thegamebrett.Manager;
@@ -33,6 +30,12 @@ import thegamebrett.network.NetworkGameSelector;
 import thegamebrett.network.User;
 import thegamebrett.usercharacter.UserCharacter;
 
+
+/**
+ * THE GAMEBRETT - Teamprojekt 2015-2016 - Hochschule Trier
+ *
+ * @author Kore Kaluzynski, Cenk Saatci, Christian Colbach
+ */
 public class GUILoader {
 
     public static class Pair<Y, V> {
@@ -156,9 +159,7 @@ public class GUILoader {
                         double newY = transition.getNewY() + shifts[i % 4][1] * shift;
                         double oldX;
                         double oldY;
-                        //System.out.println("newX="+newX + " transition.getNewX()="+transition.getNewX());
                         critical.setUserData(new Transition(transition.getOldX(), transition.getOldY(), newX, newY));
-
                     }
                 }
             }
@@ -194,8 +195,6 @@ public class GUILoader {
 
     public static Canvas createCanvas(Layout layout, double x, double y, double w, double h) {
 
-        // Done:  backgroundColor border borderColor formFactor backgroundImage
-        // To Do: 
         if (layout == null) {
             layout = new Layout();
             System.err.println("Layout ist null");
@@ -462,14 +461,6 @@ public class GUILoader {
         gc.strokeText(message, ScreenResolution.getScreenWidth() / 2 - messageWidth / 2, ScreenResolution.getScreenHeigth() / 4);
         gc.fillText(message, ScreenResolution.getScreenWidth() / 2 - messageWidth / 2, ScreenResolution.getScreenHeigth() / 4);
 
-        /*gc.setFill(ger.getFXColor());
-        gc.fillOval(0, 0, w, h);
-        gc.setFill(Color.WHITE);
-        gc.fillOval(b/4, b/4, w-b/2, h-b/2);
-        ImagePattern imagePattern;
-        imagePattern = new ImagePattern(uc.getAvatar(), b/2, b/2, wi, hi, false);
-        gc.setFill(imagePattern);
-        gc.fillOval(b/2, b/2, wi, hi);*/
         return c;
     }
 }
