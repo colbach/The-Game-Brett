@@ -123,7 +123,7 @@ function tryToJoinGame() {
 }
 
 function tryToCreateGame(index, name) {
-    if (confirm("##WantToOpenGame##: " + name)) {
+    if (confirm("##WantToOpenGame## " + name)) {
         console.log("ja");
         
         var url = "tryToCreateGame?" + index;

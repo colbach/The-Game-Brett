@@ -1,19 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package thegamebrett.game.KFSS;
 
-import thegamebrett.game.PSS.*;
 import thegamebrett.model.Layout;
 import thegamebrett.model.RelativePoint;
 import thegamebrett.model.elements.Field;
 import thegamebrett.model.mediaeffect.MediaEffect;
 
 /**
+ * THE GAMEBRETT - Teamprojekt 2015-2016 - Hochschule Trier
  *
- * @author Kore
+ * @author Kore Kaluzynski, Cenk Saatci, Christian Colbach
  */
 public class KFSS_Field extends Field{
     
@@ -60,7 +55,7 @@ public class KFSS_Field extends Field{
     
     @Override
     public MediaEffect getMediaEffect() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
     }
     
     @Override
@@ -71,7 +66,7 @@ public class KFSS_Field extends Field{
 
     @Override
     public Field[] getPrevious() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override

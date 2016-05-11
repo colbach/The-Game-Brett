@@ -1,9 +1,5 @@
 package thegamebrett.game.MADN;
 import java.util.ArrayList;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
-import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 import thegamebrett.model.GameFactory;
 import thegamebrett.model.Layout;
@@ -15,7 +11,9 @@ import thegamebrett.network.User;
 import thegamebrett.usercharacter.UserCharacter;
 
 /**
- * @author Koré
+ * THE GAMEBRETT - Teamprojekt 2015-2016 - Hochschule Trier
+ *
+ * @author Kore Kaluzynski, Cenk Saatci, Christian Colbach
  */
 public class MADN_GameFactory implements GameFactory{
 
@@ -37,11 +35,7 @@ public class MADN_GameFactory implements GameFactory{
         for(int i=0; i<users.size(); i++) {
             users.get(i);
             Layout l = new Layout();
-            //Image image = new Image("thegamebrett/gui/test.png");
-            //l.setBackgroundImage(image);
             l.setFormFactor(Layout.FORM_FACTOR_OVAL);
-//            uc = new UserCharacter("Player "+i, i, "");
-//            users.get(i).setUserCharacter(uc);
             switch (i) {
                 case 0:
                     l.setBackgroundColor(Color.RED);

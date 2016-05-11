@@ -1,16 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package thegamebrett.game.PSS;
 
 import java.util.ArrayList;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
-import javafx.scene.image.WritableImage;
-import javafx.scene.paint.Color;
 import thegamebrett.model.GameFactory;
 import thegamebrett.model.Model;
 import thegamebrett.model.Player;
@@ -19,8 +9,9 @@ import thegamebrett.model.exceptions.TooMuchPlayers;
 import thegamebrett.network.User;
 
 /**
+ * THE GAMEBRETT - Teamprojekt 2015-2016 - Hochschule Trier
  *
- * @author Korè
+ * @author Kore Kaluzynski, Cenk Saatci, Christian Colbach
  */
 public class PSS_GameFactory implements GameFactory{
     

@@ -6,9 +6,11 @@ import thegamebrett.model.elements.Field;
 import thegamebrett.model.mediaeffect.MediaEffect;
 
 /**
- * @author Koré
+ * THE GAMEBRETT - Teamprojekt 2015-2016 - Hochschule Trier
+ *
+ * @author Kore Kaluzynski, Cenk Saatci, Christian Colbach
  */
-public class MADN_Field extends Field{
+public class MADN_Field extends Field {
 
     private double width;
     private double height;
@@ -17,16 +19,14 @@ public class MADN_Field extends Field{
     private Layout layout;
     private MediaEffect me;
     private int fieldType;
-    
+
     public final static int FIELD_TYPE_NORMAL = 0;
     public final static int FIELD_TYPE_START = 1;
     public final static int FIELD_TYPE_END = 2;
     public final static int FIELD_TYPE_INIT = 3;
-    
-    
-    
-    public MADN_Field(double width, double height, RelativePoint position, MADN_Field[] next, Layout layout, MediaEffect mediaEffect, int fieldType){
-        if(layout == null) {
+
+    public MADN_Field(double width, double height, RelativePoint position, MADN_Field[] next, Layout layout, MediaEffect mediaEffect, int fieldType) {
+        if (layout == null) {
             System.err.println("Layout soll nicht null sein");
         }
         this.width = width;
@@ -37,7 +37,7 @@ public class MADN_Field extends Field{
         this.me = mediaEffect;
         this.fieldType = fieldType;
     }
-    
+
     @Override
     public RelativePoint getRelativePosition() {
         return position;
@@ -60,7 +60,7 @@ public class MADN_Field extends Field{
 
     @Override
     public Layout getLayout() {
-        if(layout == null) {
+        if (layout == null) {
             System.err.println("Kein Layout gesetzt");
         }
         return layout;
@@ -78,21 +78,23 @@ public class MADN_Field extends Field{
     public void setNext(MADN_Field[] next) {
         this.next = next;
     }
+
     public void addNext(MADN_Field nextOne) {
 
         MADN_Field[] newNext;
-        if(next != null){
-            newNext = new MADN_Field[next.length+1];
-            for(int i=0; i<next.length; i++){
+        if (next != null) {
+            newNext = new MADN_Field[next.length + 1];
+            for (int i = 0; i < next.length; i++) {
                 newNext[i] = next[i];
             }
-        newNext[next.length] = nextOne;
+            newNext[next.length] = nextOne;
         } else {
             newNext = new MADN_Field[1];
             newNext[0] = nextOne;
         }
         next = newNext;
     }
+
     public void setMediaEffect(MediaEffect me) {
         this.me = me;
     }
@@ -104,16 +106,15 @@ public class MADN_Field extends Field{
     public int getFieldType() {
         return fieldType;
     }
-    
-    
-    public void setLayout(Layout l){
+
+    public void setLayout(Layout l) {
         this.layout = l;
     }
-    
-    //nicht implementiert da nicht notwendig
+
+    // nicht implementiert da nicht notwendig
     @Override
     public Field[] getPrevious() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
     }
-    
+
 }

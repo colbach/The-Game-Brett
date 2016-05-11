@@ -6,10 +6,12 @@ import thegamebrett.action.ActionResponse;
 import thegamebrett.model.elements.Board;
 
 /**
- * @author Christian Colbach
+ * THE GAMEBRETT - Teamprojekt 2015-2016 - Hochschule Trier
+ *
+ * @author Kore Kaluzynski, Cenk Saatci, Christian Colbach
  */
 public class Model {
-    
+
     private ArrayList<Player> players;
     private GameLogic gameLogic;
     private Board board;
@@ -19,8 +21,10 @@ public class Model {
         this.gameLogic = gameLogic;
         this.board = board;
     }
-    
-    /** reicht ActionResponse-Object durch und gibt ActionRequest-Object zuruek */
+
+    /**
+     * reicht ActionResponse-Object durch und gibt ActionRequest-Object zuruek
+     */
     public ActionRequest[] react(ActionResponse resonse) {
         return gameLogic.next(resonse);
     }
@@ -49,5 +53,4 @@ public class Model {
         this.board = board;
     }
 
-    
 }

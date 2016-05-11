@@ -197,7 +197,6 @@ public class ControlDirector implements Director {
                 try {
                     int i = Integer.valueOf(request.substring("/tryToGetCharacter?".length()));
                     UserCharacter character = UserCharacterDatabase.getUserCharacter(i);
-                    System.out.println(i);
                     boolean gotIt = user.tryToSetUserCharacter(character);
                     return gotIt ? YES : NO;
                 } catch (Exception e) {

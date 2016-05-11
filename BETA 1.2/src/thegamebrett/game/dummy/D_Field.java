@@ -5,6 +5,11 @@ import thegamebrett.model.RelativePoint;
 import thegamebrett.model.elements.Field;
 import thegamebrett.model.mediaeffect.MediaEffect;
 
+/**
+ * THE GAMEBRETT - Teamprojekt 2015-2016 - Hochschule Trier
+ *
+ * @author Kore Kaluzynski, Cenk Saatci, Christian Colbach
+ */
 public class D_Field extends Field{
 
     private double width;

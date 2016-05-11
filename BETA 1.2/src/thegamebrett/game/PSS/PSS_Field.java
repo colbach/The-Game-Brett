@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package thegamebrett.game.PSS;
 
 import thegamebrett.model.Layout;
@@ -11,12 +6,12 @@ import thegamebrett.model.elements.Field;
 import thegamebrett.model.mediaeffect.MediaEffect;
 
 /**
+ * THE GAMEBRETT - Teamprojekt 2015-2016 - Hochschule Trier
  *
- * @author Kore
+ * @author Kore Kaluzynski, Cenk Saatci, Christian Colbach
  */
-public class PSS_Field extends Field{
-    
-    
+public class PSS_Field extends Field {
+
     private double width;
     private double height;
     private RelativePoint position;
@@ -38,7 +33,8 @@ public class PSS_Field extends Field{
     public void addNext(PSS_Field newField) {
         this.next = newField;
     }
-@Override
+
+    @Override
     public RelativePoint getRelativePosition() {
         return position;
     }
@@ -53,15 +49,15 @@ public class PSS_Field extends Field{
         return height;
     }
 
-    public PSS_Field getSingleNext(){
+    public PSS_Field getSingleNext() {
         return next;
     }
-    
+
     @Override
     public MediaEffect getMediaEffect() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
     }
-    
+
     @Override
     public Field[] getNext() {
         PSS_Field[] fields = {next};
@@ -70,7 +66,7 @@ public class PSS_Field extends Field{
 
     @Override
     public Field[] getPrevious() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override

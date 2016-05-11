@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import thegamebrett.model.exceptions.TooFewPlayers;
 import thegamebrett.model.exceptions.TooMuchPlayers;
 import thegamebrett.network.User;
-import javafx.scene.image.Image;
 
 /**
+ * THE GAMEBRETT - Teamprojekt 2015-2016 - Hochschule Trier
+ *
+ * @author Kore Kaluzynski, Cenk Saatci, Christian Colbach
+ * 
  * Dieses Interface gibt an dass es sich um eine GameFactory handelt.
  * Eine Gamefactory soll die statische Methode MADN_GameFactory enthalten
- * 
- * @author Christian Colbach
  */
 public interface GameFactory {
     

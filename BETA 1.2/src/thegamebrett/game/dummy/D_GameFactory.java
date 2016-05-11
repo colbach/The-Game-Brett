@@ -1,14 +1,8 @@
 package thegamebrett.game.dummy;
+
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
-import thegamebrett.assets.AssetNotExistsException;
-import thegamebrett.assets.AssetsLoader;
 import thegamebrett.model.GameFactory;
 import thegamebrett.model.Layout;
 import thegamebrett.model.Model;
@@ -17,24 +11,29 @@ import thegamebrett.model.exceptions.TooFewPlayers;
 import thegamebrett.model.exceptions.TooMuchPlayers;
 import thegamebrett.network.User;
 
+/**
+ * THE GAMEBRETT - Teamprojekt 2015-2016 - Hochschule Trier
+ *
+ * @author Kore Kaluzynski, Cenk Saatci, Christian Colbach
+ */
 public class D_GameFactory implements GameFactory {
 
     public Model createGame(ArrayList<User> users) throws TooMuchPlayers, TooFewPlayers {
         D_GameLogic gl = new D_GameLogic(null);
         D_Board b = new D_Board();
-        
-        if(4 < users.size()) {
+
+        if (4 < users.size()) {
             throw new TooMuchPlayers();
-        } else if(1 > users.size()) {
+        } else if (1 > users.size()) {
             throw new TooFewPlayers();
         }
         ArrayList<Player> players = new ArrayList<>();
-        for(int i=0; i<users.size(); i++) {
+        for (int i = 0; i < users.size(); i++) {
             users.get(i);
             D_Player p = new D_Player(i, users.get(i));
             Layout l = new Layout();
             Image image;
-            image = users.get(i).getUserCharacter().getAvatar();  
+            image = users.get(i).getUserCharacter().getAvatar();
             l.setBorderColor(users.get(i).getUserCharacter().getFXColor());
             l.setBorder(3);
             l.setBackgroundImage(image);
@@ -60,10 +59,10 @@ public class D_GameFactory implements GameFactory {
             p.setFigure(f);
             players.add(p);
         }
-        
+
         Model model = new Model(players, gl, b);
         gl.setDependingModel(model);
-        
+
         return model;
     }
 
@@ -86,5 +85,5 @@ public class D_GameFactory implements GameFactory {
     public int getMinimumPlayers() {
         return 1;
     }
-    
+
 }
