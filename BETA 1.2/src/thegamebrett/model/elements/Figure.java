@@ -4,17 +4,25 @@ import thegamebrett.model.Layout;
 import thegamebrett.model.Player;
 
 /**
- * @author Christian Colbach
+ * THE GAMEBRETT - Teamprojekt 2015-2016 - Hochschule Trier
+ *
+ * @author Kore Kaluzynski, Cenk Saatci, Christian Colbach
  */
 public class Figure extends Element {
-    
-    /** Besitzer dieser Figur */
+
+    /**
+     * Besitzer dieser Figur
+     */
     private Player owner;
-    
-    /** Feld auf dem die Figur steht */
+
+    /**
+     * Feld auf dem die Figur steht
+     */
     private Field field;
-    
-    /** Layout von Figur */
+
+    /**
+     * Layout von Figur
+     */
     private Layout layout;
 
     private double relativeWidth;
@@ -71,7 +79,5 @@ public class Figure extends Element {
         registerChange();
         this.relativeHeight = relativeHeight;
     }
-    
-    
-    
+
 }

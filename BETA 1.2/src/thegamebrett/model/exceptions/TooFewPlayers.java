@@ -1,7 +1,9 @@
 package thegamebrett.model.exceptions;
 
 /**
- * @author christiancolbach
+ * THE GAMEBRETT - Teamprojekt 2015-2016 - Hochschule Trier
+ *
+ * @author Kore Kaluzynski, Cenk Saatci, Christian Colbach
  */
 public class TooFewPlayers extends Exception {
 
@@ -9,5 +11,5 @@ public class TooFewPlayers extends Exception {
     public String toString() {
         return "Too few players";
     }
-    
+
 }

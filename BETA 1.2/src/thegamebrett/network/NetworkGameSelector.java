@@ -12,13 +12,18 @@ import thegamebrett.model.Model;
 import thegamebrett.model.exceptions.TooFewPlayers;
 import thegamebrett.model.exceptions.TooMuchPlayers;
 
+/**
+ * THE GAMEBRETT - Teamprojekt 2015-2016 - Hochschule Trier
+ *
+ * @author Kore Kaluzynski, Cenk Saatci, Christian Colbach
+ */
 public class NetworkGameSelector {
 
     private final Manager manager;
     private GameFactory selectedGame;
     private boolean gameStarted;
     private final ArrayList<User> players;
-    
+
     private User firstCanceler = null;
     private long cancelTime = 0;
 
@@ -26,10 +31,10 @@ public class NetworkGameSelector {
         this.manager = manager;
         this.players = new ArrayList<>();
     }
-    
+
     public synchronized boolean tryToCancelGame(User canceler) {
         System.out.println(players.size());
-        if((firstCanceler != canceler && System.currentTimeMillis()-cancelTime<10000) || players.size() <= 1) {
+        if ((firstCanceler != canceler && System.currentTimeMillis() - cancelTime < 10000) || players.size() <= 1) {
             endGame();
             Platform.runLater(() -> {
                 manager.getGui().showMenuScene();
@@ -48,8 +53,9 @@ public class NetworkGameSelector {
             UserManager um = manager.getMobileManager().getUserManager();
             User[] users = um.getSystemClients();
             players.clear();
-            if(creator != null)
+            if (creator != null) {
                 players.add(creator);
+            }
             for (User user : users) {
                 if (user != null) {
                     user.setActualInteractionRequest(null);
@@ -57,24 +63,22 @@ public class NetworkGameSelector {
                     }
                 }
             }
-            if(creator != null)
-            if(manager.getGui() != null && manager.getGui().getMenuView() != null)
-                manager.getGui().getMenuView().refreshGameSelectedScreen();
+            if (creator != null) {
+                if (manager.getGui() != null && manager.getGui().getMenuView() != null) {
+                    manager.getGui().getMenuView().refreshGameSelectedScreen();
+                }
+            }
             return true;
         } else {
             return false;
         }
     }
-    
+
     public void endGame() {
-        
         selectedGame = null;
         gameStarted = false;
-        
         User[] users = manager.getMobileManager().getUserManager().getSystemClients();
-        
         resetPlayers();
-        
     }
 
     private synchronized void resetPlayers() {
@@ -84,7 +88,7 @@ public class NetworkGameSelector {
     public boolean isGameSelected() {
         return selectedGame != null && !isGameStarted();
     }
-    
+
     public boolean isGameStarted() {
         return gameStarted;
     }
@@ -94,8 +98,9 @@ public class NetworkGameSelector {
             return false;
         } else if (selectedGame.getMaximumPlayers() >= players.size() + 1) {
             players.add(user);
-            if(manager.getGui() != null && manager.getGui().getMenuView() != null)
+            if (manager.getGui() != null && manager.getGui().getMenuView() != null) {
                 manager.getGui().getMenuView().refreshGameSelectedScreen();
+            }
             return true;
         } else {
             return false;
@@ -107,7 +112,7 @@ public class NetworkGameSelector {
     }
 
     public boolean canStart() {
-        if(selectedGame == null) {
+        if (selectedGame == null) {
             System.err.println("Game is not selected.");
             return false;
         } else {
@@ -122,38 +127,38 @@ public class NetworkGameSelector {
 
             // Nichtteilnehmende Clients aussortieren
             User[] systemClients = manager.getMobileManager().getUserManager().getSystemClients();
-            for(int i=0; i<systemClients.length; i++) {
+            for (int i = 0; i < systemClients.length; i++) {
                 boolean plays = false;
-                for(User player : players) {
-                    if(systemClients[i] == player) {
+                for (User player : players) {
+                    if (systemClients[i] == player) {
                         plays = true;
                     }
                 }
-                if(!plays) {
-                    if(systemClients[i] != null) {
+                if (!plays) {
+                    if (systemClients[i] != null) {
                         systemClients[i].removeUserCharacter();
                         systemClients[i] = null;
                     }
                 }
             }
-            
+
             // Spielerliste erstellen
             ArrayList<User> players = new ArrayList<>();
-            for(User user : systemClients) {
-                if(user != null) {
+            for (User user : systemClients) {
+                if (user != null) {
                     players.add(user);
                 }
             }
-            if(players.size() != this.players.size()) {
+            if (players.size() != this.players.size()) {
                 System.err.println("Achtung: readyList.size()->" + this.players.size() + " aber players.size()->" + players.size());
             }
-            
+
             // Spiel starten
             Platform.runLater(() -> {
                 try {
                     Model gameModel = selectedGame.createGame(players);
                     ScreenResolution.setBoardRatios(gameModel.getBoard().getRatioX(), gameModel.getBoard().getRatioY());
-                    
+
                     manager.getGui().getGameView().setGameModel(gameModel);
                     manager.startGame(gameModel);
                     manager.getGui().showGameScene();
