@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link href="style.css" type="text/css" rel="stylesheet">
+    <title>##InGameTitle##</title>
+    <script src="jquery.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="functions.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            update();
+            var refreshId = setInterval(function() {
+                update();
+            }, 2000);
+        });
+    </script>
+
+</head>
+
+<body>
+    <div align="center" id="content">
+        <div id="refresh" style="text-align:center;"></div>
+    </div>
+    
+    <div align="center">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <label onclick="logOut()"><b>##LogOut##</b></label> <br>
+        <br>
+        <label onclick="tryToCancelGame()"><b>##CancelGame##</b></label> <br>
+        ##CancelGameInfo##
+    </div>
+</body>
+
+</html>

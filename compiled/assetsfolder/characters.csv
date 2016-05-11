@@ -1,0 +1,9 @@
+// Syntax: <Spielername> + ";" + <Farbcode> + ";" + <Dateiname in Avatarordner>
+// Defaults
+Rot;#FF3333;tod-red.png
+Blau;#0080FF;tod-blue.png
+Green;#00CC00;tod-green.png
+// Eigene
+Potato;#81F7F3;potato.jpg
+Kore;#F781F3;kore.png
+Cenk;#E0BF60;camel.jpg
