@@ -5,10 +5,12 @@ import java.util.concurrent.atomic.AtomicLong;
 import thegamebrett.model.Player;
 
 /**
- * @author Christian Colbach
+ * THE GAMEBRETT - Teamprojekt 2015-2016 - Hochschule Trier
+ *
+ * @author Kore Kaluzynski, Cenk Saatci, Christian Colbach
  */
 public class InteractionRequest implements GUIRequest, MobileRequest {
-    
+
     private final String titel;
     //alle Objekte brauchen eine implementierte toString methode fuer die GUI
     private final Object[] choices;
@@ -24,7 +26,7 @@ public class InteractionRequest implements GUIRequest, MobileRequest {
     public InteractionRequest(String titel, Object[] choices, Player player, boolean hidden, Object userData) {
         this(titel, choices, player, hidden, "", 0, userData);
     }
-    
+
     public InteractionRequest(String titel, Object[] choices, Player player, boolean hidden, String acknowledgment, int delay, Object userData) {
         this.titel = titel;
         this.choices = choices;
@@ -56,7 +58,7 @@ public class InteractionRequest implements GUIRequest, MobileRequest {
     public String getAcknowledgment() {
         return acknowledgment;
     }
-    
+
     public int getDelay() {
         return delay;
     }
@@ -64,14 +66,14 @@ public class InteractionRequest implements GUIRequest, MobileRequest {
     public int getMessageId() {
         return messageId;
     }
-    
+
     public boolean matchMessageId(int messageId) {
         return this.messageId == messageId;
     }
-    
+
     public boolean matchMessageId(String messageId) {
         try {
-            if(messageId.equals("#########")) {
+            if (messageId.equals("#########")) {
                 return false;
             } else {
                 return matchMessageId(Integer.valueOf(messageId));
@@ -81,14 +83,14 @@ public class InteractionRequest implements GUIRequest, MobileRequest {
             return false;
         }
     }
-    
+
     public String getMessageIdAs9CharacterString() {
         return messageIdAs9CharacterString;
     }
-    
+
     private static String intAs9CharacterString(int i) {
-       String s = String.valueOf(i);
-        while(s.length() < 9) {
+        String s = String.valueOf(i);
+        while (s.length() < 9) {
             s = "0" + s;
         }
         return s;

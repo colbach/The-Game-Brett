@@ -3,6 +3,11 @@ package thegamebrett.action.request;
 import javafx.scene.image.Image;
 import thegamebrett.model.Player;
 
+/**
+ * THE GAMEBRETT - Teamprojekt 2015-2016 - Hochschule Trier
+ *
+ * @author Kore Kaluzynski, Cenk Saatci, Christian Colbach
+ */
 public class GameEndRequest implements GUIRequest, MobileRequest {
 
     private final Player[] winner;
@@ -26,7 +31,7 @@ public class GameEndRequest implements GUIRequest, MobileRequest {
         this.winner = winner;
         this.acknowledgment = acknowledgment;
     }
-    
+
     public Player[] getWinner() {
         return winner;
     }

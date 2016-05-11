@@ -8,7 +8,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 /**
- * @author Christian Colbach
+ * THE GAMEBRETT - Teamprojekt 2015-2016 - Hochschule Trier
+ *
+ * @author Kore Kaluzynski, Cenk Saatci, Christian Colbach
  */
 public class FileHandler {
 
@@ -124,7 +126,7 @@ public class FileHandler {
         if (ois != null && fis != null) {
             try {
                 // Streams schliessen
-                ois.close(); 
+                ois.close();
                 ois = null;
                 fis.close();
                 fis = null;

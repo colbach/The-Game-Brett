@@ -1,9 +1,12 @@
 package thegamebrett.action.request;
 
-import thegamebrett.model.Player;
-
+/**
+ * THE GAMEBRETT - Teamprojekt 2015-2016 - Hochschule Trier
+ *
+ * @author Kore Kaluzynski, Cenk Saatci, Christian Colbach
+ */
 public class RemoveScreenMessageRequest implements GUIRequest {
-    
+
     private final ScreenMessageRequest screenMessageRequest;
 
     public RemoveScreenMessageRequest(ScreenMessageRequest screenMessageRequest) {
@@ -17,7 +20,5 @@ public class RemoveScreenMessageRequest implements GUIRequest {
     public ScreenMessageRequest getScreenMessageRequest() {
         return screenMessageRequest;
     }
-    
-    
-    
+
 }
