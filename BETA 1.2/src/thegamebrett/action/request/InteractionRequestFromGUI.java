@@ -3,8 +3,9 @@ package thegamebrett.action.request;
 import thegamebrett.model.Player;
 
 /**
+ * THE GAMEBRETT - Teamprojekt 2015-2016 - Hochschule Trier
  *
- * @author christiancolbach
+ * @author Kore Kaluzynski, Cenk Saatci, Christian Colbach
  */
 public class InteractionRequestFromGUI extends InteractionRequest {
     

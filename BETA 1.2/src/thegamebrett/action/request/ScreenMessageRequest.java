@@ -1,10 +1,14 @@
 package thegamebrett.action.request;
 
-import thegamebrett.model.Layout;
 import thegamebrett.model.Player;
 
+/**
+ * THE GAMEBRETT - Teamprojekt 2015-2016 - Hochschule Trier
+ *
+ * @author Kore Kaluzynski, Cenk Saatci, Christian Colbach
+ */
 public class ScreenMessageRequest implements GUIRequest {
-    
+
     private final String label;
     private final Player player;
 
@@ -24,9 +28,9 @@ public class ScreenMessageRequest implements GUIRequest {
     public Player getPlayer() {
         return player;
     }
-    
+
     public boolean isGeneral() {
         return player == null;
     }
-    
+
 }

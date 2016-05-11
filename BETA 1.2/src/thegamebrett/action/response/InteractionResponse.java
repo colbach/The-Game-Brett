@@ -4,7 +4,9 @@ import thegamebrett.action.ActionResponse;
 import thegamebrett.action.request.InteractionRequest;
 
 /**
- * @author Christian Colbach
+ * THE GAMEBRETT - Teamprojekt 2015-2016 - Hochschule Trier
+ *
+ * @author Kore Kaluzynski, Cenk Saatci, Christian Colbach
  */
 public class InteractionResponse implements ActionResponse {
 
@@ -23,11 +25,11 @@ public class InteractionResponse implements ActionResponse {
     public int getChoiceIndex() {
         return choiceIndex;
     }
-    
+
     public Object getChoice() {
         return concerningInteractionRequest.getChoices()[getChoiceIndex()];
     }
-    
+
     public String getChoiceString() {
         return getChoice().toString();
     }

@@ -7,10 +7,12 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * @author Christian Colbach
+ * THE GAMEBRETT - Teamprojekt 2015-2016 - Hochschule Trier
+ *
+ * @author Kore Kaluzynski, Cenk Saatci, Christian Colbach
  */
 public class TimeManager {
-    
+
     private class Task extends TimerTask {
 
         private final Manager manager;
@@ -20,22 +22,22 @@ public class TimeManager {
             this.manager = manager;
             this.concerningTimerRequest = concerningTimerRequest;
         }
-        
+
         public void run() {
             manager.react(new TimerResponse(concerningTimerRequest));
         }
-        
+
     }
-    
+
     private final Manager manager;
 
     public TimeManager(Manager manager) {
         this.manager = manager;
     }
-    
+
     public void react(TimerRequest request) {
         Timer timer = new Timer();
         timer.schedule(new Task(manager, request), request.getMillis());
     }
-    
+
 }

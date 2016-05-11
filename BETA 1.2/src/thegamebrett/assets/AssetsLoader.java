@@ -9,9 +9,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,10 +21,12 @@ import javax.imageio.ImageIO;
 import thegamebrett.Manager;
 
 /**
- * @author Christian Colbach
+ * THE GAMEBRETT - Teamprojekt 2015-2016 - Hochschule Trier
+ *
+ * @author Kore Kaluzynski, Cenk Saatci, Christian Colbach
  */
 public class AssetsLoader {
-    
+
     public static String assetsfolder = null;
 
     static {
@@ -48,7 +47,7 @@ public class AssetsLoader {
             throw new AssetNotExistsException();
         }
     }
-    
+
     /**
      * Parameter: Datei ausgehend von assetsfolder und Bild
      */
@@ -92,7 +91,7 @@ public class AssetsLoader {
             throw new AssetNotExistsException();
         }
     }
-    
+
     public static boolean fileExists(String filename) {
         File file = new File(assetsfolder + filename);
         return file.exists();
@@ -127,7 +126,7 @@ public class AssetsLoader {
             return "";
         }
     }
-    
+
     public static String loadText_localized_SuppressExceptions(String filename) {
         try {
             return loadText_localized(filename);
@@ -136,22 +135,23 @@ public class AssetsLoader {
             return "";
         }
     }
-    
+
     private static HashMap<String, String> localizedCache = new HashMap<>();
+
     public static String loadText_localized(String filename) throws AssetNotExistsException {
         String language = Manager.rb.getLocale().getDisplayCountry();
         String localizedFilename = filename + "_" + language;
-        if(localizedCache.containsKey(localizedFilename)) {
+        if (localizedCache.containsKey(localizedFilename)) {
             return localizedCache.get(localizedFilename);
         }
         String srcText = loadText(filename);
         String[] separatedText = srcText.split("##");
         StringBuilder localizedText = new StringBuilder();
-        
+
         ResourceBundle rb = Manager.rb;
-        int i=0;
-        if(separatedText.length > 0 && srcText.startsWith("##")) {
-            if(rb.containsKey(separatedText[i])) {
+        int i = 0;
+        if (separatedText.length > 0 && srcText.startsWith("##")) {
+            if (rb.containsKey(separatedText[i])) {
                 localizedText.append(rb.getString(separatedText[i]));
             } else {
                 localizedText.append("??" + separatedText[i] + "??");
@@ -159,9 +159,9 @@ public class AssetsLoader {
             i++;
         }
         boolean toogleLocTxt = false;
-        while(i<separatedText.length) {
-            if(toogleLocTxt) {
-                if(rb.containsKey(separatedText[i])) {
+        while (i < separatedText.length) {
+            if (toogleLocTxt) {
+                if (rb.containsKey(separatedText[i])) {
                     localizedText.append(rb.getString(separatedText[i]));
                 } else {
                     localizedText.append("??" + separatedText[i] + "??");
