@@ -1,7 +1,5 @@
 package thegamebrett.network;
 
-import java.net.Inet4Address;
-import java.net.InetAddress;
 import java.util.Timer;
 import java.util.TimerTask;
 import thegamebrett.Manager;
@@ -9,9 +7,11 @@ import thegamebrett.action.request.InteractionRequest;
 import thegamebrett.action.response.InteractionResponse;
 
 /**
- * Dummy zum Simulieren des Netzwerkmanagers (thegamebrett.network.Networkmanager)
+ * THE GAMEBRETT - Teamprojekt 2015-2016 - Hochschule Trier
+ *
+ * @author Kore Kaluzynski, Cenk Saatci, Christian Colbach
  * 
- * @author Christian Colbach
+ * Dummy zum Simulieren des Netzwerkmanagers (thegamebrett.network.Networkmanager)
  */
 public class NetworkManagerDummy extends NetworkManager {
     
@@ -30,7 +30,6 @@ public class NetworkManagerDummy extends NetworkManager {
     
     public void deliverMessage(InteractionRequest ir) throws PlayerNotRegisteredException {
         
-        //int c = (Math.random() * ir.getChoices().length)
         int answer = (int)((Math.random()) * (ir.getChoices().length));
         InteractionResponse response = new InteractionResponse(ir, answer);
         

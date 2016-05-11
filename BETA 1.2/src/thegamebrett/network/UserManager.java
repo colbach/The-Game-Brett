@@ -1,20 +1,21 @@
 package thegamebrett.network;
 
 import java.net.InetAddress;
-import java.util.*;
 import thegamebrett.Manager;
 import thegamebrett.action.request.InteractionRequest;
 import thegamebrett.model.Player;
 
 /**
- * Managt verschiedene Clients
+ * THE GAMEBRETT - Teamprojekt 2015-2016 - Hochschule Trier
  *
- * @author Christian Colbach
+ * @author Kore Kaluzynski, Cenk Saatci, Christian Colbach
+ *
+ * Managt verschiedene Clients
  */
 public class UserManager {
 
     protected Manager manager;
-    
+
     public static final String[] SYSTEM_CLIENT_IDS = new String[]{
         "systemClient0",
         "systemClient1",
@@ -38,7 +39,7 @@ public class UserManager {
     public String generateSystemClientChooserAvailabilityInfoForAPI() {
         return WebGenerator.generateSystemClientChooserAvailabilityInfoForAPI(this);
     }
-    
+
     public String generateFreePositionHTML() {
         return WebGenerator.generateFreePositionHTML(this);
     }
@@ -46,7 +47,7 @@ public class UserManager {
     public boolean tryToSetSystemClient(String clientID, InetAddress ia) {
         for (int i = 0; i < SYSTEM_CLIENT_IDS.length; i++) {
             if (clientID.equals(SYSTEM_CLIENT_IDS[i]) && (systemClients[i] == null || !systemClients[i].isAlife())) {
-                if(systemClients[i] != null) {
+                if (systemClients[i] != null) {
                     systemClients[i].setSittingPlace(-1);
                 }
                 systemClients[i] = new User(ia, manager);
@@ -56,38 +57,38 @@ public class UserManager {
         }
         return false;
     }
-    
+
     public boolean tryToReplaceSystemClient(String clientID, InetAddress ia) {
         final NetworkGameSelector ngs = manager.getMobileManager().getNetworkManager().getNetworkGameSelector();
-        
+
         for (int i = 0; i < SYSTEM_CLIENT_IDS.length; i++) {
-            if (clientID!=null && clientID.equals(SYSTEM_CLIENT_IDS[i]) && systemClients[i]!=null && !systemClients[i].isAlife()) {
+            if (clientID != null && clientID.equals(SYSTEM_CLIENT_IDS[i]) && systemClients[i] != null && !systemClients[i].isAlife()) {
                 systemClients[i].setInetAddress(ia);
                 return true;
             }
         }
         return false;
     }
-    
+
     public boolean canSetSystemClient(String id) {
-        for(int i=0; i<SYSTEM_CLIENT_IDS.length; i++) {
-            if(SYSTEM_CLIENT_IDS[i].equals(id)) {
+        for (int i = 0; i < SYSTEM_CLIENT_IDS.length; i++) {
+            if (SYSTEM_CLIENT_IDS[i].equals(id)) {
                 return canSetSystemClient(i);
             }
         }
         System.err.println("Ungueltige SystemClient-ID");
         return false;
     }
-    
+
     public boolean canSetSystemClient(int index) {
         /*if(Math.random() > 0.7)
             return false;*/ // zum testen
-        return systemClients[index] == null || !systemClients[index].isAlife() || systemClients[index].getInetAddress()==null;
+        return systemClients[index] == null || !systemClients[index].isAlife() || systemClients[index].getInetAddress() == null;
     }
-    
+
     public boolean[] canSetSystemClientArray() {
         boolean[] bs = new boolean[SYSTEM_CLIENT_IDS.length];
-        for(int i=0; i<bs.length; i++) {
+        for (int i = 0; i < bs.length; i++) {
             bs[i] = canSetSystemClient(i);
         }
         return bs;
@@ -101,34 +102,25 @@ public class UserManager {
         }
         return false;
     }
-    
+
     public boolean isSystemClient(InetAddress ia) {
         for (User systemClient : systemClients) {
-            if (systemClient!=null && systemClient.matchInetAddress(ia)) {
+            if (systemClient != null && systemClient.matchInetAddress(ia)) {
                 return true;
             }
         }
         return false;
     }
-    
+
     public void logOutSystemClientWhilePlaying(User c) {
         c.setInetAddress(null);
-        /*for (int i = 0; i < systemClients.length; i++) {
-            if (systemClients[i] == c) {
-                if(systemClients[i] != null) {
-                    systemClients[i].setSittingPlace(-1);
-                    loggedOutUsers.add(c);
-                }
-                systemClients[i] = null;
-            }
-        }*/
     }
-    
+
     public void logOutSystemClient(User c) {
         c.setInetAddress(null);
         for (int i = 0; i < systemClients.length; i++) {
             if (systemClients[i] == c) {
-                if(systemClients[i] != null) {
+                if (systemClients[i] != null) {
                     systemClients[i].setSittingPlace(-1);
                     systemClients[i].removeUserCharacter();
                     systemClients[i] = null;
@@ -136,16 +128,16 @@ public class UserManager {
             }
         }
     }
-    
+
     public void deleteExitetUsers() {
-        for (int i=0; i<systemClients.length; i++) {
-            if (systemClients[i]!=null && systemClients[i].getInetAddress()==null) {
+        for (int i = 0; i < systemClients.length; i++) {
+            if (systemClients[i] != null && systemClients[i].getInetAddress() == null) {
                 systemClients[i].removeUserCharacter();
-                systemClients[i]=null;
+                systemClients[i] = null;
             }
         }
     }
-    
+
     public void deliverMessage(InteractionRequest ir) throws PlayerNotRegisteredException {
         Player p = ir.getPlayer();
         User u = p.getUser();
@@ -165,7 +157,7 @@ public class UserManager {
             throw new IllegalArgumentException("InetAddress must not be null");
         }
         for (User client : systemClients) {
-            if (client!=null && client.matchInetAddress(ia)) {
+            if (client != null && client.matchInetAddress(ia)) {
                 return client;
             }
         }
@@ -179,6 +171,5 @@ public class UserManager {
     public Manager getManager() {
         return manager;
     }
-    
-    
+
 }

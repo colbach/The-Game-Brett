@@ -3,7 +3,9 @@ package thegamebrett.model;
 import thegamebrett.gui.ScreenResolution;
 
 /**
- * @author Christian Colbach
+ * THE GAMEBRETT - Teamprojekt 2015-2016 - Hochschule Trier
+ *
+ * @author Kore Kaluzynski, Cenk Saatci, Christian Colbach
  */
 public class RelativePoint {
     

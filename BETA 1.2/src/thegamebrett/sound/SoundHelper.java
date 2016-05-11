@@ -1,28 +1,20 @@
 package thegamebrett.sound;
 
-import java.applet.Applet;
 import java.applet.AudioClip;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import thegamebrett.assets.AssetNotExistsException;
 import thegamebrett.assets.AssetsLoader;
 
 /**
- * Stellt Hilfsmethoden zur Verfuegung. 
+ * THE GAMEBRETT - Teamprojekt 2015-2016 - Hochschule Trier
+ *
+ * @author Kore Kaluzynski, Cenk Saatci, Christian Colbach
  * 
- * @author Christian Colbach
+ * Stellt Hilfsmethoden fuer die Sound-API zur Verfuegung.
  */
 public class SoundHelper {
     
     private static ArrayList<AudioClip> sounds = new ArrayList<>();
-    
-    /*
-    BUGS:
-    - Audiodatei wird stoppt wenn Thread beendet wird.
-    - Loop_Little_Big_Adventure_04.wav kann aus unbekannten Gruenden nicht abgespielt werden.
-    */
     
     /**
      * Spielt eine Audiodatei ab.

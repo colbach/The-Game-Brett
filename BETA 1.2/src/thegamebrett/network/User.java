@@ -10,14 +10,16 @@ import thegamebrett.usercharacter.UserCharacter;
 import thegamebrett.action.response.InteractionResponse;
 
 /**
- * Benutzer des Systems aus technischer Sicht
+ * THE GAMEBRETT - Teamprojekt 2015-2016 - Hochschule Trier
  *
- * @author Christian Colbach
+ * @author Kore Kaluzynski, Cenk Saatci, Christian Colbach
+ *
+ * Benutzer des Systems aus technischer Sicht.
  */
 public class User {
-    
+
     public int TIMEOUT = 7000; //in ms (1s = 1000ms)
-    
+
     // Achtung: Werte Niemals aendern da sie in Webseiten hard-gecodet sind
     public static final int WEB_PAGE_CHOOSE_POSITION = 0;
     public static final int WEB_PAGE_CHOOSE_CHARACTER = 1;
@@ -26,25 +28,24 @@ public class User {
     public static final int WEB_PAGE_GAME_ALREADY_STARTED = 5;
     public static final int WEB_PAGE_START_GAME = 7;
     public static final int WEB_PAGE_JOIN_GAME = 8;
-    
+
     private Manager manager;
 
     /**
-     * Aktuelle Position des Spielers im System.
-     * Auswahl:
-     *    WEB_PAGE_CHOOSE_POSITION,    WEB_PAGE_CHOOSE_CHARACTER,       WEB_PAGE_CHOOSE_GAME
-     *    WEB_PAGE_PLAY_GAME,          WEB_PAGE_GAME_ALREADY_STARTED,   WEB_PAGE_START_GAME
-     *    WEB_PAGE_JOIN_GAME
+     * Aktuelle Position des Spielers im System. Auswahl:
+     * WEB_PAGE_CHOOSE_POSITION, WEB_PAGE_CHOOSE_CHARACTER, WEB_PAGE_CHOOSE_GAME
+     * WEB_PAGE_PLAY_GAME, WEB_PAGE_GAME_ALREADY_STARTED, WEB_PAGE_START_GAME
+     * WEB_PAGE_JOIN_GAME
      */
     private volatile int webPage = WEB_PAGE_CHOOSE_POSITION;
-    
+
     /**
      * Zugehöriger Character
      */
     private volatile UserCharacter character = null;
 
     private static volatile AtomicLong lastClientId = new AtomicLong(0);
-    
+
     private final long clientId;
 
     private volatile long lastSignOfLife = -1; //in ms
@@ -52,7 +53,7 @@ public class User {
     private volatile InetAddress inetAddress;
 
     private volatile InteractionRequest actualInteractionRequest;
-    
+
     private volatile int sittingPlace = -1;
 
     private String htmlCache = null;
@@ -70,20 +71,20 @@ public class User {
     public UserCharacter getUserCharacter() {
         return character;
     }
-    
+
     public boolean hasUserCharacter() {
-        return character!= null;
+        return character != null;
     }
-    
+
     public void removeUserCharacter() {
-        if(character != null) {
+        if (character != null) {
             character.setInUse(false);
             character = null;
         }
     }
 
     public boolean tryToSetUserCharacter(UserCharacter character) {
-        if(character.tryToUse()) {
+        if (character.tryToUse()) {
             this.character = character;
             return true;
         } else {
@@ -96,10 +97,11 @@ public class User {
     }
 
     public boolean isAlife() {
-        if(inetAddress==null)
+        if (inetAddress == null) {
             return false;
-        else
+        } else {
             return lastSignOfLife + TIMEOUT > System.currentTimeMillis();
+        }
     }
 
     public void setInetAddress(InetAddress inetAddress) {
@@ -111,10 +113,11 @@ public class User {
     }
 
     public boolean matchInetAddress(InetAddress ia) {
-        if(ia == null || inetAddress == null)
+        if (ia == null || inetAddress == null) {
             return false;
-        else
+        } else {
             return inetAddress.equals(ia);
+        }
     }
 
     public InteractionRequest getActualInteractionRequest() {
@@ -156,30 +159,29 @@ public class User {
             System.err.println("Resonse doen't match Request");
         }
     }
-    
+
     /**
      * Return: Position des Spielers im System.
-     *    WEB_PAGE_CHOOSE_POSITION,    WEB_PAGE_CHOOSE_CHARACTER,       WEB_PAGE_CHOOSE_GAME
-     *    WEB_PAGE_PLAY_GAME,          WEB_PAGE_GAME_ALREADY_STARTED,   WEB_PAGE_START_GAME
-     *    WEB_PAGE_JOIN_GAME
+     * WEB_PAGE_CHOOSE_POSITION, WEB_PAGE_CHOOSE_CHARACTER, WEB_PAGE_CHOOSE_GAME,
+     * WEB_PAGE_PLAY_GAME, WEB_PAGE_GAME_ALREADY_STARTED, WEB_PAGE_START_GAME WEB_PAGE_JOIN_GAME
      */
     public int getWebPage() {
-        
-        if(getSittingPlace() < 0 || getSittingPlace() > UserManager.SYSTEM_CLIENT_IDS.length) {
+
+        if (getSittingPlace() < 0 || getSittingPlace() > UserManager.SYSTEM_CLIENT_IDS.length) {
             System.out.println("getSittingPlace()->" + getSittingPlace());
             return WEB_PAGE_CHOOSE_POSITION;
-        } else if(!hasUserCharacter()) {
+        } else if (!hasUserCharacter()) {
             return WEB_PAGE_CHOOSE_CHARACTER;
         } else {
             NetworkGameSelector ngs = manager.getMobileManager().getNetworkManager().getNetworkGameSelector();
-            if(ngs.isGameSelected()) {
-                if(ngs.getPlayers().contains(this)) {
+            if (ngs.isGameSelected()) {
+                if (ngs.getPlayers().contains(this)) {
                     return WEB_PAGE_START_GAME;
                 } else {
                     return WEB_PAGE_JOIN_GAME;
                 }
-            } else if(ngs.isGameStarted()) {
-                if(ngs.getPlayers().contains(this)) {
+            } else if (ngs.isGameStarted()) {
+                if (ngs.getPlayers().contains(this)) {
                     return WEB_PAGE_PLAY_GAME;
                 } else {
                     return WEB_PAGE_GAME_ALREADY_STARTED;
@@ -205,6 +207,5 @@ public class User {
     public void setSittingPlace(int sittingPlace) {
         this.sittingPlace = sittingPlace;
     }
-    
-    
+
 }

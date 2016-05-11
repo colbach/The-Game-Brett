@@ -5,7 +5,9 @@ import java.io.File;
 import java.io.FileInputStream;
 
 /**
- * @author Christian Colbach
+ * THE GAMEBRETT - Teamprojekt 2015-2016 - Hochschule Trier
+ *
+ * @author Kore Kaluzynski, Cenk Saatci, Christian Colbach
  */
 public class HttpSender {
 
@@ -21,7 +23,7 @@ public class HttpSender {
         // schreibt Header
         outputStream.write(HttpResponseHeader.generateResponseHeader(statusCode, Mimes.getMime(file), fis.available()));
 
-        // Datei senden [
+        // Datei senden...
         byte[] buffer = new byte[1024];
         int bytesRead;
         while ((bytesRead = fis.read(buffer)) != -1) {
@@ -29,7 +31,6 @@ public class HttpSender {
         }
         fis.close();
         outputStream.close();
-	// ]
 
     }
 

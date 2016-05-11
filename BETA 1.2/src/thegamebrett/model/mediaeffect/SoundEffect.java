@@ -1,25 +1,25 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package thegamebrett.model.mediaeffect;
 
 /**
+ * THE GAMEBRETT - Teamprojekt 2015-2016 - Hochschule Trier
  *
- * @author Christian Colbach
+ * @author Kore Kaluzynski, Cenk Saatci, Christian Colbach
  */
 public class SoundEffect {
-    
-    /** Referenz auf Sounddatei. Format: .wav */
+
+    /**
+     * Referenz auf Sounddatei. Format: .wav
+     */
     private String resource;
-    
+
     private long loopInterval;
-    
+
     private int loopCount;
-    
-    /** gibt an ob Clip geloopt werden darf.
-     * Wenn false kann clip kürzer als duration sein, wenn true wird clip so lange wiederholt bis duration fertig
+
+    /**
+     * gibt an ob Clip geloopt werden darf. Wenn false kann clip kürzer als
+     * duration sein, wenn true wird clip so lange wiederholt bis duration
+     * fertig
      */
     private boolean loop;
 
@@ -29,7 +29,7 @@ public class SoundEffect {
         this.loop = loop;
         this.loopCount = loopCount;
     }
-    
+
     public SoundEffect(String resource) {
         this.resource = resource;
         this.loopInterval = 0;
@@ -69,6 +69,4 @@ public class SoundEffect {
         this.loop = loop;
     }
 
-    
-    
 }

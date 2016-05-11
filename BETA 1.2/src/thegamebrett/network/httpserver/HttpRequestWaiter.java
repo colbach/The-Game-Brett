@@ -5,7 +5,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
- * @author Christian Colbach
+ * THE GAMEBRETT - Teamprojekt 2015-2016 - Hochschule Trier
+ *
+ * @author Kore Kaluzynski, Cenk Saatci, Christian Colbach
  */
 public class HttpRequestWaiter implements Runnable {
 
@@ -21,14 +23,9 @@ public class HttpRequestWaiter implements Runnable {
         try {
             serverSocket = new ServerSocket(serverPort);
 
-        } // can't open ServerSocket
-        catch (IOException ioe) {
-
-            // log [
+        } catch (IOException ioe) {
             ioe.printStackTrace();
             System.err.println("(Socket is probably already in use)");
-			//Logger.log(ioe, "-> Socket is probably already in use!");
-            // ]
 
         }
     }
@@ -39,22 +36,12 @@ public class HttpRequestWaiter implements Runnable {
         while (true) {
 
             try {
-
-                // Warten auf naechsten Zugriff
                 Socket client = serverSocket.accept();
-                //System.out.println("*");
-
-                // Zugriff mittels Handler abarbeiten
                 new HttpRequestHandler(client, director).start();
-
-            } // Error at accepting Request
+            }
             catch (IOException ioe) {
 
-                // log [
                 ioe.printStackTrace();
-				//Logger.log(ioe);
-                // ]
-
             }
         }
 
@@ -63,17 +50,11 @@ public class HttpRequestWaiter implements Runnable {
     public void closeServerSocket() {
 
         if (serverSocket != null && !serverSocket.isClosed()) {
-
-            try { // try to close ServerSocket
+            try {
                 serverSocket.close();
-
-            } // can't close ServerSocket
+            }
             catch (IOException ioe) {
-
-                // log [
                 ioe.printStackTrace();
-				//Logger.log(ioe);
-                // ]
             }
         }
     }

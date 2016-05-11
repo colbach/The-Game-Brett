@@ -1,11 +1,11 @@
 package thegamebrett.model.elements;
 
-import java.util.concurrent.atomic.AtomicLong;
-
 /**
- * Definiert Elemente welche später auf der Spielfläche angezeigt werden
+ * THE GAMEBRETT - Teamprojekt 2015-2016 - Hochschule Trier
  *
- * @author Christian Colbach
+ * @author Kore Kaluzynski, Cenk Saatci, Christian Colbach
+ *
+ * Definiert Elemente welche später auf der Spielfläche angezeigt werden
  */
 public abstract class Element {
 

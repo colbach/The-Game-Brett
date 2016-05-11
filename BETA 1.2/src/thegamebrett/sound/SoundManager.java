@@ -9,9 +9,11 @@ import thegamebrett.action.request.StopSoundsRequest;
 import thegamebrett.model.mediaeffect.SoundEffect;
 
 /**
- * Kuemmert sich um Soundwiedergabe.
+ * THE GAMEBRETT - Teamprojekt 2015-2016 - Hochschule Trier
  *
- * @author Christian Colbach
+ * @author Kore Kaluzynski, Cenk Saatci, Christian Colbach
+ *
+ * Kuemmert sich um Soundwiedergabe.
  */
 public class SoundManager {
 
@@ -44,12 +46,11 @@ public class SoundManager {
     }
 
     public void react(SoundRequest soundRequest) {
-        // mach was
         if (soundRequest instanceof PlaySoundRequest) {
             PlaySoundRequest r = (PlaySoundRequest) soundRequest;
             playSoundEffect(r.getSound());
-        } else if(soundRequest instanceof StopSoundsRequest) {
-            stopID ++;
+        } else if (soundRequest instanceof StopSoundsRequest) {
+            stopID++;
             SoundHelper.stopSounds();
         }
 

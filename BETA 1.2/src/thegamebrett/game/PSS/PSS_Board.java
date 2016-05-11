@@ -6,6 +6,7 @@
 package thegamebrett.game.PSS;
 
 import java.util.ArrayList;
+import javafx.scene.paint.Color;
 import thegamebrett.model.Layout;
 import thegamebrett.model.RelativePoint;
 import thegamebrett.model.elements.Board;
@@ -29,6 +30,7 @@ public class PSS_Board extends Board{
     public PSS_Board(String[] fieldContent){
         super();
         this.layout = new Layout();
+        this.layout.setBackgroundColor(Color.LIGHTGREY);
         this.fieldContent = fieldContent;
         createFields();
     }
