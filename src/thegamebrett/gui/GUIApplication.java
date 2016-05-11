@@ -1,5 +1,6 @@
 package thegamebrett.gui;
 
+import java.io.File;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -21,6 +22,7 @@ import thegamebrett.model.Model;
 import thegamebrett.action.request.RemoveScreenMessageRequest;
 import thegamebrett.action.request.ScreenMessageRequest;
 import static javafx.application.Application.launch;
+import thegamebrett.assets.AssetsLoader;
 
 /**
  * THE GAMEBRETT - Teamprojekt 2015-2016 - Hochschule Trier
@@ -38,7 +40,36 @@ public class GUIApplication extends Application {
     private String title = "The Game Brett";
 
     public static void main(String[] args) {
-        //AssetsLoader.assetsfolder = args[0];
+        if(args.length > 0) {
+            AssetsLoader.assetsfolder = args[0];
+        } else {
+            System.err.println("Keine Konsolenargumente angegeben!");
+            System.err.println("Suche automatisch nach Ordner...");
+            String[] possibleLocations = {
+                "./src/assetsfolder/",
+                "./dist/assetsfolder/",
+                "./assetsfolder/",
+                System.getProperty("user.home") + "/The-Game-Brett/src/assetsfolder/",
+                System.getProperty("user.home") + "/assetsfolder/",
+                System.getProperty("user.home") + "/GitHub/The-Game-Brett/src/assetsfolder/",
+                System.getProperty("user.home") + "/Desktop/assetsfolder/",
+                System.getProperty("user.home") + "/Schreibtisch/assetsfolder/",
+                "/assetsfolder/"
+            };
+            for(String location : possibleLocations) {
+                File test = new File(location);
+                if(test.exists()) {
+                    System.out.println(location + " existiert!");
+                    AssetsLoader.assetsfolder = test.getAbsolutePath();
+                    break;
+                } else {
+                    System.err.println(location + " existiert nicht.");
+                }
+            }
+            if(!AssetsLoader.assetsfolder.endsWith("/")) {
+                AssetsLoader.assetsfolder = AssetsLoader.assetsfolder + "/";
+            }
+        }
         launch(new String[0]);
     }
 
