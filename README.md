@@ -267,7 +267,7 @@ public abstract ActionRequest[] next(ActionResponse as);
 
 #### Requests und Responses
 <p>
-    Requests und Responses sind für den aktiven verlauf des Spieles verantwortlich. Es geht nie eine Interaktion vom Spiel selbst aus, die Kommunikation erfolgt immer nach dem Ping-Pong-Model. Das Model ist somit nur aktiv wenn es angestossen wird.
+    Requests und Responses sind für den aktiven Verlauf des Spieles verantwortlich. Es geht nie eine Interaktion vom Spiel selbst aus, die Kommunikation erfolgt immer nach dem Ping-Pong-Model. Das Model ist somit nur aktiv wenn es angestoßen wird.
 </p>
 ##### GUI
 Stößt die UI dazu an, sich zu aktualisieren:
@@ -301,15 +301,15 @@ thegamebrett.action.request.PlaySoundRequest(SoundEffect sound)
 Sound stoppt erst wenn das Soundobjekt zu Ende geht oder falls <code>StopSoundsRequest</code> zurück gegeben wird. Falls im SoundEffect angegeben wird dass sich dieser für immer wiederholt stoppt dieser erst bei <code>StopSoundsRequest</code> oder wenn das Spiel beendet wird.
 
 ##### Timer
-Da das gesamte Framework darauf aufgebaut ist dass die Spielelogik immer erst anläuft wenn eine Response für diese vorliegt, ist es in manchen Situationen sinnvoll einen Timer zu starten:
+Da das gesamte Framework darauf aufgebaut ist, dass die Spielelogik immer erst anläuft wenn eine Response für diese vorliegt, ist es in manchen Situationen sinnvoll einen Timer zu starten:
 ```java
 thegamebrett.action.request.TimerRequest(int millis)
 ```
-Dieser Timer hat die Eigenschaft nach einer bestimmten Anzahl von Sekunden eine <code>TimerResponse</code> zurück zu geben. Auf diese Art kann das Framework sich nach Ablauf einer bestimmten Zeit wieder selbst anstossen. (Auf diese Art und Weise sind somit auch Schleifen möglich wenn man immer ein <code>TimerRequest</code> zurück gibt)
+Dieser Timer hat die Eigenschaft nach einer bestimmten Anzahl von Sekunden eine <code>TimerResponse</code> zurück zu geben. Auf diese Art kann das Framework sich nach Ablauf einer bestimmten Zeit wieder selbst anstoßen (Auf diese Art und Weise sind somit auch Schleifen möglich wenn man immer ein <code>TimerRequest</code> zurück gibt).
 
 ##### Spielstart und Spielende 
 <p>
-    Spielstart und Spielende  werden auch über <em>Requests</em> und <em>Responses</em> geregelt. Beim Starten des Spieles erhält die <em>GameLogik</em> eine StartPseudoResponse. Diese enthält keine Daten und dient nur dazu das Spiel anzustossen.
+    Spielstart und Spielende werden ebenfalls über <em>Requests</em> und <em>Responses</em> geregelt. Beim Starten des Spieles erhält die <em>GameLogik</em> eine StartPseudoResponse. Diese enthält keine Daten und dient nur dazu das Spiel anzustoßen.
 </p>
 <p>
     Das Spiel ist erst dann beendet wenn die <em>GameLogik</em> eine <code>GameEndRequest</code> zurückgibt.
@@ -318,9 +318,9 @@ Dieser Timer hat die Eigenschaft nach einer bestimmten Anzahl von Sekunden eine 
 thegamebrett.action.request.GameEndRequest(Player[] winner, String acknowledgment, int delay, Image backgroundImage)
 ```
 
-### Gamecollection
+### GameCollection
 <p>
-    Die GameCollection ist die Klasse in der alle Spiele eingetragen werden müssen damit sie vom Framework erkannt werden. Von jedem existierenden Spiel muss sich eine Instanz der entsprechenden GameLogik innerhalb der GameCollection befinden.
+    Die GameCollection ist die Klasse, in die alle Spiele eingetragen werden müssen, damit sie vom Framework erkannt werden. Von jedem existierenden Spiel muss sich eine Instanz der entsprechenden GameLogik innerhalb der GameCollection befinden.
 </p>
 ```java
 public static GameFactory[] gameFactorys = {
@@ -333,7 +333,7 @@ Als Beispiel-Implementierung haben wir 3 Spiele realisiert. Diese sind unter <co
 
 ## Anlegen eigener Character
 <p>
-    Eigene Character können ganz leicht angelegt werden. Hierzu muss die Datei <code>assetsfolder/characters.csv</code> um eine weitere Zeile erweitert werden.
+    Zum Anlegen eigener Character muss die Datei <code>assetsfolder/characters.csv</code> um eine weitere Zeile erweitert werden.
 </p>
 <em>Beispiel:</em>
 <pre>
