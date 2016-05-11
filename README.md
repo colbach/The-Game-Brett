@@ -8,7 +8,7 @@ von Kore Kaluzynski, Cenk Saatci, Christian Colbach
 Zur Erstellung einer ausführbaren Datei muss das <em>src</em> Verzeichnis kompiliert werden.
 Die Hauptklasse der Anwendung ist die Klasse <em>thegamebrett.gui.GUIApplication</em>. Dieser muss zur Ausführung ein Parameter übergeben werden, welcher inklusive <code>/</code> den absoluten Pfad des Assetsordners angibt. Dieser Ordner ist in <em>scr/assetsfolder</em> zu finden und kann in ein beliebiges Verzeichnis im Dateisystem verschoben werden:
 </p>
-##### Beispiel zur startung der Anwendung:
+##### Beispiel zum Start der Anwendung:
 <pre>
 $ java thegamebrett.gui.GUIApplication /Users/grompa/Documents/gamebrett/classes/assetsfolder/
 </pre>
@@ -18,11 +18,11 @@ $ java thegamebrett.gui.GUIApplication /Users/grompa/Documents/gamebrett/classes
 <em>Prinzipieller Aufbau des Projektes</em>
 
 ### Model View Controller
-Mit einer Trennung zwischen Spielelogik und <code>I/O</code> wurde versucht das Framework stark MVC-orientiert umzusetzen. Dies hat den Vorteil dass die einzelnen Spiele komplett austauschbar sind ohne dass dafür eine Zeile Code im Rest des Systems geändert werden muss.
+Mit einer Trennung zwischen Spielelogik und <code>I/O</code> war es möglich, das Framework stark MVC-orientiert umzusetzen. Dies hat den Vorteil dass die einzelnen Spiele komplett austauschbar sind, ohne dass dafür eine Zeile Code im Rest des Systems geändert werden muss.
 
 #### Der Manager (Controller)
 <p>
-    Der Manager stellt sozusagen den "Dreh und Angelpunkt" der Anwendung dar. Über ihn laufen alle Kommunikationen und er dient als verbindungsglied aller komponenten (direkt oder indirekt).
+    Der Manager stellt sozusagen den "Dreh und Angelpunkt" der Anwendung dar. Über ihn laufen alle Kommunikationen und er dient als Verbindungsglied aller Komponenten (direkt oder indirekt).
 </p>
 
 #### Grafik (View #1)
@@ -30,7 +30,7 @@ Mit einer Trennung zwischen Spielelogik und <code>I/O</code> wurde versucht das 
     Die Grafische Benutzeroberfläche welche auf dem Gerät selbst angezeigt wird setzt auf JavaFX. Der Aufbau wechselt lediglich zwischen zwei <em>Scenes</em>. Der <code>MenueView</code> und der <code>GameView</code>, welche den Kern der Benutzeroberfläche darstellen.
 </p>
 <p>
-    Die <code>MenueView</code> stellt die erste <em>Scene</em> dar. Diese wird beim Start der Anwendung gesetzt und dient zur Darstellung des Menüs so wie zur auswahl der vorhandenen Spiele. Zur direkten Funktion wird sie jedoch nicht benötigt (auch wenn sie diese ergänzt) da die Funktionen nicht auf die direkte Eingabe am Gerät angewiesen ist (Mehr dazu unter <em>Steuerungskonzept</em>).
+    Die <code>MenueView</code> stellt die erste <em>Scene</em> dar. Diese wird beim Start der Anwendung gesetzt und dient zur Darstellung des Menüs, sowie zur Auswahl der vorhandenen Spiele. Zur direkten Funktion wird sie jedoch nicht benötigt (auch wenn sie diese ergänzt) da die Funktionen nicht auf die direkte Eingabe am Gerät angewiesen ist (Mehr dazu unter <em>Steuerungskonzept</em>).
 </p>
 <p>
     Die <code>GameView</code> stellt die zweite <em>Scene</em> dar. Sie ist generisch und stellt immer das aktuelle Spiel dar. Die einzelnen Spiele werden in ihr geladen und auch animiert (Bewegung von Figuren und Feldern).
@@ -38,22 +38,22 @@ Mit einer Trennung zwischen Spielelogik und <code>I/O</code> wurde versucht das 
 
 #### Webinterface (View #2)
 <p>
-    Das <em>Webinterface</em> stellt in unserem Aufbau die Grundlage aller Kommunikationen mit dem Spieler. Jeder Spieler muss sich über sein Smartphone (bzw. einem anderen internetfähigen Gerät) an den Server anmelden, welcher als verbingung zur interaktion mit dem System und damit auch mit dem Spiel dient.
+    Das <em>Webinterface</em> verkörpert in unserem Aufbau die Grundlage aller Kommunikationen mit dem Spieler. Jeder Spieler muss sich über sein Smartphone (bzw. einem anderen internetfähigen Gerät) an den Server anmelden, welcher als Verbingung zur Interaktion mit dem System und damit auch mit dem Spiel dient.
 </p>
 
 #### Spielelogik (Model #1)
 <p>
-    Die <em>Spielelogik</em> und die dazugehörigen Klassen des <em>Models</em> stellen das Spiel im eigentlichen dar. Sie ist komplett austauschbar und kann selbst zur Laufzeit beliebig oft ausgetauscht werden. Dies ermöglicht es den Spielern sich gemeinsam für ein Spiel zu entscheiden und anschliessend zu spielen.
+    Die <em>Spielelogik</em> und die dazugehörigen Klassen des <em>Models</em> stellen das Spiel im Eigentlichen dar. Sie ist komplett austauschbar und kann selbst zur Laufzeit beliebig oft ausgetauscht werden. Dies ermöglicht es den Spielern sich gemeinsam für ein Spiel zu entscheiden und dieses anschliessend zu spielen.
 </p>
 
 #### Userstate (Model #2)
 <p>
-    Die am System angemeldeten User werden vom Usermanager verwaltet. Jeder Spieler erhält einen wählbaren Sitzplatz und einen dazugehörigen Character.
+    Die am System angemeldeten User werden vom Usermanager verwaltet. Jeder Spieler erhält einen wählbaren Sitzplatz und einen dazugehörigen wählbaren Character.
 </p>
 
 #### Kommunikation zwischen einzelnen Modulen
 <p>
-    Die Komunikation zwischen den einzelnen Modulen (Model, Grafik, Webinterface, Spielelogik) findet über einen selbst implementiertes System aus <em>Actions</em> statt. Grundlage hierfür stellen die Interfaces <code>ActionRequest</code> und <code>ActionResponse</code> von welchen es eine bestimmte menge von Ableitungen gibt, welche durch das gesamte System durchgereicht werden. Hierbei leitet der Manager kontinuierlich <em>Requests</em> von der Spielelogik an die gewünschte Systemkomponente weiter (z.B. Netzwerk oder UI). Diese Systemkomponenten generieren anschliessend die passende <em>Responses</em> welche danach wieder an den Manager übergeben werden. Hirbei ist zu beachten dass die Spielelogik immer nur beim "Anstoss" durch den Manager aktiv wird und ihre nächste <em>Requests</em> generiert. Ein solcher Anstoss geschieht nur wenn eine <em>Response</em> an die Spielelogik zurück geht. Um diesen Aufbau zu verstehen sind folgende Methoden relevant:
+    Die Komunikation zwischen den einzelnen Modulen (Model, Grafik, Webinterface, Spielelogik) findet über einen selbst implementiertes System aus <em>Actions</em> statt. Grundlage hierfür stellen die Interfaces <code>ActionRequest</code> und <code>ActionResponse</code> von welchen es eine bestimmte Menge von Implementierungen gibt, welche durch das gesamte System durchgereicht werden. Hierbei leitet der Manager kontinuierlich <em>Requests</em> von der Spielelogik an die gewünschte Systemkomponente weiter (z.B. Netzwerk oder UI). Diese Systemkomponenten generieren anschliessend die passende <em>Responses</em> welche danach wieder an den Manager übergeben werden. Hirbei ist zu beachten dass die Spielelogik immer nur beim "Anstoss" durch den Manager aktiv wird und ihre nächste <em>Request</em> generiert. Ein solcher Anstoss geschieht nur wenn eine <em>Response</em> an die Spielelogik zurück geht. Um diesen Aufbau zu verstehen sind folgende Methoden relevant:
 </p>
 In der Spielelogik (<code>Gamelogik</code>):
 ```java
@@ -66,27 +66,27 @@ public void react(ActionResponse response);
 
 ### Steuerungskonzept
 <p>
-    Das Brett ist so konzipiert dass eine Steuerung mittels Maus oder Touchscreen nicht nötig ist, es genügt wenn das Spielbrett mit dem WLAN verbunden ist, beziehungsweise einen eingebauten Access Point enthält. Das Menü und die Spiele werden über die externen Geräte, welche mit dem Brett verbunden sind, gesteuert.
+    Das Brett ist so konzipiert dass eine Steuerung mittels Maus oder Touchscreen nicht nötig ist. Es genügt wenn das Spielbrett mit dem WLAN verbunden ist, beziehungsweise einen eingebauten Access Point enthält. Das Menü und die Spiele werden über die externen Geräte, welche mit dem Brett verbunden sind, gesteuert.
 </p>
 
 ### Assets
 <p>
-    Zum laden von Assets wird die Klasse <code>AssetLoader</code> verwendet, welche das laden von Inhhalten und lokalisierten Textdokumenten vereinfacht(Mehr dazu im nächsten Abschnitt Lokalisierung)
+    Zum Laden von Assets wird die Klasse <code>AssetLoader</code> verwendet, welche das Laden von Inhalten und lokalisierten Textdokumenten vereinfacht (Mehr dazu im nächsten Abschnitt Lokalisierung).
 </p>
 
 ### Lokalisierung
 <p>
-    Für die Lokalisierung unserer Anwendung verwenden wir das Java-eigene Lokalisierungsframework <code>java.util.ResourceBundle</code>. Dieses erlaubt es Sprachunabhängige Strings zu definieren und anschliessend in verschiedene Sprachen zu übersetzen.
+    Für die Lokalisierung unserer Anwendung verwenden wir das Java-eigene Lokalisierungsframework <code>java.util.ResourceBundle</code>. Dieses erlaubt es sprachunabhängige Strings zu definieren und diese anschliessend in verschiedene Sprachen zu übersetzen.
 </p>
 
 #### Verwendung durch den Endbenutzer
 <p>
-    Die Einstellung der Sprache kann in der UI im Menu vorgenommen werden. Hierzu klickt man auf den Button [Optionen] uns stell diese dann unter den Spracheinstellungen ein.
+    Die Einstellung der Sprache kann in der UI im Menu vorgenommen werden. Hierzu klickt man auf den Button [Optionen] und stellt diese anschließend unter den Spracheinstellungen ein.
 </p>
 
 #### Verwendung durch den Programmierer
 <p>
-    Bei der Verwendung unterscheiden wir im folgenden zwischen der Lokalisierung des Java-codes und der Lokalisierung der HTML-Seiten. Hierzu ist ausserdem zu erwähnen, dass alle Strings welche verwendet werden sollen in den entsprechenden <code>properties</code>-Dateien angegeben sein müssen. Für English beispielsweise in der Datei <code>languages_en.properties</code>, für Deutsch <code>languages_de.properties</code>.
+    Bei der Verwendung unterscheiden wir im Folgenden zwischen der Lokalisierung des Java-Codes und der Lokalisierung der HTML-Seiten. Hierzu ist außerdem zu erwähnen, dass alle Strings welche verwendet werden sollen, in den entsprechenden <code>properties</code>-Dateien angegeben sein müssen. Für Englisch beispielsweise in der Datei <code>languages_en.properties</code>, für Deutsch <code>languages_de.properties</code>.
 </p>
 
 ##### Java
