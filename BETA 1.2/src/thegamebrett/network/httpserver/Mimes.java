@@ -4,7 +4,9 @@ import java.io.File;
 import java.util.HashMap;
 
 /**
- * @author Christian Colbach
+ * THE GAMEBRETT - Teamprojekt 2015-2016 - Hochschule Trier
+ *
+ * @author Kore Kaluzynski, Cenk Saatci, Christian Colbach
  */
 public class Mimes {
 
@@ -88,7 +90,7 @@ public class Mimes {
             if (containsKey(o)) {
                 return super.get(o);
             } else {
-                return "content/unknown";//????"application/octet-stream"
+                return "content/unknown"; // Sollte eigentlich "application/octet-stream" sein
             }
         }
     }

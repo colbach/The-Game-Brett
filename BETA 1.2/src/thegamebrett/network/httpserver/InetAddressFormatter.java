@@ -4,7 +4,9 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 /**
- * @author Christian Colbach
+ * THE GAMEBRETT - Teamprojekt 2015-2016 - Hochschule Trier
+ *
+ * @author Kore Kaluzynski, Cenk Saatci, Christian Colbach
  */
 public class InetAddressFormatter {
 

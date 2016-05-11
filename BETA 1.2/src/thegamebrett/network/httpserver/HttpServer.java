@@ -1,14 +1,13 @@
 package thegamebrett.network.httpserver;
 
 import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Date;
-import java.util.StringTokenizer;
 
 /**
- * @author Christian Colbach
+ * THE GAMEBRETT - Teamprojekt 2015-2016 - Hochschule Trier
+ *
+ * @author Kore Kaluzynski, Cenk Saatci, Christian Colbach
  */
 public class HttpServer {
 
@@ -32,7 +31,7 @@ public class HttpServer {
     public void setPort(int port) {
         this.port = port;
 
-        if (isServerEnabled()) { // update state
+        if (isServerEnabled()) {
             requestWaiterThread.stop();
             requestWaiter.closeServerSocket();
             requestWaiter.serverPort = port;
@@ -52,15 +51,13 @@ public class HttpServer {
 
     public void enableServer() {
 
-        if (!isServerEnabled()) { // create & start RequestHandler
+        if (!isServerEnabled()) {
 
             requestWaiter = new HttpRequestWaiter(director, port);
             requestWaiterThread = new Thread(requestWaiter);
             requestWaiterThread.start();
 
-            // log [
             System.out.println("Server started (" + new Date().toString() + ")");
-			//Logger.log(Logger.LOGTYPE_NOTE, "Server started");
 
             String localHost = "Unknown";
             try {
@@ -79,38 +76,26 @@ public class HttpServer {
             addressText = localHost + ":" + port;
             
             System.out.println("webserver local available under: " + addressText);
-			//Logger.log(Logger.LOGTYPE_NOTE, "webserver local available under: " + SystemInformation.getLocalHost() + ":" + port);
-            // ]
-
         } // it is already enabled
         else {
-            // log [
             System.err.println("Cannot enable Server because it is already enabled");
-			//Logger.log(Logger.LOGTYPE_WARNING, "Cannot enable Server because it is already enabled");
-            // ]
         }
     }
 
     public void disableServer() {
 
-        if (isServerEnabled()) { // stop & destroy RequestHandler
+        if (isServerEnabled()) {
 
             requestWaiterThread.stop();
             requestWaiter.closeServerSocket();
             requestWaiterThread = null;
             requestWaiter = null;
 
-            // log [
             System.out.println("Server stopped (" + new Date().toString() + ")");
-            //Logger.log(Logger.LOGTYPE_NOTE, "Server stopped");
-			// ]
 
-        } // it is already disabled
+        }
         else {
-            // log [
             System.err.println("Cannot disable Server because it is already disabled");
-            //Logger.log(Logger.LOGTYPE_WARNING, "Cannot disable Server because it is already disabled");
-            // ]
         }
 
     }

@@ -1,6 +1,5 @@
 package thegamebrett.usercharacter;
 
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.image.Image;
@@ -11,29 +10,31 @@ import thegamebrett.gui.UserImageCircle;
 import thegamebrett.model.Layout;
 
 /**
- * @author christiancolbach
+ * THE GAMEBRETT - Teamprojekt 2015-2016 - Hochschule Trier
+ *
+ * @author Kore Kaluzynski, Cenk Saatci, Christian Colbach
  */
 public class UserCharacter {
-    
+
     private boolean inUse = false;
-    
+
     private String name; // Name des Spielers
-    
+
     private String color; // Spielerfarbe
-    
+
     private String avatarFileName; // Dateinamen von Datei
-    
+
     private Layout layout;
 
     public UserCharacter(String name, String color, String avatarFileName) {
         this.name = name;
         this.color = color;
         this.avatarFileName = avatarFileName;
-        
+
     }
-    
+
     public Layout getLayout() {
-        if(layout == null) {
+        if (layout == null) {
             layout = new Layout();
             layout.setIconImage(getAvatar());
             layout.setBorder(4);
@@ -41,15 +42,16 @@ public class UserCharacter {
         }
         return layout;
     }
-    
+
     private UserImageCircle userImageCircleCache;
+
     public UserImageCircle getUserImageCircle() {
-        if(userImageCircleCache == null) {
+        if (userImageCircleCache == null) {
             userImageCircleCache = new UserImageCircle(getAvatar(), getFXColor());
         }
         return userImageCircleCache;
     }
-    
+
     public String getName() {
         return name;
     }
@@ -61,7 +63,7 @@ public class UserCharacter {
     public Color getFXColor() {
         return Color.web(color);
     }
-    
+
     public String getColor() {
         return color;
     }
@@ -73,10 +75,10 @@ public class UserCharacter {
     public String getAvatarName() {
         return avatarFileName;
     }
-    
+
     public Image getAvatar() {
         try {
-            return AssetsLoader.loadImage("avatars/"+ avatarFileName);
+            return AssetsLoader.loadImage("avatars/" + avatarFileName);
         } catch (AssetNotExistsException ex) {
             Logger.getLogger(UserCharacter.class.getName()).log(Level.SEVERE, null, ex);
             throw new RuntimeException("Datei existiert nicht");
@@ -94,20 +96,20 @@ public class UserCharacter {
     public synchronized void setInUse(boolean inUse) {
         this.inUse = inUse;
     }
-    
+
     public synchronized boolean tryToUse() {
-        if(!isInUse()) {
+        if (!isInUse()) {
             setInUse(true);
             return true;
         } else {
             return false;
         }
     }
-    
+
     public String toCSV() {
-        return name + ";" + color + ";" + avatarFileName; 
+        return name + ";" + color + ";" + avatarFileName;
     }
-    
+
     public static UserCharacter fromCSV(String csv) {
         try {
             if (csv == null) {
@@ -123,5 +125,5 @@ public class UserCharacter {
             throw new IllegalArgumentException();
         }
     }
-    
+
 }
